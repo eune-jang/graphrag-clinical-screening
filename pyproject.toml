@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "graphrag-clinical-screening"
+version = "0.1.0"
+description = "GraphRAG-based AI agent for clinical trial eligibility screening"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Eun Hye Jang"},
+]
+
+dependencies = [
+    "pandas>=2.0",
+    "neo4j>=5.0",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "jupyter>=1.0",
+    "ipykernel>=6.0",
+]
+llm = [
+    "transformers>=4.40",
+    "torch>=2.0",
+    "sentence-transformers>=2.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

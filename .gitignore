@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# 환경
+.env
+.venv/
+venv/
+env/
+
+# 데이터 (용량 크고 라이선스 이슈)
+data/raw/*
+data/processed/*
+data/external/*
+!data/raw/README.md
+!data/processed/README.md
+!data/external/README.md
+
+# 실험 결과
+results/*
+!results/README.md
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Neo4j
+neo4j_data/

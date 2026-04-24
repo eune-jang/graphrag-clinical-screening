@@ -1,0 +1,11 @@
+# NCT02923921 (SEQUOIA Trial) 실험 설정
+trial:
+  nct_id: NCT02923921
+  name: SEQUOIA
+  cancer_type: NSCLC
+
+ontology:
+  layers: [protocol, terminology, domain, lexical]
+  
+evaluation:
+  metrics: [precision, recall, f1, specificity]

@@ -1,0 +1,10 @@
+# LLM 모델 설정
+default:
+  model_name: "meta-llama/Llama-3-8B"
+  max_tokens: 2048
+  temperature: 0.0
+
+screening:
+  model_name: "meta-llama/Llama-3-8B"
+  max_tokens: 1024
+  temperature: 0.0
