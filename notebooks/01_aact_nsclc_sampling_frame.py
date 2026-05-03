@@ -165,14 +165,14 @@ def filter_nsclc(studies, conditions, browse_conditions, keywords):
     # Interventional 시험만 필터
     nsclc = studies[
         (studies["nct_id"].isin(all_nsclc_ids)) &
-        (studies["study_type"] == "Interventional")
+        (studies["study_type"] == "INTERVENTIONAL")
     ].copy()
 
     # 유효한 status 필터
     valid_statuses = [
-        "Completed", "Active, not recruiting", "Recruiting",
-        "Enrolling by invitation", "Not yet recruiting",
-        "Terminated", "Suspended", "Withdrawn",
+        "COMPLETED", "ACTIVE_NOT_RECRUITING", "RECRUITING",
+        "ENROLLING_BY_INVITATION", "NOT_YET_RECRUITING",
+        "TERMINATED", "SUSPENDED", "WITHDRAWN",
     ]
     nsclc = nsclc[nsclc["overall_status"].isin(valid_statuses)]
 
