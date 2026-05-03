@@ -15,6 +15,21 @@ TODO: 안정화 후 분리
 3. 아래 DATA_DIR 경로를 압축 해제한 폴더로 변경
 
 필요 라이브러리: pip install pandas openpyxl
+
+변경 이력:
+  - v2 (2026-05): NCCN v5.2026 기준 검토 후 업데이트
+    - BIOMARKER_MAP: NRG1 추가 (NSCL-19 footnote qq 필수 검사 항목)
+    - Modality: ADC_KEYWORDS, BISPECIFIC_KEYWORDS 카테고리 신설
+    - TKI_KEYWORDS: ensartinib, repotrectinib 등 11개 약물 추가
+    - ANTI_VEGF_KEYWORDS: bevacizumab, ramucirumab 분리 (기존 CHEMO에서 이동)
+    - browse_conditions, keywords 테이블 필터링 로직에 반영
+    - classify_stage() 함수 추가
+    - amivantamab BISPECIFIC으로 재분류
+  - v2.1 (2026-05): 코드 리뷰 후 버그 수정 및 분류 로직 보강
+    - classify_histology(): adenosquamous 오분류 버그 수정 (Squamous → Both)
+    - SURGERY_KEYWORDS: neoadjuvant/adjuvant 제거 (classify_stage()에서만 처리)
+    - classify_stage(): "advanced" 단독 표현 처리 추가 (→ Advanced (III/IV))
+    - classify_line(): maintenance/consolidation 패턴 추가
 """
 
 import pandas as pd
@@ -78,7 +93,18 @@ def load_all():
         "nct_id", "lead_or_collaborator", "agency_class", "name",
     ])
 
-    return studies, conditions, eligibilities, interventions, sponsors
+    # v2: browse_conditions, keywords 로드 추가
+    browse_conditions = load_table(
+        "browse_conditions", REQUIRED_FILES["browse_conditions"],
+        usecols=["nct_id", "mesh_term"],
+    )
+
+    keywords = load_table(
+        "keywords", REQUIRED_FILES["keywords"],
+        usecols=["nct_id", "name"],
+    )
+
+    return studies, conditions, eligibilities, interventions, sponsors, browse_conditions, keywords
 
 
 # ============================================================
@@ -93,9 +119,15 @@ NSCLC_PATTERNS = [
 ]
 NSCLC_REGEX = re.compile("|".join(NSCLC_PATTERNS), re.IGNORECASE)
 
+# MeSH terms for NSCLC (browse_conditions 테이블용)
+NSCLC_MESH_TERMS = [
+    "Carcinoma, Non-Small-Cell Lung",
+    "Lung Neoplasms",
+]
 
-def filter_nsclc(studies, conditions):
-    """NSCLC 관련 시험 필터링 (conditions + title 기반)"""
+
+def filter_nsclc(studies, conditions, browse_conditions, keywords):
+    """NSCLC 관련 시험 필터링 (conditions + title + browse_conditions + keywords)"""
 
     # (a) conditions 테이블에서 NSCLC 매칭
     cond_match = conditions[
@@ -111,7 +143,24 @@ def filter_nsclc(studies, conditions):
         studies["official_title"].fillna("").str.contains(NSCLC_REGEX)
     ]["nct_id"].unique()
 
-    all_nsclc_ids = set(cond_match) | set(title_match_brief) | set(title_match_official)
+    # (c) v2: browse_conditions (NLM MeSH term) 매칭
+    bc_match = set()
+    if not browse_conditions.empty and "mesh_term" in browse_conditions.columns:
+        bc_match = set(browse_conditions[
+            browse_conditions["mesh_term"].isin(NSCLC_MESH_TERMS)
+        ]["nct_id"].unique())
+
+    # (d) v2: keywords 테이블 매칭
+    kw_match = set()
+    if not keywords.empty and "name" in keywords.columns:
+        kw_match = set(keywords[
+            keywords["name"].fillna("").str.contains(NSCLC_REGEX)
+        ]["nct_id"].unique())
+
+    all_nsclc_ids = (
+        set(cond_match) | set(title_match_brief) | set(title_match_official)
+        | bc_match | kw_match
+    )
 
     # Interventional 시험만 필터
     nsclc = studies[
@@ -119,7 +168,7 @@ def filter_nsclc(studies, conditions):
         (studies["study_type"] == "Interventional")
     ].copy()
 
-    # 유효한 status 필터 (너무 오래된 것 제외하되 넓게 잡음)
+    # 유효한 status 필터
     valid_statuses = [
         "Completed", "Active, not recruiting", "Recruiting",
         "Enrolling by invitation", "Not yet recruiting",
@@ -129,7 +178,10 @@ def filter_nsclc(studies, conditions):
 
     print(f"\n🔍 NSCLC Interventional 시험: {len(nsclc):,}건")
     print(f"   - conditions 매칭: {len(cond_match):,}")
-    print(f"   - title 매칭 (추가): {len(set(title_match_brief) | set(title_match_official)) - len(cond_match):,}")
+    print(f"   - title 매칭 (추가): {len(set(title_match_brief) | set(title_match_official)):,}")
+    print(f"   - browse_conditions (MeSH) 매칭: {len(bc_match):,}")
+    print(f"   - keywords 매칭: {len(kw_match):,}")
+    print(f"   - 합집합 (중복 제거 전): {len(all_nsclc_ids):,}")
 
     return nsclc
 
@@ -139,13 +191,36 @@ def filter_nsclc(studies, conditions):
 # ============================================================
 
 # --- 4a. Treatment Modality 분류 ---
+# v2: NCCN NSCL-J 기준 전면 재구성
+
 TKI_KEYWORDS = [
+    # EGFR TKI (1-3세대)
     "erlotinib", "gefitinib", "afatinib", "osimertinib", "dacomitinib",
+    "lazertinib",
+    # EGFR exon 20 insertion
+    "sunvozertinib",
+    # ALK TKI
     "crizotinib", "ceritinib", "alectinib", "brigatinib", "lorlatinib",
-    "selpercatinib", "pralsetinib", "capmatinib", "tepotinib",
-    "sotorasib", "adagrasib", "dabrafenib", "trametinib",
-    "entrectinib", "larotrectinib", "mobocertinib",
-    "lazertinib", "amivantamab",
+    "ensartinib",                                        # v2 추가
+    # ROS1/NTRK TKI
+    "repotrectinib", "taletrectinib",                    # v2 추가
+    "entrectinib", "larotrectinib",
+    # RET TKI
+    "selpercatinib", "pralsetinib",
+    "cabozantinib",                                      # v2 추가
+    # MET TKI
+    "capmatinib", "tepotinib",
+    # KRAS G12C
+    "sotorasib", "adagrasib",
+    # BRAF (+MEK) inhibitors
+    "dabrafenib", "trametinib",
+    "encorafenib", "binimetinib", "vemurafenib",         # v2 추가
+    # HER2 TKI
+    "zongertinib", "sevabertinib",                       # v2 추가
+    # EGFR exon 20 (legacy)
+    "mobocertinib",
+    # FGFR (emerging)
+    "erdafitinib",                                       # v2 추가
 ]
 
 IO_KEYWORDS = [
@@ -157,10 +232,33 @@ IO_KEYWORDS = [
 ]
 
 CHEMO_KEYWORDS = [
+    # v2: bevacizumab, ramucirumab을 ANTI_VEGF로 분리
     "cisplatin", "carboplatin", "pemetrexed", "docetaxel", "paclitaxel",
     "gemcitabine", "vinorelbine", "etoposide", "nab-paclitaxel",
-    "bevacizumab", "ramucirumab",
     "chemotherapy", "platinum-based", "platinum doublet",
+]
+
+# v2: 신규 카테고리 — ADC (Antibody-Drug Conjugate)
+ADC_KEYWORDS = [
+    "datopotamab deruxtecan", "datopotamab",
+    "trastuzumab deruxtecan", "fam-trastuzumab", "t-dxd",
+    "ado-trastuzumab emtansine", "t-dm1",
+    "telisotuzumab vedotin", "telisotuzumab",
+    "sacituzumab govitecan", "sacituzumab",
+    "antibody-drug conjugate", "antibody drug conjugate",
+]
+
+# v2: 신규 카테고리 — Bispecific Antibody
+BISPECIFIC_KEYWORDS = [
+    "amivantamab",       # EGFR/MET bispecific (기존 TKI에서 이동)
+    "zenocutuzumab",     # HER2/HER3 bispecific (NRG1 fusion)
+    "bispecific",
+]
+
+# v2: Anti-VEGF (기존 CHEMO에서 분리)
+ANTI_VEGF_KEYWORDS = [
+    "bevacizumab", "ramucirumab",
+    "anti-vegf", "antiangiogenic",
 ]
 
 RADIATION_KEYWORDS = [
@@ -170,7 +268,8 @@ RADIATION_KEYWORDS = [
 
 SURGERY_KEYWORDS = [
     "surgery", "surgical", "resection", "lobectomy", "pneumonectomy",
-    "neoadjuvant", "adjuvant",
+    # v2.1: neoadjuvant/adjuvant 제거 — Surgery 아닌 neoadjuvant chemo 시험의 오분류 방지
+    # perioperative context는 classify_stage()의 periop_pats에서 처리
 ]
 
 
@@ -185,6 +284,12 @@ def classify_modality(intervention_text):
         modalities.add("Immunotherapy")
     if any(kw in text for kw in CHEMO_KEYWORDS):
         modalities.add("Chemotherapy")
+    if any(kw in text for kw in ADC_KEYWORDS):
+        modalities.add("ADC")
+    if any(kw in text for kw in BISPECIFIC_KEYWORDS):
+        modalities.add("Bispecific Ab")
+    if any(kw in text for kw in ANTI_VEGF_KEYWORDS):
+        modalities.add("Anti-VEGF")
     if any(kw in text for kw in RADIATION_KEYWORDS):
         modalities.add("Radiation")
     if any(kw in text for kw in SURGERY_KEYWORDS):
@@ -197,6 +302,8 @@ def classify_modality(intervention_text):
 
 
 # --- 4b. Molecular Target / Biomarker 분류 ---
+# v2: NRG1 추가, MET/HER2 패턴 보강
+
 BIOMARKER_MAP = {
     "EGFR":     [r"egfr", r"epidermal growth factor"],
     "ALK":      [r"\balk\b", r"anaplastic lymphoma kinase"],
@@ -204,12 +311,17 @@ BIOMARKER_MAP = {
     "PD-L1":    [r"pd-?l1", r"programmed death.?ligand"],
     "KRAS":     [r"kras", r"k-ras"],
     "BRAF":     [r"braf", r"b-raf", r"v600e"],
-    "MET":      [r"\bmet\b.*exon", r"met amplif", r"c-met"],
-    "RET":      [r"\bret\b.*fusion", r"\bret\b.*rearrange", r"ret-positive"],
+    "MET":      [r"\bmet\b.*exon", r"met amplif", r"c-met",
+                 r"met\s*ex14", r"met.*skipping"],               # v2: 패턴 보강
+    "RET":      [r"\bret\b.*fusion", r"\bret\b.*rearrange",
+                 r"ret-positive", r"ret\s+positive"],             # v2: 패턴 보강
     "NTRK":     [r"ntrk", r"neurotrophic"],
-    "HER2":     [r"her2", r"her-2", r"erbb2"],
+    "HER2":     [r"her2", r"her-2", r"erbb2",
+                 r"her2.*ihc", r"her2.*overexpression"],          # v2: IHC 패턴 추가
+    "NRG1":     [r"nrg1", r"neuregulin"],                        # v2: 신규 추가
     "STK11":    [r"stk11"],
     "TP53":     [r"tp53", r"p53"],
+    "FGFR":     [r"fgfr", r"fibroblast growth factor receptor"], # v2: emerging 추가
 }
 
 
@@ -240,16 +352,28 @@ def classify_line(text):
         r"after\s+progression", r"relapsed", r"refractory",
         r"post.?(platinum|chemo|immunotherapy)",
     ]
+    # v2.1: maintenance/consolidation 패턴 추가
+    # NCCN에서 1L 후 유지요법 및 chemoRT 후 consolidation을 별도 치료 맥락으로 다룸
+    maintenance_pats = [
+        r"maintenance\s+therap", r"maintenance\s+treat",
+        r"switch\s+maintenance", r"continuation\s+maintenance",
+        r"consolidat\w*\s+(therap|immuno|treat)",
+    ]
 
     is_1l = any(re.search(p, text) for p in first_line_pats)
     is_2l = any(re.search(p, text) for p in later_line_pats)
+    is_maint = any(re.search(p, text) for p in maintenance_pats)
 
     if is_1l and is_2l:
         return "Mixed (1L + 2L+)"
+    elif is_1l and is_maint:
+        return "1L + Maintenance"
     elif is_1l:
         return "1L (Treatment-naïve)"
     elif is_2l:
         return "2L+ (Previously treated)"
+    elif is_maint:
+        return "Maintenance/Consolidation"
     else:
         return "Not specified"
 
@@ -258,6 +382,11 @@ def classify_line(text):
 def classify_histology(text):
     """Squamous vs Non-squamous 분류"""
     text = str(text).lower()
+
+    # v2.1: adenosquamous를 먼저 체크 — "squamous" 부분문자열 매칭에 의한 오분류 방지
+    adenosq = bool(re.search(r"adenosquamous", text))
+    if adenosq:
+        return "Both"
 
     sq = bool(re.search(r"squamous", text))
     non_sq = bool(re.search(r"non.?squamous|adenocarcinoma|large\s*cell", text))
@@ -272,11 +401,60 @@ def classify_histology(text):
         return "Not specified"
 
 
+# --- 4e. v2: Stage 분류 ---
+def classify_stage(text):
+    """title / eligibility criteria에서 disease stage 추정"""
+    text = str(text).lower()
+
+    early_pats = [
+        r"stage\s*i[ab]?\b", r"stage\s*ii[ab]?\b",
+        r"early.?stage", r"resectable",
+        r"completely\s+resected",
+    ]
+    locally_adv_pats = [
+        r"stage\s*iii[abc]?\b",
+        r"locally\s+advanced", r"unresectable.*stage\s*iii",
+        r"chemoradiation", r"concurrent.*chemo.*radi",
+    ]
+    metastatic_pats = [
+        r"stage\s*iv[abc]?\b", r"metastatic",
+        r"advanced\s+(or\s+)?metastatic",
+        r"m1[abc]?\b",
+    ]
+    # v2.1: "advanced" 단독 사용 시 (IIIB/C + IV 통칭) — locally_adv/metastatic 어디에도
+    # 안 잡힌 경우에만 적용하기 위해 별도 패턴으로 분리
+    advanced_standalone_pat = r"\badvanced\b"
+
+    periop_pats = [
+        r"neoadjuvant", r"adjuvant", r"perioperative",
+    ]
+
+    is_early = any(re.search(p, text) for p in early_pats)
+    is_la = any(re.search(p, text) for p in locally_adv_pats)
+    is_met = any(re.search(p, text) for p in metastatic_pats)
+    is_periop = any(re.search(p, text) for p in periop_pats)
+
+    stages = []
+    if is_early:
+        stages.append("Early (I-II)")
+    if is_la:
+        stages.append("Locally Advanced (III)")
+    if is_met:
+        stages.append("Metastatic (IV)")
+    # v2.1: "advanced" 단독인데 위 패턴에 안 잡힌 경우 → Advanced (III/IV)
+    if not is_la and not is_met and re.search(advanced_standalone_pat, text):
+        stages.append("Advanced (III/IV)")
+    if is_periop:
+        stages.append("Perioperative")
+
+    return " / ".join(stages) if stages else "Not specified"
+
+
 # ============================================================
 # 5. Sampling Frame 구축
 # ============================================================
 def build_sampling_frame(nsclc, conditions, eligibilities, interventions, sponsors):
-    """각 시험에 5개 층화 기준 태깅"""
+    """각 시험에 6개 층화 기준 태깅 (v2: stage 추가)"""
     print("\n🏷️  층화 기준 태깅 중...\n")
 
     nct_ids = nsclc["nct_id"].unique()
@@ -322,6 +500,7 @@ def build_sampling_frame(nsclc, conditions, eligibilities, interventions, sponso
     frame["biomarker"] = frame["_all_text"].apply(classify_biomarkers)
     frame["line_of_therapy"] = frame["_all_text"].apply(classify_line)
     frame["histology"] = frame["_all_text"].apply(classify_histology)
+    frame["stage"] = frame["_all_text"].apply(classify_stage)   # v2 추가
 
     # Phase 정리
     frame["phase_clean"] = frame["phase"].fillna("Not Applicable").str.strip()
@@ -348,6 +527,7 @@ def print_distribution(frame):
         "Biomarker": "biomarker",
         "Line of Therapy": "line_of_therapy",
         "Histology": "histology",
+        "Stage": "stage",              # v2 추가
         "Sponsor Type": "sponsor_type",
     }
 
@@ -368,11 +548,12 @@ def export_frame(frame, output_path="../results/nsclc_sampling_frame.xlsx"):
     # 출력 디렉토리 생성
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-    # 출력 컬럼 정리
+    # 출력 컬럼 정리 (v2: stage 추가)
     export_cols = [
         "nct_id", "brief_title", "phase_clean", "overall_status",
         "enrollment", "start_date",
         "modality", "biomarker", "line_of_therapy", "histology",
+        "stage",                        # v2 추가
         "lead_sponsor", "sponsor_type",
     ]
     out = frame[export_cols].copy()
@@ -380,6 +561,7 @@ def export_frame(frame, output_path="../results/nsclc_sampling_frame.xlsx"):
         "NCT_ID", "Brief_Title", "Phase", "Status",
         "Enrollment", "Start_Date",
         "Modality", "Biomarker", "Line_of_Therapy", "Histology",
+        "Stage",                        # v2 추가
         "Lead_Sponsor", "Sponsor_Type",
     ]
 
@@ -406,7 +588,7 @@ def export_frame(frame, output_path="../results/nsclc_sampling_frame.xlsx"):
 # ============================================================
 def main():
     print("=" * 60)
-    print("  AACT NSCLC Sampling Frame Builder")
+    print("  AACT NSCLC Sampling Frame Builder (v2 — NCCN v5.2026)")
     print("  Protocol KG (Layer 1) 구축용 프로토콜 선정")
     print("=" * 60)
 
@@ -418,11 +600,11 @@ def main():
         print(f"   https://aact.ctti-clinicaltrials.org/downloads 에서 다운로드")
         return
 
-    # 로드
-    studies, conditions, eligibilities, interventions, sponsors = load_all()
+    # 로드 (v2: browse_conditions, keywords 추가)
+    studies, conditions, eligibilities, interventions, sponsors, browse_conditions, keywords = load_all()
 
-    # NSCLC 필터링
-    nsclc = filter_nsclc(studies, conditions)
+    # NSCLC 필터링 (v2: browse_conditions, keywords 반영)
+    nsclc = filter_nsclc(studies, conditions, browse_conditions, keywords)
 
     if len(nsclc) == 0:
         print("\n❌ NSCLC 시험이 검출되지 않았습니다. 필터 조건을 확인하세요.")
@@ -441,20 +623,39 @@ def main():
     print("\n" + "=" * 60)
     print("📋  다음 단계: 프로토콜 선정 가이드")
     print("=" * 60)
+    # v2.1: NCCN 치료 경로 분기 계층에 맞게 선정 가이드 재구성
     print("""
 1. results/nsclc_sampling_frame.xlsx 파일을 열어 분포를 확인하세요.
 
-2. 층화 기준 5개 (Phase, Modality, Biomarker, Line, Histology)의
-   주요 조합(cell)에서 최소 1-2개씩 선정하세요.
+2. Primary Axis — Stage × Line of Therapy (NCCN 최상위 분기)
+   NCCN의 치료 경로 분기에 대응하는 매트릭스를 기준으로
+   각 셀에서 1-2개씩 선정하세요:
 
-3. 선정 우선순위:
+                          1L          2L+         Maint/Consol
+   Early (I-II)          periop      —           adjuvant
+   Locally Adv (III)     chemoRT     salvage     consolidation
+   Metastatic (IV)       systemic    subsequent  maintenance
+   Advanced (III/IV)     systemic    subsequent  maintenance
+
+3. Secondary Axis — Biomarker × Modality (NCCN 약물 선택 분기)
+   Primary Axis 각 셀 내에서 다음 다양성을 확보하세요:
+   - Biomarker: EGFR, ALK, PD-L1 외에 KRAS, ROS1, BRAF, MET, RET,
+     NTRK, HER2, NRG1 시험이 포함되어 있는지
+   - Modality: TKI, IO, Chemo, ADC, Bispecific Ab 시험이
+     고르게 포함되어 있는지
+
+4. Coverage Check — Histology, Phase (셀 내 다양성 보장)
+   - Histology: Squamous 전용 시험이 포함되어 있는지
+   - Phase: I, I/II, II, III가 모두 포함되어 있는지
+
+5. 선정 우선순위:
    - Enrollment(등록 환자수)이 큰 시험 → 임상적 대표성 높음
    - Sponsor 다양성 확보 → 특정 회사 편중 방지
    - Status: Completed > Active > Recruiting 순 권장
 
-4. 목표 샘플 수: 30-50개
+6. 목표 샘플 수: 30-50개
 
-5. 선정 후 results/nsclc_sampling_frame_eligibility.xlsx에서
+7. 선정 후 results/nsclc_sampling_frame_eligibility.xlsx에서
    해당 시험의 Eligibility Criteria 텍스트를 확인하고
    두 annotator가 독립적으로 구조화 작업을 진행하세요.
 """)
