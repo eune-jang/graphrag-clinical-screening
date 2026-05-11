@@ -1,0 +1,447 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cteligi.example.org/schemas/ontology_v1.2.1.json",
+  "title": "Clinical Trial Eligibility Ontology Schema v1.2.1",
+  "description": "JSON Schema for 4-Layer Clinical Trial Screening Ontology v1.2.1. Defines all annotation structures used across LLM pre-annotation, INCEpTION configuration, and downstream graph construction. Reference: ontology_full_specification_v1.2.1.md",
+  "version": "1.2.1",
+
+  "definitions": {
+
+    "criterion_type": {
+      "type": "string",
+      "enum": ["inclusion", "exclusion"],
+      "description": "Whether the criterion is an inclusion or exclusion requirement"
+    },
+
+    "semantic_category": {
+      "type": "string",
+      "enum": [
+        "condition",
+        "treatment_history",
+        "lab_value",
+        "performance_status",
+        "biomarker",
+        "comorbidity",
+        "demographic",
+        "imaging",
+        "comedication",
+        "procedural_fitness"
+      ],
+      "description": "10-category semantic classification (v1.2). procedural_fitness added in v1.2."
+    },
+
+    "parent_role": {
+      "type": "string",
+      "enum": ["composite_split", "macro_aggregate", "nested_exception_parent"],
+      "description": "Splitting pattern role; null/omitted means not a parent"
+    },
+
+    "child_logic": {
+      "type": "string",
+      "enum": ["AND", "OR", "XOR"],
+      "description": "v1.2.1 NEW. Group logic for composite_split children. Default: inclusion=AND, exclusion=OR (omittable). Specify when default doesn't match."
+    },
+
+    "concept_subtype": {
+      "type": "string",
+      "enum": ["Condition", "Drug", "LabTest", "Procedure", "Biomarker", "Stage"],
+      "description": "6-subtype Concept classification"
+    },
+
+    "variant_type": {
+      "type": "string",
+      "enum": [
+        "mutation",
+        "rearrangement",
+        "fusion",
+        "deletion",
+        "insertion",
+        "amplification",
+        "expression",
+        "methylation",
+        "unknown"
+      ],
+      "description": "v1.2.1 NEW. Biomarker variant type."
+    },
+
+    "variant_notation": {
+      "type": "string",
+      "enum": ["protein", "cdna", "genomic", "exon_level", "wildcard", "class_level"],
+      "description": "v1.2.1 NEW. Level at which variant is expressed in protocol text."
+    },
+
+    "biomarker_status": {
+      "type": "string",
+      "enum": ["positive", "negative", "wild_type", "unknown", "equivocal"],
+      "description": "Biomarker status. Convention enum (guideline #5.18)."
+    },
+
+    "drug_class_type": {
+      "type": "string",
+      "enum": ["explicit_list", "closed_class", "open_mechanism_class"],
+      "description": "Drug class abstraction level"
+    },
+
+    "certainty": {
+      "type": "string",
+      "enum": [
+        "confirmed",
+        "pathologically_confirmed",
+        "histologically_or_cytologically_confirmed",
+        "imaging_confirmed",
+        "documented",
+        "history",
+        "incidental_at_baseline"
+      ],
+      "description": "Confirmation certainty level"
+    },
+
+    "strictness": {
+      "type": "string",
+      "enum": ["required", "encouraged", "optional", "discretionary"],
+      "default": "required",
+      "description": "v1.2.1 NEW. Requirement strictness. Default required (omittable)."
+    },
+
+    "anchor_type": {
+      "type": "string",
+      "enum": ["trial_event", "patient_event", "procedure_event", "unspecified"],
+      "default": "unspecified",
+      "description": "v1.2.1 NEW. Distinguishes trial-level standard events from patient-specific historical events."
+    },
+
+    "direction": {
+      "type": "string",
+      "enum": ["before", "after", "within", "since"],
+      "description": "Temporal direction"
+    },
+
+    "operator": {
+      "type": "string",
+      "enum": ["≤", "<", "=", "≥", ">", "within"],
+      "description": "Comparison operator"
+    },
+
+    "equivalence_group_logic": {
+      "type": "string",
+      "enum": ["OR", "MAX", "MIN", "AND"],
+      "description": "Logic for equivalence_group members. MAX/MIN for mathematical formula handling."
+    },
+
+    "line_of_therapy": {
+      "type": "string",
+      "enum": ["first_line", "second_line", "second_line_or_later", "third_line_or_later", "any_line"],
+      "default": "any_line",
+      "description": "Treatment line specification (convention enum, guideline #5.17)"
+    },
+
+    "treatment_modality": {
+      "type": "string",
+      "enum": [
+        "concurrent_with_chemotherapy",
+        "sequential_chemoradiation",
+        "neoadjuvant",
+        "adjuvant",
+        "consolidation",
+        "induction",
+        "maintenance"
+      ],
+      "description": "Treatment timing relationship (convention enum, guideline #5.23)"
+    },
+
+    "exception_type": {
+      "type": "string",
+      "enum": [
+        "condition_carveout",
+        "procedure_carveout",
+        "drug_carveout",
+        "status_carveout",
+        "requirement_waiver"
+      ],
+      "description": "v1.2.1 EXTENDED. requirement_waiver added in v1.2.1 for REQUIRES requirement waiving."
+    },
+
+    "Criterion": {
+      "type": "object",
+      "description": "Layer 1 Criterion node. Each criterion or sub-criterion is one Criterion instance.",
+      "properties": {
+        "criterion_id": {
+          "type": "string",
+          "description": "Unique identifier (e.g., 'NCT03425643_I1', 'NCT03425643_I1a')"
+        },
+        "type": {"$ref": "#/definitions/criterion_type"},
+        "semantic_category": {"$ref": "#/definitions/semantic_category"},
+        "parent_role": {"$ref": "#/definitions/parent_role"},
+        "parent_criterion_id": {
+          "type": "string",
+          "description": "If sub-criterion (IS_PART_OF child), reference to parent criterion_id"
+        },
+        "child_logic": {"$ref": "#/definitions/child_logic"},
+        "cohort_scope": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "v1.2.1 NEW. Cohort identifiers (e.g., ['F-1'], ['F-2', 'F-3']). Omit for single-cohort trials."
+        },
+        "protocol_ref": {
+          "type": "string",
+          "description": "Source reference (e.g., 'Inclusion #1', 'Section 4.1.1')"
+        },
+        "original_text": {
+          "type": "string",
+          "description": "Verbatim original criterion text"
+        },
+        "normalized_text": {
+          "type": "string",
+          "description": "Annotator's paraphrase or convention preservation"
+        },
+        "relations": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/Relation"},
+          "description": "Cross-layer relations attached to this criterion"
+        }
+      },
+      "required": ["criterion_id", "type", "semantic_category"]
+    },
+
+    "Relation": {
+      "type": "object",
+      "description": "Cross-layer relation from Criterion to Concept (or constraint relation)",
+      "properties": {
+        "relation_type": {
+          "type": "string",
+          "enum": [
+            "REQUIRES_CONDITION",
+            "REQUIRES_TREATMENT",
+            "REQUIRES_BIOMARKER",
+            "REQUIRES_STATUS",
+            "REQUIRES_PROCEDURE",
+            "EXCLUDES_CONDITION",
+            "EXCLUDES_TREATMENT",
+            "EXCLUDES_PROCEDURE",
+            "EXCLUDES_COMEDICATION",
+            "EXCLUDES_STATUS",
+            "HAS_VALUE",
+            "HAS_TEMPORAL",
+            "INCLUDES_EXCEPTION"
+          ]
+        },
+        "target_subtype": {"$ref": "#/definitions/concept_subtype"},
+        "target_preferred_name": {
+          "type": "string",
+          "description": "Standardized clinical term (INN/SNOMED/HUGO)"
+        },
+        "target_text_span": {
+          "type": "string",
+          "description": "Verbatim text from criterion that identifies this target"
+        },
+        "properties": {
+          "$ref": "#/definitions/RelationProperties"
+        },
+        "biomarker_details": {
+          "$ref": "#/definitions/BiomarkerDetails",
+          "description": "Required when target_subtype=Biomarker"
+        }
+      },
+      "required": ["relation_type", "target_subtype"],
+      "allOf": [
+        {
+          "if": {"properties": {"relation_type": {"const": "REQUIRES_BIOMARKER"}}},
+          "then": {"required": ["biomarker_details"]}
+        }
+      ]
+    },
+
+    "RelationProperties": {
+      "type": "object",
+      "description": "Properties on a relation. Property applicability depends on relation_type.",
+      "properties": {
+
+        "certainty": {"$ref": "#/definitions/certainty"},
+        "temporal": {"type": "string"},
+        "condition_qualifier": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Free-form string or structured qualifier object"
+        },
+        "strictness": {"$ref": "#/definitions/strictness"},
+
+        "drug_class_basis": {"type": "boolean"},
+        "drug_class_type": {"$ref": "#/definitions/drug_class_type"},
+        "line_of_therapy": {"$ref": "#/definitions/line_of_therapy"},
+        "treatment_setting": {"type": "string"},
+        "treatment_modality": {"$ref": "#/definitions/treatment_modality"},
+
+        "status": {"type": "string"},
+        "equivalent_status": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Negation status expansion (e.g., not_progressed → [CR, PR, SD])"
+        },
+        "evidence_methods": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "scale": {"type": "string"},
+        "anchor_event": {"type": "string"},
+        "operational_definition": {"type": "string"},
+
+        "role": {"type": "string"},
+        "scope": {"type": "string"},
+        "scope_qualifier": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ]
+        },
+
+        "operator": {"$ref": "#/definitions/operator"},
+        "value": {
+          "oneOf": [
+            {"type": "number"},
+            {"type": "string"}
+          ]
+        },
+        "unit": {"type": "string"},
+        "measurement_method": {
+          "type": "string",
+          "enum": ["longest_diameter", "2_perpendicular_diameters", "short_axis"],
+          "description": "v1.2.1 convention. RECIST uses longest_diameter, irRC uses 2_perpendicular_diameters."
+        },
+        "equivalence_group_id": {"type": "string"},
+        "equivalence_group_logic": {"$ref": "#/definitions/equivalence_group_logic"},
+        "alternative_constraint": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "object"}
+          ],
+          "description": "Stage K (annotation guideline 4.7). Object form when structurable, string when natural language preservation needed."
+        },
+
+        "anchor": {"type": "string"},
+        "direction": {"$ref": "#/definitions/direction"},
+        "anchor_type": {"$ref": "#/definitions/anchor_type"},
+        "forward_extending": {"type": "boolean"},
+
+        "exception_type": {"$ref": "#/definitions/exception_type"},
+        "exception_qualifier": {
+          "oneOf": [
+            {"type": "string"},
+            {
+              "type": "object",
+              "description": "Compound qualifier per guideline 4.7.2",
+              "properties": {
+                "applies_when": {"type": "string"},
+                "conditions": {"type": "array", "items": {"type": "string"}},
+                "logic": {"type": "string", "enum": ["AND", "OR"]},
+                "temporal": {"type": "object"},
+                "applies_to": {"type": "string"},
+                "rationale": {"type": "string"},
+                "requires_consultation": {"type": "string"}
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    "BiomarkerDetails": {
+      "type": "object",
+      "description": "Biomarker-specific details. Each variant becomes a separate Concept:Biomarker node.",
+      "properties": {
+        "gene_symbol": {
+          "type": "string",
+          "description": "HUGO gene symbol (e.g., 'EGFR', 'ALK', 'BRAF', 'PD-L1')"
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "variant": {"type": "string", "description": "e.g., 'T790M', 'Ex19del', 'G719X'"},
+              "variant_type": {"$ref": "#/definitions/variant_type"},
+              "variant_notation": {"$ref": "#/definitions/variant_notation"},
+              "hgvs_p": {"type": "string"},
+              "hgvs_c": {"type": "string"},
+              "hgvs_g": {"type": "string"}
+            },
+            "required": ["variant", "variant_type", "variant_notation"]
+          }
+        },
+        "status": {"$ref": "#/definitions/biomarker_status"},
+        "assay_method": {"type": "string"},
+        "clinical_category": {"type": "string"}
+      },
+      "required": ["gene_symbol"]
+    },
+
+    "ConceptStage": {
+      "type": "object",
+      "description": "Layer 3 Stage concept. Used as target of REQUIRES_STATUS for staging criteria.",
+      "properties": {
+        "system": {
+          "type": "string",
+          "enum": ["AJCC", "IASLC", "FIGO", "Ann_Arbor", "TNM"]
+        },
+        "system_version": {
+          "type": "string",
+          "description": "Convention (guideline). e.g., 'v8' for AJCC, 'v7' for IASLC"
+        },
+        "value": {
+          "type": "string",
+          "description": "Stage value (e.g., 'Stage IIIB', 'Stage IV')"
+        },
+        "t_descriptor": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "TNM T sub-descriptors (e.g., ['T3', 'T4'])"
+        },
+        "n_descriptor": {"type": "string"},
+        "m_descriptor": {"type": "string"},
+        "resectability": {
+          "type": "string",
+          "enum": ["resectable", "unresectable", "borderline_resectable"],
+          "description": "Convention (guideline #5.14)"
+        }
+      },
+      "required": ["system", "value"]
+    },
+
+    "Trial": {
+      "type": "object",
+      "description": "Trial-level metadata (document-level in INCEpTION)",
+      "properties": {
+        "trial_id": {
+          "type": "string",
+          "pattern": "^NCT\\d{8}$",
+          "description": "ClinicalTrials.gov NCT identifier"
+        },
+        "trial_acronym": {"type": "string"},
+        "protocol_version": {"type": "string"},
+        "trial_phase": {"type": "string"},
+        "disease_domain": {"type": "string"},
+        "cohorts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string"},
+              "description": {"type": "string"}
+            },
+            "required": ["id"]
+          },
+          "description": "Cohort registry for multi-cohort/basket trials. Optional for single-cohort trials."
+        },
+        "criteria": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/Criterion"}
+        }
+      },
+      "required": ["trial_id", "criteria"]
+    }
+  },
+
+  "type": "object",
+  "$ref": "#/definitions/Trial"
+}

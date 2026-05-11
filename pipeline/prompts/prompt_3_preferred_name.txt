@@ -1,0 +1,84 @@
+You are an expert at clinical terminology normalization.
+
+# Task
+For the given concept entity (drug, condition, biomarker, observation, procedure, or stage), produce the standardized preferred name.
+
+# Normalization Rules
+
+| target_subtype | preferred_name source |
+|---|---|
+| Drug | International Non-proprietary Name (INN). NOT brand names, NOT development codes |
+| Condition | SNOMED CT preferred term. Expand abbreviations (PDAC → Pancreatic ductal adenocarcinoma) |
+| Observation | LOINC preferred term, standard clinical name, or demographic attribute name |
+| Procedure | SNOMED CT procedure or standard term |
+| Biomarker | HUGO gene symbol + variant; specify variant_type and variant_notation |
+| Stage | Stage system + value (e.g., "AJCC v8 Stage IIIB") |
+
+# Specific Rules
+
+## Drug normalization
+- Development codes → INN: "AZD9291" → "Osimertinib", "MK-3475" → "Pembrolizumab", "AM0010" → "Pegilodecakin"
+- Class names: "EGFR-TKI" → preferred_name: "EGFR-TKI class" + class_members: ["Erlotinib", "Gefitinib", "Afatinib", ...]
+- Generation/strength qualifier preserved: "3rd generation EGFR TKI" → keep as-is
+
+## Condition normalization
+- "PDAC" → "Pancreatic ductal adenocarcinoma"
+- "NSCLC" → "Non-small cell lung cancer"
+- "ILD" → "Interstitial lung disease"
+- "BCC" → "Basal cell carcinoma"
+
+## Biomarker — properties
+
+For Biomarker targets, you MUST specify:
+
+**variant_type** (9-enum): mutation / rearrangement / fusion / deletion / insertion / amplification / expression / methylation / unknown
+
+**variant_notation** (6-enum): protein / cdna / genomic / exon_level / wildcard / class_level
+
+For multi-variant biomarker criteria, produce ONE entry per variant.
+
+# Output Format
+
+{
+  "concept_subtype": "<6-enum>",
+  "preferred_name": "standardized name",
+  "alternate_names": ["original surface form", "abbreviation if any"],
+  
+  // For Biomarker only:
+  "variants": [
+    {
+      "gene_symbol": "EGFR",
+      "variant": "T790M",
+      "variant_type": "mutation",
+      "variant_notation": "protein",
+      "hgvs_p": "p.Thr790Met"
+    }
+  ],
+  
+  // For Drug class:
+  "is_drug_class": true,
+  "drug_class_type": "explicit_list | closed_class | open_mechanism_class",
+  "class_members": ["specific drug 1", "specific drug 2"],
+  
+  // For Stage:
+  "system": "AJCC | IASLC",
+  "system_version": "v7 | v8",
+  "value": "Stage IIIB"
+}
+
+# Examples
+
+See examples.json (key: "prompt_3_preferred_name") for 5 worked examples:
+1. Drug INN normalization — AURA3 (AZD9291 → Osimertinib)
+2. Multi-variant biomarker — AURA3 I7 (EGFR with G719X/Ex19del/L858R/L861Q)
+3. Specific point mutation — AURA3 I8 (T790M)
+4. Closed drug class — SEQUOIA (platinum class)
+5. Stage with system_version — KEYNOTE-671 I1 (AJCC v8 Stage IIIB)
+
+# Now process the following entity:
+
+TARGET_TEXT_SPAN: {{target_text_span}}
+TARGET_SUBTYPE: {{target_subtype}}
+CRITERION_CONTEXT: {{full_criterion_text}}
+
+OUTPUT (JSON only, no preamble):

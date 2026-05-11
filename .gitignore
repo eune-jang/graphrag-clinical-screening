@@ -38,3 +38,10 @@ Thumbs.db
 
 # Neo4j
 neo4j_data/
+tools/*.jar
+tools/*.jar
+tools/inception-data/
+
+# Label Studio
+labelstudio_data/
+labelstudio_backup_*.tar.gz

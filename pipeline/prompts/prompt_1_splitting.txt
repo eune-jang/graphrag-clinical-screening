@@ -1,0 +1,82 @@
+You are an expert at analyzing clinical trial eligibility criteria.
+
+# Task
+Given a single eligibility criterion text from a clinical trial protocol, determine its structural decomposition.
+
+# Splitting Patterns
+
+Three splitting patterns are defined:
+
+**composite_split**: Multiple independent meanings combined in one criterion, often with different semantic categories or relation types. Examples:
+- "Male/female ≥18 years with previously untreated NSCLC" → 3 children: NSCLC diagnosis, age, treatment-naive
+- "Documented EGFR mutation OR ALK rearrangement" → 2 OR-children
+
+**macro_aggregate**: A macro-statement covering multiple lab values, typically with sub-bullet structure or "as defined in Table" reference. Examples:
+- "Adequate organ function as defined in Table 1: ANC ≥1500, Plt ≥100k, Hgb ≥9.0..." → parent + N lab-value children
+- All children always combine with AND logic
+
+**nested_exception**: An EXCLUDES or REQUIRES with explicit carve-out language ("except", "Note: X are NOT excluded", "not required if Y"). Examples:
+- "Has additional malignancy except basal cell carcinoma..." → carve-out
+- "Molecular testing required, unless squamous histology" → requirement waiver
+
+**none**: Simple single-meaning criterion requiring no decomposition.
+
+# child_logic Rules (only for composite_split)
+
+- inclusion + explicit "or" / "either" / "any of the following" → child_logic: OR (must specify)
+- inclusion without explicit OR → child_logic: AND (default, can omit)
+- exclusion with sub-bullets or "or" → child_logic: OR (default for exclusion)
+- exclusion with AND-style enumeration (rare) → child_logic: AND (must specify)
+
+For macro_aggregate, child_logic is always AND (omit).
+For nested_exception, child_logic is not used.
+
+# cohort_scope Detection
+
+If the criterion text mentions a specific cohort/part/arm (e.g., "Part F-1", "Cohort A", "patients in Arm 2"), record cohort_scope as an array of cohort identifiers.
+
+If the criterion applies to all cohorts in a multi-cohort trial OR if the trial has a single cohort, omit cohort_scope.
+
+IMPORTANT: Only use cohort_scope when the criterion TEXT ITSELF restricts applicability to specific cohorts. Do NOT infer cohort_scope from trial metadata (e.g., arm descriptions). Most multi-arm trials (drug vs placebo) share the same eligibility criteria across all arms → null.
+
+# Output Format
+
+Return JSON with the following structure:
+
+{
+  "splitting_decision": "composite_split | macro_aggregate | nested_exception | none",
+  "child_logic": "AND | OR | null",
+  "cohort_scope": ["cohort_id_1", "cohort_id_2"] or null,
+  "sub_criteria": [
+    {
+      "child_id": "a | b | c | ...",
+      "text_span": "exact text from original criterion",
+      "rationale": "brief 1-sentence reason"
+    }
+  ],
+  "confidence": "high | medium | low",
+  "notes": "anything ambiguous or worth flagging for human review"
+}
+
+If splitting_decision is "none", set sub_criteria to empty array.
+
+# Examples
+
+See examples.json (key: "prompt_1_splitting") for 5 worked examples covering:
+1. composite_split with explicit OR (inclusion) — SEQUOIA I1
+2. macro_aggregate (organ function) — KEYNOTE-671 I5
+3. nested_exception with condition_carveout — KEYNOTE-671 E5
+4. nested_exception with requirement waiver (exception_qualifier) — KEYNOTE-001
+5. none (simple criterion) — KEYNOTE-671 I4 (ECOG)
+
+# Now process the following criterion:
+
+CRITERION_TEXT: {{criterion_text}}
+TRIAL_HAS_COHORTS: {{cohort_list_or_null}}
+
+NEIGHBORING_CRITERIA (for context — the current criterion is marked with ">>> CURRENT >>>"):
+{{neighboring_criteria}}
+
+Use the neighboring criteria to detect macro_aggregate patterns. If the current criterion is a header like "Adequate organ function" and the following criteria are lab values (ANC, platelets, creatinine, etc.), this is a macro_aggregate parent. The sub_criteria should reference the following lab value criteria by their text.
+
+OUTPUT (JSON only, no preamble):

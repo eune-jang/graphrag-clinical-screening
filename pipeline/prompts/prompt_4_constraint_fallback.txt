@@ -1,0 +1,88 @@
+You are an expert at extracting numeric and temporal constraints from clinical trial criteria.
+
+# Task
+For the given criterion text, extract HAS_VALUE and HAS_TEMPORAL properties. Focus on **non-standard patterns** that require interpretation beyond simple regex (most standard patterns handled by Python regex before this prompt).
+
+# HAS_VALUE Properties
+
+{
+  "operator": "≤ | < | = | ≥ | > | within",
+  "value": "numeric or string",
+  "unit": "string",
+  "scale": "ECOG | CTCAE | RECIST v1.1 | irRC | etc.",
+  "measurement_method": "longest_diameter | 2_perpendicular_diameters | short_axis | etc.",
+  "alternative_constraint": "string or nested object"
+}
+
+# HAS_TEMPORAL Properties
+
+{
+  "operator": "≤ | < | = | ≥ | > | within",
+  "value": "numeric",
+  "unit": "days | weeks | months | years",
+  "anchor": "string",
+  "direction": "before | after | within | since",
+  "anchor_type": "trial_event | patient_event | unspecified"
+}
+
+# anchor_type Decision
+
+| Anchor pattern | anchor_type |
+|---|---|
+| "Randomization", "first_dose", "informed_consent", "study_treatment_start" | trial_event |
+| "first_EGFR_TKI_treatment_start", "documented_PD_on_X_treatment", "completion_of_concurrent_CRT", "screening_biopsy", "thoracic_radiation_completion" | patient_event |
+| Cannot classify | unspecified |
+
+# Special Patterns
+
+## Mathematical formula in temporal value
+
+Pattern: "X days OR Y × half-life, whichever longer"
+Output: TWO parallel HAS_TEMPORAL entries with equivalence_group_id and group_logic="MAX"
+
+## Range temporal value
+
+Pattern: "X to Y days prior"
+Output: TWO parallel HAS_TEMPORAL entries (≥X + ≤Y)
+
+## Value with tolerance
+
+Pattern: "60 Gy ±10% (54-66 Gy)"
+Output: HAS_VALUE primary (operator="=", value=60) + alternative_constraint with tolerance/value_range
+
+# Output Format
+
+{
+  "has_value_constraints": [
+    {
+      "operator": "...",
+      "value": "...",
+      ...
+    }
+  ],
+  "has_temporal_constraints": [
+    {
+      "operator": "...",
+      "anchor": "...",
+      "anchor_type": "...",
+      ...
+    }
+  ],
+  "needs_human_review": true/false,
+  "review_reason": "if needs_human_review, why"
+}
+
+# Examples
+
+See examples.json (key: "prompt_4_constraint_fallback") for 4 worked examples:
+1. Patient-specific event anchor — AURA3 I8d
+2. Mathematical washout formula — AURA3 E1b
+3. Range temporal + value tolerance — PACIFIC I4
+4. Range temporal + value tolerance — PACIFIC I4
+
+# Now process the following criterion:
+
+CRITERION_TEXT: {{criterion_text}}
+ALREADY_EXTRACTED_BY_REGEX: {{regex_output_or_null}}
+
+OUTPUT (JSON only, no preamble):

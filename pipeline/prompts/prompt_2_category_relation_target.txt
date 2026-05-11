@@ -1,0 +1,107 @@
+You are an expert at mapping clinical trial eligibility criteria to a structured ontology.
+
+# Task
+For the given criterion text, identify:
+1. The semantic_category (single dominant category)
+2. The cross-layer relation(s) needed to express the criterion's meaning
+3. The target subtype (Concept type) for each relation
+
+# Semantic Category (10 enum values)
+
+| category | when to use |
+|---|---|
+| condition | Diagnosis or disease status (e.g., "NSCLC diagnosis", "metastatic disease") |
+| treatment_history | Prior drug/therapy history (e.g., "prior gemcitabine") |
+| observation | Quantitative thresholds: lab values (e.g., "ANC ≥ 1500"), clinical measurements (e.g., "FEV1 ≥ 2.0L"), and demographic values (e.g., "age ≥ 18") |
+| performance_status | Activity level (ECOG, Karnofsky) |
+| biomarker | Molecular/genetic markers (e.g., "EGFR T790M", "PD-L1+") |
+| comorbidity | Coexisting conditions, often exclusion |
+| demographic | Age, sex, body weight |
+| imaging | RECIST, irRC, CT/MRI requirements |
+| comedication | Concurrent medications |
+| procedural_fitness | Fitness for procedures (e.g., "fit for surgery") |
+
+# Relation Type Decision Tree
+
+Step 1: Inclusion or exclusion criterion?
+Step 2: Match the dominant intent:
+
+For inclusion:
+- Diagnosis required → REQUIRES_CONDITION
+- Treatment history required → REQUIRES_TREATMENT
+- Biomarker status required → REQUIRES_BIOMARKER
+- Test result status required → REQUIRES_STATUS
+- Procedure evidence required → REQUIRES_PROCEDURE
+
+For exclusion:
+- Diagnosis excluded → EXCLUDES_CONDITION
+- Treatment history excluded → EXCLUDES_TREATMENT
+- Procedure history excluded → EXCLUDES_PROCEDURE
+- Concurrent medication excluded → EXCLUDES_COMEDICATION
+- Status excluded → EXCLUDES_STATUS
+
+For both (constraints):
+- Numeric value constraint → HAS_VALUE
+- Temporal constraint → HAS_TEMPORAL
+- Carve-out from EXCLUDES OR waiver of REQUIRES → INCLUDES_EXCEPTION
+
+# Multiple Relations Per Criterion
+
+A criterion can have MULTIPLE relations. For example:
+- "ECOG ≤ 1 within 10 days of randomization" → HAS_VALUE (ECOG ≤ 1) + HAS_TEMPORAL (within 10 days)
+- "Prior gemcitabine with documented PD" → REQUIRES_TREATMENT (gemcitabine) + REQUIRES_STATUS (PD)
+- "T790M+ from tissue biopsy after PD on EGFR-TKI" → REQUIRES_BIOMARKER + REQUIRES_PROCEDURE + HAS_TEMPORAL
+
+# Target Subtype Decision
+
+For each relation, the target Concept has one of 6 subtypes:
+
+| target_subtype | when to use |
+|---|---|
+| Condition | Diseases, syndromes (REQUIRES/EXCLUDES_CONDITION) |
+| Drug | Medications, drug classes (REQUIRES/EXCLUDES_TREATMENT, EXCLUDES_COMEDICATION) |
+| Observation | Lab tests, performance scales, clinical assessments, demographic values (HAS_VALUE, REQUIRES_STATUS, EXCLUDES_STATUS) |
+| Procedure | Surgeries, biopsies, imaging (REQUIRES/EXCLUDES_PROCEDURE) |
+| Biomarker | Genes, mutations, expression levels (REQUIRES_BIOMARKER) |
+| Stage | Disease stage classifications (REQUIRES_STATUS for stage) |
+
+# Output Format
+
+{
+  "semantic_category": "<enum value>",
+  "relations": [
+    {
+      "relation_id": "r1",
+      "relation_type": "<relation enum>",
+      "target_subtype": "<subtype enum>",
+      "target_text_span": "exact text identifying target entity",
+      "is_negation": false,
+      "rationale": "1-sentence reason"
+    }
+  ],
+  "confidence": "high | medium | low",
+  "notes": "anything worth flagging"
+}
+
+# Decision tips
+
+- If criterion contains numeric value + temporal: BOTH HAS_VALUE and HAS_TEMPORAL relations
+- If criterion is "previously untreated" type: EXCLUDES_TREATMENT with universal-scope target
+- If criterion has measurable/RECIST/irRC: REQUIRES_STATUS for response, REQUIRES_PROCEDURE for imaging requirement
+- "Clinical progression" → status (not procedure)
+- Surgery / radiation / transplant → Procedure (not Drug, not Treatment)
+
+# Examples
+
+See examples.json (key: "prompt_2_category_relation_target") for 3 worked examples:
+1. Multi-relation, treatment_history dominant — SEQUOIA I3
+2. Biomarker dominant with multi-variant — AURA3 I7
+3. Exclusion with EXCLUDES_PROCEDURE — KEYNOTE-671 E3 (transplant)
+
+# Now process the following criterion:
+
+CRITERION_TEXT: {{criterion_text}}
+CRITERION_TYPE: {{inclusion_or_exclusion}}
+PARENT_INFO: {{parent_id_and_role_or_null}}
+
+OUTPUT (JSON only, no preamble):

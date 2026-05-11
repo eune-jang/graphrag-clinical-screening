@@ -1,0 +1,695 @@
+{
+  "metadata": {
+    "schema_version": "v1.2.2",
+    "description": "Few-shot examples for 5 LLM pre-annotation prompts. Each example references actual criteria from 6-trial stress test (KEYNOTE-671, SEQUOIA, ALEX, AURA3, PACIFIC, KEYNOTE-001).",
+    "format_note": "Examples loaded into prompts dynamically. Stage K (prompt 5) examples include needs_human_review flags."
+  },
+  "prompt_1_splitting": [
+    {
+      "label": "composite_split with explicit OR (inclusion)",
+      "source": "SEQUOIA I1 (NCT02923921)",
+      "input": {
+        "criterion_text": "The presence of metastatic pancreatic adenocarcinoma plus 1 of the following:\na. Histological diagnosis of pancreatic adenocarcinoma confirmed pathologically, OR\nb. Pathologist-confirmed histological/cytological diagnosis of adenocarcinoma consistent with pancreas origin in conjunction with either: (i) The presence of a mass in the pancreas, OR (ii) A history of pancreatic adenocarcinoma.",
+        "trial_has_cohorts": null
+      },
+      "output": {
+        "splitting_decision": "composite_split",
+        "child_logic": "OR",
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": "Histological diagnosis of pancreatic adenocarcinoma confirmed pathologically",
+            "rationale": "Path A — direct histological confirmation"
+          },
+          {
+            "child_id": "b",
+            "text_span": "Pathologist-confirmed histological/cytological diagnosis of adenocarcinoma consistent with pancreas origin in conjunction with the presence of a mass in the pancreas",
+            "rationale": "Path B-i — secondary path with pancreatic mass"
+          },
+          {
+            "child_id": "c",
+            "text_span": "Pathologist-confirmed histological/cytological diagnosis of adenocarcinoma consistent with pancreas origin in conjunction with a history of pancreatic adenocarcinoma",
+            "rationale": "Path B-ii — secondary path with PDAC history"
+          }
+        ],
+        "confidence": "high",
+        "notes": "Inclusion with explicit OR — child_logic must be specified."
+      }
+    },
+    {
+      "label": "macro_aggregate (organ function)",
+      "source": "KEYNOTE-671 I5 (NCT03425643)",
+      "input": {
+        "criterion_text": "Have adequate organ function as defined in Table 1. Specimens must be collected within 10 days prior to the start of study treatment.\n- ANC ≥ 1500/µL\n- Platelets ≥ 100,000/µL\n- Hemoglobin ≥ 9.0 g/dL\n- Creatinine clearance OR GFR ≥ 60 mL/min\n- Total bilirubin ≤ 1.5 × ULN\n- AST and ALT ≤ 2.5 × ULN\n- TSH within normal limits\n- INR ≤ 1.5 × ULN",
+        "trial_has_cohorts": null
+      },
+      "output": {
+        "splitting_decision": "macro_aggregate",
+        "child_logic": "AND",
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": "ANC ≥ 1500/µL",
+            "rationale": "Hematologic"
+          },
+          {
+            "child_id": "b",
+            "text_span": "Platelets ≥ 100,000/µL",
+            "rationale": "Hematologic"
+          },
+          {
+            "child_id": "c",
+            "text_span": "Hemoglobin ≥ 9.0 g/dL",
+            "rationale": "Hematologic"
+          },
+          {
+            "child_id": "d",
+            "text_span": "Creatinine clearance OR GFR ≥ 60 mL/min",
+            "rationale": "Renal — equivalence_group"
+          },
+          {
+            "child_id": "e",
+            "text_span": "Total bilirubin ≤ 1.5 × ULN",
+            "rationale": "Hepatic"
+          },
+          {
+            "child_id": "f",
+            "text_span": "AST and ALT ≤ 2.5 × ULN",
+            "rationale": "Hepatic — AND group"
+          },
+          {
+            "child_id": "g",
+            "text_span": "TSH within normal limits",
+            "rationale": "Endocrine"
+          },
+          {
+            "child_id": "h",
+            "text_span": "INR ≤ 1.5 × ULN",
+            "rationale": "Coagulation"
+          }
+        ],
+        "confidence": "high",
+        "notes": "Standard organ function macro. The 10-day temporal window applies to parent."
+      }
+    },
+    {
+      "label": "nested_exception with condition_carveout",
+      "source": "KEYNOTE-671 E5 (NCT03425643)",
+      "input": {
+        "criterion_text": "Has known additional malignancy that is progressing or requires active treatment within the past 5 years.\nNote: Participants with basal cell carcinoma of the skin, squamous cell carcinoma of the skin, noninvasive bladder carcinoma, or any carcinoma in situ that have undergone potentially curative therapy are not excluded.",
+        "trial_has_cohorts": null
+      },
+      "output": {
+        "splitting_decision": "nested_exception",
+        "child_logic": null,
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "main",
+            "text_span": "Has known additional malignancy that is progressing or requires active treatment within the past 5 years",
+            "rationale": "Main EXCLUDES_CONDITION target"
+          },
+          {
+            "child_id": "exception",
+            "text_span": "basal cell carcinoma of the skin, squamous cell carcinoma of the skin, noninvasive bladder carcinoma, or any carcinoma in situ that have undergone potentially curative therapy",
+            "rationale": "Carveout via INCLUDES_EXCEPTION (condition_carveout)"
+          }
+        ],
+        "confidence": "high",
+        "notes": "Standard nested_exception with condition_carveout. No splitting via IS_PART_OF."
+      }
+    },
+    {
+      "label": "nested_exception with requirement waiver — KEYNOTE-001",
+      "source": "KEYNOTE-001 I1_F (NCT01295827)",
+      "input": {
+        "criterion_text": "For patients enrolled in F-1, F-2, or F-3, who are known to have a tumor of predominantly squamous histology, molecular testing for EGFR mutation and ALK translocation will not be required as this is not standard of care.",
+        "trial_has_cohorts": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "F",
+          "F-1",
+          "F-2",
+          "F-3"
+        ]
+      },
+      "output": {
+        "splitting_decision": "nested_exception",
+        "child_logic": null,
+        "cohort_scope": [
+          "F-1",
+          "F-2",
+          "F-3"
+        ],
+        "sub_criteria": [
+          {
+            "child_id": "main",
+            "text_span": "molecular testing for EGFR mutation and ALK translocation",
+            "rationale": "Main REQUIRES_BIOMARKER target (testing requirement)"
+          },
+          {
+            "child_id": "exception",
+            "text_span": "patients with predominantly squamous histology",
+            "rationale": "Requirement waiver via INCLUDES_EXCEPTION with exception_qualifier (waiver_type: requirement_exempt)"
+          }
+        ],
+        "confidence": "high",
+        "notes": "requirement waiver pattern. Histology-specific applicability. Expressed via exception_qualifier."
+      }
+    },
+    {
+      "label": "none (simple criterion)",
+      "source": "KEYNOTE-671 I4 (NCT03425643)",
+      "input": {
+        "criterion_text": "Have an ECOG performance status of 0 to 1 within 10 days of randomization.",
+        "trial_has_cohorts": null
+      },
+      "output": {
+        "splitting_decision": "none",
+        "child_logic": null,
+        "cohort_scope": null,
+        "sub_criteria": [],
+        "confidence": "high",
+        "notes": "Simple criterion with HAS_VALUE + HAS_TEMPORAL combined on single concept (ECOG)."
+      }
+    }
+  ],
+  "prompt_2_category_relation_target": [
+    {
+      "label": "Multi-relation, treatment_history dominant",
+      "source": "SEQUOIA I3 (NCT02923921)",
+      "input": {
+        "criterion_text": "Patient must have documented tumor progression during or following a gemcitabine-containing regimen for the treatment of metastatic disease. Diagnosis of progression must be within 28 days prior to Randomization.",
+        "criterion_type": "inclusion",
+        "parent_info": null
+      },
+      "output": {
+        "semantic_category": "treatment_history",
+        "relations": [
+          {
+            "relation_id": "r1",
+            "relation_type": "REQUIRES_TREATMENT",
+            "target_subtype": "Drug",
+            "target_text_span": "gemcitabine-containing regimen",
+            "is_negation": false,
+            "rationale": "Prior gemcitabine therapy required"
+          },
+          {
+            "relation_id": "r2",
+            "relation_type": "REQUIRES_STATUS",
+            "target_subtype": "Observation",
+            "target_text_span": "tumor progression",
+            "is_negation": false,
+            "rationale": "Documented progression status required"
+          },
+          {
+            "relation_id": "r3",
+            "relation_type": "HAS_TEMPORAL",
+            "target_subtype": "Observation",
+            "target_text_span": "within 28 days prior to Randomization",
+            "is_negation": false,
+            "rationale": "Temporal window for progression diagnosis"
+          }
+        ],
+        "confidence": "high",
+        "notes": "3 relations on single criterion."
+      }
+    },
+    {
+      "label": "Biomarker dominant with multi-variant",
+      "source": "AURA3 I7 (NCT02151981)",
+      "input": {
+        "criterion_text": "Documented EGFR mutation (at any time since the initial diagnosis of NSCLC) known to be associated with EGFR TKI sensitivity (including G719X, exon 19 deletion, L858R, L861Q).",
+        "criterion_type": "inclusion",
+        "parent_info": null
+      },
+      "output": {
+        "semantic_category": "biomarker",
+        "relations": [
+          {
+            "relation_id": "r1",
+            "relation_type": "REQUIRES_BIOMARKER",
+            "target_subtype": "Biomarker",
+            "target_text_span": "EGFR mutation associated with EGFR TKI sensitivity (G719X, exon 19 deletion, L858R, L861Q)",
+            "is_negation": false,
+            "rationale": "EGFR sensitizing mutation required, multi-variant fan-out"
+          }
+        ],
+        "confidence": "high",
+        "notes": "Multi-variant target. Each variant becomes separate Concept:Biomarker in Stage F downstream."
+      }
+    },
+    {
+      "label": "Exclusion with EXCLUDES_PROCEDURE",
+      "source": "KEYNOTE-671 E3 (NCT03425643)",
+      "input": {
+        "criterion_text": "Has had an allogenic tissue/solid organ transplant.",
+        "criterion_type": "exclusion",
+        "parent_info": null
+      },
+      "output": {
+        "semantic_category": "comorbidity",
+        "relations": [
+          {
+            "relation_id": "r1",
+            "relation_type": "EXCLUDES_PROCEDURE",
+            "target_subtype": "Procedure",
+            "target_text_span": "allogenic tissue/solid organ transplant",
+            "is_negation": false,
+            "rationale": "Past transplant procedure excludes patient"
+          }
+        ],
+        "confidence": "high",
+        "notes": "EXCLUDES_PROCEDURE used (not EXCLUDES_TREATMENT) for surgical/transplant procedures."
+      }
+    }
+  ],
+  "prompt_3_preferred_name": [
+    {
+      "label": "Drug INN normalization (with class)",
+      "source": "AURA3 (NCT02151981)",
+      "input": {
+        "target_text_span": "AZD9291 or other 3rd generation EGFR TKIs",
+        "target_subtype": "Drug",
+        "criterion_context": "Treatment with osimertinib (AZD9291) or other 3rd generation EGFR TKIs..."
+      },
+      "output": {
+        "concept_subtype": "Drug",
+        "preferred_name": "Osimertinib",
+        "alternate_names": [
+          "AZD9291"
+        ],
+        "is_drug_class": false,
+        "additional_targets": [
+          {
+            "preferred_name": "3rd generation EGFR TKI class",
+            "is_drug_class": true,
+            "drug_class_type": "open_mechanism_class",
+            "class_members": [
+              "Osimertinib"
+            ],
+            "generation_qualifier": "3rd_generation"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Multi-variant biomarker (mixed notation levels)",
+      "source": "AURA3 I7 (NCT02151981)",
+      "input": {
+        "target_text_span": "EGFR mutation including G719X, exon 19 deletion, L858R, L861Q",
+        "target_subtype": "Biomarker",
+        "criterion_context": "EGFR sensitizing mutation criterion"
+      },
+      "output": {
+        "concept_subtype": "Biomarker",
+        "preferred_name": "EGFR sensitizing mutation",
+        "alternate_names": [
+          "EGFR mutation",
+          "EGFR-activating mutation"
+        ],
+        "variants": [
+          {
+            "gene_symbol": "EGFR",
+            "variant": "G719X",
+            "variant_type": "mutation",
+            "variant_notation": "wildcard",
+            "note": "X denotes any amino acid; expand to G719A/G719S/G719C in EMR matching"
+          },
+          {
+            "gene_symbol": "EGFR",
+            "variant": "exon 19 deletion",
+            "variant_type": "deletion",
+            "variant_notation": "exon_level",
+            "note": "Macro-class covering c.2235_2249del, c.2236_2250del etc."
+          },
+          {
+            "gene_symbol": "EGFR",
+            "variant": "L858R",
+            "variant_type": "mutation",
+            "variant_notation": "protein",
+            "hgvs_p": "p.Leu858Arg"
+          },
+          {
+            "gene_symbol": "EGFR",
+            "variant": "L861Q",
+            "variant_type": "mutation",
+            "variant_notation": "protein",
+            "hgvs_p": "p.Leu861Gln"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Specific point mutation (T790M)",
+      "source": "AURA3 I8 (NCT02151981)",
+      "input": {
+        "target_text_span": "T790M+ mutation",
+        "target_subtype": "Biomarker",
+        "criterion_context": "T790M-positive resistance after first-line EGFR TKI"
+      },
+      "output": {
+        "concept_subtype": "Biomarker",
+        "preferred_name": "EGFR T790M mutation",
+        "alternate_names": [
+          "T790M"
+        ],
+        "variants": [
+          {
+            "gene_symbol": "EGFR",
+            "variant": "T790M",
+            "variant_type": "mutation",
+            "variant_notation": "protein",
+            "hgvs_p": "p.Thr790Met",
+            "clinical_category": "EGFR_TKI_resistance"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Closed drug class",
+      "source": "SEQUOIA / various",
+      "input": {
+        "target_text_span": "platinum-containing regimen",
+        "target_subtype": "Drug",
+        "criterion_context": "Prior platinum-based chemotherapy"
+      },
+      "output": {
+        "concept_subtype": "Drug",
+        "preferred_name": "Platinum agent class",
+        "alternate_names": [
+          "platinum-based chemotherapy",
+          "platinum-containing regimen"
+        ],
+        "is_drug_class": true,
+        "drug_class_type": "closed_class",
+        "class_members": [
+          "Cisplatin",
+          "Carboplatin",
+          "Oxaliplatin"
+        ]
+      }
+    },
+    {
+      "label": "Stage with system_version",
+      "source": "KEYNOTE-671 I1 (NCT03425643)",
+      "input": {
+        "target_text_span": "Stage IIIB (T3-4 N2) per AJCC v8",
+        "target_subtype": "Stage",
+        "criterion_context": "Resectable Stage IIIB NSCLC"
+      },
+      "output": {
+        "concept_subtype": "Stage",
+        "preferred_name": "AJCC 8th edition Stage IIIB",
+        "system": "AJCC",
+        "system_version": "v8",
+        "value": "Stage IIIB"
+      }
+    }
+  ],
+  "prompt_4_constraint_fallback": [
+    {
+      "label": "Patient-specific event anchor",
+      "source": "AURA3 I8d (NCT02151981)",
+      "input": {
+        "criterion_text": "...biopsy sample taken after documented disease progression on first line treatment with an approved, EGFR tyrosine kinase inhibitor.",
+        "regex_output_or_null": null
+      },
+      "output": {
+        "has_value_constraints": [],
+        "has_temporal_constraints": [
+          {
+            "operator": ">",
+            "value": 0,
+            "unit": "days",
+            "anchor": "documented_PD_on_1L_EGFR_TKI",
+            "direction": "after",
+            "anchor_type": "patient_event"
+          }
+        ],
+        "needs_human_review": false,
+        "review_reason": null
+      }
+    },
+    {
+      "label": "Mathematical washout formula",
+      "source": "AURA3 E1b (NCT02151981)",
+      "input": {
+        "criterion_text": "Treatment with an EGFR-TKI within 8 days or approximately 5x half-life, whichever is the longer, of the first dose of study treatment.",
+        "regex_output_or_null": null
+      },
+      "output": {
+        "has_value_constraints": [],
+        "has_temporal_constraints": [
+          {
+            "operator": "<",
+            "value": 8,
+            "unit": "days",
+            "anchor": "first_dose_study_treatment",
+            "direction": "before",
+            "anchor_type": "trial_event",
+            "equivalence_group_id": "egfr_tki_washout",
+            "equivalence_group_logic": "MAX"
+          },
+          {
+            "operator": "<",
+            "value": 5,
+            "unit": "× half_life",
+            "value_type": "computed",
+            "anchor": "first_dose_study_treatment",
+            "direction": "before",
+            "anchor_type": "trial_event",
+            "equivalence_group_id": "egfr_tki_washout",
+            "equivalence_group_logic": "MAX"
+          }
+        ],
+        "needs_human_review": true,
+        "review_reason": "Mathematical formula requires verification of group_logic semantic and computed value handling"
+      }
+    },
+    {
+      "label": "Range temporal + value tolerance",
+      "source": "PACIFIC I4 (NCT02125461)",
+      "input": {
+        "criterion_text": "...completed within 1 to 42 days prior to first dose. Total radiation dose 60 Gy ±10% (54 to 66 Gy).",
+        "regex_output_or_null": null
+      },
+      "output": {
+        "has_value_constraints": [
+          {
+            "operator": "=",
+            "value": 60,
+            "unit": "Gy",
+            "alternative_constraint": {
+              "tolerance": "±10%",
+              "value_range": [
+                54,
+                66
+              ]
+            }
+          }
+        ],
+        "has_temporal_constraints": [
+          {
+            "operator": "≥",
+            "value": 1,
+            "unit": "days",
+            "anchor": "first_dose",
+            "direction": "before",
+            "anchor_type": "trial_event"
+          },
+          {
+            "operator": "≤",
+            "value": 42,
+            "unit": "days",
+            "anchor": "first_dose",
+            "direction": "before",
+            "anchor_type": "trial_event"
+          }
+        ],
+        "needs_human_review": false,
+        "review_reason": null
+      }
+    },
+    {
+      "label": "strictness=encouraged",
+      "source": "PACIFIC I4g (NCT02125461)",
+      "input": {
+        "criterion_text": "Sites are encouraged to adhere to mean lung dose <20 Gy.",
+        "regex_output_or_null": null
+      },
+      "output": {
+        "has_value_constraints": [
+          {
+            "operator": "<",
+            "value": 20,
+            "unit": "Gy",
+            "scale": "Mean lung radiation dose"
+          }
+        ],
+        "has_temporal_constraints": [],
+        "needs_human_review": false,
+        "review_reason": null
+      }
+    }
+  ],
+  "prompt_5_alternative_constraint": [
+    {
+      "label": "Conditional numeric threshold (bilirubin)",
+      "source": "KEYNOTE-671 I5e (NCT03425643)",
+      "input": {
+        "criterion_text": "Total bilirubin ≤ 1.5 × ULN OR direct bilirubin ≤ ULN for patients with total bilirubin levels > 1.5 × ULN",
+        "primary_constraint": {
+          "relation_type": "HAS_VALUE",
+          "target": "Total bilirubin",
+          "operator": "≤",
+          "value": 1.5,
+          "unit": "× ULN"
+        },
+        "alternative_text": "Direct bilirubin within normal limits if total bilirubin > 1.5 × ULN"
+      },
+      "output": {
+        "alternative_constraint": {
+          "condition": "if total bilirubin > 1.5 × ULN",
+          "alternative_test": "Direct bilirubin",
+          "alternative_value": "within normal limits"
+        },
+        "needs_human_review": false
+      }
+    },
+    {
+      "label": "Liver mets-conditional (AST/ALT in liver mets)",
+      "source": "ALEX E3a (NCT02075840)",
+      "input": {
+        "criterion_text": "AST and ALT > 3 × ULN, or > 5 × ULN if liver metastases are present",
+        "primary_constraint": {
+          "relation_type": "HAS_VALUE",
+          "target": "AST",
+          "operator": ">",
+          "value": 3,
+          "unit": "× ULN"
+        },
+        "alternative_text": "≥ 5 × ULN for patients with concurrent liver metastasis"
+      },
+      "output": {
+        "alternative_constraint": {
+          "condition": "if concurrent liver metastasis present",
+          "operator": "≥",
+          "value": 5,
+          "unit": "× ULN"
+        },
+        "needs_human_review": false
+      }
+    },
+    {
+      "label": "Compound exception qualifier (brain mets carve-out)",
+      "source": "AURA3 E3 (NCT02151981)",
+      "input": {
+        "criterion_text": "History of leptomeningeal carcinomatosis. Brain metastases unless asymptomatic, stable and not requiring steroids for at least 4 weeks prior to start of study treatment.",
+        "primary_constraint": {
+          "relation_type": "EXCLUDES_CONDITION",
+          "target": "brain metastases"
+        },
+        "alternative_text": "unless asymptomatic, stable and not requiring steroids for at least 4 weeks prior to start of study treatment"
+      },
+      "output": {
+        "exception_type": "status_carveout",
+        "exception_qualifier": {
+          "conditions": [
+            "asymptomatic",
+            "stable",
+            "no_steroid_dependency"
+          ],
+          "logic": "AND",
+          "temporal": {
+            "operator": "≥",
+            "value": 4,
+            "unit": "weeks",
+            "anchor": "study_treatment_start",
+            "direction": "before",
+            "anchor_type": "trial_event"
+          },
+          "applies_to": "no_steroid_dependency"
+        },
+        "needs_human_review": false
+      }
+    },
+    {
+      "label": "Mathematical washout with subjective fallback",
+      "source": "AURA3 E1b (NCT02151981)",
+      "input": {
+        "criterion_text": "8 days or approximately 5x half-life, whichever is the longer. If sufficient washout time has not occurred... alternative appropriate washout time... could be agreed upon by AstraZeneca and the Investigator.",
+        "primary_constraint": {
+          "relation_type": "HAS_TEMPORAL",
+          "target": "EGFR-TKI washout"
+        },
+        "alternative_text": "alternative washout time agreed by AstraZeneca and Investigator"
+      },
+      "output": {
+        "alternative_constraint": "max(8 days, 5 × half_life). Investigator + AstraZeneca may agree on alternative washout based on drug AE duration and reversibility.",
+        "structured_components": {
+          "primary_formula": "max(8_days, 5_half_life)",
+          "fallback_pathway": "investigator_AstraZeneca_agreement",
+          "fallback_basis": [
+            "drug_AE_duration",
+            "drug_AE_reversibility"
+          ]
+        },
+        "needs_human_review": true,
+        "review_reason": "Mathematical formula combined with subjective approval pathway. Verify equivalence_group_id and group_logic application."
+      }
+    },
+    {
+      "label": "requirement waiver — KEYNOTE-001 (squamous OR KRAS+)",
+      "source": "KEYNOTE-001 (NCT01295827)",
+      "input": {
+        "criterion_text": "molecular testing for EGFR/ALK not required for squamous histology OR known KRAS mutation",
+        "primary_constraint": {
+          "relation_type": "REQUIRES_BIOMARKER",
+          "target": "EGFR/ALK molecular testing"
+        },
+        "alternative_text": "waived for predominantly squamous histology OR known KRAS mutation (mutual exclusivity)"
+      },
+      "output": {
+        "exception_type": "status_carveout",
+        "exception_qualifier": {
+          "applies_when": "predominantly_squamous_histology OR known_KRAS_mutation",
+          "conditions": [
+            "predominantly_squamous_histology",
+            "known_KRAS_mutation"
+          ],
+          "logic": "OR",
+          "rationale": "not_standard_of_care_for_squamous (squamous case); mutual_exclusivity (KRAS case)",
+          "waiver_type": "requirement_exempt"
+        },
+        "needs_human_review": false
+      }
+    },
+    {
+      "label": "Patient-specific reference (recovered to baseline)",
+      "source": "SEQUOIA I6 (NCT02923921)",
+      "input": {
+        "criterion_text": "Recovered to CTCAE Grade ≤1 or to baseline from any prior anticancer therapy adverse events.",
+        "primary_constraint": {
+          "relation_type": "HAS_VALUE",
+          "target": "CTCAE AE Grade",
+          "operator": "≤",
+          "value": 1
+        },
+        "alternative_text": "or recovered to baseline"
+      },
+      "output": {
+        "alternative_constraint": {
+          "condition": "if not at Grade ≤ 1",
+          "alternative_baseline": "patient-specific pre-treatment baseline",
+          "needs_chart_review": true
+        },
+        "needs_human_review": false
+      }
+    }
+  ]
+}
