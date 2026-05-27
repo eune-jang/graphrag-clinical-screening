@@ -532,5 +532,116 @@ NCT02912949  eNRGy              (NRG1 fusion, basket)
 
 **검증**: 3개 신규 테스트 추가 (`test_iaa_filter_*` in `tests/test_iaa_metrics.py`) → **34/34 통과**.
 
+---
+
+## 13. 2026-05-27 세션 마무리 — 종합 + 다음 세션용 인계
+
+### 13-1. 오늘 push된 commit 6개 (origin/main 최신)
+```
+317065a align config.py + validators.py to v1.2.2 spec (close HANDOFF §7-H)
+0df4736 remove XOR from CHILD_LOGIC enum (v1.2.2 spec alignment)
+3ec1a5b restrict hosted app to 8 IAA-evaluation trials + clean secret template
+595df04 relocate audit reference + remove unused labelstudio schema
+e55b87d fix outdated IAA docs + CLI help references
+b2bc9e7 add IAA framework + Streamlit annotation UI (local + hosted)
+```
+(`43cd72c Added Dev Container Folder`는 사용자가 GitHub UI에서 직접 추가)
+
+### 13-2. 배포 현황
+- **Repo**: `eune-jang/graphrag-clinical-screening` — public
+- **Hosted app**: Streamlit Community Cloud, custom subdomain (사용자 노트 참조)
+- **Secret**: `SHARED_PASSWORD` SCC dashboard에 설정됨. `.example` 파일은 placeholder만.
+- **자동 재배포**: GitHub push 감지 → 1-3분 후 SCC가 새 컨테이너로 갱신
+- **번들 데이터**: `streamlit_apps/data/{NCT*}/stage1/{input,llm_output}.json` × 30 trials
+- **IAA dropdown 필터**: `iaa_pipeline_spec/iaa_8trials.txt` 8개만 노출
+
+### 13-3. ⚠️ 보안 인시던트 + 처리
+세션 중 `.streamlit/secrets.toml.example` 파일에 실제 패스워드 `nsclciaa2026`가 입력된 채로 commit 전 단계까지 감 → push 전 발견하여 placeholder로 복원. 사용자에게 SCC Secret 변경 안내. **git history에는 노출 안 됨** (commit 전 단계에서 발견).
+
+다음 세션 시 확인 사항:
+- [ ] SCC Secret 실제로 새 패스워드로 변경됐는지 (`nsclciaa2026` 폐기)
+- [ ] DYK에게 새 패스워드 out-of-band 전달 완료 여부
+
+### 13-4. 미해결 / 보류 결정사항
+
+#### A. Paper claim 결정 (22 follow-up trials 처리 정책)
+22개 비-IAA trial을 어떻게 처리할지는 paper draft 시점에 결정:
+- **(A1)** Methodology validation only — 22개 사용 안 함 (가장 단순)
+- **(A2)** 30-trial gold corpus 공개 — methodology 검증 후 single-annotator로 22개 처리
+- **(A3)** RAG agent end-to-end — 22개는 `pipeline/output/NCT*_annotation.json` 그대로 KG 입력
+
+대부분 임상 NLP paper는 (A1) 또는 (A3). 결정 시점은 IAA 결과 + paper 외곽 잡힌 후.
+
+#### B. Annotator ID 입력 검증 (Option A from "DYK가 EHJ ID 잘못 입력" 토론)
+- 현재: free text input, upload-resume 시점에만 identity guard
+- 옵션 A: `ALLOWED_ANNOTATORS = {"EHJ", "DYK"}` (또는 SCC secret)로 사전 등록된 ID만 허용
+- 5분 작업, 위험 90% 차단 (오타). 다음 세션에 적용 권장.
+
+#### C. Commit/Download UX 개선 (4가지 옵션)
+사용자가 "Commit 안 누르고 Draft만 쓰면 안 돼?" 질문 → 현재 design 유지로 답함. 그러나 UX 개선 여지 있음:
+- (C1) 그대로 — 현재
+- (C2) Commit 버튼 제거 — draft만 사용 (방법론 약화)
+- (C3) Commit + Download 합쳐 한 번에
+- (C4) Commit 전 confirmation modal
+
+#### D. v1.2.2 spec 잔여 (deferral, 의도된 미해결)
+- `variant_notation` 5 enum activation — Stage 3 IAA 작업 시
+- `ontology_v1.2.2.json` schema 파일 생성 — Stage 3 downstream validation 필요 시
+- 22 trial reprocess (NCT01884285, NCT03219268의 amplification/unknown 5건) — 22 follow-up corpus 정책 결정 시
+
+### 13-5. Annotator guide 작성 TODO
+오늘 Q&A에서 나온 annotator 가이드 항목들. `docs/annotator_guide.md` 신설 또는 hosting_guide.md에 추가 권장.
+
+| 주제 | 핵심 내용 |
+|---|---|
+| **child_logic null 처리** | spec 규칙: inclusion+AND default omit, exclusion+OR default omit. override 케이스만 명시. `(unset)` 선택 = JSON에서 필드 자체 omit |
+| **cohort_scope 사용법** | 대부분 비워둠 (모든 cohort 적용). cohort-specific 명시 ("Part F only" 등)일 때만 선택. KEYNOTE-001(15 cohorts)이 가장 주의 필요. ASTRIS/GFH925는 cohort 없음 → multiselect 미표시 |
+| **Save draft vs Commit final** | Save = 브라우저 세션만, 새로고침 시 손실. Commit = 잠금 + 다운로드 파일에 `committed=true`. 둘 다 다운로드 권장 |
+| **다운로드 필수** | Streamlit Cloud는 서버 영구 저장 없음. 본인 다운로드 파일 = 본인 작업의 유일한 기록 |
+| **재개 워크플로우** | 다음 세션: URL 접속 → password → trial 선택 → "Upload a draft you downloaded earlier" → 이전 다운로드 파일 → form 복원 |
+| **공유 폴더 업로드** | `📥 Download committed envelope` → `/shared/iaa/submissions/{ID}/NCT*_stage1.json` |
+| **honor system** | annotator ID 정확히 입력, 본인 commit 전 다른 annotator 결과 보지 않기 |
+
+### 13-6. 다음 세션 우선순위 후보
+
+#### P0 — DYK annotation 시작 전 확인 (최단 작업)
+- [ ] SCC Secret 새 패스워드 적용 확인
+- [ ] DYK에게 URL + 새 패스워드 + annotator_guide 전달
+- [ ] (옵션 B 적용) Annotator ID 사전 등록 검증 추가 — 5분
+
+#### P1 — Annotation 결과 받기 전 가능한 작업
+- [ ] **`scripts/compute_iaa.py`** 작성 — 둘 다 commit 후 κ + 표 생성. 1-2시간.
+- [ ] **`docs/annotator_guide.md`** 작성 — 위 §13-5 표 + 예시. 30분.
+- [ ] **`iaa_pipeline_spec/05_iaa_metrics.md`** — paper Methods용 metric 공식 문서화. 2-3시간.
+
+#### P2 — Stage 1 결과 받은 후 (다음 주)
+- [ ] 8 trial 모두 commit envelope 수신 후 IAA 계산 실행
+- [ ] κ 결과 분석 → onto spec / prompt 수정 판단
+  - κ ≥ 0.6 → Stage 2 진행
+  - κ < 0.6 → 불일치 패턴 분석 → spec 수정 → 재annotation
+
+#### P3 — Stage 1 만족스러우면
+- [ ] Stage 2 LLM runner 구현 — `run_stage2_category_relation()`
+- [ ] Stage 2 UI form (`streamlit_apps/stage2_app.py`)
+- [ ] AACT → Stage1Input 변환 (이미 있음 — 22 trial 추가 시 재활용)
+
+### 13-7. 현재 상태 한 줄 요약
+
+> **Stage 1 IAA 실험 준비 완료.** Hosted app 배포됨, 8 trial 필터링, v1.2.2 spec 정합화, 34/34 tests 통과, 6 commits push 완료. 다음 세션 우선 작업: SCC Secret 변경 확인 + DYK에게 URL/password 공유 + annotator guide 작성 + compute_iaa.py 작성.
+
+### 13-8. 빠른 참조 (다음 세션 첫 명령)
+```bash
+cd /Users/jang-eunhye/graphrag-clinical-screening
+
+# 환경 확인
+git log --oneline -5    # 마지막 commit이 317065a여야 함
+git status              # clean이어야 함
+python3 tests/test_iaa_metrics.py 2>&1 | tail -3  # 34/34 passed
+
+# 로컬 IAA UI (필요 시)
+streamlit run streamlit_apps/stage1_app.py
+# 또는 production app은 SCC URL로 직접 (사용자 노트 참조)
+```
+
 ### 12-10. 한 줄 요약
 > **IAA 인프라 0 → 1**. spec 따라 aligners + metrics + Stage 1 UI 완성, 18 tests 통과. 다음 세션은 시범 실행 (후보 I) 또는 Stage 2 runner (후보 J)부터.
