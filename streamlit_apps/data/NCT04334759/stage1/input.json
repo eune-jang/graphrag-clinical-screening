@@ -1,0 +1,258 @@
+{
+  "trial_id": "NCT04334759",
+  "criteria": [
+    {
+      "criterion_id": "NCT04334759_I1",
+      "type": "inclusion",
+      "text": "Adults (18 years or over) with a histological diagnosis of epithelioid pleural mesothelioma that is not amenable to curative surgical resection. Histological diagnosis requires tumour tissue from an open biopsy, or a core biopsy with a needle of 19 gauge or wider.",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT04334759_I2",
+      "type": "inclusion",
+      "text": "Measurable disease as per modified RECIST 1.1 (mRECIST 1.1) criteria for assessment of response in pleural mesothelioma, without prior radiotherapy to these sites.",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT04334759_I3",
+      "type": "inclusion",
+      "text": "Body weight \\>30 kg,",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT04334759_I4",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) performance status of 0 or 1.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT04334759_I5",
+      "type": "inclusion",
+      "text": "Tumour tissue (Formalin-Fixed Paraffin-Embedded \\[FFPE\\]) available from standard of care diagnostic biopsy for PD-L1 testing and other correlative biomarker testing at a central laboratory.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT04334759_I6",
+      "type": "inclusion",
+      "text": "Life expectancy of at least 12 weeks.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT04334759_I7",
+      "type": "inclusion",
+      "text": "Adequate blood tests (done within 14 days prior to randomisation) and with values within the ranges specified below. Blood transfusions are permissible if completed at least 7 days prior to treatment start.",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT04334759_I8",
+      "type": "inclusion",
+      "text": "Haemoglobin ≥ 9.0 g/L",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT04334759_I9",
+      "type": "inclusion",
+      "text": "Absolute neutrophil count ≥ 1.5 x 10\\^9/L",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT04334759_I10",
+      "type": "inclusion",
+      "text": "Platelets ≥ 100 x 10\\^9/L",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT04334759_I11",
+      "type": "inclusion",
+      "text": "Total bilirubin ≤ 1.5 x upper limit of normal (ULN) (except participants with Gilbert's Syndrome, who are eligible with bilirubin ≤ 2.5 ULN)",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT04334759_I12",
+      "type": "inclusion",
+      "text": "Alanine transaminase ≤ 2.5 x upper limit of normal (ULN), unless liver metastases or invasion are present, in which case it must be ≤ 5 x ULN",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT04334759_I13",
+      "type": "inclusion",
+      "text": "Aspartate aminotransferase ≤ 2.5 x ULN, unless liver metastases or invasion are present, in which case it must be ≤ 5 x ULN",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT04334759_I14",
+      "type": "inclusion",
+      "text": "Creatinine clearance (CrCl) ≥ 45 mL/min (Cockcroft-Gault formula). NOTE: Carboplatin AUC 5 must be the initial platinum agent of choice in patients with creatinine Cl \\<60 mL/min but ≥ 45 mL/min, or those with clinically reported hearing loss.",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT04334759_I15",
+      "type": "inclusion",
+      "text": "Patient consent must be appropriately obtained in accordance with applicable local and regulatory requirements. Each patient or legal representative must sign a consent form prior to enrolment in the trial to document their willingness to participate.",
+      "protocol_ref": "Inclusion #15"
+    },
+    {
+      "criterion_id": "NCT04334759_I16",
+      "type": "inclusion",
+      "text": "Willing and able to comply with all study requirements, including treatment, timing and/or nature of required assessments.",
+      "protocol_ref": "Inclusion #16"
+    },
+    {
+      "criterion_id": "NCT04334759_I17",
+      "type": "inclusion",
+      "text": "Women of childbearing potential must use a reliable means of contraception during treatment and for at least 90 days thereafter. Breastfeeding is not permissible during or for at least 90 days after the final study treatment. Men must have been surgically sterilised or use a barrier method of contraception if they are sexually active with a woman of child bearing potential.",
+      "protocol_ref": "Inclusion #17"
+    },
+    {
+      "criterion_id": "NCT04334759_I18",
+      "type": "inclusion",
+      "text": "Evidence of post-menopausal status or negative serum pregnancy test for female pre-menopausal patients. Women will be considered post-menopausal if they have been amenorrheic for 12 months without an alternative medical cause.",
+      "protocol_ref": "Inclusion #18"
+    },
+    {
+      "criterion_id": "NCT04334759_E1",
+      "type": "exclusion",
+      "text": "Non-epithelioid histology (biphasic or sarcomatoid).",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT04334759_E2",
+      "type": "exclusion",
+      "text": "Prior chemotherapy or other systemic anti-cancer or immunotherapy for PM.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT04334759_E3",
+      "type": "exclusion",
+      "text": "Diagnosis based only on cytology or aspiration biopsy with a needle narrower than 19 gauge.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT04334759_E4",
+      "type": "exclusion",
+      "text": "Active or prior documented autoimmune or inflammatory disorders (including inflammatory bowel disease \\[e.g. colitis or Crohn's disease\\], diverticulitis \\[with the exception of diverticulosis\\], systemic lupus erythematosus, Sarcoidosis syndrome, or Wegener syndrome \\[granulomatosis with polyangiitis, Graves' disease, rheumatoid arthritis, hypophysitis, uveitis, etc.\\]). The following are exceptions to this criterion: 1. Patients with vitiligo or alopecia 2. Patients with hypothyroidism (e.g. following Hashimoto syndrome) stable on hormone replacement 3. Any chronic skin condition that does not require systemic therapy 4. Patients without active disease in the last 5 years may be included 5. Patients with celiac disease controlled by diet alone",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT04334759_E5",
+      "type": "exclusion",
+      "text": "Any condition requiring systemic treatment with either corticosteroids (\\>10 mg daily prednisone or equivalent dose of an alternative corticosteroid) or other immunosuppressive medications within 28 days of durvalumab or ipilimumab or nivolumab administration. Intranasal, inhaled or topical steroids or local steroid injections (e.g. intra-articular injection) are permitted in the absence of active autoimmune disease. Standard steroid premedication given prior to chemotherapy or as prophylaxis for imaging contrast allergy should not be counted for this criterion.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT04334759_E6",
+      "type": "exclusion",
+      "text": "Participants with symptomatic or uncontrolled brain metastases or leptomeningeal disease are excluded.",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT04334759_E7",
+      "type": "exclusion",
+      "text": "Prior therapy with an anti-PD-1, anti-PD-L1, anti-PD-L2, anti-CTLA-4 antibody, or any other antibody or drug specifically targeting T cell co-stimulation or immune checkpoint pathways.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT04334759_E8",
+      "type": "exclusion",
+      "text": "Current treatment or treatment within the last 12 months with any investigational anti-cancer products.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT04334759_E9",
+      "type": "exclusion",
+      "text": "Concurrent enrolment in another clinical study testing an anticancer treatment.",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT04334759_E10",
+      "type": "exclusion",
+      "text": "Mean QT interval corrected for heart rate using Fridericia's formula (QTcF) ≥ 470 msec in screening ECG measured using standard institutional method or history of familial long QT syndrome.",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT04334759_E11",
+      "type": "exclusion",
+      "text": "Major surgical procedure (as defined by the Investigator) within 28 days prior to the first dose of study treatment on protocol. Note: Local surgery of isolated lesions for palliative intent is acceptable. Limited pleural biopsy procedures do not apply.",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT04334759_E12",
+      "type": "exclusion",
+      "text": "No other malignancy that requires active treatment. Participants with a past history of adequately treated carcinoma in situ, non-melanoma skin cancer or lentigo maligna without evidence of disease or superficial transitional cell carcinoma of the bladder are eligible.",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT04334759_E13",
+      "type": "exclusion",
+      "text": "Hearing loss or peripheral neuropathy considered by the investigators to contraindicate administration of either cisplatin, carboplatin or pemetrexed.",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT04334759_E14",
+      "type": "exclusion",
+      "text": "History of allergy or hypersensitivity to investigational product, cisplatin, carboplatin, pemetrexed, ipilimumab, nivolumab or any excipient.",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT04334759_E15",
+      "type": "exclusion",
+      "text": "Uncontrolled intercurrent illness including, but not limited to, ongoing or active infection, symptomatic congestive cardiac failure, uncontrolled hypertension, unstable angina pectoris, cardiac arrhythmia, interstitial lung disease, active peptic ulcer disease or gastritis, serious chronic gastrointestinal conditions associated with diarrhoea, active bleeding diatheses.",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT04334759_E16",
+      "type": "exclusion",
+      "text": "Hepatitis B, hepatitis C or human immunodeficiency virus (HIV). Exceptions include past or resolved Hepatitis B (defined as the presence of hepatitis B core antibody \\[anti-HBc\\] and absence of HBsAg) and patients positive for hepatitis C (HCV) antibody if polymerase chain reaction is negative for HCV RNA. HIV testing is not required in absence of clinical suspicion of HIV.",
+      "protocol_ref": "Exclusion #16"
+    },
+    {
+      "criterion_id": "NCT04334759_E17",
+      "type": "exclusion",
+      "text": "Known history of primary immunodeficiency, allogeneic organ transplant, pneumonitis or active tuberculosis.",
+      "protocol_ref": "Exclusion #17"
+    },
+    {
+      "criterion_id": "NCT04334759_E18",
+      "type": "exclusion",
+      "text": "Receipt of live attenuated vaccination within 30 days prior to enrolment or within 30 days of receiving durvalumab, ipilimumab, nivolumab.",
+      "protocol_ref": "Exclusion #18"
+    },
+    {
+      "criterion_id": "NCT04334759_E19",
+      "type": "exclusion",
+      "text": "Specific comorbidities or conditions or concomitant medications which may interact with the investigational product(s).",
+      "protocol_ref": "Exclusion #19"
+    },
+    {
+      "criterion_id": "NCT04334759_E20",
+      "type": "exclusion",
+      "text": "Any condition that, in the opinion of the investigator, would interfere with evaluation of study treatment or interpretation of patient safety or study results.",
+      "protocol_ref": "Exclusion #20"
+    },
+    {
+      "criterion_id": "NCT04334759_E21",
+      "type": "exclusion",
+      "text": "Serious medical or psychiatric conditions or social situation that might limit compliance with study requirements, substantially increase risk of incurring adverse events or compromise the ability of the patient to give written informed consent.",
+      "protocol_ref": "Exclusion #21"
+    }
+  ],
+  "trial_acronym": "DREAM3R",
+  "disease_domain": "Mesothelioma",
+  "cohorts": [
+    {
+      "cohort_id": "Experimental Arm: Durvalumab + Chemotherapy, then Durvalumab Maintenance",
+      "description": "Durvalumab + Standard Chemotherapy for 4 to 6 cycles, followed by Maintenance with Durvalumab",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Control Arm: Chemotherapy, then Observation",
+      "description": "Standard Chemotherapy for 4 to 6 cycles, followed by Observation",
+      "group_type": "ACTIVE_COMPARATOR"
+    },
+    {
+      "cohort_id": "Control Arm: Ipilimumab and Nivolumab",
+      "description": "Ipilimumab every 6 weeks and Nivolumab every 2 or 3 weeks for up to 2 years.",
+      "group_type": "ACTIVE_COMPARATOR"
+    }
+  ]
+}

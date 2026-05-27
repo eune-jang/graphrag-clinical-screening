@@ -1,0 +1,150 @@
+{
+  "trial_id": "NCT02279433",
+  "criteria": [
+    {
+      "criterion_id": "NCT02279433_I1",
+      "type": "inclusion",
+      "text": "Histologically or cytologically confirmed diagnosis of advanced solid tumors that have relapsed from or are refractory to standard treatment or for which no standard treatment is available 2. Part 1 Dose Escalation subjects must meet 1 of the following criteria:",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02279433_I2",
+      "type": "inclusion",
+      "text": "Solid tumors with documented ROS1, NTRK1, NTRK2, or NTRK3 rearrangement",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02279433_I3",
+      "type": "inclusion",
+      "text": "Neuroendocrine tumors",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02279433_I4",
+      "type": "inclusion",
+      "text": "Solid tumors with tumor-induced pain 3. Part 2 Dose Expansion subjects must meet 1 of the following criteria:",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02279433_I5",
+      "type": "inclusion",
+      "text": "NSCLC with documented ROS1, NTRK1, NTRK2, or NTRK3 rearrangement",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02279433_I6",
+      "type": "inclusion",
+      "text": "k-RAS wild-type CRC with documented NTRK1, NTRK2, or NTRK3 rearrangement",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT02279433_I7",
+      "type": "inclusion",
+      "text": "Other solid tumors with documented ROS1, NTRK1, NTRK2, or NTRK3 rearrangement",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT02279433_I8",
+      "type": "inclusion",
+      "text": "Pulmonary LCNEC; 4. Male or female ≥18 years of age 5. Eastern Cooperative Oncology Group performance status 0 to 1 6. Adequate organ function 7. Adequate blood clotting function 8. Women of childbearing potential must have a negative pregnancy test 9. Willingness to provide archival tumor samples 10. Other inclusion criteria may apply",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT02279433_E1",
+      "type": "exclusion",
+      "text": "Hematological malignancies",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02279433_E2",
+      "type": "exclusion",
+      "text": "Known positive HIV infection, or active hepatitis B or C infection",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02279433_E3",
+      "type": "exclusion",
+      "text": "Comorbidity that would interfere with therapy",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02279433_E4",
+      "type": "exclusion",
+      "text": "Receipt of an allogeneic bone marrow or allogeneic stem cell transplant",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02279433_E5",
+      "type": "exclusion",
+      "text": "Concomitant medical condition that would increase the risk of toxicity, in the opinion of the Investigator or Sponsor",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02279433_E6",
+      "type": "exclusion",
+      "text": "History of myocardial infarction and unstable angina within 6 months before study drug treatment; symptomatic congestive heart failure (Congestive Heart Failure New York Heart Association Class III or IV); congenital long QT syndrome; or ventricular arrhythmias defined as grade ≥2 according to NCI CTCAE, v4",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT02279433_E7",
+      "type": "exclusion",
+      "text": "Clinically active primary central nervous system tumors or brain metastases with the exception of subjects with glioblastoma multiform that carry ROS1 rearrangement",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT02279433_E8",
+      "type": "exclusion",
+      "text": "Unresolved toxicities from previous anticancer therapy",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT02279433_E9",
+      "type": "exclusion",
+      "text": "Systemic treatment with anticancer therapy within 3 weeks before study drug treatment",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT02279433_E10",
+      "type": "exclusion",
+      "text": "Therapeutic radiation therapy or major surgery within 4 weeks before study drug treatment or palliative radiation therapy within 2 weeks before study drug treatment",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT02279433_E11",
+      "type": "exclusion",
+      "text": "Participation in a therapeutic clinical study within 3 weeks for biological treatments, and within 2 weeks or 5 half-lives, whichever is longer, for small molecule agents, before study drug treatment",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT02279433_E12",
+      "type": "exclusion",
+      "text": "Concomitant treatment with strong inhibitors or inducers of CYP3A4 and P-glycoprotein",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT02279433_E13",
+      "type": "exclusion",
+      "text": "Clinically significant malabsorption syndrome or other gastrointestinal disease that would impact drug absorption",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT02279433_E14",
+      "type": "exclusion",
+      "text": "QTcF values higher than 450 ms at screening",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT02279433_E15",
+      "type": "exclusion",
+      "text": "Breastfeeding",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT02279433_E16",
+      "type": "exclusion",
+      "text": "Other exclusion criteria may apply",
+      "protocol_ref": "Exclusion #16"
+    }
+  ],
+  "disease_domain": "Oncology"
+}

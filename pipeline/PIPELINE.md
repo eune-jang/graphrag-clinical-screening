@@ -93,6 +93,37 @@ LLM-assisted clinical trial annotation 파이프라인 + Neo4j 기반 검수 워
 | `_archive_dedup_nested_exception.py` | orchestrator.py:357 source-fix 후 새 데이터에 재발 가능성 없음. 외부 구 데이터 import용 safety net |
 | `_archive_rename_observation.py` | orchestrator.py:320,330 source-fix (LabTest→Observation) 후 동일 |
 
+### IAA framework (`iaa_pipeline/` — production pipeline과 별개)
+
+평가용 트랙. `pipeline/`을 라이브러리로 import하여 stage별 LLM 호출 + annotator gold + IAA 메트릭 계산.
+
+| 파일 | 역할 |
+|---|---|
+| `iaa_pipeline/stage_runner.py` | Stage 1 (Splitting) runner. Stage 2-5는 stub |
+| `iaa_pipeline/stage_schemas.py` | TypedDict + lightweight validator (envelope, Stage1~5 records, ErrorTypeAnnotation) |
+| `iaa_pipeline/cache.py` | sha256 키 disk-backed LLM 캐시 |
+| `iaa_pipeline/cli.py` | `python -m iaa_pipeline.cli stage1 ...` |
+| `iaa_pipeline/aligners.py` | Annotator A/B record 정렬 (Stage 1=criterion_id, Stage 2=target_text_span fuzzy, Stage 3-5=composite key, error_type=record_locator) |
+| `iaa_pipeline/metrics.py` | Cohen's κ (self-contained), set agreement, per-field F1. `compute_stage{1,2,4}_iaa()` + `compute_error_type_iaa()`. Stage 3/5 stub |
+| `iaa_pipeline/streamlit_app.py` | (로컬) Stage 1 annotation UI. Mode/Phase gated. Blinding: `audit_streamlit_v1.md` 참조 |
+| `streamlit_apps/stage1_app.py` | (호스팅) Stage 1 UI — Streamlit Cloud용. Shared password auth, session-state-only, download 워크플로우 |
+| `streamlit_apps/data/` | 30 trial input/llm_output JSON (호스팅 앱이 repo에서 직접 로드) |
+| `scripts/convert_production_to_iaa.py` | 30 trial production output → IAA workspace (Stage1Input + Stage1 envelope, LLM 호출 0) |
+| `docs/hosting_guide.md` | Streamlit Community Cloud 배포 가이드 (10단계) |
+
+실행:
+```bash
+# Stage 1 LLM 추출
+python -m iaa_pipeline.cli stage1 examples/keynote_671_input.json \
+    --output-dir iaa_workspace/ --cache-dir cache/
+
+# Annotation UI (streamlit 필요: pip install -e ".[iaa]")
+bash scripts/run_iaa_ui.sh
+
+# 메트릭 단위 테스트
+python tests/test_iaa_metrics.py    # 18 smoke tests
+```
+
 ## 데이터 흐름 요약
 
 ```
@@ -151,3 +182,4 @@ Neo4j graph
   ```
   OPENAI_API_KEY=<set>
   ```
+- IAA UI (선택): `streamlit>=1.30`, `typing_extensions>=4.0` (`pip install -e ".[iaa]"`)

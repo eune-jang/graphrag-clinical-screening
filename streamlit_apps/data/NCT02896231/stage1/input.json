@@ -1,0 +1,102 @@
+{
+  "trial_id": "NCT02896231",
+  "criteria": [
+    {
+      "criterion_id": "NCT02896231_I1",
+      "type": "inclusion",
+      "text": "Signed Informed Consent Form",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02896231_I2",
+      "type": "inclusion",
+      "text": "Age≥18 years",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02896231_I3",
+      "type": "inclusion",
+      "text": "Histologically or cytologically confirmed advanced non-small cell lung cancer",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02896231_I4",
+      "type": "inclusion",
+      "text": "Must have evidence of c-Met positivity from the results of molecular pre-screening evaluations",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02896231_I5",
+      "type": "inclusion",
+      "text": "At least one measurable lesion as per RECIST v1.1",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02896231_I6",
+      "type": "inclusion",
+      "text": "Patients must have recovered from all toxicities related to prior anticancer therapies to grade ≤ 1",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT02896231_I7",
+      "type": "inclusion",
+      "text": "ECOG Performance Status of 0-2",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT02896231_E1",
+      "type": "exclusion",
+      "text": "Previous or current treatment with a c-Met inhibitor or HGF-targeting therapy",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02896231_E2",
+      "type": "exclusion",
+      "text": "Symptomatic central nervous system (CNS) metastases that are neurologically unstable or requiring increasing doses of steroids to control, and patients with any CNS deficits.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02896231_E3",
+      "type": "exclusion",
+      "text": "Clinically significant, uncontrolled heart diseases. Unstable angina History of documented congestive heart failure (New York Heart Association functional classification \\> II) Uncontrolled hypertension defined by a Systolic Blood Pressure (SBP) ≥ 140 mm Hg and/or Diastolic Blood Pressure (DBP) ≥ 90 mm Hg Arrhythmias",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02896231_E4",
+      "type": "exclusion",
+      "text": "Active peptic ulcer disease or gastritis",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02896231_E5",
+      "type": "exclusion",
+      "text": "Adverse events from prior anti-cancer therapy that have not resolved to Grade ≤ 1, except for alopecia",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02896231_E6",
+      "type": "exclusion",
+      "text": "Major surgery within 4 weeks prior to starting PLB1001",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT02896231_E7",
+      "type": "exclusion",
+      "text": "Previous anti-cancer and investigational agents within 4 weeks before first dose of PLB1001. If previous treatment is a monoclonal antibody, then the treatment must be discontinued at least 6 weeks before first dose of PLB1001.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT02896231_E8",
+      "type": "exclusion",
+      "text": "Pregnant or nursing women",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT02896231_E9",
+      "type": "exclusion",
+      "text": "Involved in other clinical trials \\< 30 days prior to Day 1",
+      "protocol_ref": "Exclusion #9"
+    }
+  ],
+  "disease_domain": "NSCLC"
+}

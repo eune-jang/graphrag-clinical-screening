@@ -45,3 +45,16 @@ tools/inception-data/
 # Label Studio
 labelstudio_data/
 labelstudio_backup_*.tar.gz
+
+# Streamlit secrets (real values; commit only the .example template)
+.streamlit/secrets.toml
+
+# Local IAA working dir — bundled data lives in streamlit_apps/data/ instead
+iaa_workspace/
+
+# Production pipeline output (reproducible from raw data; intentionally untracked
+# per HANDOFF §9 Conventions)
+pipeline/output/
+
+# Python cache
+**/__pycache__/

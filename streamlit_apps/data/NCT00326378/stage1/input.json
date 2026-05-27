@@ -1,0 +1,120 @@
+{
+  "trial_id": "NCT00326378",
+  "criteria": [
+    {
+      "criterion_id": "NCT00326378_I1",
+      "type": "inclusion",
+      "text": "Histologically proven non-small cell lung cancer",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00326378_I2",
+      "type": "inclusion",
+      "text": "Presence of measurable disease by RECIST",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00326378_I3",
+      "type": "inclusion",
+      "text": "Inoperable Stage IIIA or IIIB, proven by CT or MRI (except wet T4). However, N2 or N3 should be confirmed by PET or pathology. (For T4, PET is optional)",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00326378_I4",
+      "type": "inclusion",
+      "text": "18 years of age or older",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00326378_I5",
+      "type": "inclusion",
+      "text": "ECOG Performance status 0-1",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00326378_I6",
+      "type": "inclusion",
+      "text": "No prior chemotherapy, radiation therapy to chest, immunotherapy, or biologic therapy",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00326378_I7",
+      "type": "inclusion",
+      "text": "Serum Hgb ≥ 10 gm/dL, platelet ≥ 100,000/μL, absolute neutrophil count ≥ 1,500/μL",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00326378_I8",
+      "type": "inclusion",
+      "text": "Serum creatinine ≤1.25 x UNL or creatinine clearance ≥60 mlmL/min",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00326378_I9",
+      "type": "inclusion",
+      "text": "Serum bilirubin ≤ 1.5 x UNL, AST (SGOT) and ALT (SGPT) ≤ 2.5 x UNL, alkaline phosphatase ≤ 5 x UNL",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT00326378_I10",
+      "type": "inclusion",
+      "text": "FEV1\\> 0.8 L",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT00326378_I11",
+      "type": "inclusion",
+      "text": "Patients must sign an informed consent",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT00326378_E1",
+      "type": "exclusion",
+      "text": "Carcinoid tumor, small cell carcinoma of lung",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00326378_E2",
+      "type": "exclusion",
+      "text": "Patients with any distant metastasis",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00326378_E3",
+      "type": "exclusion",
+      "text": "History of another malignancy within the last five years except cured basal cell carcinoma of skin and cured carcinoma in-situ of uterine cervix",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00326378_E4",
+      "type": "exclusion",
+      "text": "Any other morbidity or situation with contraindication for chemotherapy (e.g. active infection, myocardial infarction preceding 6 months, symptomatic heart disease including unstable angina, congestive heart failure or uncontrolled arrhythmias, immunosuppressive treatment)",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00326378_E5",
+      "type": "exclusion",
+      "text": "Pregnant or lactating women, women who has not taken test of pregnancy (within 14 days before the first administration) and pregnant women",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT00326378_E6",
+      "type": "exclusion",
+      "text": "Women and men of childbearing potential who have no willing of employing adequate contraception",
+      "protocol_ref": "Exclusion #6"
+    }
+  ],
+  "disease_domain": "Lung Cancer",
+  "cohorts": [
+    {
+      "cohort_id": "CCRT arm without consolidation chemotherapy",
+      "description": "Docetaxel 20mg/m2 \\& Cisplatin 20mg/m2 (D1,8,15,22,29,36) during radiotherapy",
+      "group_type": "ACTIVE_COMPARATOR"
+    },
+    {
+      "cohort_id": "CCRT arm with consolidation chemotherapy",
+      "description": "docetaxel 20mg/m2 \\& cisplatin 20mg/m2 (D1,8,15,22,29,36) during radiotherapy, and followed by consolidation chemotherapy with 3-weekly docetaxel 35mg/m2 \\& cisplatin 35mg/m2 (D1,8) every 3 weeks (#3).",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+{
+  "trial_id": "NCT01631552",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT01631552_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I12",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I13",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I15",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I16",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I17",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I18",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I19",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I20",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Refractory to at least one prior standard therapeutic regimen"
+        },
+        {
+          "child_id": "b",
+          "text_span": "relapsed after at least one prior standard therapeutic regimen"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_I21",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I22",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I23",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I24",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "At least 2 weeks beyond treatment (chemotherapy, investigational drugs including small molecular inhibitors, immunotherapy and/or radiation therapy)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "major surgery"
+        },
+        {
+          "child_id": "c",
+          "text_span": "recovered from all acute toxicities to Grade 1 or less (except alopecia)"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_I25",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_I26",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "hemoglobin > 9 g/dL"
+        },
+        {
+          "child_id": "b",
+          "text_span": "absolute neutrophil count (ANC) > 1,500 per mm^3"
+        },
+        {
+          "child_id": "c",
+          "text_span": "platelets > 100,000 per mm^3"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01631552_I27",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "creatinine \u000264 2.0 x institutional upper limit of normal (IULN)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "bilirubin \u000264 1.5 IULN"
+        },
+        {
+          "child_id": "c",
+          "text_span": "aspartate aminotransferase (AST) and alanine aminotransferase (ALT) \u000264 3.0 x IULN or 5 x IULN if know liver metastases"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01631552_I28",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Women who are pregnant"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Women who are lactating"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Women of childbearing potential unwilling to use effective contraception during study until conclusion of 12-week post-treatment evaluation period"
+        },
+        {
+          "child_id": "b",
+          "text_span": "fertile men unwilling to use effective contraception during study until conclusion of 12-week post-treatment evaluation period"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01631552_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "treated, non-progressive brain metastases"
+        },
+        {
+          "child_id": "b",
+          "text_span": "off high-dose steroids (> 20 mg prednisone or equivalent) for at least 4 weeks"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01631552_E5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_E6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "active ≥ grade 2 anorexia"
+        },
+        {
+          "child_id": "b",
+          "text_span": "active ≥ grade 2 nausea or vomiting"
+        },
+        {
+          "child_id": "c",
+          "text_span": "signs of intestinal obstruction"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_E7",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Individuals with non-melanoma skin cancer or carcinoma in situ of the cervix are eligible"
+        },
+        {
+          "child_id": "b",
+          "text_span": "individuals with other prior malignancies must have had at least a 3-year disease-free interval"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01631552_E8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Individuals known to be HIV positive"
+        },
+        {
+          "child_id": "b",
+          "text_span": "hepatitis B positive"
+        },
+        {
+          "child_id": "c",
+          "text_span": "hepatitis C positive"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_E9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Known history of unstable angina, MI, or CHF present within 6 months"
+        },
+        {
+          "child_id": "b",
+          "text_span": "clinically significant cardiac arrhythmia (other than stable atrial fibrillation) requiring anti-arrhythmia therapy"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_E10",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Known history of clinically significant active COPD"
+        },
+        {
+          "child_id": "b",
+          "text_span": "other moderate-to-severe chronic respiratory illness present within 6 months"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_E11",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior history of clinically significant bleeding"
+        },
+        {
+          "child_id": "b",
+          "text_span": "intestinal obstruction"
+        },
+        {
+          "child_id": "c",
+          "text_span": "GI perforation"
+        },
+        {
+          "child_id": "d",
+          "text_span": "within 6 months of initiation of study treatment"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01631552_E12",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01631552_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "History of an anaphylactic reaction to irinotecan"
+        },
+        {
+          "child_id": "b",
+          "text_span": "≥ Grade 3 GI toxicity to prior irinotecan"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01631552_E14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

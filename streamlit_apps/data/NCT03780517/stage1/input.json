@@ -1,0 +1,132 @@
+{
+  "trial_id": "NCT03780517",
+  "criteria": [
+    {
+      "criterion_id": "NCT03780517_I1",
+      "type": "inclusion",
+      "text": "Participants are eligible to be included in the study only if all of the following criteria apply:",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT03780517_I2",
+      "type": "inclusion",
+      "text": "Male or female participants must be ≥ 18 years, at the time of signing the informed consent",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT03780517_I3",
+      "type": "inclusion",
+      "text": "Diagnosis of advanced solid tumor with a documented rearranged during transfection (RET) gene altered malignancy as determined locally by a DNA based assay of tumor tissue and/or blood",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT03780517_I4",
+      "type": "inclusion",
+      "text": "Participants must have no alternative approved therapy.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT03780517_I5",
+      "type": "inclusion",
+      "text": "For participants in Part B expansion cohort only: documented local diagnosis of either 1) advanced RET gene fusion non-small cell lung cancer (NSCLC); 2) advanced RET gene mutant medullary thyroid cancer (MTC); or 3) other RET gene altered advanced tumors or NSCLC/MTC with prior specific RET gene targeted therapy",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT03780517_I6",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) performance status of 0 or 1",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT03780517_I7",
+      "type": "inclusion",
+      "text": "Negative pregnancy test for females of child bearing potential; must be surgically sterile, postmenopausal, or willing and able to be compliant with a contraceptive regimen",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT03780517_I8",
+      "type": "inclusion",
+      "text": "Contraceptive use by men or women should be consistent with local regulations.",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT03780517_I9",
+      "type": "inclusion",
+      "text": "Capable of giving signed informed consent",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT03780517_E1",
+      "type": "exclusion",
+      "text": "Participants are excluded from the study if any of the following criteria apply:",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT03780517_E2",
+      "type": "exclusion",
+      "text": "Inability to take oral medications or gastrointestinal (GI) conditions that can interfere with the swallowing or absorption of study medication",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT03780517_E3",
+      "type": "exclusion",
+      "text": "Uncontrolled or severe concurrent medical condition",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT03780517_E4",
+      "type": "exclusion",
+      "text": "History of upper GI bleeding, ulceration, or perforation within 12 months prior to the first dose of study drug",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT03780517_E5",
+      "type": "exclusion",
+      "text": "Known history of stroke or cerebrovascular accident within 6 months prior to the first dose of study drug",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT03780517_E6",
+      "type": "exclusion",
+      "text": "Participants with known infection with human immunodeficiency virus (HIV) or Acquired Immune Deficiency Syndrome (AIDS) (testing not required)",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT03780517_E7",
+      "type": "exclusion",
+      "text": "Participants who are hepatitis B surface antigen positive or participants who are hepatitis C antibody positive (Participants who have been successfully treated for hepatitis C virus \\[HCV\\] are eligible if an undetectable HCV viral load at least 6 months after completion of treatment can be demonstrated.)",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT03780517_E8",
+      "type": "exclusion",
+      "text": "Any evidence of serious active infections",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT03780517_E9",
+      "type": "exclusion",
+      "text": "Uncontrolled or severe cardiovascular disease",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT03780517_E10",
+      "type": "exclusion",
+      "text": "Uncontrolled intercurrent illness or psychiatric illness/social situations that would limit compliance with study requirements",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT03780517_E11",
+      "type": "exclusion",
+      "text": "Participants with a prior or concurrent malignancy other than the malignancies under study",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT03780517_E12",
+      "type": "exclusion",
+      "text": "Ongoing cancer directed therapy",
+      "protocol_ref": "Exclusion #12"
+    }
+  ],
+  "disease_domain": "Oncology"
+}

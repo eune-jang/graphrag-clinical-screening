@@ -1,0 +1,282 @@
+{
+  "trial_id": "NCT01168973",
+  "criteria": [
+    {
+      "criterion_id": "NCT01168973_I1",
+      "type": "inclusion",
+      "text": "Disease progression during or after one prior first-line platinum-based chemotherapy with or without maintenance therapy",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT01168973_I2",
+      "type": "inclusion",
+      "text": "Prior bevacizumab as first-line and/or maintenance therapy is allowed",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT01168973_I3",
+      "type": "inclusion",
+      "text": "Signed informed consent",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT01168973_I4",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) performance status of 0-1",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT01168973_I5",
+      "type": "inclusion",
+      "text": "Histologically or cytologically confirmed NSCLC",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT01168973_I6",
+      "type": "inclusion",
+      "text": "Stage IV NSCLC disease",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT01168973_I7",
+      "type": "inclusion",
+      "text": "Participants have measurable or nonmeasurable disease",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT01168973_I8",
+      "type": "inclusion",
+      "text": "Adequate organ function, defined as:",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT01168973_I9",
+      "type": "inclusion",
+      "text": "Total bilirubin less than or equal to Upper Limit of Normal (ULN),",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT01168973_I10",
+      "type": "inclusion",
+      "text": "Aspartate Aminotransferase (AST) and Alanine Aminotransaminase (ALT) less than or equal to 2.5 x ULN, or less than or equal to 5 x ULN if the transferase elevation is due to liver metastases,",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT01168973_I11",
+      "type": "inclusion",
+      "text": "Serum creatinine less than or equal to 1.5 x ULN or calculated creatinine clearance greater than or equal to 50 milliliters per minute (ml/min) (per the Cockcroft-Gault formula or equivalent and/or 24-hour urine collection),",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT01168973_I12",
+      "type": "inclusion",
+      "text": "Absolute Neutrophil Count (ANC) greater than or equal to 1.5 x 10\\^3/microliters (µL), hemoglobin greater than or equal to 10.0 grams/deciliter (g/dL), and platelets greater than or equal to 100 x 10\\^3/µL,",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT01168973_I13",
+      "type": "inclusion",
+      "text": "Adequate coagulation function as defined by International Normalized Ratio (INR) less than or equal to 1.5, or prothrombin time and partial thromboplastin time less than or equal to 1.5 x ULN.",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT01168973_I14",
+      "type": "inclusion",
+      "text": "The participant does not have cirrhosis at a level of Child-Pugh B (or worse) or cirrhosis (any degree) and a history of hepatic encephalopathy or clinically meaningful ascites resulting from cirrhosis. Clinically meaningful ascites is defined as ascites resulting from cirrhosis and requiring ongoing treatment with diuretics and/or paracentesis.",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT01168973_I15",
+      "type": "inclusion",
+      "text": "Urinary protein is less than or equal to 1+ on dipstick or routine urinalysis. If urine dipstick or routine analysis indicates proteinuria greater than or equal to 2+, a 24-hour urine must be collected and must demonstrate less than 1000 milligrams (mg) of protein.",
+      "protocol_ref": "Inclusion #15"
+    },
+    {
+      "criterion_id": "NCT01168973_I16",
+      "type": "inclusion",
+      "text": "Participants of reproductive potential (both sexes) must agree to use reliable method of birth control (hormonal or barrier methods) during the study period and at least 12 weeks after the last dose of study therapy",
+      "protocol_ref": "Inclusion #16"
+    },
+    {
+      "criterion_id": "NCT01168973_I17",
+      "type": "inclusion",
+      "text": "Life expectancy of greater than or equal to 3 months",
+      "protocol_ref": "Inclusion #17"
+    },
+    {
+      "criterion_id": "NCT01168973_I18",
+      "type": "inclusion",
+      "text": "Prior radiation therapy is allowed if: In the case of chest radiotherapy at least 28 days have elapsed from the completion of radiation treatment prior to randomization; In the case of focal or palliative radiation treatment at least 7 days have elapsed from last radiation treatment prior to randomization (and provided that 25% or less of total bone marrow had been irradiated); In the case of Central Nervous System (CNS) radiation at least 14 days have elapsed from the completion of radiation treatment prior to randomization",
+      "protocol_ref": "Inclusion #18"
+    },
+    {
+      "criterion_id": "NCT01168973_E1",
+      "type": "exclusion",
+      "text": "Disease progression on more than 1 prior chemotherapy regimens",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT01168973_E2",
+      "type": "exclusion",
+      "text": "Participants whose only prior treatment was a tyrosine kinase inhibitor",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT01168973_E3",
+      "type": "exclusion",
+      "text": "The participant's tumor wholly or partially contains small cell lung cancer",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT01168973_E4",
+      "type": "exclusion",
+      "text": "Major surgery within 28 days prior to randomization, or subcutaneous venous access device placement within 7 days prior to randomization. Postoperative bleeding complications or wound complications from a surgical procedure performed in the last 2 months.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT01168973_E5",
+      "type": "exclusion",
+      "text": "Concurrent treatment with other anticancer therapy, including other chemotherapy, immunotherapy, hormonal therapy, chemoembolization, or targeted therapy",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT01168973_E6",
+      "type": "exclusion",
+      "text": "Last dose of bevacizumab must be at least 28 days from time of randomization",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT01168973_E7",
+      "type": "exclusion",
+      "text": "Last dose of cytotoxic chemotherapy must be at least 14 days from time of randomization",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT01168973_E8",
+      "type": "exclusion",
+      "text": "The participant has untreated CNS metastases. Participants with treated brain metastases are eligible if they are clinically stable with regard to neurologic function, off steroids after cranial irradiation ending at least 2 weeks prior to randomization, or after surgical resection performed at least 28 days prior to randomization. No evidence of Grade greater than or equal to 1 CNS hemorrhage based on pretreatment Magnetic Resonance Imaging (MRI) or IV contrast Computed Tomography (CT) scan.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT01168973_E9",
+      "type": "exclusion",
+      "text": "Radiologically documented evidence of major blood vessel invasion or encasement by cancer",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT01168973_E10",
+      "type": "exclusion",
+      "text": "Radiographic evidence of intratumor cavitation",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT01168973_E11",
+      "type": "exclusion",
+      "text": "History of uncontrolled hereditary or acquired thrombotic disorder",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT01168973_E12",
+      "type": "exclusion",
+      "text": "Chronic therapy with nonsteroidal anti-inflammatory drug (NSAIDs) or other antiplatelet agents; Aspirin use at doses up to 325 milligrams per day (mg/day) is permitted",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT01168973_E13",
+      "type": "exclusion",
+      "text": "History of gross hemoptysis (defined as bright red blood or greater than or equal to 1/2 teaspoon) within 2 months prior to randomization",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT01168973_E14",
+      "type": "exclusion",
+      "text": "Clinically relevant congestive heart failure \\[New York Heart Association (NYHA II-IV)\\] or symptomatic or poorly controlled cardiac arrhythmia",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT01168973_E15",
+      "type": "exclusion",
+      "text": "Any arterial thrombotic event, including myocardial infarction, unstable angina, cerebrovascular accident, or transient ischemic attack, within 6 months prior to randomization",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT01168973_E16",
+      "type": "exclusion",
+      "text": "Uncontrolled arterial hypertension greater than or equal to 150 / greater than or equal to 90 millimeters of mercury (mm Hg) despite standard medical management",
+      "protocol_ref": "Exclusion #16"
+    },
+    {
+      "criterion_id": "NCT01168973_E17",
+      "type": "exclusion",
+      "text": "Serious or nonhealing wound, ulcer, or bone fracture within 28 days prior to randomization",
+      "protocol_ref": "Exclusion #17"
+    },
+    {
+      "criterion_id": "NCT01168973_E18",
+      "type": "exclusion",
+      "text": "Significant bleeding disorders, vasculitis, or Grade 3/4 gastrointestinal bleeding within 3 months prior to randomization",
+      "protocol_ref": "Exclusion #18"
+    },
+    {
+      "criterion_id": "NCT01168973_E19",
+      "type": "exclusion",
+      "text": "Gastrointestinal (GI) perforation and/or fistulae within 6 months prior to randomization",
+      "protocol_ref": "Exclusion #19"
+    },
+    {
+      "criterion_id": "NCT01168973_E20",
+      "type": "exclusion",
+      "text": "Bowel obstruction, history or presence of inflammatory enteropathy or extensive intestinal resection Crohn's disease, ulcerative colitis, or chronic diarrhea",
+      "protocol_ref": "Exclusion #20"
+    },
+    {
+      "criterion_id": "NCT01168973_E21",
+      "type": "exclusion",
+      "text": "Peripheral neuropathy greater than or equal to Grade 2 \\[National Cancer Institute Common Terminology Criteria for Adverse Events (NCI-CTCAE) version 4.02\\]",
+      "protocol_ref": "Exclusion #21"
+    },
+    {
+      "criterion_id": "NCT01168973_E22",
+      "type": "exclusion",
+      "text": "Serious illness or medical condition(s) including, but not limited to: Human immunodeficiency virus (HIV) infection or acquired immunodeficiency syndrome (AIDS)-related illness; Active or uncontrolled clinically serious infection; Severe acute or chronic medical or psychiatric condition or laboratory abnormality that may increase the risk associated with study participation or study drug administration",
+      "protocol_ref": "Exclusion #22"
+    },
+    {
+      "criterion_id": "NCT01168973_E23",
+      "type": "exclusion",
+      "text": "Known allergy or hypersensitivity reaction to any of the treatment components",
+      "protocol_ref": "Exclusion #23"
+    },
+    {
+      "criterion_id": "NCT01168973_E24",
+      "type": "exclusion",
+      "text": "The participant is pregnant or breastfeeding",
+      "protocol_ref": "Exclusion #24"
+    },
+    {
+      "criterion_id": "NCT01168973_E25",
+      "type": "exclusion",
+      "text": "Current or recent (within 28 days prior to randomization) treatment with an investigational drug or device that has not received regulatory approval for any indication at the time of randomization, or participation in another interventional clinical trial",
+      "protocol_ref": "Exclusion #25"
+    },
+    {
+      "criterion_id": "NCT01168973_E26",
+      "type": "exclusion",
+      "text": "Prior therapy with docetaxel",
+      "protocol_ref": "Exclusion #26"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Ramucirumab + Docetaxel",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Placebo + Docetaxel",
+      "description": "",
+      "group_type": "PLACEBO_COMPARATOR"
+    }
+  ]
+}

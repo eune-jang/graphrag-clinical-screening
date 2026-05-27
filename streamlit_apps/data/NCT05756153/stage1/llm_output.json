@@ -1,0 +1,157 @@
+{
+  "trial_id": "NCT05756153",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT05756153_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_I2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Males"
+        },
+        {
+          "child_id": "b",
+          "text_span": "females"
+        },
+        {
+          "child_id": "c",
+          "text_span": "aged ≥ 18 years"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT05756153_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_I8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_I9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Women of childbearing potential (WOCBP) must agree to use effective contraception method during the study specified period"
+        },
+        {
+          "child_id": "b",
+          "text_span": "male patients with WOCBP partners must agree to use effective contraception method during the study specified period"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT05756153_E1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "uncontrollable or symptomatic pleural effusion"
+        },
+        {
+          "child_id": "b",
+          "text_span": "ascites"
+        },
+        {
+          "child_id": "c",
+          "text_span": "pericardial effusion"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT05756153_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT05756153_E10",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pregnant females"
+        },
+        {
+          "child_id": "b",
+          "text_span": "lactating females"
+        },
+        {
+          "child_id": "c",
+          "text_span": "female patients intend to become pregnant during participation"
+        }
+      ],
+      "child_logic": "OR"
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

@@ -1,0 +1,204 @@
+{
+  "trial_id": "NCT00130728",
+  "criteria": [
+    {
+      "criterion_id": "NCT00130728_I1",
+      "type": "inclusion",
+      "text": "Signed written informed consent",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00130728_I2",
+      "type": "inclusion",
+      "text": "Cytologically or histologically confirmed NSCLC",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00130728_I3",
+      "type": "inclusion",
+      "text": "Clinical or radiographic progression during or after first-line chemotherapy or chemoradiotherapy for NSCLC",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00130728_I4",
+      "type": "inclusion",
+      "text": "Consent to provide archival tissue for analysis is required for participation in this study",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00130728_I5",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) performance status of 0, 1, or 2",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00130728_I6",
+      "type": "inclusion",
+      "text": "Age ≥ 18 years",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00130728_I7",
+      "type": "inclusion",
+      "text": "Use of an acceptable means of contraception for men and women of childbearing potential",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00130728_I8",
+      "type": "inclusion",
+      "text": "International normalized ratio (INR) no greater than 1.3 and an aPTT no greater than the upper limits of normal within 28 days prior to enrollment for patients not on low-molecular-weight heparin or fondaparinux",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00130728_E1",
+      "type": "exclusion",
+      "text": "Squamous cell carcinoma",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00130728_E2",
+      "type": "exclusion",
+      "text": "Prior treatment with an investigational or marketed inhibitor of the Epidermal Growth Factor Receptor (EGFR) pathway or anti-angiogenesis agent",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00130728_E3",
+      "type": "exclusion",
+      "text": "Systemic chemotherapy, radiotherapy, or investigational treatment within 28 days prior to randomization",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00130728_E4",
+      "type": "exclusion",
+      "text": "Local palliative radiotherapy within 14 days prior to randomization or persistent adverse effects from radiotherapy that have not resolved to Grade 2 or less following completion of treatment",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00130728_E5",
+      "type": "exclusion",
+      "text": "Whole brain radiotherapy or stereotactic radiosurgery for brain metastases within 4 weeks of Day 0",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT00130728_E6",
+      "type": "exclusion",
+      "text": "Neurosurgery for brain metastases within 24 weeks of Day 0",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT00130728_E7",
+      "type": "exclusion",
+      "text": "Brain biopsy within 12 weeks of Day 0",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT00130728_E8",
+      "type": "exclusion",
+      "text": "Current use of dexamethasone for treatment associated with brain metastases",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT00130728_E9",
+      "type": "exclusion",
+      "text": "History of gross hemoptysis within 3 months prior to randomization unless definitively treated with surgery or radiation",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT00130728_E10",
+      "type": "exclusion",
+      "text": "History of any of the following within 6 months prior to Day 0: serious systemic disease, uncontrolled hypertension, unstable angina, New York Heart Association (NYHA) Grade 2 or greater Congestive Heart Failure (CHF), unstable symptomatic arrhythmia requiring medication, clinically significant peripheral vascular disease, abdominal fistula, gastrointestinal perforation, or intra-abdominal abscess",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT00130728_E11",
+      "type": "exclusion",
+      "text": "Evidence of bleeding diathesis or coagulopathy or other serious or acute internal bleeding within 6 months prior to randomization",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT00130728_E12",
+      "type": "exclusion",
+      "text": "Central Nervous System (CNS) bleeding; history or clinical evidence of CNS stroke (hemorrhagic or thrombotic) within the last 6 months",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT00130728_E13",
+      "type": "exclusion",
+      "text": "Progressive neurologic symptoms in patients with a history of brain metastases",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT00130728_E14",
+      "type": "exclusion",
+      "text": "Full-dose anticoagulation with warfarin",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT00130728_E15",
+      "type": "exclusion",
+      "text": "Chronic daily use of aspirin or other full-dose nonsteroidal anti-inflammatory drugs (NSAIDs) with anti-platelet activity",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT00130728_E16",
+      "type": "exclusion",
+      "text": "In-patient surgical procedure, open biopsy, or significant traumatic injury within 28 days prior to randomization",
+      "protocol_ref": "Exclusion #16"
+    },
+    {
+      "criterion_id": "NCT00130728_E17",
+      "type": "exclusion",
+      "text": "Minor surgical procedure, fine needle aspirations or core biopsy within 7 days prior to randomization",
+      "protocol_ref": "Exclusion #17"
+    },
+    {
+      "criterion_id": "NCT00130728_E18",
+      "type": "exclusion",
+      "text": "Anticipation of need for a major surgical procedure during the course of the study",
+      "protocol_ref": "Exclusion #18"
+    },
+    {
+      "criterion_id": "NCT00130728_E19",
+      "type": "exclusion",
+      "text": "Serious, non-healing wound, ulcer, or bone fracture",
+      "protocol_ref": "Exclusion #19"
+    },
+    {
+      "criterion_id": "NCT00130728_E20",
+      "type": "exclusion",
+      "text": "Inability to take oral medication or requirement for intravenous (IV) alimentation or total parenteral nutrition with lipids, or prior surgical procedures affecting absorption",
+      "protocol_ref": "Exclusion #20"
+    },
+    {
+      "criterion_id": "NCT00130728_E21",
+      "type": "exclusion",
+      "text": "Pregnancy or breast-feeding",
+      "protocol_ref": "Exclusion #21"
+    },
+    {
+      "criterion_id": "NCT00130728_E22",
+      "type": "exclusion",
+      "text": "Presence of another invasive cancer within 5 years prior to randomization",
+      "protocol_ref": "Exclusion #22"
+    },
+    {
+      "criterion_id": "NCT00130728_E23",
+      "type": "exclusion",
+      "text": "Evidence of confusion or disorientation, or history of major psychiatric illness that may impair the patient's understanding of the Informed Consent Form or their ability to comply with study requirements",
+      "protocol_ref": "Exclusion #23"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "erlotinib HCl + bevacizumab",
+      "description": "oral erlotinib HCl 150 mg/day orally + intravenous infusion of bevacizumab at a dose of 15 mg/kg on the first day of each 3-week cycle",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "erlotinib HCl + placebo",
+      "description": "oral erlotinib HCl 150 mg/day orally + intravenous infusion of placebo at a dose of 15 mg/kg on the first day of each 3-week cycle",
+      "group_type": "PLACEBO_COMPARATOR"
+    }
+  ]
+}

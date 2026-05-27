@@ -1,0 +1,249 @@
+{
+  "trial_id": "NCT02912949",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT02912949_I1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "At least one measurable lesion according to RECIST v1.1"
+        },
+        {
+          "child_id": "b",
+          "text_span": "evaluable disease for a limited number of patients (up to 15) in Group H"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "more than 14 days or more than 5 half-lives prior to study entry, whichever is shorter"
+        },
+        {
+          "child_id": "b",
+          "text_span": "more than 14 days for radiotherapy"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02912949_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Hemoglobin \u000265 8 g/dL"
+        },
+        {
+          "child_id": "b",
+          "text_span": "\u000265 5 mmol/L"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_I10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I12",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "fresh strongly preferred"
+        },
+        {
+          "child_id": "b",
+          "text_span": "else archival"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_I13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Not pregnant"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Not nursing"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02912949_I14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_I15",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Patients must have received prior standard therapy appropriate for their tumor type and stage of disease"
+        },
+        {
+          "child_id": "b",
+          "text_span": "in the opinion of the Investigator, would be unlikely to tolerate or derive clinically meaningful benefit from appropriate standard of care therapy"
+        },
+        {
+          "child_id": "c",
+          "text_span": "no satisfactory alternative treatment options are available"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_I16",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Locally-advanced unresectable or metastatic solid tumor malignancy"
+        },
+        {
+          "child_id": "b",
+          "text_span": "documented NRG1 gene fusion, identified through molecular assays such as next generation sequencing-based assays [DNA or RNA], as routinely performed at CLIA or other similarly-certified laboratories"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02912949_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pregnant"
+        },
+        {
+          "child_id": "b",
+          "text_span": "lactating"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Presence of an active uncontrolled infection"
+        },
+        {
+          "child_id": "b",
+          "text_span": "an unexplained fever"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_E4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Known symptomatic brain metastases"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Known unstable brain metastases"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_E7",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Presence of LVEF below 50% on the screening echocardiogram"
+        },
+        {
+          "child_id": "b",
+          "text_span": "history or presence of any significant cardiovascular disease, including unstable angina or myocardial infarction within 12 months prior to screening, congestive heart failure (NYHA Class III or IV), or ventricular arrhythmia requiring medication"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02912949_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02912949_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

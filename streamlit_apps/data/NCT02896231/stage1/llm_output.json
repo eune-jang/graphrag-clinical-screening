@@ -1,0 +1,152 @@
+{
+  "trial_id": "NCT02896231",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT02896231_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Previous or current treatment with a c-Met inhibitor"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Previous or current treatment with HGF-targeting therapy"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02896231_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Symptomatic central nervous system (CNS) metastases that are neurologically unstable or requiring increasing doses of steroids to control"
+        },
+        {
+          "child_id": "b",
+          "text_span": "patients with any CNS deficits"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02896231_E3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Clinically significant, uncontrolled heart diseases"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Unstable angina"
+        },
+        {
+          "child_id": "c",
+          "text_span": "History of documented congestive heart failure (New York Heart Association functional classification > II)"
+        },
+        {
+          "child_id": "d",
+          "text_span": "Uncontrolled hypertension defined by a Systolic Blood Pressure (SBP) ≥ 140 mm Hg and/or Diastolic Blood Pressure (DBP) ≥ 90 mm Hg"
+        },
+        {
+          "child_id": "e",
+          "text_span": "Arrhythmias"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02896231_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Active peptic ulcer disease"
+        },
+        {
+          "child_id": "b",
+          "text_span": "gastritis"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02896231_E5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_E7",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Previous anti-cancer and investigational agents within 4 weeks before first dose of PLB1001"
+        },
+        {
+          "child_id": "b",
+          "text_span": "If previous treatment is a monoclonal antibody, then the treatment must be discontinued at least 6 weeks before first dose of PLB1001"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02896231_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02896231_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

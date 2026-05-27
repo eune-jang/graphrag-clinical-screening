@@ -1,0 +1,411 @@
+{
+  "trial_id": "NCT01884285",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT01884285_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_I2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Male"
+        },
+        {
+          "child_id": "b",
+          "text_span": "female"
+        },
+        {
+          "child_id": "c",
+          "text_span": "aged 18 years and older"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Histologically or cytologically proven diagnosis of prostate cancer"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Histologically or cytologically proven diagnosis of sqNSCLC"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Histologically or cytologically proven diagnosis of TNBC"
+        },
+        {
+          "child_id": "d",
+          "text_span": "Histologically or cytologically proven diagnosis of known PTEN-deficient solid malignancy"
+        },
+        {
+          "child_id": "e",
+          "text_span": "is refractory to standard therapies"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_I4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Females should be using adequate contraceptive measures"
+        },
+        {
+          "child_id": "b",
+          "text_span": "not be breast feeding"
+        },
+        {
+          "child_id": "c",
+          "text_span": "must have negative pregnancy test prior to start of dosing if of child-bearing potential"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_I5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "WHO/ECOG performance status 0 to 1 with no deterioration over the previous 2 weeks"
+        },
+        {
+          "child_id": "b",
+          "text_span": "min life expectancy of 12 weeks"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_I6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Tumours that are known to have genomic alterations in PTEN or PIK3CB by local test results may also be eligible"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Part B - Tumour amenable to taking of paired biopsies in opinion of the investigator"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Patients with TNBC or mCRPC: PTEN-deficient tumours Parts A,B or D1(mCRPC)"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_I8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_I9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Serum testosterone concentration \u00026450 ng/dL sustained by medical or surgical castration Parts A,B or D (TNBC)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Oestrogen receptor, progesterone receptor and HER2 negative advanced adenocarcinoma of breast. Parts A, B or D1 (solid malignancies)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Consented provision of formalin fixed paraffin embedded blocks/ slides from most recent tissue sample. Part C (all patients)"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_I10",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "treatment with abiraterone acetate"
+        },
+        {
+          "child_id": "b",
+          "text_span": "treatment with enzalutamide"
+        },
+        {
+          "child_id": "c",
+          "text_span": "one prior chemotherapy (docetaxel)"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_I11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_I12",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_I13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Last PSA value should have increase of \u000260; 25% of the first PSA value"
+        },
+        {
+          "child_id": "b",
+          "text_span": "an absolute increase of \u000260;2 ng/mL over the first PSA value"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_I14",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Serum potassium > 3.5 mmol/L"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Parts C2 and D2 - Prospectively determined eligible PTEN alteration determined by next generation sequencing, protein deficient determined by IHC or PIK3CB mutation/amplification"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Part D2 - Measurable disease (at least 1 lesion ≥10 mm longest diameter or for lymph nodes short axis ≥15 mm) by CT/MRI"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Nitrosourea or mitomycin C within 6 weeks"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Investigational agents from previous clinical study within 4 weeks"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Chemotherapy, immunotherapy or anticancer agents within 4 weeks"
+        },
+        {
+          "child_id": "d",
+          "text_span": "hormonal therapy"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Strong inhibitors and strong or moderate inducers of CYP3A4"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Radiotherapy with a wide field of radiation within 4 weeks"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT01884285_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "active liver disease (other than malignancy)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "active bleeding diatheses"
+        },
+        {
+          "child_id": "c",
+          "text_span": "active infection including hepatitis B, hepatitis C and human immunodeficiency virus (HIV)"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E12",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "potent inhibitors of CYP3A4/5 and CYP2C8"
+        },
+        {
+          "child_id": "b",
+          "text_span": "moderate inhibitors of CYP3A4/5 and CYP2C8"
+        },
+        {
+          "child_id": "c",
+          "text_span": "inducers of CYP3A4/5 and CYP2C8"
+        },
+        {
+          "child_id": "d",
+          "text_span": "if taken within the stated washout periods before the first dose"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Exposure to sensitive or narrow therapeutic range substrates of the drug metabolising enzymes CYP2C8, CYP2C9, CYP2C19"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Exposure to sensitive or narrow therapeutic range substrates of the drug transporters Pgp, BCRP, OATP1B1, OATP1B3, OCT1 and OCT2"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_E14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT01884285_E15",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "coronary artery bypass graft"
+        },
+        {
+          "child_id": "b",
+          "text_span": "vascular stent"
+        },
+        {
+          "child_id": "c",
+          "text_span": "myocardial infarction"
+        },
+        {
+          "child_id": "d",
+          "text_span": "angina pectoris"
+        },
+        {
+          "child_id": "e",
+          "text_span": "congestive heart failure New York Heart Association Grade \u000262;2"
+        },
+        {
+          "child_id": "f",
+          "text_span": "supraventricular arrhythmias including atrial fibrillation, which are uncontrolled"
+        },
+        {
+          "child_id": "g",
+          "text_span": "haemorrhagic or thrombotic stroke, including transient ischaemic attacks or any other central nervous system bleeding"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_E16",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Abnormal ECHO at baseline <55%"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Abnormal MUGA at baseline <55%"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT01884285_E17",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Diabetes Type I"
+        },
+        {
+          "child_id": "b",
+          "text_span": "uncontrolled Type II as judged by the Investigator"
+        }
+      ],
+      "child_logic": "OR"
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

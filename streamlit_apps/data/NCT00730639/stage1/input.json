@@ -1,0 +1,136 @@
+{
+  "trial_id": "NCT00730639",
+  "criteria": [
+    {
+      "criterion_id": "NCT00730639_I1",
+      "type": "inclusion",
+      "text": "Subjects must have mCRPC,RCC, MEL, Non-small-cell lung cancer (NSCLC), or Colorectal Cancer (CRC), that is advanced (non-resectable), or recurrent and for which no alternative, curative standard exists",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00730639_I2",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) Performance Status of 0-2",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00730639_I3",
+      "type": "inclusion",
+      "text": "Must have at least 1 measurable lesion",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00730639_I4",
+      "type": "inclusion",
+      "text": "Subjects with mCRPC and with only non-measurable bone lesions must have either progression new lesions or have Prostate-specific antigen (PSA) progression within the 6-week period before study administration",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00730639_I5",
+      "type": "inclusion",
+      "text": "At least 1 and up to 5 prior systemic therapies for advanced/recurrent disease",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00730639_I6",
+      "type": "inclusion",
+      "text": "Prior treated brain or meningeal metastases must be without Magnetic resonance imaging (MRI) evidence of progression for at least 8 weeks and off immunosuppressive doses of systemic steroids for at least 2 weeks before study drug administration",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00730639_I7",
+      "type": "inclusion",
+      "text": "Prior systemic radiation therapy must have been completed at least 4 weeks before study drug administration. Prior focal radiotherapy completed at least 2 weeks prior to study drug administration",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00730639_I8",
+      "type": "inclusion",
+      "text": "Immunosuppressive doses of systemic medications, such as steroids or absorbed topical steroids must be discontinued at least 2 weeks before study drug administration",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00730639_I9",
+      "type": "inclusion",
+      "text": "Prior surgery that required general anesthesia must be completed at least 2 weeks before study drug administration. Surgery requiring local/epidural anesthesia must be completed at least 72 hours before study drug administration",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT00730639_E1",
+      "type": "exclusion",
+      "text": "History of severe hypersensitivity reactions to other Monoclonal antibody (mAb)s",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00730639_E2",
+      "type": "exclusion",
+      "text": "Subjects with any active autoimmune disease or a documented history of autoimmune disease, or history of syndrome that required systemic steroids or immunosuppressive medications, except for subjects with vitiligo or resolved childhood asthma/atopy",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00730639_E3",
+      "type": "exclusion",
+      "text": "Prior therapy with an anti-Programmed death-1 (PD-1), anti-PD-L1, anti-PD-L2, or anti- Cytotoxic t-lymphocyte antigen-4 (CTLA-4) antibody (or any other antibody targeting T cell co-stimulation pathways)",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00730639_E4",
+      "type": "exclusion",
+      "text": "Known history of Human Immunodeficiency Virus",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00730639_E5",
+      "type": "exclusion",
+      "text": "Active infection requiring therapy, positive tests for Hepatitis B surface antigen or Hepatitis C ribonucleic acid (RNA)",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT00730639_E6",
+      "type": "exclusion",
+      "text": "Underlying medical conditions that will make the administration of study drug hazardous",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT00730639_E7",
+      "type": "exclusion",
+      "text": "Concurrent medical condition requiring the use of immunosuppressive medications, or immunosuppressive doses of systemic or absorbable topical corticosteroids",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT00730639_E8",
+      "type": "exclusion",
+      "text": "Use of other investigational drugs (drugs not marketed for any indication) within 28 days or at least 5 half-lives (whichever is longer) before study drug administration",
+      "protocol_ref": "Exclusion #8"
+    }
+  ],
+  "trial_acronym": "MDX1106-03",
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Melanoma - BMS-936558 (MDX-1106)",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "RCC - BMS-936558 (MDX-1106)",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "mCRPC - BMS-936558 (MDX-1106)",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "NSCLC - BMS-936558 (MDX-1106)",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "CRC - BMS-936558 (MDX-1106)",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

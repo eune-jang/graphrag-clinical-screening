@@ -1,0 +1,432 @@
+{
+  "trial_id": "NCT00020709",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT00020709_I1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Either histologic or cytologic proof of a newly diagnosed single, primary bronchogenic non-small cell lung cancer is required (adenocarcinoma, non-lobar and non-diffuse bronchioloalveolar cell carcinoma, large cell carcinoma, or squamous cell carcinoma)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "a biopsy with histology is preferred, but cytology is allowed"
+        },
+        {
+          "child_id": "c",
+          "text_span": "histology or cytology from involved mediastinal or supraclavicular lymph nodes alone will be allowed if a separate distal primary lesion is clearly evident on radiographs (i.e., a second biopsy will not be required)"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Patients with brain metastases are ineligible"
+        },
+        {
+          "child_id": "b",
+          "text_span": "all patients must have a pretreatment CT or MRI scan of the brain to evaluate for CNS disease within 42 days prior to registration"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Patients must have unresectable Stage IIIA (N2) or Stage IIIB disease"
+        },
+        {
+          "child_id": "b",
+          "text_span": "also satisfy the following criteria"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Histologic or cytologic proof of N2 disease by exploratory thoracotomy"
+        },
+        {
+          "child_id": "b",
+          "text_span": "thoracoscopy"
+        },
+        {
+          "child_id": "c",
+          "text_span": "mediastinoscopy"
+        },
+        {
+          "child_id": "d",
+          "text_span": "mediastinotomy"
+        },
+        {
+          "child_id": "e",
+          "text_span": "Chamberlain procedure"
+        },
+        {
+          "child_id": "f",
+          "text_span": "Wang needle biopsy"
+        },
+        {
+          "child_id": "g",
+          "text_span": "fine needle aspiration (FNA) under bronchoscopic or CT guidance"
+        },
+        {
+          "child_id": "h",
+          "text_span": "other method"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00020709_I9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I12",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "documentation of N3 status"
+        },
+        {
+          "child_id": "b",
+          "text_span": "documentation of T4 status"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00020709_I13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pathologically documented or radiographically documented positive N3 nodes"
+        },
+        {
+          "child_id": "b",
+          "text_span": "patients with positive supraclavicular or scalene lymph nodes must not have disease extending up into the cervical region"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I14",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Fine needle aspiration"
+        },
+        {
+          "child_id": "b",
+          "text_span": "core needle biopsy"
+        },
+        {
+          "child_id": "c",
+          "text_span": "excisional biopsy"
+        },
+        {
+          "child_id": "d",
+          "text_span": "supraclavicular N3 nodes"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00020709_I15",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I16",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I17",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I18",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I19",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Right sided primary"
+        },
+        {
+          "child_id": "b",
+          "text_span": "paralyzed left true vocal cord"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00020709_I20",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Tumor of any size that invades mediastinum"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Tumor of any size that invades heart"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Tumor of any size that invades great vessels"
+        },
+        {
+          "child_id": "d",
+          "text_span": "Tumor of any size that invades trachea"
+        },
+        {
+          "child_id": "e",
+          "text_span": "Tumor of any size that invades esophagus"
+        },
+        {
+          "child_id": "f",
+          "text_span": "Tumor of any size that invades vertebral body"
+        },
+        {
+          "child_id": "g",
+          "text_span": "Tumor of any size that invades carina"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I21",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I22",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I23",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I24",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I25",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I26",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I27",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "measurable or non-measurable disease documented by CT, MRI, X-ray or physical exam"
+        },
+        {
+          "child_id": "b",
+          "text_span": "measurable disease must be assessed within 28 days prior to registration"
+        },
+        {
+          "child_id": "c",
+          "text_span": "non-measurable disease assessed within 42 days prior to registration"
+        },
+        {
+          "child_id": "d",
+          "text_span": "pleural effusions and laboratory parameters are not acceptable as the only evidence of disease"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I28",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Patients must not have received any prior chemotherapy or radiotherapy for lung cancer"
+        },
+        {
+          "child_id": "b",
+          "text_span": "patients must not have had a previous surgical resection"
+        },
+        {
+          "child_id": "c",
+          "text_span": "patients may have undergone exploratory thoracotomy, mediastinoscopy, excisional biopsy or similar surgery for the purpose of determining diagnosis, stage, or potential resectability or newly diagnosed lung tumor"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I29",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I30",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "The pre-registration FEV1 must be either \u001e 2.0 liters"
+        },
+        {
+          "child_id": "b",
+          "text_span": "if < 2.0 liters, the predicted FEV1 of the contralateral lung must be > 800 cc based on the quantitative split function testing within 42 days prior to registration"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00020709_I31",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I32",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I33",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I34",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I35",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I36",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I37",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Institutions must have received IRB approval for S9925"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Southwest Oncology Group, NCIC-CTG and CTSU patients must be offered participation in S9925 (the Lung Cancer Specimen Repository)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "patients registered by other groups may be offered participation in S9925 (at the discretion of the participating group)"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I38",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I39",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I40",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pregnant or nursing women may not participate in this trial because of the increased risk of fetal harm including fetal death from the chemotherapeutic agents"
+        },
+        {
+          "child_id": "b",
+          "text_span": "women/men of reproductive potential may not participate unless they have agreed to use an effective contraceptive method"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00020709_I41",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00020709_I42",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

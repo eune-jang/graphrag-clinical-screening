@@ -1,0 +1,270 @@
+{
+  "trial_id": "NCT00020709",
+  "criteria": [
+    {
+      "criterion_id": "NCT00020709_I1",
+      "type": "inclusion",
+      "text": "Either histologic or cytologic proof of a newly diagnosed single, primary bronchogenic non-small cell lung cancer is required (adenocarcinoma, non-lobar and non-diffuse bronchioloalveolar cell carcinoma, large cell carcinoma, or squamous cell carcinoma); a biopsy with histology is preferred, but cytology is allowed; histology or cytology from involved mediastinal or supraclavicular lymph nodes alone will be allowed if a separate distal primary lesion is clearly evident on radiographs (i.e., a second biopsy will not be required)",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00020709_I2",
+      "type": "inclusion",
+      "text": "Patients with brain metastases are ineligible; all patients must have a pretreatment CT or MRI scan of the brain to evaluate for CNS disease within 42 days prior to registration",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00020709_I3",
+      "type": "inclusion",
+      "text": "Patients with two or more parenchymal lesions on same or opposite sides of the lung are ineligible",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00020709_I4",
+      "type": "inclusion",
+      "text": "Patients must have unresectable Stage IIIA (N2) or Stage IIIB disease and also satisfy the following criteria:",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00020709_I5",
+      "type": "inclusion",
+      "text": "Unresectable Stage IIIA (N2) patients must satisfy the criteria:",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00020709_I6",
+      "type": "inclusion",
+      "text": "N2 mediastinal lymph nodes must be multiple and/or bulky on CT scan or X-ray, such that, in the opinion of the treating investigator, the patient is not a candidate for induction chemotherapy or chemoradiotherapy followed by surgical resection",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00020709_I7",
+      "type": "inclusion",
+      "text": "If Stage IIIA (N2), the N2 status must be documented by any one of the following methods:",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00020709_I8",
+      "type": "inclusion",
+      "text": "Histologic or cytologic proof of N2 disease by exploratory thoracotomy, thoracoscopy, mediastinoscopy, mediastinotomy, Chamberlain procedure, Wang needle biopsy, or fine needle aspiration (FNA) under bronchoscopic or CT guidance or other method",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00020709_I9",
+      "type": "inclusion",
+      "text": "Node positivity by FDG-PET scan",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT00020709_I10",
+      "type": "inclusion",
+      "text": "Nodes \\> 3 cm on CT scan",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT00020709_I11",
+      "type": "inclusion",
+      "text": "Paralyzed left true vocal cord with separate left lung primary distinct from AP window nodes on CT scan",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT00020709_I12",
+      "type": "inclusion",
+      "text": "Stage IIIB patients must satisfy the following criteria; documentation of N3 or T4 status may be obtained by one or more of the following:",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT00020709_I13",
+      "type": "inclusion",
+      "text": "Pathologically documented or radiographically documented positive N3 nodes; patients with positive supraclavicular or scalene lymph nodes must not have disease extending up into the cervical region",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT00020709_I14",
+      "type": "inclusion",
+      "text": "Fine needle aspiration, core needle biopsy or excisional biopsy or supraclavicular N3 nodes",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT00020709_I15",
+      "type": "inclusion",
+      "text": "Biopsy of contralateral mediastinal N3 nodes by mediastinoscopy, mediastinotomy or thoracotomy",
+      "protocol_ref": "Inclusion #15"
+    },
+    {
+      "criterion_id": "NCT00020709_I16",
+      "type": "inclusion",
+      "text": "Fine needle aspiration, core needle or Wang needle biopsy under Ct or bronchoscopic fluoroscopic guidance of enlarged contralateral N3 mediastinal nodes",
+      "protocol_ref": "Inclusion #16"
+    },
+    {
+      "criterion_id": "NCT00020709_I17",
+      "type": "inclusion",
+      "text": "Contralateral mediastinal nodes \\> 3 cm on CT scan",
+      "protocol_ref": "Inclusion #17"
+    },
+    {
+      "criterion_id": "NCT00020709_I18",
+      "type": "inclusion",
+      "text": "Node positivity by FDG-PET scan",
+      "protocol_ref": "Inclusion #18"
+    },
+    {
+      "criterion_id": "NCT00020709_I19",
+      "type": "inclusion",
+      "text": "Right sided primary with paralyzed left true vocal cord OR",
+      "protocol_ref": "Inclusion #19"
+    },
+    {
+      "criterion_id": "NCT00020709_I20",
+      "type": "inclusion",
+      "text": "Any of the following T4 lesions: Tumor of any size that invades any of the following: mediastinum, heart, great vessels, trachea, esophagus, vertebral body or carina",
+      "protocol_ref": "Inclusion #20"
+    },
+    {
+      "criterion_id": "NCT00020709_I21",
+      "type": "inclusion",
+      "text": "Written documentation of type of T4 extent by attending surgeon on either the operative report or as an addendum in the notes section of the prestudy form if patient has had an exploratory thoracotomy or thoracoscopy",
+      "protocol_ref": "Inclusion #21"
+    },
+    {
+      "criterion_id": "NCT00020709_I22",
+      "type": "inclusion",
+      "text": "T4 involvement of trachea or carina by direct bronchoscopic visualization, documented on bronchoscopy report or as an addendum in the notes section of the prestudy form",
+      "protocol_ref": "Inclusion #22"
+    },
+    {
+      "criterion_id": "NCT00020709_I23",
+      "type": "inclusion",
+      "text": "T4 involvement of heart, esophagus, aorta or vertebral body documented by CT scan, MRI or transesophageal ultrasound",
+      "protocol_ref": "Inclusion #23"
+    },
+    {
+      "criterion_id": "NCT00020709_I24",
+      "type": "inclusion",
+      "text": "T4 involvement of the mediastinum may also be accepted by CT or MRI criteria if, in absence of the above organ involvement, there is soft tissue extension directly into the mediastinal space; radiographic criteria for involvement of main pulmonary artery or vein is allowed only if there is a mediastinal soft tissue mass",
+      "protocol_ref": "Inclusion #24"
+    },
+    {
+      "criterion_id": "NCT00020709_I25",
+      "type": "inclusion",
+      "text": "Patients must not have malignant pleural effusions; NOTE: the only exception is pleural effusion only on CT scan (and not visible on CXR) OR deemed too small to tap",
+      "protocol_ref": "Inclusion #25"
+    },
+    {
+      "criterion_id": "NCT00020709_I26",
+      "type": "inclusion",
+      "text": "Patients with pericardial effusions are ineligible",
+      "protocol_ref": "Inclusion #26"
+    },
+    {
+      "criterion_id": "NCT00020709_I27",
+      "type": "inclusion",
+      "text": "All patients must have measurable or non-measurable disease documented by CT, MRI, X-ray or physical exam; measurable disease must be assessed within 28 days prior to registration and non-measurable disease assessed within 42 days prior to registration; pleural effusions and laboratory parameters are not acceptable as the only evidence of disease",
+      "protocol_ref": "Inclusion #27"
+    },
+    {
+      "criterion_id": "NCT00020709_I28",
+      "type": "inclusion",
+      "text": "Patients must not have received any prior chemotherapy or radiotherapy for lung cancer; patients must not have had a previous surgical resection; however, patients may have undergone exploratory thoracotomy, mediastinoscopy, excisional biopsy or similar surgery for the purpose of determining diagnosis, stage, or potential resectability or newly diagnosed lung tumor",
+      "protocol_ref": "Inclusion #28"
+    },
+    {
+      "criterion_id": "NCT00020709_I29",
+      "type": "inclusion",
+      "text": "Patients must have a measured or calculated creatinine clearance \\>= 50 cc/min",
+      "protocol_ref": "Inclusion #29"
+    },
+    {
+      "criterion_id": "NCT00020709_I30",
+      "type": "inclusion",
+      "text": "The pre-registration FEV1 must be either \\>= 2.0 liters, OR if \\< 2.0 liters, the predicted FEV1 of the contralateral lung must be \\> 800 cc based on the quantitative split function testing within 42 days prior to registration",
+      "protocol_ref": "Inclusion #30"
+    },
+    {
+      "criterion_id": "NCT00020709_I31",
+      "type": "inclusion",
+      "text": "WBC \\>= 3,000/ul",
+      "protocol_ref": "Inclusion #31"
+    },
+    {
+      "criterion_id": "NCT00020709_I32",
+      "type": "inclusion",
+      "text": "ANC \\>= 1,200/ul",
+      "protocol_ref": "Inclusion #32"
+    },
+    {
+      "criterion_id": "NCT00020709_I33",
+      "type": "inclusion",
+      "text": "Platelet count \\>= 100,000/ul",
+      "protocol_ref": "Inclusion #33"
+    },
+    {
+      "criterion_id": "NCT00020709_I34",
+      "type": "inclusion",
+      "text": "All patients must have a CT of upper abdomen to exclude metastatic disease involving the contralateral chest, liver or adrenals (if chest CT is performed including complete liver and adrenals in the report, a separate CT of upper abdomen is not necessary) within 42 days prior to registration",
+      "protocol_ref": "Inclusion #34"
+    },
+    {
+      "criterion_id": "NCT00020709_I35",
+      "type": "inclusion",
+      "text": "All patients must have a Zubrod Performance Status of 0-1",
+      "protocol_ref": "Inclusion #35"
+    },
+    {
+      "criterion_id": "NCT00020709_I36",
+      "type": "inclusion",
+      "text": "Patients must have an EKG within 42 days prior to registration",
+      "protocol_ref": "Inclusion #36"
+    },
+    {
+      "criterion_id": "NCT00020709_I37",
+      "type": "inclusion",
+      "text": "Institutions must have received IRB approval for S9925; Southwest Oncology Group, NCIC-CTG and CTSU patients must be offered participation in S9925 (the Lung Cancer Specimen Repository); patients registered by other groups may be offered participation in S9925 (at the discretion of the participating group)",
+      "protocol_ref": "Inclusion #37"
+    },
+    {
+      "criterion_id": "NCT00020709_I38",
+      "type": "inclusion",
+      "text": "No prior malignancy is allowed except for adequately treated basal cell or squamous cell skin cancer, in situ cervical cancer, or other cancer for which the patient has been disease-free for five years",
+      "protocol_ref": "Inclusion #38"
+    },
+    {
+      "criterion_id": "NCT00020709_I39",
+      "type": "inclusion",
+      "text": "If day 28 of 42 falls on a weekend or holiday, the limit may be extended to the next working day",
+      "protocol_ref": "Inclusion #39"
+    },
+    {
+      "criterion_id": "NCT00020709_I40",
+      "type": "inclusion",
+      "text": "Pregnant or nursing women may not participate in this trial because of the increased risk of fetal harm including fetal death from the chemotherapeutic agents; women/men of reproductive potential may not participate unless they have agreed to use an effective contraceptive method",
+      "protocol_ref": "Inclusion #40"
+    },
+    {
+      "criterion_id": "NCT00020709_I41",
+      "type": "inclusion",
+      "text": "Patients must be informed of the investigational nature of this study and must sign and give written informed consent in accordance with institutional and federal guidelines",
+      "protocol_ref": "Inclusion #41"
+    },
+    {
+      "criterion_id": "NCT00020709_I42",
+      "type": "inclusion",
+      "text": "At the time of patient registration, the treating institution's name and ID number must be provided to the Data Operations Center in Seattle in order to ensure that the current (within 365 days) date of institutional review board approval for this study has been entered into the data base",
+      "protocol_ref": "Inclusion #42"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Arm I (gefitinib, combination chemotherapy, radiation)",
+      "description": "Patients receive induction therapy comprising cisplatin IV over 1 hour on days 1, 8, 29, and 36 and etoposide IV over 1 hour on days 1-5 and 29-33. Beginning within 24 hours after starting chemotherapy, patients receive concurrent induction radiotherapy 5 days a week for 5 weeks and then boost radiotherapy 5 days a week for 1.5 weeks.\n\nBeginning approximately 4-8 weeks after completion of chemoradiotherapy, patients with stable or responding disease receive consolidation therapy comprising docetaxel IV over 1 hour on day 1. Treatment repeats every 21 days for 3 courses.\n\nPatients with stable or responding disease are randomized to one of two treatment arms for maintenance therapy. Patients begin maintenance therapy approximately 4-7 weeks after completion of consolidation therapy.\n\nPatients receive oral gefitinib daily.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Arm II (placebo, combination chemotherapy, radiation)",
+      "description": "Patients receive induction therapy comprising cisplatin IV over 1 hour on days 1, 8, 29, and 36 and etoposide IV over 1 hour on days 1-5 and 29-33. Beginning within 24 hours after starting chemotherapy, patients receive concurrent induction radiotherapy 5 days a week for 5 weeks and then boost radiotherapy 5 days a week for 1.5 weeks.\n\nBeginning approximately 4-8 weeks after completion of chemoradiotherapy, patients with stable or responding disease receive consolidation therapy comprising docetaxel IV over 1 hour on day 1. Treatment repeats every 21 days for 3 courses.\n\nPatients with stable or responding disease are randomized to one of two treatment arms for maintenance therapy. Patients begin maintenance therapy approximately 4-7 weeks after completion of consolidation therapy.\n\nPatients receive oral placebo daily. In both arms, maintenance therapy continues for a maximum of 5 years in the absence of disease progression or unacceptable toxicity.",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

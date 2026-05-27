@@ -1,0 +1,7 @@
+# Production dependencies for Streamlit Community Cloud deployment.
+# (pyproject.toml is the source of truth for development; this mirrors
+# the subset needed at runtime so SCC can `pip install -r requirements.txt`.)
+
+streamlit>=1.30
+typing_extensions>=4.0
+python-dotenv>=1.0

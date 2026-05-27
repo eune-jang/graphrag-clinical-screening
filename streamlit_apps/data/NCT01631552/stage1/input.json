@@ -1,0 +1,280 @@
+{
+  "trial_id": "NCT01631552",
+  "criteria": [
+    {
+      "criterion_id": "NCT01631552_I1",
+      "type": "inclusion",
+      "text": "Individuals able to understand and give written informed consent.",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT01631552_I2",
+      "type": "inclusion",
+      "text": "Histologically or cytologically confirmed epithelial cancer of one of the following types:",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT01631552_I3",
+      "type": "inclusion",
+      "text": "Gastric adenocarcinoma (GC)",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT01631552_I4",
+      "type": "inclusion",
+      "text": "Esophageal cancer (EC)",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT01631552_I5",
+      "type": "inclusion",
+      "text": "Hepatocellular carcinoma (HCC)",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT01631552_I6",
+      "type": "inclusion",
+      "text": "Non-small-cell lung cancer (NSCLC)",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT01631552_I7",
+      "type": "inclusion",
+      "text": "Small-cell lung cancer (SCLC)",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT01631552_I8",
+      "type": "inclusion",
+      "text": "Epithelial ovarian cancer (EOC)",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT01631552_I9",
+      "type": "inclusion",
+      "text": "Cervical Cancer",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT01631552_I10",
+      "type": "inclusion",
+      "text": "Endometrial Cancer",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT01631552_I11",
+      "type": "inclusion",
+      "text": "Triple-negative breast cancer (TNBC)",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT01631552_I12",
+      "type": "inclusion",
+      "text": "Non-triple-negative breast cancer",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT01631552_I13",
+      "type": "inclusion",
+      "text": "Papillary thyroid cancer (excludes follicular, medullary, Hurthle cell, and anaplastic thyroid cancer)",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT01631552_I14",
+      "type": "inclusion",
+      "text": "Glioblastoma multiforme (GBM)",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT01631552_I15",
+      "type": "inclusion",
+      "text": "Hormone-refractory prostate cancer (HRPC)",
+      "protocol_ref": "Inclusion #15"
+    },
+    {
+      "criterion_id": "NCT01631552_I16",
+      "type": "inclusion",
+      "text": "Head and neck cancers- squamous cell (SCCHN)",
+      "protocol_ref": "Inclusion #16"
+    },
+    {
+      "criterion_id": "NCT01631552_I17",
+      "type": "inclusion",
+      "text": "Renal cell cancer (clear cell) (RCC)",
+      "protocol_ref": "Inclusion #17"
+    },
+    {
+      "criterion_id": "NCT01631552_I18",
+      "type": "inclusion",
+      "text": "Urothelial cancer",
+      "protocol_ref": "Inclusion #18"
+    },
+    {
+      "criterion_id": "NCT01631552_I19",
+      "type": "inclusion",
+      "text": "Stage IV (metastatic) disease (except for individuals with GBM).",
+      "protocol_ref": "Inclusion #19"
+    },
+    {
+      "criterion_id": "NCT01631552_I20",
+      "type": "inclusion",
+      "text": "Refractory to or relapsed after at least one prior standard therapeutic regimen",
+      "protocol_ref": "Inclusion #20"
+    },
+    {
+      "criterion_id": "NCT01631552_I21",
+      "type": "inclusion",
+      "text": "Adequate performance status (ECOG 0 or 1)",
+      "protocol_ref": "Inclusion #21"
+    },
+    {
+      "criterion_id": "NCT01631552_I22",
+      "type": "inclusion",
+      "text": "Expected survival ≥ 6 months.",
+      "protocol_ref": "Inclusion #22"
+    },
+    {
+      "criterion_id": "NCT01631552_I23",
+      "type": "inclusion",
+      "text": "Measurable disease by CT or MRI.",
+      "protocol_ref": "Inclusion #23"
+    },
+    {
+      "criterion_id": "NCT01631552_I24",
+      "type": "inclusion",
+      "text": "At least 2 weeks beyond treatment (chemotherapy, investigational drugs including small molecular inhibitors, immunotherapy and/or radiation therapy) or major surgery and recovered from all acute toxicities to Grade 1 or less (except alopecia).",
+      "protocol_ref": "Inclusion #24"
+    },
+    {
+      "criterion_id": "NCT01631552_I25",
+      "type": "inclusion",
+      "text": "At least 2 weeks beyond high dose systemic corticosteroids (however, low dose corticosteroids \\< 20 mg prednisone or equivalent daily are permitted).",
+      "protocol_ref": "Inclusion #25"
+    },
+    {
+      "criterion_id": "NCT01631552_I26",
+      "type": "inclusion",
+      "text": "Adequate hematology without ongoing transfusional support (hemoglobin \\> 9 g/dL, absolute neutrophil count (ANC) \\> 1,500 per mm\\^3, platelets \\> 100,000 per mm\\^3).",
+      "protocol_ref": "Inclusion #26"
+    },
+    {
+      "criterion_id": "NCT01631552_I27",
+      "type": "inclusion",
+      "text": "Adequate renal and hepatic function (creatinine ≤ 2.0 x institutional upper limit of normal (IULN), bilirubin ≤ 1.5 IULN, aspartate aminotransferase (AST) and alanine aminotransferase (ALT) ≤ 3.0 x IULN or 5 x IULN if know liver metastases).",
+      "protocol_ref": "Inclusion #27"
+    },
+    {
+      "criterion_id": "NCT01631552_I28",
+      "type": "inclusion",
+      "text": "Otherwise, all toxicity at study entry ≤ Grade 1.",
+      "protocol_ref": "Inclusion #28"
+    },
+    {
+      "criterion_id": "NCT01631552_E1",
+      "type": "exclusion",
+      "text": "Women who are pregnant or lactating.",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT01631552_E2",
+      "type": "exclusion",
+      "text": "Women of childbearing potential and fertile men unwilling to use effective contraception during study until conclusion of 12-week post-treatment evaluation period.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT01631552_E3",
+      "type": "exclusion",
+      "text": "Individuals with Gilbert's disease.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT01631552_E4",
+      "type": "exclusion",
+      "text": "Individuals with brain metastases can be enrolled only if treated, non-progressive brain metastases and off high-dose steroids (\\> 20 mg prednisone or equivalent) for at least 4 weeks.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT01631552_E5",
+      "type": "exclusion",
+      "text": "Presence of bulky disease (defined as any single mass \\> 7 cm in its greatest dimension). Individuals with a mass over 7 cm, but otherwise eligible, may be considered for enrollment after discussion and approval with the medical monitor.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT01631552_E6",
+      "type": "exclusion",
+      "text": "Individuals with active ≥ grade 2 anorexia, nausea or vomiting, and/or signs of intestinal obstruction.",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT01631552_E7",
+      "type": "exclusion",
+      "text": "Individuals with non-melanoma skin cancer or carcinoma in situ of the cervix are eligible, while individuals with other prior malignancies must have had at least a 3-year disease-free interval.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT01631552_E8",
+      "type": "exclusion",
+      "text": "Individuals known to be HIV positive, hepatitis B positive, or hepatitis C positive.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT01631552_E9",
+      "type": "exclusion",
+      "text": "Known history of unstable angina, MI, or CHF present within 6 months or clinically significant cardiac arrhythmia (other than stable atrial fibrillation) requiring anti-arrhythmia therapy.",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT01631552_E10",
+      "type": "exclusion",
+      "text": "Known history of clinically significant active COPD, or other moderate-to-severe chronic respiratory illness present within 6 months.",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT01631552_E11",
+      "type": "exclusion",
+      "text": "Prior history of clinically significant bleeding, intestinal obstruction, or GI perforation within 6 months of initiation of study treatment.",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT01631552_E12",
+      "type": "exclusion",
+      "text": "Infection requiring intravenous antibiotic use within 1 week.",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT01631552_E13",
+      "type": "exclusion",
+      "text": "History of an anaphylactic reaction to irinotecan or ≥ Grade 3 GI toxicity to prior irinotecan,",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT01631552_E14",
+      "type": "exclusion",
+      "text": "Other concurrent medical or psychiatric conditions that, in the Investigator's opinion, may be likely to confound study interpretation or prevent completion of study procedures and follow-up examinations.",
+      "protocol_ref": "Exclusion #14"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Sacituzumab Govitecan-hziy (SG) 8 mg/kg",
+      "description": "Participants will receive sacituzumab govitecan-hziy (SG) 8 mg/kg of body weight via intravenous (IV) infusion on Days 1 and 8 of a 21-day treatment cycle until disease progression or unacceptable toxicity.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "SG 10 mg/kg",
+      "description": "Participants will receive SG 10 mg/kg of body weight via intravenous (IV) infusion on Days 1 and 8 of a 21-day treatment cycle until disease progression or unacceptable toxicity.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "SG 12 mg/kg",
+      "description": "Participants will receive SG 12 mg/kg of body weight via intravenous (IV) infusion on Days 1 and 8 of a 21-day treatment cycle until disease progression or unacceptable toxicity.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "SG 18 mg/kg",
+      "description": "Participants will receive SG 18 mg/kg of body weight via intravenous (IV) infusion on Days 1 and 8 of a 21-day treatment cycle until disease progression or unacceptable toxicity.",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

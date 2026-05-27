@@ -1,0 +1,72 @@
+{
+  "trial_id": "NCT00451906",
+  "criteria": [
+    {
+      "criterion_id": "NCT00451906_I1",
+      "type": "inclusion",
+      "text": "adult patients, \\>=18 years of age;",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00451906_I2",
+      "type": "inclusion",
+      "text": "histologically or cytologically documented inoperable, locally advanced ( stage III), metastatic (stage IV) or recurrent NSCLC other than squamous cell (tumors of mixed histology should be categorized by the predominant cell type);",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00451906_I3",
+      "type": "inclusion",
+      "text": "ECOG PS status 0-2;",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00451906_I4",
+      "type": "inclusion",
+      "text": "life expectancy \\>= 12weeks;",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00451906_I5",
+      "type": "inclusion",
+      "text": "adequate renal, liver and hematological function.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00451906_E1",
+      "type": "exclusion",
+      "text": "mixed, non-small and small cell tumors, or mixed adenosquamous carcinomas with a predominant squamous component;",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00451906_E2",
+      "type": "exclusion",
+      "text": "hemoptysis (\\>=1/2 teaspoon of bright red blood) in previous 3 months;",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00451906_E3",
+      "type": "exclusion",
+      "text": "evidence of tumor invading major blood vessels on imaging;",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00451906_E4",
+      "type": "exclusion",
+      "text": "evidence of CNS metastases, even if previously treated.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00451906_E5",
+      "type": "exclusion",
+      "text": "major surgery (including open biopsy), significant traumatic injury within 28 days prior to enrolment, or anticipation of need for major surgery during study treatment;",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT00451906_E6",
+      "type": "exclusion",
+      "text": "prior chemotherapy for stage IIIb/IV disease.",
+      "protocol_ref": "Exclusion #6"
+    }
+  ],
+  "disease_domain": "NSCLC"
+}

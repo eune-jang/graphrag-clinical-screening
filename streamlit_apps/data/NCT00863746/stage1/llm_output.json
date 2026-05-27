@@ -1,0 +1,282 @@
+{
+  "trial_id": "NCT00863746",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT00863746_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Advanced relapsed or refractory predominantly non squamous NSCLC"
+        },
+        {
+          "child_id": "b",
+          "text_span": "The diagnosis must have been confirmed cyto-/ histologically"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00863746_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "measurable disease"
+        },
+        {
+          "child_id": "b",
+          "text_span": "non-measurable disease"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00863746_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Male subjects \u00003E/= 18 years of age at the time of Informed Consent"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Female subjects \u00003E/= 18 years of age at the time of Informed Consent"
+        },
+        {
+          "child_id": "c",
+          "text_span": "\u00003E/=20 for Japan"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00863746_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I12",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I13",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I15",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Alanine aminotransferase (ALT) < 2.5 x upper limit of normal (<= 5 x upper limit of normal in patients with liver metastases)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Aspartate aminotransferase (AST) < 2.5 x upper limit of normal (<= 5 x upper limit of normal in patients with liver metastases)"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00863746_I16",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I17",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prothrombin Time (PT)-International Normalized Ratio (INR) < 1.5 x upper limit of normal"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Partial Thromboplastin Time (PTT) < 1.5 x upper limit of normal"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00863746_I18",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_I19",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Congestive heart failure"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Active coronary artery disease (CAD)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Cardiac arrhythmias (>Grade 2 NCI-CTCAE [National Cancer Institute-Common Terminology Criteria for Adverse Events] vers. 3.0)"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00863746_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "History of Human immunodeficiency virus (HIV) infection"
+        },
+        {
+          "child_id": "b",
+          "text_span": "chronic hepatitis B"
+        },
+        {
+          "child_id": "c",
+          "text_span": "chronic hepatitis C"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00863746_E5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E12",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pregnant women"
+        },
+        {
+          "child_id": "b",
+          "text_span": "breast-feeding women"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00863746_E14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00863746_E15",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior treatment with other Vascular Endothelial Growth Factor (VEGF) (R) inhibitors, including compounds that impact vascularity (i.e. sunitinib, thalidomide, vandetanib, vascular disrupting agents [VDA], VEGF-trap and other experimental agents of this class)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Only bevacizumab (Avastin) is permitted"
+        }
+      ],
+      "child_logic": "AND"
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

@@ -1,0 +1,60 @@
+{
+  "trial_id": "NCT00588445",
+  "criteria": [
+    {
+      "criterion_id": "NCT00588445_I1",
+      "type": "inclusion",
+      "text": "Pathologic confirmation of malignancy at Memorial Sloan-Kettering",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00588445_I2",
+      "type": "inclusion",
+      "text": "Patients must have previously untreated stage I or II NSCLC (T11-2N0M0, T1-2N1M0, T3N0M0) and 1 of the following features: never smoker or \\< 15 pack year smoking history and/or bronchioloalveolar cancer (either pure BAC, BAC with focal invasion or adenocarcinoma with BAC features)",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00588445_I3",
+      "type": "inclusion",
+      "text": "Patients must have been determined to be operable and resectable by the treating thoracic surgeon.",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00588445_I4",
+      "type": "inclusion",
+      "text": "Age \\>18 years.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00588445_I5",
+      "type": "inclusion",
+      "text": "Measurable indicator lesions",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00588445_I6",
+      "type": "inclusion",
+      "text": "Ability to understand and the willingness to sign a written informed consent document.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00588445_E1",
+      "type": "exclusion",
+      "text": "Pregnant or lactating women or women of childbearing potential not using effective contraception. Men participating in the trial must also use effective contraception when sexually active.",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00588445_E2",
+      "type": "exclusion",
+      "text": "Patients may not be receiving any other investigational agents.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00588445_E3",
+      "type": "exclusion",
+      "text": "Any history of or evidence of interstitial lung disease (patients with chronic stable radiographic changes who are asymptomatic need not be excluded).",
+      "protocol_ref": "Exclusion #3"
+    }
+  ],
+  "disease_domain": "NSCLC"
+}

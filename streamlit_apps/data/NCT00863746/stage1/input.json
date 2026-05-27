@@ -1,0 +1,223 @@
+{
+  "trial_id": "NCT00863746",
+  "criteria": [
+    {
+      "criterion_id": "NCT00863746_I1",
+      "type": "inclusion",
+      "text": "Ability to understand and willingness to sign a written Informed Consent",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00863746_I2",
+      "type": "inclusion",
+      "text": "Advanced relapsed or refractory predominantly non squamous NSCLC. The diagnosis must have been confirmed cyto-/ histologically",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00863746_I3",
+      "type": "inclusion",
+      "text": "Patients must have measurable or non-measurable disease",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00863746_I4",
+      "type": "inclusion",
+      "text": "At least two but not more than three prior standard treatment regimens for NSCLC",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00863746_I5",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) Performance Status of 0 or 1",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00863746_I6",
+      "type": "inclusion",
+      "text": "Male or female subjects \\>/= 18 years of age (\\>/=20 for Japan) at the time of Informed Consent",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00863746_I7",
+      "type": "inclusion",
+      "text": "Life expectancy of at least 12 weeks",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00863746_I8",
+      "type": "inclusion",
+      "text": "Ability to swallow oral medication",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00863746_I9",
+      "type": "inclusion",
+      "text": "Both men and women using adequate barrier birth control measures during the course of the trial and 4 weeks after the completion of trial",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT00863746_I10",
+      "type": "inclusion",
+      "text": "Adequate bone marrow, liver and renal function as assessed by the following laboratory requirements to be conducted within 7 days prior to start of the study drug:",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT00863746_I11",
+      "type": "inclusion",
+      "text": "Haemoglobin \\> 9.0 g/dl",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT00863746_I12",
+      "type": "inclusion",
+      "text": "Absolute neutrophil count (ANC) \\>1,500/mm3",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT00863746_I13",
+      "type": "inclusion",
+      "text": "Platelet count \\>/= 100,000/µl",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT00863746_I14",
+      "type": "inclusion",
+      "text": "Total bilirubin \\</=1.5 x the upper limit of normal",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT00863746_I15",
+      "type": "inclusion",
+      "text": "Alanine aminotransferase (ALT) \\< 2.5 x upper limit of normal (\\</= 5 x upper limit of normal in patients with liver metastases) Aspartate aminotransferase (AST) \\< 2.5 x upper limit of normal (\\</= 5 x upper limit of normal in patients with liver metastases)",
+      "protocol_ref": "Inclusion #15"
+    },
+    {
+      "criterion_id": "NCT00863746_I16",
+      "type": "inclusion",
+      "text": "Alkaline phosphatase \\< 4 x upper limit of normal (\\</= 5 x upper limit of normal in patients with liver metastases)",
+      "protocol_ref": "Inclusion #16"
+    },
+    {
+      "criterion_id": "NCT00863746_I17",
+      "type": "inclusion",
+      "text": "Prothrombin Time (PT)-International Normalized Ratio (INR) or Partial Thromboplastin Time (PTT) \\< 1.5 x upper limit of normal",
+      "protocol_ref": "Inclusion #17"
+    },
+    {
+      "criterion_id": "NCT00863746_I18",
+      "type": "inclusion",
+      "text": "Serum creatinine \\< 1.5 x upper limit of normal",
+      "protocol_ref": "Inclusion #18"
+    },
+    {
+      "criterion_id": "NCT00863746_I19",
+      "type": "inclusion",
+      "text": "Calculated creatinine clearance of \\>/= 50 mL/min",
+      "protocol_ref": "Inclusion #19"
+    },
+    {
+      "criterion_id": "NCT00863746_E1",
+      "type": "exclusion",
+      "text": "NSCLC patients with predominantly squamous cell carcinoma histology Excluded medical conditions:",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00863746_E2",
+      "type": "exclusion",
+      "text": "History of cardiac disease: Congestive heart failure, Active coronary artery disease (CAD), Cardiac arrhythmias (\\>Grade 2 NCI-CTCAE \\[National Cancer Institute-Common Terminology Criteria for Adverse Events\\] vers. 3.0)",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00863746_E3",
+      "type": "exclusion",
+      "text": "Uncontrolled hypertension despite two anti-hypertensive medications",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00863746_E4",
+      "type": "exclusion",
+      "text": "History of Human immunodeficiency virus (HIV) infection or chronic hepatitis B or C",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00863746_E5",
+      "type": "exclusion",
+      "text": "History of organ allograft",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT00863746_E6",
+      "type": "exclusion",
+      "text": "Active clinically serious infections (\\> grade 2 NCI-CTCAE vers. 3.0)",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT00863746_E7",
+      "type": "exclusion",
+      "text": "Patients with seizure disorder requiring medication",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT00863746_E8",
+      "type": "exclusion",
+      "text": "Patients with evidence or history of bleeding diathesis or coagulopathy",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT00863746_E9",
+      "type": "exclusion",
+      "text": "Patients undergoing renal dialysis",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT00863746_E10",
+      "type": "exclusion",
+      "text": "Pulmonary hemorrhage/ bleeding event \\>/= CTCAE grade 2 within four weeks prior to the first dose of the study drug",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT00863746_E11",
+      "type": "exclusion",
+      "text": "Any other hemorrhage/ bleeding event \\>/= CTCAE grade 3 within four weeks prior to the first dose of the study drug",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT00863746_E12",
+      "type": "exclusion",
+      "text": "Thrombotic or embolic venous or arterial events such as cerebrovascular accident",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT00863746_E13",
+      "type": "exclusion",
+      "text": "Pregnant or breast-feeding women.",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT00863746_E14",
+      "type": "exclusion",
+      "text": "Any condition which could affect the absorption or pharmacokinetics of the study drug",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT00863746_E15",
+      "type": "exclusion",
+      "text": "Prior treatment with other Vascular Endothelial Growth Factor (VEGF) (R) inhibitors, including compounds that impact vascularity (i.e. sunitinib, thalidomide, vandetanib, vascular disrupting agents \\[VDA\\], VEGF-trap and other experimental agents of this class). Only bevacizumab (Avastin) is permitted.",
+      "protocol_ref": "Exclusion #15"
+    }
+  ],
+  "trial_acronym": "MISSION",
+  "disease_domain": "Lung Cancer",
+  "cohorts": [
+    {
+      "cohort_id": "Sorafenib (Nexavar, BAY43-9006)",
+      "description": "Participants received 2 tablets of Sorafenib (2×200 mg) orally twice daily (BID)",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Placebo",
+      "description": "Participants received 2 tablets of placebo orally twice daily (BID)",
+      "group_type": "PLACEBO_COMPARATOR"
+    }
+  ]
+}

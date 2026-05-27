@@ -1,0 +1,264 @@
+{
+  "trial_id": "NCT03219268",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT03219268_I1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Histologically proven, locally advanced unresectable or metastatic solid tumors"
+        },
+        {
+          "child_id": "b",
+          "text_span": "hematologic malignancies, Cohort Expansion only"
+        },
+        {
+          "child_id": "c",
+          "text_span": "for whom no approved therapy with demonstrated clinical benefit is available or standard treatment was declined"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT03219268_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_I5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Tissue specimen available for retrospective analysis of PD-1 expression"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Tissue specimen available for retrospective analysis of PD-L1 expression"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Tissue specimen available for retrospective analysis of LAG-3 expression"
+        },
+        {
+          "child_id": "d",
+          "text_span": "Tissue specimen available for retrospective analysis of MHC-II expression"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT03219268_I6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Locally advanced or metastatic HER2+ locally advanced or metastatic solid tumors, regardless of organ of origin"
+        },
+        {
+          "child_id": "b",
+          "text_span": "The cancer must have progressed following standard therapy, or has progressed during or after HER2-directed therapy if approved and available for patients with HER2+ breast, gastric, or gastroesophageal junction cancer"
+        },
+        {
+          "child_id": "c",
+          "text_span": "History of HER2 positivity defined as 3+ by IHC or 2+ by Immunohistochemistry (IHC) in combination with in situ hybridization (ISH) positivity most recent tumor biopsy"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT03219268_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Symptomatic central nervous system (CNS) metastases"
+        },
+        {
+          "child_id": "b",
+          "text_span": "primary CNS lymphoma"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03219268_E2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Treatment with any systemic chemotherapy within 3 weeks prior to the initiation of study drug"
+        },
+        {
+          "child_id": "b",
+          "text_span": "treatment with biologics or investigational therapy within the 4 weeks prior to the initiation of study drug"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT03219268_E5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E12",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Active pneumonitis"
+        },
+        {
+          "child_id": "b",
+          "text_span": "history of non-infectious pneumonitis"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03219268_E13",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E14",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "active viral infection requiring parenteral treatment within 7 days prior to the initiation of study drug"
+        },
+        {
+          "child_id": "b",
+          "text_span": "active bacterial infection requiring parenteral treatment within 7 days prior to the initiation of study drug"
+        },
+        {
+          "child_id": "c",
+          "text_span": "active systemic fungal infection requiring parenteral treatment within 7 days prior to the initiation of study drug"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03219268_E15",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Known history of positive testing for human immunodeficiency virus"
+        },
+        {
+          "child_id": "b",
+          "text_span": "history of acquired immune deficiency syndrome"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03219268_E16",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Known history of hepatitis B (except in hepatocellular carcinoma)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "hepatitis C infection"
+        },
+        {
+          "child_id": "c",
+          "text_span": "known positive test for hepatitis B surface antigen, hepatitis B core antigen, or hepatitis C polymerase chain reaction (PCR)"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03219268_E17",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03219268_E18",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Dementia"
+        },
+        {
+          "child_id": "b",
+          "text_span": "altered mental status that would preclude understanding and rendering of informed consent"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03219268_E19",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

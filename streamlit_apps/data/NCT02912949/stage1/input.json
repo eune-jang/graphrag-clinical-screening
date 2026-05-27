@@ -1,0 +1,173 @@
+{
+  "trial_id": "NCT02912949",
+  "criteria": [
+    {
+      "criterion_id": "NCT02912949_I1",
+      "type": "inclusion",
+      "text": "At least one measurable lesion according to RECIST v1.1 OR evaluable disease for a limited number of patients (up to 15) in Group H;",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02912949_I2",
+      "type": "inclusion",
+      "text": "Performance status of ECOG 0 - 2;",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02912949_I3",
+      "type": "inclusion",
+      "text": "Estimated life expectancy of at least 12 weeks;",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02912949_I4",
+      "type": "inclusion",
+      "text": "Toxicities incurred as a result of previous anti-cancer therapy resolved to ≤Grade 1;",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02912949_I5",
+      "type": "inclusion",
+      "text": "Treatment with anti-cancer medication or investigational drugs within the following intervals before the first dose of MCLA-128: 1. more than 14 days or more than 5 half-lives prior to study entry, whichever is shorter. 2. more than 14 days for radiotherapy.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02912949_I6",
+      "type": "inclusion",
+      "text": "Recovery from major surgery or other complication to ≤ Grade 2 or baseline ;",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT02912949_I7",
+      "type": "inclusion",
+      "text": "Absolute neutrophil count ≥1.5 x 109/L without colony stimulating factor support for at least 7 days prior to screening;",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT02912949_I8",
+      "type": "inclusion",
+      "text": "Platelets ≥75 x 109/L without transfusion support for at least 7 days prior to screening;",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT02912949_I9",
+      "type": "inclusion",
+      "text": "Hemoglobin ≥8 g/dL or ≥5 mmol/L;",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT02912949_I10",
+      "type": "inclusion",
+      "text": "Alanine aminotransferase (ALT), aspartate aminotransferase (AST) ≤3 x upper limit of normal (ULN) and total bilirubin ≤1.5 x ULN; in cases of metastatic liver involvement, ALT/AST ≤5 x ULN and total bilirubin ≤2 x ULN will be allowed; in cases of antecedents of Gilbert's syndrome when total bilirubin ≤3.0 x ULN or direct bilirubin ≤1.5 x ULN will be allowed;",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT02912949_I11",
+      "type": "inclusion",
+      "text": "Estimated glomerular filtration rate (GFR) of more than 30 mL/min",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT02912949_I12",
+      "type": "inclusion",
+      "text": "Able to provide a tumor biopsy sample (fresh strongly preferred or else archival);",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT02912949_I13",
+      "type": "inclusion",
+      "text": "Not pregnant or nursing",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT02912949_I14",
+      "type": "inclusion",
+      "text": "Fertile patients must use effective contraception during and for 6 month after completion of study therapy;",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT02912949_I15",
+      "type": "inclusion",
+      "text": "Patients must have received prior standard therapy appropriate for their tumor type and stage of disease, or in the opinion of the Investigator, would be unlikely to tolerate or derive clinically meaningful benefit from appropriate standard of care therapy or no satisfactory alternative treatment options are available;",
+      "protocol_ref": "Inclusion #15"
+    },
+    {
+      "criterion_id": "NCT02912949_I16",
+      "type": "inclusion",
+      "text": "Locally-advanced unresectable or metastatic solid tumor malignancy with documented NRG1 gene fusion, identified through molecular assays such as next generation sequencing-based assays \\[DNA or RNA\\], as routinely performed at CLIA or other similarly-certified laboratories.",
+      "protocol_ref": "Inclusion #16"
+    },
+    {
+      "criterion_id": "NCT02912949_E1",
+      "type": "exclusion",
+      "text": "Pregnant or lactating;",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02912949_E2",
+      "type": "exclusion",
+      "text": "Presence of an active uncontrolled infection or an unexplained fever;",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02912949_E3",
+      "type": "exclusion",
+      "text": "Known hypersensitivity to any of the components of MCLA-128;",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02912949_E4",
+      "type": "exclusion",
+      "text": "Known HIV, active Hepatitis B without receiving antiviral treatment, or Hepatitis C; patients treated for Hepatitis C and have undetectable viral loads are eligible",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02912949_E5",
+      "type": "exclusion",
+      "text": "Known symptomatic or unstable brain metastases;",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02912949_E6",
+      "type": "exclusion",
+      "text": "Patients with leptomeningeal metastases;",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT02912949_E7",
+      "type": "exclusion",
+      "text": "Presence of LVEF below 50% on the screening echocardiogram; or history or presence of any significant cardiovascular disease, including unstable angina or myocardial infarction within 12 months prior to screening, congestive heart failure (NYHA Class III or IV), or ventricular arrhythmia requiring medication;",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT02912949_E8",
+      "type": "exclusion",
+      "text": "Previous or concurrent malignancy (excluding non-basal cell carcinoma of skin or carcinoma in situ of the uterine cervix) unless the tumor was treated with curative intent more than 2 years prior to study entry;",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT02912949_E9",
+      "type": "exclusion",
+      "text": "Presence of any other medical or psychological condition deemed by the Investigator to be likely to interfere with a patient ability to sign informed consent, cooperate or participate in the study, or interfere with the interpretation of the results.",
+      "protocol_ref": "Exclusion #9"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Part 2 Pancreatic adenocarcinoma harboring NRG1 fusion",
+      "description": "Participants will receive intravenous infusion of 750 mg of zenocutuzumab (MCLA-128) (the recommended Phase 2 dose (RP2D)) every 2 weeks.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Part 2 NSCLC cancer harboring NRG1 fusion",
+      "description": "Participants will receive intravenous infusion of 750 mg of zenocutuzumab (MCLA-128) (the recommended Phase 2 dose (RP2D)) every 2 weeks.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Part 2 Solid tumour (basket) harboring NRG1 fusion",
+      "description": "Participants will receive intravenous infusion of 750 mg of zenocutuzumab (MCLA-128) (the recommended Phase 2 dose (RP2D)) every 2 weeks.",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

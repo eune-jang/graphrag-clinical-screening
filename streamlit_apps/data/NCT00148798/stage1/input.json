@@ -1,0 +1,67 @@
+{
+  "trial_id": "NCT00148798",
+  "criteria": [
+    {
+      "criterion_id": "NCT00148798_I1",
+      "type": "inclusion",
+      "text": "Diagnosis of histologically or cytologically confirmed NSCLC, stage IIIb with documented malignant pleural effusion or stage IV",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00148798_I2",
+      "type": "inclusion",
+      "text": "Immunohistochemical evidence of EGFR expression on tumor tissue",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00148798_I3",
+      "type": "inclusion",
+      "text": "Presence of at least 1 bi-dimensionally measurable index lesion, whereby index lesions must not lie in an irradiated area",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00148798_E1",
+      "type": "exclusion",
+      "text": "Previous exposure to monoclonal antibodies, signal transduction inhibitors or EGFR-targeting therapy",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00148798_E2",
+      "type": "exclusion",
+      "text": "Previous chemotherapy for NSCLC",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00148798_E3",
+      "type": "exclusion",
+      "text": "Documented or symptomatic brain metastasis",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00148798_E4",
+      "type": "exclusion",
+      "text": "Superior vena cava syndrome contra-indicating hydration",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00148798_E5",
+      "type": "exclusion",
+      "text": "Previous malignancy in the last 5 years except basal cell carcinoma of the skin or pre-invasive carcinoma of the cervix",
+      "protocol_ref": "Exclusion #5"
+    }
+  ],
+  "trial_acronym": "FLEX",
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Cetuximab plus chemotherapy",
+      "description": "cetuximab + cisplatin + vinorelbine",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Chemotherapy alone",
+      "description": "cisplatin + vinorelbine alone",
+      "group_type": "ACTIVE_COMPARATOR"
+    }
+  ]
+}

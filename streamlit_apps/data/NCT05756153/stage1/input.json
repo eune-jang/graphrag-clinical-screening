@@ -1,0 +1,120 @@
+{
+  "trial_id": "NCT05756153",
+  "criteria": [
+    {
+      "criterion_id": "NCT05756153_I1",
+      "type": "inclusion",
+      "text": "Patient has provided informed consent form (ICF).",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT05756153_I2",
+      "type": "inclusion",
+      "text": "Males or females aged ≥ 18 years.",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT05756153_I3",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) Performance Status of 0\\~1.",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT05756153_I4",
+      "type": "inclusion",
+      "text": "Life expectancy \\> 3 months judged by the investigator.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT05756153_I5",
+      "type": "inclusion",
+      "text": "Have histologically or cytologically confirmed advanced KRAS G12C-mutated NSCLC.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT05756153_I6",
+      "type": "inclusion",
+      "text": "Have at least one measurable lesion per RECIST 1.1.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT05756153_I7",
+      "type": "inclusion",
+      "text": "Have sufficient organ functions.",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT05756153_I8",
+      "type": "inclusion",
+      "text": "With toxicities left from prior anti-tumor therapy resolved to baseline or CTCAE Grade 1 (neurotoxicity or alopecia ≤ Grade 2).",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT05756153_I9",
+      "type": "inclusion",
+      "text": "Women of childbearing potential (WOCBP) and male patients with WOCBP partners must agree to use effective contraception method during the study specified period.",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT05756153_E1",
+      "type": "exclusion",
+      "text": "With clinically significant cardiovascular diseases.",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT05756153_E2",
+      "type": "exclusion",
+      "text": "With active central nervous system (CNS) metastases and/or carcinomatous meningitis.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT05756153_E3",
+      "type": "exclusion",
+      "text": "With clinically significant gastrointestinal diseases.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT05756153_E4",
+      "type": "exclusion",
+      "text": "With active infections.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT05756153_E5",
+      "type": "exclusion",
+      "text": "With uncontrollable or symptomatic pleural effusion, ascites, or pericardial effusion.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT05756153_E6",
+      "type": "exclusion",
+      "text": "With uncontrolled systemic diseases, such as hypertension or diabetes.",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT05756153_E7",
+      "type": "exclusion",
+      "text": "Prior treatment with an inhibitor specific to KRAS G12C.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT05756153_E8",
+      "type": "exclusion",
+      "text": "Major surgery within 4 weeks prior to initiation of study treatment.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT05756153_E9",
+      "type": "exclusion",
+      "text": "With known allergies to the study drugs or components.",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT05756153_E10",
+      "type": "exclusion",
+      "text": "Pregnant or lactating females, or female patients intend to become pregnant during participation.",
+      "protocol_ref": "Exclusion #10"
+    }
+  ],
+  "disease_domain": "NSCLC"
+}

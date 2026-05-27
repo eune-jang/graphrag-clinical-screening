@@ -1,0 +1,120 @@
+{
+  "trial_id": "NCT00091663",
+  "criteria": [
+    {
+      "criterion_id": "NCT00091663_I1",
+      "type": "inclusion",
+      "text": "Written (signed) informed consent(s)",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00091663_I2",
+      "type": "inclusion",
+      "text": "Inoperable and incurable, locally advanced, recurrent or metastatic NSCLC",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00091663_I3",
+      "type": "inclusion",
+      "text": "Relapse following standard chemotherapy (combination chemotherapy such as two-drug combination chemotherapy, or a single-agent chemotherapy agent for elderly or poor performance status patients)",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00091663_I4",
+      "type": "inclusion",
+      "text": "Age \\>=18 years",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00091663_I5",
+      "type": "inclusion",
+      "text": "ECOG performance status of 0 to 3",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00091663_I6",
+      "type": "inclusion",
+      "text": "Recovered from the toxic effects of prior therapy",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00091663_I7",
+      "type": "inclusion",
+      "text": "Able to comply with study and follow-up procedures",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00091663_I8",
+      "type": "inclusion",
+      "text": "Able to take oral medication",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00091663_I9",
+      "type": "inclusion",
+      "text": "Use of an effective means of contraception (for patients with reproductive potential)",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT00091663_I10",
+      "type": "inclusion",
+      "text": "Granulocyte count \\>=1.0 x 10\\^9/L",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT00091663_I11",
+      "type": "inclusion",
+      "text": "Platelet count \\>=75 x 10\\^9/L",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT00091663_I12",
+      "type": "inclusion",
+      "text": "Serum bilirubin \\<1.5 x upper limit of normal (ULN)",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT00091663_I13",
+      "type": "inclusion",
+      "text": "SGOT (AST) \\<2 x ULN unless elevation is clearly due to liver metastases; then SGOT (AST) must be \\<5 x ULN",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT00091663_I14",
+      "type": "inclusion",
+      "text": "Serum creatinine \\<=1.5 mg/dL",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT00091663_E1",
+      "type": "exclusion",
+      "text": "Any unstable systemic disease (including active infection, unstable angina, congestive heart failure, myocardial infarction within the last 6 months, hepatic, renal, or metabolic disease)",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00091663_E2",
+      "type": "exclusion",
+      "text": "Prior therapy with any systemic HER1/EGFR small molecule inhibitor, including gefitinib (Iressa), erlotinib (Tarceva), or other investigational agents in this class",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00091663_E3",
+      "type": "exclusion",
+      "text": "History of another malignancy in the past 2 years unless the malignancy has been adequately treated and is associated with a 5-year anticipated survival of \\>=90%",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00091663_E4",
+      "type": "exclusion",
+      "text": "Known central nervous system (CNS) metastases that have not yet been definitively treated with surgery and/or radiation or that are symptomatic or unstable",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00091663_E5",
+      "type": "exclusion",
+      "text": "Nursing mothers or pregnant females",
+      "protocol_ref": "Exclusion #5"
+    }
+  ],
+  "disease_domain": "Lung Cancer"
+}

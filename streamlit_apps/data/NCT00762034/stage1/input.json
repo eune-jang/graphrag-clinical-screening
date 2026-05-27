@@ -1,0 +1,186 @@
+{
+  "trial_id": "NCT00762034",
+  "criteria": [
+    {
+      "criterion_id": "NCT00762034_I1",
+      "type": "inclusion",
+      "text": "You must sign an informed consent document for clinical research.",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00762034_I2",
+      "type": "inclusion",
+      "text": "You must have Stage IIIB or Stage IV nonsquamous non-small cell lung cancer.",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00762034_I3",
+      "type": "inclusion",
+      "text": "You must not have received any prior treatment for your disease.",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00762034_I4",
+      "type": "inclusion",
+      "text": "Prior radiation therapy is allowed to \\< 25% of the bone marrow; however, prior radiation to the whole pelvis is not allowed. If you have had radiation therapy to the chest, you are not eligible to participate.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00762034_I5",
+      "type": "inclusion",
+      "text": "You must be at least 18 years of age or older.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00762034_I6",
+      "type": "inclusion",
+      "text": "You must have measureable tumor lesions according to the Response Evaluation Criteria in Solid Tumors (RECIST) or disease can be evaluated on computed tomography (CT) scan.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00762034_I7",
+      "type": "inclusion",
+      "text": "Your test results assessing the function of blood forming tissue, kidneys and liver must be satisfactory.",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00762034_I8",
+      "type": "inclusion",
+      "text": "Women must be sterile, postmenopausal or on contraception and men must be sterile (for example post-vasectomy) or on contraception.",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00762034_E1",
+      "type": "exclusion",
+      "text": "You cannot have clinically significant third-space fluid collections (e.g. ascites or pleural effusions that cannot be controlled by drainage or other procedures).",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00762034_E2",
+      "type": "exclusion",
+      "text": "You cannot have Non-small Cell Lung Carcinoma (NSCLC) of predominantly squamous cell histology.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00762034_E3",
+      "type": "exclusion",
+      "text": "You cannot have known central nervous system (CNS) disease, other than stable, treated brain metastasis.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00762034_E4",
+      "type": "exclusion",
+      "text": "You cannot have undergone a surgical procedure, open biopsy, open pleurodesis, or significant traumatic injury within 28 days of starting the study treatment, or have an anticipated need for major surgery during the study.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00762034_E5",
+      "type": "exclusion",
+      "text": "You cannot have a history of gastrointestinal fistula, perforation, or abscess, inflammatory bowel disease, or diverticulitis.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT00762034_E6",
+      "type": "exclusion",
+      "text": "You are currently receiving ongoing treatment with full-dose warfarin or equivalent.",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT00762034_E7",
+      "type": "exclusion",
+      "text": "You cannot have significant vascular disease, serious cardiac conditions (such as heart attack), stroke or transient ischemic attack within 6 months of the trial.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT00762034_E8",
+      "type": "exclusion",
+      "text": "You cannot have evidence of bleeding diathesis or coagulopathy (in the absence of therapeutic anticoagulation).",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT00762034_E9",
+      "type": "exclusion",
+      "text": "You cannot have inadequately controlled hypertension, or a history of hypertensive crisis or hypertensive encephalopathy.",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT00762034_E10",
+      "type": "exclusion",
+      "text": "You cannot have a serious, nonhealing wound, active ulcer, or untreated bone fracture.",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT00762034_E11",
+      "type": "exclusion",
+      "text": "You cannot have another form of cancer, other than superficial basal cell and superficial squamous (skin) cell, or carcinoma in situ of the cervix within the last 5 years.",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT00762034_E12",
+      "type": "exclusion",
+      "text": "You cannot have received an investigational treatment within 30 days prior to the trial.",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT00762034_E13",
+      "type": "exclusion",
+      "text": "You cannot have previously received treatment with paclitaxel, carboplatin, pemetrexed, or bevacizumab.",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT00762034_E14",
+      "type": "exclusion",
+      "text": "You cannot be pregnant or breast-feeding.",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT00762034_E15",
+      "type": "exclusion",
+      "text": "You cannot have a known sensitivity to any component of paclitaxel, carboplatin, pemetrexed, or bevacizumab.",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT00762034_E16",
+      "type": "exclusion",
+      "text": "You cannot have a history of hemoptysis (coughing blood) within 3 months prior to the trial.",
+      "protocol_ref": "Exclusion #16"
+    },
+    {
+      "criterion_id": "NCT00762034_E17",
+      "type": "exclusion",
+      "text": "You are unable to stop taking aspirin more than 1.3 grams per day or other nonsteroidal anti-inflammatory drugs (NSAIDs).",
+      "protocol_ref": "Exclusion #17"
+    },
+    {
+      "criterion_id": "NCT00762034_E18",
+      "type": "exclusion",
+      "text": "You are unable or unwilling to take folic acid or vitamin B12 supplementation.",
+      "protocol_ref": "Exclusion #18"
+    },
+    {
+      "criterion_id": "NCT00762034_E19",
+      "type": "exclusion",
+      "text": "You are unable to take corticosteroids.",
+      "protocol_ref": "Exclusion #19"
+    },
+    {
+      "criterion_id": "NCT00762034_E20",
+      "type": "exclusion",
+      "text": "You have any other on-going illnesses including active infections that may not allow you to adhere to the requirements of the trial.",
+      "protocol_ref": "Exclusion #20"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Pem/Carbo/Bev",
+      "description": "Pemetrexed (Pem), carboplatin (Carbo) and bevacizumab (Bev) followed by pemetrexed and bevacizumab",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Pac/Carbo/Bev",
+      "description": "Paclitaxel (Pac), carboplatin (Carbo) and bevacizumab (Bev) followed by bevacizumab",
+      "group_type": "ACTIVE_COMPARATOR"
+    }
+  ]
+}

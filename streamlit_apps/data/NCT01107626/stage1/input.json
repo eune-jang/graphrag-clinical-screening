@@ -1,0 +1,263 @@
+{
+  "trial_id": "NCT01107626",
+  "criteria": [
+    {
+      "criterion_id": "NCT01107626_I1",
+      "type": "inclusion",
+      "text": "Inclusion Criteria (Step 1 Induction Therapy):",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT01107626_I2",
+      "type": "inclusion",
+      "text": "Cytologically or histologically confirmed non-small cell lung cancer (NSCLC)",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT01107626_I3",
+      "type": "inclusion",
+      "text": "Predominant non-squamous histology (NSCLC not otherwise specified allowed). Mixed tumors are categorized by the predominant cell type.",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT01107626_I4",
+      "type": "inclusion",
+      "text": "Stage IV disease including M1a or M1b stages or recurrent disease",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT01107626_I5",
+      "type": "inclusion",
+      "text": "Stage IIIB (T4NX) disease with ipsilateral lung lobe allowed provided patients are not candidates for combined chemotherapy or radiotherapy",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT01107626_I6",
+      "type": "inclusion",
+      "text": "At least 12 months since prior adjuvant chemotherapy",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT01107626_I7",
+      "type": "inclusion",
+      "text": "At least 2 weeks since prior radiotherapy",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT01107626_I8",
+      "type": "inclusion",
+      "text": "Prior carboplatin allowed provided it was given as part of adjuvant chemotherapy",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT01107626_I9",
+      "type": "inclusion",
+      "text": "Patients with brain metastasis must have received local therapy to the brain and have no evidence of progression in the brain for at least 2 weeks from the time of completion of local therapy, prior to registration",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT01107626_I10",
+      "type": "inclusion",
+      "text": "ECOG (Eastern Cooperative Oncology Group) performance status 0-1",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT01107626_I11",
+      "type": "inclusion",
+      "text": "Leukocytes ≥ 3,000/mm\\^3",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT01107626_I12",
+      "type": "inclusion",
+      "text": "Absolute neutrophil count ≥ 1,500/mm\\^3",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT01107626_I13",
+      "type": "inclusion",
+      "text": "Platelet count ≥ 100,000/mm\\^3",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT01107626_I14",
+      "type": "inclusion",
+      "text": "Total bilirubin ≤ institutional upper limit of normal (ULN)",
+      "protocol_ref": "Inclusion #14"
+    },
+    {
+      "criterion_id": "NCT01107626_I15",
+      "type": "inclusion",
+      "text": "AST and ALT ≤ 3 times ULN",
+      "protocol_ref": "Inclusion #15"
+    },
+    {
+      "criterion_id": "NCT01107626_I16",
+      "type": "inclusion",
+      "text": "Creatinine ≤ institutional ULN OR creatinine clearance ≥ 60 mL/min",
+      "protocol_ref": "Inclusion #16"
+    },
+    {
+      "criterion_id": "NCT01107626_I17",
+      "type": "inclusion",
+      "text": "Urine protein:urine dipstick ≤ 0-1+ (if \\> 1+, urine protein creatinine ratio must be \\< 1)",
+      "protocol_ref": "Inclusion #17"
+    },
+    {
+      "criterion_id": "NCT01107626_I18",
+      "type": "inclusion",
+      "text": "Measurable or non-measurable disease as defined by RECIST (Response Evaluation Criteria in Solid Tumours) criteria",
+      "protocol_ref": "Inclusion #18"
+    },
+    {
+      "criterion_id": "NCT01107626_I19",
+      "type": "inclusion",
+      "text": "Patients with hypertension must be adequately controlled (BP \\< 150/100 mm Hg) with appropriate anti-hypertensive therapy or diet",
+      "protocol_ref": "Inclusion #19"
+    },
+    {
+      "criterion_id": "NCT01107626_I20",
+      "type": "inclusion",
+      "text": "Concurrent therapeutic anti-coagulation allowed",
+      "protocol_ref": "Inclusion #20"
+    },
+    {
+      "criterion_id": "NCT01107626_I21",
+      "type": "inclusion",
+      "text": "Fertile patients must agree to abstain from sexual intercourse or to use adequate contraceptive methods during and for at least 6 months after completion of study therapy Exclusion Criteria (Step 1 Induction Therapy):",
+      "protocol_ref": "Inclusion #21"
+    },
+    {
+      "criterion_id": "NCT01107626_I22",
+      "type": "inclusion",
+      "text": "Prior malignancy within the past 3 years except superficial melanoma, basal cell carcinoma, or carcinoma in situ",
+      "protocol_ref": "Inclusion #22"
+    },
+    {
+      "criterion_id": "NCT01107626_I23",
+      "type": "inclusion",
+      "text": "Prior systemic chemotherapy for advanced stage lung cancer",
+      "protocol_ref": "Inclusion #23"
+    },
+    {
+      "criterion_id": "NCT01107626_I24",
+      "type": "inclusion",
+      "text": "Prior use of paclitaxel, pemetrexed disodium, or bevacizumab",
+      "protocol_ref": "Inclusion #24"
+    },
+    {
+      "criterion_id": "NCT01107626_I25",
+      "type": "inclusion",
+      "text": "Major hemoptysis within the past 4 weeks",
+      "protocol_ref": "Inclusion #25"
+    },
+    {
+      "criterion_id": "NCT01107626_I26",
+      "type": "inclusion",
+      "text": "Uncontrolled intercurrent illness including, but not limited to, active infection, symptomatic congestive heart failure, unstable angina pectoris, serious cardiac arrhythmia, psychiatric illness/social situations that would limit compliance with study requirements",
+      "protocol_ref": "Inclusion #26"
+    },
+    {
+      "criterion_id": "NCT01107626_I27",
+      "type": "inclusion",
+      "text": "History of arterial thrombotic events or major bleeding within the past 12 months",
+      "protocol_ref": "Inclusion #27"
+    },
+    {
+      "criterion_id": "NCT01107626_I28",
+      "type": "inclusion",
+      "text": "Major surgery such as thoracotomy, laparotomy, craniotomy, or significant traumatic injury within 6 weeks prior to registration. Biopsy procedures and chest tube insertion are not considered major surgery for the purpose of this protocol.",
+      "protocol_ref": "Inclusion #28"
+    },
+    {
+      "criterion_id": "NCT01107626_I29",
+      "type": "inclusion",
+      "text": "Core biopsy within 7 days of registration",
+      "protocol_ref": "Inclusion #29"
+    },
+    {
+      "criterion_id": "NCT01107626_I30",
+      "type": "inclusion",
+      "text": "Significant vascular disease (e.g., aortic aneurysm requiring surgical repair or recent peripheral arterial thrombosis) within the past 6 months",
+      "protocol_ref": "Inclusion #30"
+    },
+    {
+      "criterion_id": "NCT01107626_I31",
+      "type": "inclusion",
+      "text": "Clinically significant cardiovascular disease",
+      "protocol_ref": "Inclusion #31"
+    },
+    {
+      "criterion_id": "NCT01107626_I32",
+      "type": "inclusion",
+      "text": "Abdominal fistula, gastrointestinal perforation, or intra-abdominal abscess within the past 6 months",
+      "protocol_ref": "Inclusion #32"
+    },
+    {
+      "criterion_id": "NCT01107626_I33",
+      "type": "inclusion",
+      "text": "History of serious non-healing wounds, ulcers, or bone fractures",
+      "protocol_ref": "Inclusion #33"
+    },
+    {
+      "criterion_id": "NCT01107626_I34",
+      "type": "inclusion",
+      "text": "Cavitary lesions in the lungs",
+      "protocol_ref": "Inclusion #34"
+    },
+    {
+      "criterion_id": "NCT01107626_I35",
+      "type": "inclusion",
+      "text": "Pregnant or nursing",
+      "protocol_ref": "Inclusion #35"
+    },
+    {
+      "criterion_id": "NCT01107626_I36",
+      "type": "inclusion",
+      "text": "Concurrent anti-retroviral therapy in patients with HIV infection Inclusion Criteria (Step 2 Maintenance Therapy):",
+      "protocol_ref": "Inclusion #36"
+    },
+    {
+      "criterion_id": "NCT01107626_I37",
+      "type": "inclusion",
+      "text": "Patient must have an overall stable or better response after 4 courses of induction therapy",
+      "protocol_ref": "Inclusion #37"
+    },
+    {
+      "criterion_id": "NCT01107626_I38",
+      "type": "inclusion",
+      "text": "ECOG (Eastern Cooperative Oncology Group) performance status 0-1",
+      "protocol_ref": "Inclusion #38"
+    },
+    {
+      "criterion_id": "NCT01107626_I39",
+      "type": "inclusion",
+      "text": "Patients must be registered to Step 2 within 6 weeks of the last day of chemotherapy administration on Step 1",
+      "protocol_ref": "Inclusion #39"
+    },
+    {
+      "criterion_id": "NCT01107626_I40",
+      "type": "inclusion",
+      "text": "Acceptable bone marrow, renal and hepatic function within 2 weeks of registration",
+      "protocol_ref": "Inclusion #40"
+    }
+  ],
+  "disease_domain": "Lung Cancer",
+  "cohorts": [
+    {
+      "cohort_id": "Arm A (Induction then Maintenance with Bevacizumab)",
+      "description": "Induction Therapy:\n\nPatients receive paclitaxel IV over 3 hours, carboplatin IV over 15-30 minutes, and bevacizumab IV over 30-90 minutes on day 1. Courses repeat every 21 days for 4 courses in the absence of disease progression or unacceptable toxicity.\n\nMaintenance Therapy:\n\nPatients achieving complete response, partial response or stable disease following induction therapy are randomized to 1 of 3 treatment arms. Patients in arm A receive bevacizumab IV over 30-90 minutes on day 1 of every cycle until progression or unacceptable toxicity.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Arm B (Induction then Maintenance with Pemetrexed)",
+      "description": "Induction Therapy:\n\nPatients receive paclitaxel IV over 3 hours, carboplatin IV over 15-30 minutes, and bevacizumab IV over 30-90 minutes on day 1. Courses repeat every 21 days for 4 courses in the absence of disease progression or unacceptable toxicity.\n\nMaintenance Therapy:\n\nPatients achieving complete response, partial response or stable disease following induction therapy are randomized to 1 of 3 treatment arms. Patients in arm B receive pemetrexed IV over 10 minutes on day 1 of every cycle until progression or unacceptable toxicity.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Arm C (Induction then Maintenance with Bevacizumab & Pemetrexed)",
+      "description": "Induction Therapy:\n\nPatients receive paclitaxel IV over 3 hours, carboplatin IV over 15-30 minutes, and bevacizumab IV over 30-90 minutes on day 1. Courses repeat every 21 days for 4 courses in the absence of disease progression or unacceptable toxicity.\n\nMaintenance Therapy:\n\nPatients achieving complete response, partial response or stable disease following induction therapy are randomized to 1 of 3 treatment arms. Patients in arm C receive bevacizumab as in arm A and pemetrexed as in arm B.",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

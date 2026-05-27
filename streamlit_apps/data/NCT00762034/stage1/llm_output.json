@@ -1,0 +1,320 @@
+{
+  "trial_id": "NCT00762034",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT00762034_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_I4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior radiation therapy is allowed to < 25% of the bone marrow"
+        },
+        {
+          "child_id": "b",
+          "text_span": "prior radiation to the whole pelvis is not allowed"
+        },
+        {
+          "child_id": "c",
+          "text_span": "If you have had radiation therapy to the chest, you are not eligible to participate"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00762034_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_I6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "measureable tumor lesions according to the Response Evaluation Criteria in Solid Tumors (RECIST)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "disease can be evaluated on computed tomography (CT) scan"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_I8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Women must be sterile, postmenopausal or on contraception"
+        },
+        {
+          "child_id": "b",
+          "text_span": "men must be sterile (for example post-vasectomy) or on contraception"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00762034_E1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "have undergone a surgical procedure within 28 days of starting the study treatment"
+        },
+        {
+          "child_id": "b",
+          "text_span": "have undergone an open biopsy within 28 days of starting the study treatment"
+        },
+        {
+          "child_id": "c",
+          "text_span": "have undergone an open pleurodesis within 28 days of starting the study treatment"
+        },
+        {
+          "child_id": "d",
+          "text_span": "have undergone significant traumatic injury within 28 days of starting the study treatment"
+        },
+        {
+          "child_id": "e",
+          "text_span": "have an anticipated need for major surgery during the study"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "history of gastrointestinal fistula"
+        },
+        {
+          "child_id": "b",
+          "text_span": "history of perforation"
+        },
+        {
+          "child_id": "c",
+          "text_span": "history of abscess"
+        },
+        {
+          "child_id": "d",
+          "text_span": "history of inflammatory bowel disease"
+        },
+        {
+          "child_id": "e",
+          "text_span": "history of diverticulitis"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E7",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "significant vascular disease"
+        },
+        {
+          "child_id": "b",
+          "text_span": "serious cardiac conditions (such as heart attack)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "stroke"
+        },
+        {
+          "child_id": "d",
+          "text_span": "transient ischemic attack within 6 months of the trial"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "inadequately controlled hypertension"
+        },
+        {
+          "child_id": "b",
+          "text_span": "a history of hypertensive crisis"
+        },
+        {
+          "child_id": "c",
+          "text_span": "a history of hypertensive encephalopathy"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E10",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "a serious, nonhealing wound"
+        },
+        {
+          "child_id": "b",
+          "text_span": "active ulcer"
+        },
+        {
+          "child_id": "c",
+          "text_span": "untreated bone fracture"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E12",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "previously received treatment with paclitaxel"
+        },
+        {
+          "child_id": "b",
+          "text_span": "previously received treatment with carboplatin"
+        },
+        {
+          "child_id": "c",
+          "text_span": "previously received treatment with pemetrexed"
+        },
+        {
+          "child_id": "d",
+          "text_span": "previously received treatment with bevacizumab"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E14",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "You cannot be pregnant"
+        },
+        {
+          "child_id": "b",
+          "text_span": "You cannot be breast-feeding"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E15",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "sensitivity to any component of paclitaxel"
+        },
+        {
+          "child_id": "b",
+          "text_span": "sensitivity to any component of carboplatin"
+        },
+        {
+          "child_id": "c",
+          "text_span": "sensitivity to any component of pemetrexed"
+        },
+        {
+          "child_id": "d",
+          "text_span": "sensitivity to any component of bevacizumab"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00762034_E16",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E17",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E18",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E19",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00762034_E20",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

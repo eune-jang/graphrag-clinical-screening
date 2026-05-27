@@ -1,0 +1,198 @@
+{
+  "trial_id": "NCT02474355",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT02474355_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Locally advanced (stage IIIB) or metastatic (stage IV) EGFRm NSCLC"
+        },
+        {
+          "child_id": "b",
+          "text_span": "not amenable to curative surgery or radiotherapy"
+        },
+        {
+          "child_id": "c",
+          "text_span": "confirmation of the presence of the T790M mutation"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02474355_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_I8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Female patients of childbearing potential must be using adequate contraceptive measures"
+        },
+        {
+          "child_id": "b",
+          "text_span": "must not be breast feeding"
+        },
+        {
+          "child_id": "c",
+          "text_span": "must have a negative pregnancy test prior to start of dosing"
+        },
+        {
+          "child_id": "d",
+          "text_span": "Otherwise, they must have evidence of nonchildbearing potential"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02474355_I9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "uncontrolled hypertension"
+        },
+        {
+          "child_id": "b",
+          "text_span": "active bleeding diatheses"
+        },
+        {
+          "child_id": "c",
+          "text_span": "active infection including hepatitis B, hepatitis C, and human immunodeficiency virus"
+        },
+        {
+          "child_id": "d",
+          "text_span": "significantly impaired bone marrow reserve or organ function, including hepatic and renal impairment"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02474355_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Patient with symptomatic central nervous system (CNS) metastases who is neurologically unstable"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Patient with symptomatic central nervous system (CNS) metastases who has required increasing doses of steroids to manage CNS symptoms within the 2 weeks prior to start AZD9291 administration"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02474355_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Past medical history of ILD"
+        },
+        {
+          "child_id": "b",
+          "text_span": "drug-induced ILD"
+        },
+        {
+          "child_id": "c",
+          "text_span": "radiation pneumonitis requiring steroid treatment"
+        },
+        {
+          "child_id": "d",
+          "text_span": "any evidence of clinically active ILD"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02474355_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02474355_E11",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "History of hypersensitivity to excipients of AZD9291"
+        },
+        {
+          "child_id": "b",
+          "text_span": "History of hypersensitivity to drugs with a similar chemical structure or class to AZD9291"
+        }
+      ],
+      "child_logic": "OR"
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

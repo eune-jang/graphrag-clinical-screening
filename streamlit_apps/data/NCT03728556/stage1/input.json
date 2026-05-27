@@ -1,0 +1,186 @@
+{
+  "trial_id": "NCT03728556",
+  "criteria": [
+    {
+      "criterion_id": "NCT03728556_I1",
+      "type": "inclusion",
+      "text": "Willing to participate in this trial; fully understand and informed of this trial, and able to provide written informed consent form (ICF).",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT03728556_I2",
+      "type": "inclusion",
+      "text": "≥ 18 years of age on the day of signing ICF.",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT03728556_I3",
+      "type": "inclusion",
+      "text": "Have histologically confirmed locally advanced/unresectable stage III non-small cell lung cancer.",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT03728556_I4",
+      "type": "inclusion",
+      "text": "The first dose of CS1001 will be administered within 1 - 42 days (including 42 days) after concurrent/sequential chemoradiotherapy is completed.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT03728556_I5",
+      "type": "inclusion",
+      "text": "Platinum-containing chemotherapy.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT03728556_I6",
+      "type": "inclusion",
+      "text": "Absence of progression after concurrent/sequential chemoradiotherapy.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT03728556_I7",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group(ECOG) Perfomance Status (PS) of 0 or 1.",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT03728556_I8",
+      "type": "inclusion",
+      "text": "Life expectancy ≥ 12 weeks.",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT03728556_I9",
+      "type": "inclusion",
+      "text": "Subject with prior anti-cancer treatment can only be enrolled when all toxicities except for hearing loss, alopecia and fatigue, of prior anti-cancer treatment has recovered to baseline or ≤ Grade 1 (according to National Cancer Institute \\[NCI\\] Common Terminology Criteria for Adverse Events \\[CTCAE\\] v4.03).",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT03728556_I10",
+      "type": "inclusion",
+      "text": "Subjects must have adequate organ function as assessed in the following laboratory tests.",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT03728556_I11",
+      "type": "inclusion",
+      "text": "Women of childbearing potential or fertile men must agree to use an effective method of birth control from providing signed ICF and for 180 days after last dose of investigational product. Women of childbearing potential include premenopausal women and women whose menopause started within prior 2 years. Women of childbearing potential must have a negative pregnancy test ≤7 days prior to the first dose of experimental drug.",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT03728556_E1",
+      "type": "exclusion",
+      "text": "Histologically identified to have mixed small cell lung cancer component.",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT03728556_E2",
+      "type": "exclusion",
+      "text": "Disease progression after concurrent/sequential chemoradiotherapy.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT03728556_E3",
+      "type": "exclusion",
+      "text": "Major surgical procedure (as determined by investigators) within 28 days prior to the first dose of investigational product.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT03728556_E4",
+      "type": "exclusion",
+      "text": "Has received a live vaccine within 28 days prior to the first dose of investigational product.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT03728556_E5",
+      "type": "exclusion",
+      "text": "Current participation in another clinical study or use of any investigational drug within 28 days prior to the first dose of investigational product in this trial. (Participation in the overall survival follow-up of a study is allowed.)",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT03728556_E6",
+      "type": "exclusion",
+      "text": "Any prior treatment of antibody/drug that targets at T-cell coregulatory proteins (immune checkpoints, including PD-1, PD-L1, CTLA4, TIM3 and LAG3, etc.).",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT03728556_E7",
+      "type": "exclusion",
+      "text": "Subjects with current active autoimmune disease or prior history of autoimmune disease that probably will relapse or at risk of having these conditions.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT03728556_E8",
+      "type": "exclusion",
+      "text": "Immune deficient disease or systemic corticosteroid treatment within 7 days prior to the first dose of investigational product, or any other form of immune suppressing treatment.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT03728556_E9",
+      "type": "exclusion",
+      "text": "A known additional malignancy within 5 years prior to the first dose of investigational product.",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT03728556_E10",
+      "type": "exclusion",
+      "text": "History of inflammatory bowel disease or active inflammatory bowel disease (for example Crohn's disease or ulcerative colitis).",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT03728556_E11",
+      "type": "exclusion",
+      "text": "Known history of human immunodeficiency virus (HIV) infection and/or acquired immune deficiency syndrome.",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT03728556_E12",
+      "type": "exclusion",
+      "text": "Subjects at active phase of chronic hepatitis B or with active hepatitis C.",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT03728556_E13",
+      "type": "exclusion",
+      "text": "History of organ transplantation.",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT03728556_E14",
+      "type": "exclusion",
+      "text": "Subjects with known history of alcoholism or drugs abuse.",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT03728556_E15",
+      "type": "exclusion",
+      "text": "Severe allergic reaction to other monoclonal antibodies.",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT03728556_E16",
+      "type": "exclusion",
+      "text": "QTc interval \\> 480 msec on the screening electrocardiogram (ECG) (as calculated by Fridericia formula).",
+      "protocol_ref": "Exclusion #16"
+    },
+    {
+      "criterion_id": "NCT03728556_E17",
+      "type": "exclusion",
+      "text": "Subjects with other conditions that in the investigator's opinion may influence subject's compliance or make subjects not suitable for participating in this trial.",
+      "protocol_ref": "Exclusion #17"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "CS1001monoclonal antibody",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "CS1001 Placebo",
+      "description": "",
+      "group_type": "PLACEBO_COMPARATOR"
+    }
+  ]
+}

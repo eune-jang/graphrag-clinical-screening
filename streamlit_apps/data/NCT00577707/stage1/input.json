@@ -1,0 +1,144 @@
+{
+  "trial_id": "NCT00577707",
+  "criteria": [
+    {
+      "criterion_id": "NCT00577707_I1",
+      "type": "inclusion",
+      "text": "Pathologic confirmation of NSCLC",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT00577707_I2",
+      "type": "inclusion",
+      "text": "Patients must have previously untreated stage IB-IIIA NSCLC (T1-3N0-2M0)",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT00577707_I3",
+      "type": "inclusion",
+      "text": "Patients must have lung cancer with a documented EGFR activating mutation (exon 19 deletion, L858R, L861Q)",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT00577707_I4",
+      "type": "inclusion",
+      "text": "Patients must be candidates for resection with curative intent",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT00577707_I5",
+      "type": "inclusion",
+      "text": "Measurable disease, defined as at least one lesion that can be accurately measured in at least one dimension (longest diameter to be recorded on CT)",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT00577707_I6",
+      "type": "inclusion",
+      "text": "Age greater or equal to 18 years",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT00577707_I7",
+      "type": "inclusion",
+      "text": "Karnofsky performance status greater or equal to 70%",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT00577707_I8",
+      "type": "inclusion",
+      "text": "Normal marrow function: leukocytes greater than or equal to 3,000/μl, absolute neutrophil count greater than or equal to 1,500/μl, platelets greater than or equal to 100,000/μl, hemoglobin greater than or equal to 9 gm/dl",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT00577707_I9",
+      "type": "inclusion",
+      "text": "Adequate renal function, with creatinine less than or equal to 1.3 mg/dl or calculated creatinine clearance greater to or equal to 60ml/min by Cockroft and Gault equation using parameters of age, weight (kg), and baseline serum creatinine (mg/dl)",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT00577707_I10",
+      "type": "inclusion",
+      "text": "Adequate hepatic function: Total bilirubin within normal limits, AST \\< 1.5 X UNL, alkaline phosphatase \\< 1.5 X UNL",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT00577707_I11",
+      "type": "inclusion",
+      "text": "Women of childbearing age must have a negative urine or blood pregnancy test",
+      "protocol_ref": "Inclusion #11"
+    },
+    {
+      "criterion_id": "NCT00577707_I12",
+      "type": "inclusion",
+      "text": "Men and women of childbearing potential must be willing to consent to using effective contraception while on treatment and for at least 3 months thereafter",
+      "protocol_ref": "Inclusion #12"
+    },
+    {
+      "criterion_id": "NCT00577707_I13",
+      "type": "inclusion",
+      "text": "Patients must have ability to understand and the willingness to sign a written informed consent document",
+      "protocol_ref": "Inclusion #13"
+    },
+    {
+      "criterion_id": "NCT00577707_E1",
+      "type": "exclusion",
+      "text": "Prior chemotherapy or radiation therapy, with the exception of chemotherapy for nononcologic conditions (ie, methotrexate for the treatment of rheumatoid arthritis)",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT00577707_E2",
+      "type": "exclusion",
+      "text": "Prior treatment with gefitinib, erlotinib, or other drugs that target EGFR",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT00577707_E3",
+      "type": "exclusion",
+      "text": "Patients must not be receiving any other investigational agents",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT00577707_E4",
+      "type": "exclusion",
+      "text": "Any evidence of interstitial lung disease (patients with chronic stable radiographic changes who are asymptomatic need not be excluded)",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT00577707_E5",
+      "type": "exclusion",
+      "text": "Patients who report a hearing deficit at baseline, even if it does not require a hearing aid or intervention, or interfere with activities of daily life (CTCAE grade 2 or higher)",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT00577707_E6",
+      "type": "exclusion",
+      "text": "Peripheral neuropathy \\> grade 1",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT00577707_E7",
+      "type": "exclusion",
+      "text": "Known HIV-positive patients receiving combination anti-retroviral therapy are excluded from the study because of possible pharmacokinetic interactions with the study drugs.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT00577707_E8",
+      "type": "exclusion",
+      "text": "Other serious illness or medical condition including unstable cardiac disease requiring treatment, history of significant neurologic or psychiatric disorders (including psychotic disorders, dementia, or seizures), or active uncontrolled infection",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT00577707_E9",
+      "type": "exclusion",
+      "text": "Women who are pregnant or breast-feeding",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT00577707_E10",
+      "type": "exclusion",
+      "text": "Psychiatric illness or social situation that would limit compliance with study requirements",
+      "protocol_ref": "Exclusion #10"
+    }
+  ],
+  "disease_domain": "NSCLC"
+}

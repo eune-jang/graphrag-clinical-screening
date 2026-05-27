@@ -1,0 +1,113 @@
+{
+  "trial_id": "NCT02367794",
+  "criteria": [
+    {
+      "criterion_id": "NCT02367794_I1",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) performance status 0 or 1",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02367794_I2",
+      "type": "inclusion",
+      "text": "Histologically or cytologically confirmed, treatment-naïve Stage IV squamous NSCLC",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02367794_I3",
+      "type": "inclusion",
+      "text": "Previously obtained archival tumor tissue or tissue obtained from biopsy at screening",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02367794_I4",
+      "type": "inclusion",
+      "text": "Measurable disease as defined by RECIST v1.1",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02367794_I5",
+      "type": "inclusion",
+      "text": "Adequate hematologic and end organ function",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02367794_E1",
+      "type": "exclusion",
+      "text": "Active or untreated central nervous system (CNS) metastasis",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02367794_E2",
+      "type": "exclusion",
+      "text": "Malignancies other than NSCLC within 5 years prior to randomization, with the exception of those with a negligible risk of metastasis or death treated with expected curative outcome",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02367794_E3",
+      "type": "exclusion",
+      "text": "Pregnant or lactating women",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02367794_E4",
+      "type": "exclusion",
+      "text": "History of autoimmune disease",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02367794_E5",
+      "type": "exclusion",
+      "text": "History of idiopathic pulmonary fibrosis, organizing pneumonia, drug-induced pneumonitis, idiopathic pneumonitis, or evidence of active pneumonitis on screening chest Computed Tomography (CT) scan, History of radiation pneumonitis in the radiation field (fibrosis) is permitted",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02367794_E6",
+      "type": "exclusion",
+      "text": "Positive test for Human Immunodeficiency Virus (HIV)",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT02367794_E7",
+      "type": "exclusion",
+      "text": "Active hepatitis B or hepatitis C",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT02367794_E8",
+      "type": "exclusion",
+      "text": "Prior treatment with cluster of differentiation 137 (CD137) agonists or immune checkpoint blockade therapies, anti-programmed death-1 (anti-PD-1), and anti-PD-L1 therapeutic antibody",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT02367794_E9",
+      "type": "exclusion",
+      "text": "Severe infection within 4 weeks prior to randomization",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT02367794_E10",
+      "type": "exclusion",
+      "text": "Significant history of cardiovascular disease",
+      "protocol_ref": "Exclusion #10"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Arm A: Atezolizumab + Paclitaxel + Carboplatin",
+      "description": "The induction phase of the study will consist of four or six cycles; atezolizumab, paclitaxel, and carboplatin will be administered on Day 1 of each 21-day cycle. The Day 1 order of drug administration is as follows: atezolizumab, then paclitaxel, then carboplatin. Participants who experience no further clinical benefit at any time during the induction phase will discontinue all study treatments. In the absence of the above criteria, after the 4- or 6-cycle induction phase, participants will begin maintenance therapy with atezolizumab. Atezolizumab will be continued as long as there is a clinical benefit to the participant.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Arm B: Atezolizumab + Nab-Paclitaxel + Carboplatin",
+      "description": "The induction phase of the study will consist of four or six cycles; atezolizumab and carboplatin will be administered on Day 1 of each 21-day cycle. Nab-Paclitaxel will be administered on Days 1, 8, and 15 of each 21-day cycle. The Day 1 order of drug administration is as follows: atezolizumab, then nab-paclitaxel, then carboplatin. Participants who experience no further clinical benefit at any time during the induction phase will discontinue all study treatments. In the absence of the above criteria, after the 4- or 6-cycle induction phase, participants will begin maintenance therapy with atezolizumab. Atezolizumab will be continued as long as there is a clinical benefit to the participant.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Arm C: Nab-Paclitaxel + Carboplatin",
+      "description": "The induction phase of the study will consist of four or six cycles; carboplatin will be administered on Day 1 of each 21-day cycle, nab-paclitaxel will be administered on Days 1, 8, and 15 of each 21-day cycle. The Day 1 order of drug administration is as follows: nab-paclitaxel, then carboplatin. Participants who experience disease progression at any time during the induction phase will discontinue all study treatment. In the maintenance phase, participants will receive best supportive care.",
+      "group_type": "ACTIVE_COMPARATOR"
+    }
+  ]
+}

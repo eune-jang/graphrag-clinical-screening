@@ -1,0 +1,241 @@
+{
+  "trial_id": "NCT03425643",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT03425643_I1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "previously untreated"
+        },
+        {
+          "child_id": "b",
+          "text_span": "pathologically confirmed"
+        },
+        {
+          "child_id": "c",
+          "text_span": "resectable Stage II, IIIA, or IIIB (N2) NSCLC"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT03425643_I2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "If male, must agree to use contraception or practice abstinence"
+        },
+        {
+          "child_id": "b",
+          "text_span": "refrain from donating sperm during the treatment period and for the time needed to eliminate each study intervention after the last dose of study intervention"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT03425643_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "not a woman of childbearing potential (WOCBP)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "a WOCBP who agrees to follow contraceptive guidance during the treatment period and for the time needed to eliminate each study intervention after the last dose of study intervention and agrees not to donate eggs (ova, oocytes) to others or freeze/store for her own use for the purpose of reproduction during this period"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03425643_I4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Have available formalin-fixed paraffin embedded (FFPE) tumor tissue sample blocks for submission"
+        },
+        {
+          "child_id": "b",
+          "text_span": "If blocks are not available, have unstained slides for submission for central programmed death-ligand 1 (PD-L1) testing"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03425643_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "NSCLC involving the superior sulcus"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Large cell neuro-endocrine cancer (LCNEC)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Sarcomatoid tumor"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03425643_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Has a history of (non-infectious) pneumonitis /interstitial lung disease that required steroids"
+        },
+        {
+          "child_id": "b",
+          "text_span": "has current pneumonitis/interstitial lung disease that requires steroids"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03425643_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Hepatitis B"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Hepatitis C"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03425643_E10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E12",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "prior therapy with an anti-PD-1 agent"
+        },
+        {
+          "child_id": "b",
+          "text_span": "prior therapy with an anti-PD-L1 agent"
+        },
+        {
+          "child_id": "c",
+          "text_span": "prior therapy with an anti-PD-L2 agent"
+        },
+        {
+          "child_id": "d",
+          "text_span": "prior therapy with an agent directed to another co-inhibitory T-cell receptor"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03425643_E14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E15",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E16",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E17",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT03425643_E18",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Has a diagnosis of immunodeficiency"
+        },
+        {
+          "child_id": "b",
+          "text_span": "is receiving either systemic steroid therapy or any other form of immunosuppressive therapy within 7 days prior the first dose of trial drug"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT03425643_E19",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

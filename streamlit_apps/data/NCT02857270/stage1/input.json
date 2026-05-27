@@ -1,0 +1,180 @@
+{
+  "trial_id": "NCT02857270",
+  "criteria": [
+    {
+      "criterion_id": "NCT02857270_I1",
+      "type": "inclusion",
+      "text": "Have advanced or metastatic cancer (solid tumors) and be an appropriate candidate for experimental therapy.",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02857270_I2",
+      "type": "inclusion",
+      "text": "Part B (No Longer Enrolling Participants): Have advanced or metastatic cancer with an activating mitogen-activated protein kinase pathway alteration, BRAF mutant metastatic melanoma refractory to or relapsed after treatment with RAF and/or MEK inhibitors, metastatic melanoma with a NRAS mutation, or BRAF mutant NSCLC.",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02857270_I3",
+      "type": "inclusion",
+      "text": "Part C: Advanced, unresectable cancer (dose escalation) and advanced, unresectable, or metastatic non-small cell lung cancer with a BRAF or RAS mutation, or NRAS mutant melanoma (dose expansion).",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02857270_I4",
+      "type": "inclusion",
+      "text": "Part D (No Longer Enrolling Participants): Have metastatic pancreatic ductal adenocarcinoma (dose escalation and dose expansion).",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02857270_I5",
+      "type": "inclusion",
+      "text": "Part E: Metastatic BRAF V600E colorectal cancer.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02857270_I6",
+      "type": "inclusion",
+      "text": "Have discontinued previous treatments for cancer and have resolution, except where otherwise stated in the inclusion criteria, of all clinically significant toxic effects of prior chemotherapy, surgery, or radiotherapy to Grade ≤1 by National Cancer Institute (NCI) Common Terminology Criteria for Adverse Events (CTCAE), Version 4.0.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT02857270_I7",
+      "type": "inclusion",
+      "text": "Have adequate organ function.",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT02857270_I8",
+      "type": "inclusion",
+      "text": "Have a performance status of 0 to 1 on the Eastern Cooperative Oncology Group (ECOG) scale.",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT02857270_E1",
+      "type": "exclusion",
+      "text": "Have serious preexisting medical conditions.",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02857270_E2",
+      "type": "exclusion",
+      "text": "Have a known human immunodeficiency virus (HIV) infection or known activated/reactivated hepatitis A, B, or C.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02857270_E3",
+      "type": "exclusion",
+      "text": "Have symptomatic central nervous system malignancy or metastasis.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02857270_E4",
+      "type": "exclusion",
+      "text": "Have current hematologic malignancies, acute or chronic leukemia.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02857270_E5",
+      "type": "exclusion",
+      "text": "Have a second primary malignancy that in the judgment of the investigator or Lilly may affect the interpretation of results.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02857270_E6",
+      "type": "exclusion",
+      "text": "Have prior malignancies. Participants with carcinoma in situ of any origin and participants with prior malignancies who are in remission and whose likelihood of recurrence is very low, as judged by the Lilly clinical research physician, are eligible for this study.",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT02857270_E7",
+      "type": "exclusion",
+      "text": "Have a mean QT interval corrected for heart rate (QTc) of ≥470 milliseconds on screening electrocardiogram (ECG) as calculated using the Bazett's formula at several consecutive days of assessment.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT02857270_E8",
+      "type": "exclusion",
+      "text": "Have participated, within the last 28 days in a clinical trial involving an investigational product or are currently enrolled in a clinical trial involving an investigational product or any other type of medical research judged not to be scientifically or medically compatible with this study.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT02857270_E9",
+      "type": "exclusion",
+      "text": "Have previously completed or withdrawn from this study or any other study investigating an ERK1/2 inhibitor.",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT02857270_E10",
+      "type": "exclusion",
+      "text": "If female, is pregnant, breastfeeding, or planning to become pregnant.",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT02857270_E11",
+      "type": "exclusion",
+      "text": "Have history or findings of central or branch retinal artery or venous occlusion with significant vision loss or other retinal diseases that cause current visual impairment or would likely cause visual impairment over the time period of the study.",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT02857270_E12",
+      "type": "exclusion",
+      "text": "Currently using concomitant medications that are strong inhibitors or inducers of CYP3A4.",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT02857270_E13",
+      "type": "exclusion",
+      "text": "Part C: have serious and/or uncontrolled preexisting medical condition(s) that, in the judgment of the investigator, would preclude participation in this study, including interstitial lung disease (ILD) or severe dyspnea at rest or requiring oxygen therapy.",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT02857270_E14",
+      "type": "exclusion",
+      "text": "Part C4 NRAS Melanoma: have previously completed or withdrawn from a study investigating a MEK inhibitor.",
+      "protocol_ref": "Exclusion #14"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "LY3214996 Dose Escalation",
+      "description": "LY3214996 given orally once a day (or twice a day) for 21 days.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "LY3214996 + Midazolam",
+      "description": "(Preliminary Drug-Drug Interactions \\[DDI\\])\n\nLY3214996 given orally (once a day) and midazolam given orally on cycle 1 day 1 and cycle 1 day 16 (21 day cycles except cycle 1 only = 22 days).",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "LY3214996 Dose Expansion",
+      "description": "LY3214996 given orally (once a day) during each 21 day cycle.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "LY3214996 + Abemaciclib",
+      "description": "Dose Escalation and Expansion- LY3214996 given orally (dose timing will be determined) and abemaciclib given orally (single dose given during lead in period) twice a day every 12 hours during 21 day cycle.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "LY3214996 + Nab-Paclitaxel + Gemcitabine",
+      "description": "Dose Escalation and Expansion- LY3214996 given orally (dose timing will be determined) and nab-paclitaxel given intravenously (IV) on day 1, 8, and 15 and gemcitabine IV on day 1, 8, and 15 during each 28 day cycle.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "LY3214996 + Encorafenib + Cetuximab",
+      "description": "Dose Escalation and Expansion- LY3214996 given orally, encorafenib given orally and cetuximab given IV.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Japan Part 1",
+      "description": "LY3214996 given orally.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Japan Part 2",
+      "description": "LY3214996 given orally and abemaciclib given orally.",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

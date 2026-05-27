@@ -1,0 +1,224 @@
+{
+  "trial_id": "NCT03219268",
+  "criteria": [
+    {
+      "criterion_id": "NCT03219268_I1",
+      "type": "inclusion",
+      "text": "Histologically proven, locally advanced unresectable or metastatic solid tumors (or hematologic malignancies, Cohort Expansion only) for whom no approved therapy with demonstrated clinical benefit is available or standard treatment was declined.",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT03219268_I2",
+      "type": "inclusion",
+      "text": "Eastern Cooperative Oncology Group (ECOG) performance status of 0 or 1",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT03219268_I3",
+      "type": "inclusion",
+      "text": "Life expectancy ≥ 12 weeks",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT03219268_I4",
+      "type": "inclusion",
+      "text": "Measurable disease",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT03219268_I5",
+      "type": "inclusion",
+      "text": "Tissue specimen available for retrospective analysis of PD-1, PD-L1, LAG-3, and MHC-II expression",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT03219268_I6",
+      "type": "inclusion",
+      "text": "Acceptable laboratory parameters HER2+ Cohort: \\- Locally advanced or metastatic HER2+ locally advanced or metastatic solid tumors, regardless of organ of origin. i. The cancer must have progressed following standard therapy, or has progressed during or after HER2-directed therapy if approved and available for patients with HER2+ breast, gastric, or gastroesophageal junction cancer. ii. History of HER2 positivity defined as 3+ by IHC or 2+ by Immunohistochemistry (IHC) in combination with in situ hybridization (ISH) positivity most recent tumor biopsy.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT03219268_I7",
+      "type": "inclusion",
+      "text": "All patients in the HER2+ cohort must be willing to provide consent for a baseline and on-treatment tumor biopsy during the screening period and within 14 days prior to Cycle 3 Day 1. Exceptions may be made based on a medical contraindication at the discretion of the Sponsor's Medical Monitor. This requirement will be discontinued after an adequate number of samples are collected, as determined by the Sponsor.",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT03219268_E1",
+      "type": "exclusion",
+      "text": "Symptomatic central nervous system (CNS) metastases or primary CNS lymphoma",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT03219268_E2",
+      "type": "exclusion",
+      "text": "History of allogeneic bone marrow, stem-cell, or solid organ transplant",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT03219268_E3",
+      "type": "exclusion",
+      "text": "History of known or suspected autoimmune disease with the specific exceptions of vitiligo, resolved childhood atopic dermatitis, psoriasis not requiring systemic treatment (within the past 2 years), and patients with a history of Grave's disease that are now euthyroid clinically and by laboratory testing.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT03219268_E4",
+      "type": "exclusion",
+      "text": "Treatment with any systemic chemotherapy within 3 weeks prior to the initiation of study drug; treatment with biologics or investigational therapy within the 4 weeks prior to the initiation of study drug.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT03219268_E5",
+      "type": "exclusion",
+      "text": "Major surgery within 4 weeks prior to the initiation of study drug.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT03219268_E6",
+      "type": "exclusion",
+      "text": "Prior treatment with combination of monoclonal antibodies against PD-1 and LAG-3 (Cohort Expansion only).",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT03219268_E7",
+      "type": "exclusion",
+      "text": "Treatment with radiation therapy within 2 weeks prior to the initiation of study drug.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT03219268_E8",
+      "type": "exclusion",
+      "text": "Clinically significant cardiovascular disease.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT03219268_E9",
+      "type": "exclusion",
+      "text": "QTcF prolongation \\> 480 milliseconds",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT03219268_E10",
+      "type": "exclusion",
+      "text": "HER2+ cohort: left ventricular ejection fraction less than 50%",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT03219268_E11",
+      "type": "exclusion",
+      "text": "Clinically significant pulmonary compromise, including a requirement for supplemental oxygen use to maintain adequate oxygenation.",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT03219268_E12",
+      "type": "exclusion",
+      "text": "Active pneumonitis or history of non-infectious pneumonitis.",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT03219268_E13",
+      "type": "exclusion",
+      "text": "Clinically significant gastrointestinal disorders.",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT03219268_E14",
+      "type": "exclusion",
+      "text": "Evidence of active viral, bacterial, or systemic fungal infection requiring parenteral treatment within 7 days prior to the initiation of study drug.",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT03219268_E15",
+      "type": "exclusion",
+      "text": "Known history of positive testing for human immunodeficiency virus or history of acquired immune deficiency syndrome.",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT03219268_E16",
+      "type": "exclusion",
+      "text": "Known history of hepatitis B (except in hepatocellular carcinoma) or hepatitis C infection or known positive test for hepatitis B surface antigen, hepatitis B core antigen, or hepatitis C polymerase chain reaction (PCR)",
+      "protocol_ref": "Exclusion #16"
+    },
+    {
+      "criterion_id": "NCT03219268_E17",
+      "type": "exclusion",
+      "text": "Vaccination with any live virus vaccine within 4 weeks prior to the initiation of study drug administration. Inactivated annual influenza vaccination is allowed",
+      "protocol_ref": "Exclusion #17"
+    },
+    {
+      "criterion_id": "NCT03219268_E18",
+      "type": "exclusion",
+      "text": "Dementia or altered mental status that would preclude understanding and rendering of informed consent",
+      "protocol_ref": "Exclusion #18"
+    },
+    {
+      "criterion_id": "NCT03219268_E19",
+      "type": "exclusion",
+      "text": "Confirmed or presumed COVID-19/SARS-CoV-2 infection. While SARS-CoV-2 testing is not mandatory for study entry, testing should follow local clinical practice guidelines/standards. Patients with a positive test result for SARS-CoV-2 infection, known asymptomatic infection, or presumed infection are excluded. Patients may be considered eligible after a resolved SARS-CoV-2 infection once he or she remains afebrile for at least 72 hours and after other SARS-CoV-2-related symptoms have fully recovered to baseline for a minimum of 72 hours.",
+      "protocol_ref": "Exclusion #19"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Tebotelimab: 1 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab 3 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab: 10 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab: 30 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab: 120 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab: 400 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab: 600 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab: 800 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Tebotelimab: 1200 mg",
+      "description": "",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Combination cohort 1",
+      "description": "Tebotelimab and margetuximab",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Combination Cohort 2",
+      "description": "Tebotelimab and margetuximab",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Monotherapy Cohort Expansion",
+      "description": "Monotherapy expansion at 600 mg",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

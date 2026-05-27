@@ -1,0 +1,207 @@
+{
+  "trial_id": "NCT00730639",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT00730639_I1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "mCRPC"
+        },
+        {
+          "child_id": "b",
+          "text_span": "RCC"
+        },
+        {
+          "child_id": "c",
+          "text_span": "MEL"
+        },
+        {
+          "child_id": "d",
+          "text_span": "Non-small-cell lung cancer (NSCLC)"
+        },
+        {
+          "child_id": "e",
+          "text_span": "Colorectal Cancer (CRC)"
+        },
+        {
+          "child_id": "f",
+          "text_span": "that is advanced (non-resectable), or recurrent and for which no alternative, curative standard exists"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00730639_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_I4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "progression new lesions"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Prostate-specific antigen (PSA) progression within the 6-week period before study administration"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00730639_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_I6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior treated brain or meningeal metastases must be without Magnetic resonance imaging (MRI) evidence of progression for at least 8 weeks"
+        },
+        {
+          "child_id": "b",
+          "text_span": "off immunosuppressive doses of systemic steroids for at least 2 weeks before study drug administration"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00730639_I7",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior systemic radiation therapy must have been completed at least 4 weeks before study drug administration"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Prior focal radiotherapy completed at least 2 weeks prior to study drug administration"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00730639_I8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_I9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior surgery that required general anesthesia must be completed at least 2 weeks before study drug administration"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Surgery requiring local/epidural anesthesia must be completed at least 72 hours before study drug administration"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00730639_E1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_E2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_E3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "anti-Programmed death-1 (PD-1)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "anti-PD-L1"
+        },
+        {
+          "child_id": "c",
+          "text_span": "anti-PD-L2"
+        },
+        {
+          "child_id": "d",
+          "text_span": "anti-Cytotoxic t-lymphocyte antigen-4 (CTLA-4) antibody"
+        },
+        {
+          "child_id": "e",
+          "text_span": "any other antibody targeting T cell co-stimulation pathways"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00730639_E4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Active infection requiring therapy"
+        },
+        {
+          "child_id": "b",
+          "text_span": "positive tests for Hepatitis B surface antigen"
+        },
+        {
+          "child_id": "c",
+          "text_span": "positive tests for Hepatitis C ribonucleic acid (RNA)"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00730639_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00730639_E7",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Concurrent medical condition requiring the use of immunosuppressive medications"
+        },
+        {
+          "child_id": "b",
+          "text_span": "immunosuppressive doses of systemic or absorbable topical corticosteroids"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00730639_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

@@ -1,0 +1,221 @@
+{
+  "trial_id": "NCT00326378",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT00326378_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Inoperable Stage IIIA or IIIB, proven by CT or MRI (except wet T4)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "N2 or N3 should be confirmed by PET or pathology"
+        },
+        {
+          "child_id": "c",
+          "text_span": "For T4, PET is optional"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00326378_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_I6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "No prior chemotherapy"
+        },
+        {
+          "child_id": "b",
+          "text_span": "No prior radiation therapy to chest"
+        },
+        {
+          "child_id": "c",
+          "text_span": "No prior immunotherapy"
+        },
+        {
+          "child_id": "d",
+          "text_span": "No prior biologic therapy"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00326378_I7",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Serum Hgb \u000260 10 gm/dL"
+        },
+        {
+          "child_id": "b",
+          "text_span": "platelet \u000260 100,000/\u0003bcL"
+        },
+        {
+          "child_id": "c",
+          "text_span": "absolute neutrophil count \u000260 1,500/\u0003bcL"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00326378_I8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Serum creatinine \u0002641.25 x UNL"
+        },
+        {
+          "child_id": "b",
+          "text_span": "creatinine clearance \u00026460 mlmL/min"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00326378_I9",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Serum bilirubin \u000264 1.5 x UNL"
+        },
+        {
+          "child_id": "b",
+          "text_span": "AST (SGOT) and ALT (SGPT) \u000264 2.5 x UNL"
+        },
+        {
+          "child_id": "c",
+          "text_span": "alkaline phosphatase \u000264 5 x UNL"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00326378_I10",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_I11",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Carcinoid tumor"
+        },
+        {
+          "child_id": "b",
+          "text_span": "small cell carcinoma of lung"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00326378_E2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00326378_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "active infection"
+        },
+        {
+          "child_id": "b",
+          "text_span": "myocardial infarction preceding 6 months"
+        },
+        {
+          "child_id": "c",
+          "text_span": "symptomatic heart disease including unstable angina, congestive heart failure or uncontrolled arrhythmias"
+        },
+        {
+          "child_id": "d",
+          "text_span": "immunosuppressive treatment"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00326378_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pregnant or lactating women"
+        },
+        {
+          "child_id": "b",
+          "text_span": "women who has not taken test of pregnancy (within 14 days before the first administration)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "pregnant women"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00326378_E6",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Women of childbearing potential"
+        },
+        {
+          "child_id": "b",
+          "text_span": "men of childbearing potential"
+        },
+        {
+          "child_id": "c",
+          "text_span": "who have no willing of employing adequate contraception"
+        }
+      ],
+      "child_logic": "AND"
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

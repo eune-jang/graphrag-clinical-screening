@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "graphrag-clinical-screening"
@@ -32,6 +32,12 @@ llm = [
     "torch>=2.0",
     "sentence-transformers>=2.0",
 ]
+iaa = [
+    "streamlit>=1.30",
+    "typing_extensions>=4.0",
+]
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+# 현 시점 실제 코드는 project root의 pipeline/ + iaa_pipeline/에 있음.
+# src/graphrag_screening/{agent,retrieval,...} scaffold는 추후 폴더 재구조(옵션 A) 때 통합 예정.
+packages = ["pipeline", "iaa_pipeline"]

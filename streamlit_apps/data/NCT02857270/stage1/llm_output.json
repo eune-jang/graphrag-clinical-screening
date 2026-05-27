@@ -1,0 +1,242 @@
+{
+  "trial_id": "NCT02857270",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT02857270_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_I2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "advanced or metastatic cancer with an activating mitogen-activated protein kinase pathway alteration"
+        },
+        {
+          "child_id": "b",
+          "text_span": "BRAF mutant metastatic melanoma refractory to or relapsed after treatment with RAF and/or MEK inhibitors"
+        },
+        {
+          "child_id": "c",
+          "text_span": "metastatic melanoma with a NRAS mutation"
+        },
+        {
+          "child_id": "d",
+          "text_span": "BRAF mutant NSCLC"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Advanced, unresectable cancer (dose escalation)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "advanced, unresectable, or metastatic non-small cell lung cancer with a BRAF or RAS mutation"
+        },
+        {
+          "child_id": "c",
+          "text_span": "NRAS mutant melanoma (dose expansion)"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_I8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_E1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "known human immunodeficiency virus (HIV) infection"
+        },
+        {
+          "child_id": "b",
+          "text_span": "known activated/reactivated hepatitis A, B, or C"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_E3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "current hematologic malignancies"
+        },
+        {
+          "child_id": "b",
+          "text_span": "acute leukemia"
+        },
+        {
+          "child_id": "c",
+          "text_span": "chronic leukemia"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_E5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_E8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Have participated, within the last 28 days in a clinical trial involving an investigational product"
+        },
+        {
+          "child_id": "b",
+          "text_span": "are currently enrolled in a clinical trial involving an investigational product"
+        },
+        {
+          "child_id": "c",
+          "text_span": "any other type of medical research judged not to be scientifically or medically compatible with this study"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT02857270_E10",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "If female"
+        },
+        {
+          "child_id": "b",
+          "text_span": "is pregnant"
+        },
+        {
+          "child_id": "c",
+          "text_span": "breastfeeding"
+        },
+        {
+          "child_id": "d",
+          "text_span": "planning to become pregnant"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_E11",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "history or findings of central or branch retinal artery or venous occlusion with significant vision loss"
+        },
+        {
+          "child_id": "b",
+          "text_span": "other retinal diseases that cause current visual impairment or would likely cause visual impairment over the time period of the study"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT02857270_E12",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Currently using concomitant medications that are strong inhibitors of CYP3A4"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Currently using concomitant medications that are strong inducers of CYP3A4"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "serious and/or uncontrolled preexisting medical condition(s) that, in the judgment of the investigator, would preclude participation in this study"
+        },
+        {
+          "child_id": "b",
+          "text_span": "interstitial lung disease (ILD)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "severe dyspnea at rest or requiring oxygen therapy"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT02857270_E14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}

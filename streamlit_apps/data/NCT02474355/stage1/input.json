@@ -1,0 +1,127 @@
+{
+  "trial_id": "NCT02474355",
+  "criteria": [
+    {
+      "criterion_id": "NCT02474355_I1",
+      "type": "inclusion",
+      "text": "Provision of signed and dated written informed consent by the patient or legally acceptable representative prior to any study-specific procedures",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02474355_I2",
+      "type": "inclusion",
+      "text": "Adults (according to each country regulations for age of majority)",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02474355_I3",
+      "type": "inclusion",
+      "text": "Locally advanced (stage IIIB) or metastatic (stage IV) EGFRm NSCLC, not amenable to curative surgery or radiotherapy, with confirmation of the presence of the T790M mutation",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02474355_I4",
+      "type": "inclusion",
+      "text": "Prior therapy with an EGFR-TKI. Patients may have also received additional lines of treatment",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02474355_I5",
+      "type": "inclusion",
+      "text": "World Health Organization (WHO) performance status 0-2",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02474355_I6",
+      "type": "inclusion",
+      "text": "Adequate bone marrow reserve and organ function as demonstrated by complete blood count, biochemistry in blood and urine at baseline (please refer to IB for guidance)",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT02474355_I7",
+      "type": "inclusion",
+      "text": "ECG recording at baseline showing absence of any cardiac abnormality as per exclusion criterion #6",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT02474355_I8",
+      "type": "inclusion",
+      "text": "Female patients of childbearing potential must be using adequate contraceptive measures, must not be breast feeding, and must have a negative pregnancy test prior to start of dosing. Otherwise, they must have evidence of nonchildbearing potential",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT02474355_I9",
+      "type": "inclusion",
+      "text": "Male patients must be willing to use barrier contraception, i.e., condoms",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT02474355_E1",
+      "type": "exclusion",
+      "text": "Previous (within 6 months) or current treatment with AZD9291",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02474355_E2",
+      "type": "exclusion",
+      "text": "Patients currently receiving (or unable to stop use at least 1 week prior to receiving the first dose of AZD9291) any treatment known to be potent inhibitors or inducers of cytochrome P450 (CYP) 3A4",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02474355_E3",
+      "type": "exclusion",
+      "text": "Any evidence of severe or uncontrolled systemic diseases, including uncontrolled hypertension, active bleeding diatheses, active infection including hepatitis B, hepatitis C, and human immunodeficiency virus, or significantly impaired bone marrow reserve or organ function, including hepatic and renal impairment, which in the investigator's opinion would significantly alter the risk/benefit balance.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02474355_E4",
+      "type": "exclusion",
+      "text": "Patient with symptomatic central nervous system (CNS) metastases who is neurologically unstable or has required increasing doses of steroids to manage CNS symptoms within the 2 weeks prior to start AZD9291 administration;",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02474355_E5",
+      "type": "exclusion",
+      "text": "Past medical history of ILD, drug-induced ILD, radiation pneumonitis requiring steroid treatment, or any evidence of clinically active ILD",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02474355_E6",
+      "type": "exclusion",
+      "text": "Any of the following cardiac criteria:",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT02474355_E7",
+      "type": "exclusion",
+      "text": "Mean resting corrected QT interval (QTcF) \\> 470 ms using Fredericia's formula :",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT02474355_E8",
+      "type": "exclusion",
+      "text": "Any clinically important abnormalities in rhythm, conduction or morphology of resting ECG (e.g., complete left bundle branch block, third degree heart block, second degree heart block)",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT02474355_E9",
+      "type": "exclusion",
+      "text": "Any factors that increase the risk of QTc prolongation or risk of arrhythmic events",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT02474355_E10",
+      "type": "exclusion",
+      "text": "Any unresolved toxicity from prior therapy CTCAE \\> grade 3 at the time of starting treatment",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT02474355_E11",
+      "type": "exclusion",
+      "text": "History of hypersensitivity to excipients of AZD9291 or to drugs with a similar chemical structure or class to AZD9291",
+      "protocol_ref": "Exclusion #11"
+    }
+  ],
+  "trial_acronym": "ASTRIS",
+  "disease_domain": "Lung Cancer"
+}

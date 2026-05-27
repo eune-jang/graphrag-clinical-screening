@@ -1,0 +1,357 @@
+{
+  "trial_id": "NCT00130728",
+  "stage": 1,
+  "source": "llm",
+  "model": "production-pipeline-v1.2.1",
+  "created_at": "2026-05-27T03:47:07Z",
+  "records": [
+    {
+      "criterion_id": "NCT00130728_I1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_I2",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_I3",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_I4",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_I5",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_I6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_I7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_I8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "International normalized ratio (INR) no greater than 1.3"
+        },
+        {
+          "child_id": "b",
+          "text_span": "an aPTT no greater than the upper limits of normal within 28 days prior to enrollment"
+        },
+        {
+          "child_id": "c",
+          "text_span": "for patients not on low-molecular-weight heparin or fondaparinux"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00130728_E1",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior treatment with an investigational or marketed inhibitor of the Epidermal Growth Factor Receptor (EGFR) pathway"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Prior treatment with an anti-angiogenesis agent"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Systemic chemotherapy within 28 days prior to randomization"
+        },
+        {
+          "child_id": "b",
+          "text_span": "radiotherapy within 28 days prior to randomization"
+        },
+        {
+          "child_id": "c",
+          "text_span": "investigational treatment within 28 days prior to randomization"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Local palliative radiotherapy within 14 days prior to randomization"
+        },
+        {
+          "child_id": "b",
+          "text_span": "persistent adverse effects from radiotherapy that have not resolved to Grade 2 or less following completion of treatment"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Whole brain radiotherapy for brain metastases within 4 weeks of Day 0"
+        },
+        {
+          "child_id": "b",
+          "text_span": "stereotactic radiosurgery for brain metastases within 4 weeks of Day 0"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E6",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E7",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E8",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E9",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E10",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "serious systemic disease"
+        },
+        {
+          "child_id": "b",
+          "text_span": "uncontrolled hypertension"
+        },
+        {
+          "child_id": "c",
+          "text_span": "unstable angina"
+        },
+        {
+          "child_id": "d",
+          "text_span": "New York Heart Association (NYHA) Grade 2 or greater Congestive Heart Failure (CHF)"
+        },
+        {
+          "child_id": "e",
+          "text_span": "unstable symptomatic arrhythmia requiring medication"
+        },
+        {
+          "child_id": "f",
+          "text_span": "clinically significant peripheral vascular disease"
+        },
+        {
+          "child_id": "g",
+          "text_span": "abdominal fistula"
+        },
+        {
+          "child_id": "h",
+          "text_span": "gastrointestinal perforation"
+        },
+        {
+          "child_id": "i",
+          "text_span": "intra-abdominal abscess"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E11",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Evidence of bleeding diathesis"
+        },
+        {
+          "child_id": "b",
+          "text_span": "coagulopathy"
+        },
+        {
+          "child_id": "c",
+          "text_span": "other serious or acute internal bleeding within 6 months prior to randomization"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E12",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Central Nervous System (CNS) bleeding"
+        },
+        {
+          "child_id": "b",
+          "text_span": "history or clinical evidence of CNS stroke (hemorrhagic or thrombotic) within the last 6 months"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00130728_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Progressive neurologic symptoms"
+        },
+        {
+          "child_id": "b",
+          "text_span": "patients with a history of brain metastases"
+        }
+      ],
+      "child_logic": "AND"
+    },
+    {
+      "criterion_id": "NCT00130728_E14",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E15",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E16",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "In-patient surgical procedure within 28 days prior to randomization"
+        },
+        {
+          "child_id": "b",
+          "text_span": "open biopsy within 28 days prior to randomization"
+        },
+        {
+          "child_id": "c",
+          "text_span": "significant traumatic injury within 28 days prior to randomization"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E17",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E18",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E19",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Serious, non-healing wound"
+        },
+        {
+          "child_id": "b",
+          "text_span": "ulcer"
+        },
+        {
+          "child_id": "c",
+          "text_span": "bone fracture"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E20",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Inability to take oral medication"
+        },
+        {
+          "child_id": "b",
+          "text_span": "requirement for intravenous (IV) alimentation or total parenteral nutrition with lipids"
+        },
+        {
+          "child_id": "c",
+          "text_span": "prior surgical procedures affecting absorption"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E21",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pregnancy"
+        },
+        {
+          "child_id": "b",
+          "text_span": "breast-feeding"
+        }
+      ],
+      "child_logic": "OR"
+    },
+    {
+      "criterion_id": "NCT00130728_E22",
+      "splitting_decision": "none",
+      "sub_criteria": []
+    },
+    {
+      "criterion_id": "NCT00130728_E23",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Evidence of confusion or disorientation"
+        },
+        {
+          "child_id": "b",
+          "text_span": "history of major psychiatric illness that may impair the patient's understanding of the Informed Consent Form or their ability to comply with study requirements"
+        }
+      ],
+      "child_logic": "OR"
+    }
+  ],
+  "notes": "Extracted from production pipeline output (pipeline/output/NCT*_annotation.json) — Prompt 1 results were already embedded as parent_role / child_logic. No new LLM call."
+}
