@@ -44,8 +44,8 @@ graphrag-clinical-screening/
 │   ├── cli.py
 │   ├── aligners.py
 │   ├── metrics.py
-│   ├── streamlit_app.py            (local UI)
-│   └── for_reference/              (alternative design, audit reference)
+│   └── streamlit_app.py            (local UI)
+├── docs/audit_reference/           (alternative design considered during the audit)
 ├── streamlit_apps/
 │   ├── stage1_app.py               (hosted UI)
 │   └── data/{trial_id}/stage1/     (30 trial inputs + LLM outputs bundled)
