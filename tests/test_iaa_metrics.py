@@ -37,6 +37,10 @@ from iaa_pipeline.streamlit_app import (
     STAGE_MODE,
 )
 
+# Hosted app helpers (filtering bundled trials to IAA subset)
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "streamlit_apps"))
+import stage1_app as hosted  # noqa: E402
+
 
 # ──────────────────────────────────────────────────────────────────────
 # Cohen's kappa unit tests
@@ -478,6 +482,48 @@ def test_envelope_is_committed():
     assert envelope_is_committed({"committed": "yes"}) is False  # not boolean
     assert envelope_is_committed({}) is False
     assert envelope_is_committed(None) is False
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Hosted app — IAA trial filtering
+# ──────────────────────────────────────────────────────────────────────
+
+def test_iaa_filter_file_exists_and_parses():
+    """iaa_8trials.txt should exist and contain exactly 8 NCT IDs."""
+    iaa_ids = hosted._load_iaa_trial_filter()
+    assert iaa_ids is not None, "iaa_pipeline_spec/iaa_8trials.txt is missing"
+    assert len(iaa_ids) == 8, f"expected 8 trials, got {len(iaa_ids)}: {iaa_ids}"
+    # spec doc names KEYNOTE-671 explicitly as the pilot
+    assert "NCT03425643" in iaa_ids
+
+
+def test_hosted_app_lists_only_iaa_trials():
+    """When the filter file is present, list_bundled_trials returns only the 8."""
+    trials = hosted.list_bundled_trials()
+    iaa_ids = hosted._load_iaa_trial_filter()
+    assert iaa_ids is not None
+    assert set(trials) == iaa_ids, (
+        f"hosted app dropdown leaked non-IAA trials: "
+        f"{set(trials) - iaa_ids}"
+    )
+    assert len(trials) == 8
+
+
+def test_iaa_filter_skips_comments_and_blanks():
+    """The parser ignores blank lines and comment lines (starting with #)."""
+    import tempfile, os
+    with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as f:
+        f.write("# comment line\nNCT00001\n\n# another\nNCT00002\n")
+        tmp_path = f.name
+    try:
+        # Monkey-patch the constant to point at the temp file
+        original = hosted.IAA_TRIAL_LIST
+        hosted.IAA_TRIAL_LIST = Path(tmp_path)
+        ids = hosted._load_iaa_trial_filter()
+        assert ids == {"NCT00001", "NCT00002"}
+    finally:
+        hosted.IAA_TRIAL_LIST = original
+        os.unlink(tmp_path)
 
 
 # ──────────────────────────────────────────────────────────────────────

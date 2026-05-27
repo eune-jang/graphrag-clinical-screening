@@ -18,6 +18,7 @@ Stages 2-5 runners are stubs (form rendering / runners pending).
 | Annotation UI (hosted) | `streamlit_apps/stage1_app.py` | Streamlit Community Cloud — shared password, ephemeral storage, download workflow |
 | Tests | `tests/test_iaa_metrics.py` | 31 unit tests (metrics + alignment + blinding guarantees). All pass. |
 | Converter | `scripts/convert_production_to_iaa.py` | Extracts Stage 1 splitting decisions from `pipeline/output/NCT*_annotation.json` into IAA envelope format (zero LLM calls) |
+| IAA trial subset | `iaa_pipeline_spec/iaa_8trials.txt` + `iaa_8trials_selection.md` | 8-trial stratified sample for IAA measurement (out of 30 candidates). The hosted app dropdown is filtered to this list. |
 
 ## Design docs
 
@@ -27,6 +28,23 @@ Stages 2-5 runners are stubs (form rendering / runners pending).
 - `audit_streamlit_v1.md` — self-audit of UI blinding leaks + resolution
   notes (3 critical / 3 moderate / 2 minor; CRITICAL all closed at the
   function-signature level)
+- `iaa_8trials_selection.md` — rationale for the 8-trial stratified sample
+  used in the IAA experiment (Methods section source)
+
+## IAA experiment scope (8 of 30 trials)
+
+The Stage 1 IAA experiment uses 8 trials, not all 30 candidates. Rationale
+in `iaa_8trials_selection.md`. The 30 bundled trials remain in
+`streamlit_apps/data/` because they're useful for follow-up single-annotator
+work or auto-generated KG inputs, but the hosted app **filters its dropdown
+to the 8** so blind annotators can't drift onto non-IAA trials.
+
+The 22 trials outside the IAA sample are handled per the paper's claim:
+- If the paper claims methodology validation only → no further work needed
+- If a 30-trial gold corpus is released → single-annotator on the remaining 22
+  using the validated methodology
+- If only the LLM-generated KG is used downstream → 22 trials use the existing
+  `pipeline/output/NCT*_annotation.json` files as-is
 
 ## Requirements
 

@@ -51,6 +51,7 @@ from iaa_pipeline.stage_schemas import (  # noqa: E402
 )
 
 DATA_DIR = _THIS_DIR / "data"
+IAA_TRIAL_LIST = _PROJECT_ROOT / "iaa_pipeline_spec" / "iaa_8trials.txt"
 STAGE = 1
 MODE = "from_scratch"
 
@@ -101,13 +102,40 @@ def gate_password() -> bool:
 # Data access (read-only, bundled in repo)
 # ──────────────────────────────────────────────────────────────────────
 
+def _load_iaa_trial_filter() -> set[str] | None:
+    """Read the IAA evaluation subset from iaa_pipeline_spec/iaa_8trials.txt.
+
+    Returns a set of NCT IDs (one per non-comment, non-blank line) or None
+    if the file is missing (caller then shows all bundled trials).
+    """
+    if not IAA_TRIAL_LIST.exists():
+        return None
+    ids = set()
+    for line in IAA_TRIAL_LIST.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            ids.add(line)
+    return ids or None
+
+
 def list_bundled_trials() -> list[str]:
+    """Return the trial IDs the annotator can pick.
+
+    Restricted to the IAA evaluation subset (`iaa_8trials.txt`) when that
+    file is present; otherwise falls back to every bundled trial. The
+    restriction prevents annotators from wasting blind-annotation effort
+    on trials outside the IAA stratified sample.
+    """
     if not DATA_DIR.exists():
         return []
-    return sorted(
+    all_trials = sorted(
         d.name for d in DATA_DIR.iterdir()
         if d.is_dir() and (d / f"stage{STAGE}" / "input.json").exists()
     )
+    iaa_filter = _load_iaa_trial_filter()
+    if iaa_filter is None:
+        return all_trials
+    return [t for t in all_trials if t in iaa_filter]
 
 
 def load_bundled_input(trial_id: str) -> dict | None:
@@ -178,7 +206,16 @@ def render_sidebar() -> tuple[str | None, str]:
         if not trials:
             st.error("No trials bundled in `streamlit_apps/data/`.")
             return None, annotator
-        trial_id = st.selectbox("Pick a trial", trials, key="trial_pick")
+        is_filtered = _load_iaa_trial_filter() is not None
+        label = f"Pick a trial ({len(trials)} IAA subset)" if is_filtered \
+                else f"Pick a trial ({len(trials)} total)"
+        trial_id = st.selectbox(label, trials, key="trial_pick")
+        if is_filtered:
+            st.caption(
+                f"📋 Showing only the {len(trials)} IAA evaluation trials "
+                "(stratified sample). See "
+                "`iaa_pipeline_spec/iaa_8trials_selection.md` for the rationale."
+            )
 
         st.divider()
         st.subheader("Resume previous draft")

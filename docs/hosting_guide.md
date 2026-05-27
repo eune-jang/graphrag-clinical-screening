@@ -10,9 +10,17 @@ and download their committed envelopes for out-of-band submission.
 |---|---|
 | Streamlit app (`streamlit_apps/stage1_app.py`) | Streamlit Cloud server |
 | 30 trial input data (`streamlit_apps/data/`) | Committed in GitHub repo, served by SCC |
+| IAA trial filter (`iaa_pipeline_spec/iaa_8trials.txt`) | Committed — dropdown shows only these 8 |
 | Annotator drafts | **Browser session state only** — never written to SCC disk |
 | Committed envelopes | Downloaded by annotator, manually uploaded to shared submission folder |
 | Shared password | Streamlit Cloud "secrets" (not in git) |
+
+The dropdown shows only the 8 IAA-evaluation trials by design — annotators
+shouldn't waste blind-annotation effort on trials outside the stratified
+sample. See `iaa_pipeline_spec/iaa_8trials_selection.md` for the rationale.
+To work on the remaining 22 trials later (e.g., single-annotator follow-up),
+either rename/remove `iaa_8trials.txt` or write a separate phase-2 app
+pointed at the full bundle.
 
 Server has no annotator-specific persistence. Refreshing the browser tab
 loses unsaved progress. Annotators should periodically "Download draft"

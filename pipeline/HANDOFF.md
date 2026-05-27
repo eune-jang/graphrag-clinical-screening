@@ -495,5 +495,42 @@ UI 첫 사용 워크플로우:
 - Cold-start 10-30초 (SCC 무료 tier 정상 동작).
 - 기관 IRB 정책 확인 완료 (AACT public, annotation은 PHI 아님).
 
+### 12-10b. IAA evaluation trial 선정 (8 of 30) — 2026-05-27 후반후반후반
+
+**결정**: 30 trial 전수 dual-annotator gold 대신 stratified sample 8개로 IAA 측정.
+
+**근거** (`iaa_pipeline_spec/iaa_8trials_selection.md`):
+- Stratified purposive sampling (stage / line / biomarker / modality / phase 균형)
+- 각 stage별 stress-test 매핑:
+  - Stage 1: KEYNOTE-671 (macro_aggregate), KEYNOTE-001 (cohort_scope), eNRGy (basket)
+  - Stage 3: ALEX/ASTRIS/GFH925/eNRGy로 variant_type 4종 (rearrangement, protein, KRAS G12C, NRG1 fusion) 커버
+  - Stage 4: PACIFIC (patient_event anchor)
+- Paper Methods에서 "Why N=8" 정당화 가능 (Cohen κ는 5-20 unit에서 보통 측정)
+
+**선정 8개**:
+```
+NCT03425643  KEYNOTE-671        (pilot, macro_aggregate)
+NCT02125461  PACIFIC            (patient_event anchor)
+NCT03728556  GEMSTONE-301       (consolidation)
+NCT02075840  ALEX               (ALK rearrangement)
+NCT01295827  KEYNOTE-001        (multi-cohort)
+NCT02474355  ASTRIS             (EGFR T790M)
+NCT05756153  GFH925+cetuximab   (KRAS G12C)
+NCT02912949  eNRGy              (NRG1 fusion, basket)
+```
+
+**나머지 22 trial 처리 정책** (paper claim 따라 결정):
+- (A) Methodology validation only — 22개 사용 안 함
+- (B) 30-trial gold corpus 공개 — methodology 검증 후 single-annotator로 22개 처리
+- (C) RAG agent end-to-end — 22개는 기존 `pipeline/output/NCT*_annotation.json` 그대로 KG에 투입
+
+대부분 임상 NLP paper는 (A) 또는 (C). 결정은 paper draft 작성 시점에.
+
+**구현**: `iaa_pipeline_spec/iaa_8trials.txt`를 신뢰 소스로 삼아 hosted app dropdown이 자동 8개로 필터링됨 (`stage1_app.py:list_bundled_trials`). 22개 follow-up 작업 필요 시 (B) 또는 (C) 경로로:
+- (B): `iaa_8trials.txt`를 rename/remove → app이 30개 전부 표시
+- (C): 별도 phase-2 app 작성하여 full bundle 사용
+
+**검증**: 3개 신규 테스트 추가 (`test_iaa_filter_*` in `tests/test_iaa_metrics.py`) → **34/34 통과**.
+
 ### 12-10. 한 줄 요약
 > **IAA 인프라 0 → 1**. spec 따라 aligners + metrics + Stage 1 UI 완성, 18 tests 통과. 다음 세션은 시범 실행 (후보 I) 또는 Stage 2 runner (후보 J)부터.
