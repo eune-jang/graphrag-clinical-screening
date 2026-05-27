@@ -113,15 +113,19 @@ LLM-assisted clinical trial annotation 파이프라인 + Neo4j 기반 검수 워
 
 실행:
 ```bash
-# Stage 1 LLM 추출
-python -m iaa_pipeline.cli stage1 examples/keynote_671_input.json \
+# Stage 1 LLM 추출 (번들된 30 trial 중 1개 예시)
+python -m iaa_pipeline.cli stage1 \
+    streamlit_apps/data/NCT03425643/stage1/input.json \
     --output-dir iaa_workspace/ --cache-dir cache/
 
-# Annotation UI (streamlit 필요: pip install -e ".[iaa]")
+# Annotation UI — 로컬 (streamlit 필요: pip install -e ".[iaa]")
 bash scripts/run_iaa_ui.sh
 
-# 메트릭 단위 테스트
-python tests/test_iaa_metrics.py    # 18 smoke tests
+# Annotation UI — 호스팅 (배포: docs/hosting_guide.md)
+streamlit run streamlit_apps/stage1_app.py
+
+# 메트릭 + 블라인딩 단위 테스트
+python tests/test_iaa_metrics.py    # 31 tests
 ```
 
 ## 데이터 흐름 요약
