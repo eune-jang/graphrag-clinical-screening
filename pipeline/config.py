@@ -87,7 +87,7 @@ CONCEPT_SUBTYPES = {"Condition", "Drug", "Observation", "Procedure", "Biomarker"
 
 SPLITTING_DECISIONS = {"composite_split", "macro_aggregate", "nested_exception", "none"}
 
-CHILD_LOGIC = {"AND", "OR", "XOR"}
+CHILD_LOGIC = {"AND", "OR"}  # v1.2.2: XOR removed (stress test 0 occurrence in 30 trials)
 
 VARIANT_TYPES = {
     "mutation", "rearrangement", "fusion", "deletion", "insertion",

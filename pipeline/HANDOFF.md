@@ -202,7 +202,7 @@ NCT02075840_I2  "Life expectancy at least 12 weeks"    →  동일
 
 | # | 위치 | 현재 | v1.2.2 spec | 실제 emit 수 (30 trial) |
 |---|---|---|---|---|
-| ① | `config.py:90` | `CHILD_LOGIC = {AND, OR, XOR}` | `{AND, OR}` (XOR 제거) | XOR **0건** — 무영향, enum만 정리 |
+| ① | `config.py:90` | ✅ **RESOLVED 2026-05-27**: `CHILD_LOGIC = {AND, OR}`. `stage_schemas.py:104` docstring 동기화. Streamlit dropdown에서 XOR 옵션 제거됨. 30 trial XOR emit 0건 확인 → 데이터 무영향. | `{AND, OR}` (XOR 제거) | XOR **0건** |
 | ② | `config.py:92-95` | `VARIANT_TYPES` 9개 (+amplification, methylation, unknown) | 6개 (3개 제거) | amplification **2건** (NCT01884285, NCT03219268), unknown **3건** (NCT01884285), methylation 0건 — 총 5건 재처리 필요 |
 | ③ | `config.py:97, 151` | `variant_notation` strip ("deferred to v1.3") | 5 enum active + LLM auto-fill (protein/cdna/genomic/exon_level/wildcard) | **0건 채워짐** — ~58 variant에 잠재적 채움 대상. 정책 결정 필요 (코드 보수 유지 vs spec align) |
 | ④ | `config.py:17` | `SCHEMA_PATH = ontology_v1.2.1.json` | v1.2.2 파일로 갱신 | 단순 reference, 결과 무영향 |

@@ -101,7 +101,7 @@ class Stage1Record(TypedDict, total=False):
     """One record in Stage 1 output (one per input criterion)."""
     criterion_id: str                   # required: parent criterion ID
     splitting_decision: str             # required: one of SPLITTING_DECISIONS
-    child_logic: str | None             # optional: "AND" | "OR" | "XOR" | None
+    child_logic: str | None             # optional: "AND" | "OR" | None  (v1.2.2: XOR removed)
     cohort_scope: list[str] | None      # optional
     sub_criteria: list[Stage1SubCriterion]  # required (empty list if decision="none")
     confidence: Literal["high", "medium", "low"]  # optional
