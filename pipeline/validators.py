@@ -5,7 +5,15 @@ Each validator checks LLM output against schema enums and structural
 rules BEFORE passing to the next stage. On failure, returns a list of error
 strings so the orchestrator can decide whether to retry or flag for human review.
 
-v1.2.1 → pruned: strictness, variant_notation, procedure_event, requirement_waiver, t/n/m_descriptor deferred to v1.3
+v1.2.2 self-correction status (see pipeline/HANDOFF.md §7-H):
+  - CHILD_LOGIC: {AND, OR}                                            ✓ aligned
+  - VARIANT_TYPES: 6 types (amplification/methylation/unknown removed) ✓ aligned
+  - EXCEPTION_TYPES: 4 types (requirement_waiver removed)             ✓ aligned
+  - ANCHOR_TYPES: 3 types (procedure_event removed)                   ✓ aligned
+  - CONCEPT_SUBTYPES: LabTest → Observation                           ✓ aligned
+  - variant_notation: stripped (v1.2.2 activates 5 enum values;
+    revisit when Stage 3 IAA work begins)                              ⏸ deferred
+  - strictness, t/n/m_descriptor: stripped (insufficient NSCLC stress) ⏸ deferred
 """
 from __future__ import annotations
 from typing import Any

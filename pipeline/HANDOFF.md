@@ -203,15 +203,15 @@ NCT02075840_I2  "Life expectancy at least 12 weeks"    →  동일
 | # | 위치 | 현재 | v1.2.2 spec | 실제 emit 수 (30 trial) |
 |---|---|---|---|---|
 | ① | `config.py:90` | ✅ **RESOLVED 2026-05-27**: `CHILD_LOGIC = {AND, OR}`. `stage_schemas.py:104` docstring 동기화. Streamlit dropdown에서 XOR 옵션 제거됨. 30 trial XOR emit 0건 확인 → 데이터 무영향. | `{AND, OR}` (XOR 제거) | XOR **0건** |
-| ② | `config.py:92-95` | `VARIANT_TYPES` 9개 (+amplification, methylation, unknown) | 6개 (3개 제거) | amplification **2건** (NCT01884285, NCT03219268), unknown **3건** (NCT01884285), methylation 0건 — 총 5건 재처리 필요 |
-| ③ | `config.py:97, 151` | `variant_notation` strip ("deferred to v1.3") | 5 enum active + LLM auto-fill (protein/cdna/genomic/exon_level/wildcard) | **0건 채워짐** — ~58 variant에 잠재적 채움 대상. 정책 결정 필요 (코드 보수 유지 vs spec align) |
-| ④ | `config.py:17` | `SCHEMA_PATH = ontology_v1.2.1.json` | v1.2.2 파일로 갱신 | 단순 reference, 결과 무영향 |
-| ⑤ | `validators.py:8` docstring | "v1.2.1 → pruned ... deferred to v1.3" | 실제는 v1.2.2 self-correction. variant_notation은 v1.2.2 active | 주석 정합성, 결과 무영향 |
+| ② | `config.py:92-95` | ✅ **RESOLVED 2026-05-27**: `VARIANT_TYPES` 6개 (amplification/methylation/unknown 제거됨). 5건 영향 (NCT01884285 amp 1 + unknown 3, NCT03219268 amp 1) — **모두 비-IAA trials**라 즉시 영향 X. 22 follow-up corpus 작업 시 재처리. | 6개 | amplification 2 + unknown 3 (모두 비-IAA) |
+| ③ | `config.py:105, 160` | ✅ **POLICY DECIDED 2026-05-27**: 현재 strip 유지 (코드 보수). 코멘트 "v1.3" → "Stage 3 IAA work begins" 로 갱신. v1.2.2 spec align은 Stage 3 IAA 작업과 함께 진행 예정. | 5 enum active (정책 보류) | ~58 variant 잠재 영향 (보류) |
+| ④ | `config.py:17` | ✅ **DOCUMENTED 2026-05-27**: SCHEMA_PATH는 사용처 0 (dead reference). v1.2.1.json은 historical reference로 유지. v1.2.2 JSON 생성은 Stage 3 IAA 작업과 함께. | (deferred) | 무영향 |
+| ⑤ | `validators.py:8` docstring | ✅ **RESOLVED 2026-05-27**: 모듈 docstring을 v1.2.2 self-correction 현황표로 재작성 (CHILD_LOGIC/VARIANT_TYPES/EXCEPTION_TYPES/ANCHOR_TYPES/CONCEPT_SUBTYPES aligned, variant_notation/strictness/descriptor deferred). | — | 주석 정합성 확보 |
 
-**결과 영향 요약**:
-- **즉시 재처리 필요**: 5건 (amplification 2 + unknown 3, 2 trial)
-- **spec 미충족 (선택)**: variant_notation ~58건 누락 — 살릴지 결정 필요
-- **무영향 (enum 정리만)**: XOR 제거, methylation 제거, SCHEMA_PATH 갱신, 주석 정리
+**결과 영향 요약** (2026-05-27 갱신):
+- **재처리 필요했던 5건**: 모두 비-IAA trials (NCT01884285, NCT03219268) → 22 follow-up corpus 작업 시 처리. IAA 8 trials 무영향.
+- **variant_notation policy decided**: strip 유지 — Stage 3 IAA 시작 시 spec align 재검토.
+- **enum/주석 정리 완료**: XOR 제거 ✓, amplification/methylation/unknown 제거 ✓, validators.py docstring 갱신 ✓, SCHEMA_PATH 코멘트 추가 ✓.
 
 **부수 발견 — child_logic 과다 명시 가능성**:
 - 30 trial에서 child_logic: AND 84건, OR 173건 (총 257건)

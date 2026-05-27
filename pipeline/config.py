@@ -14,6 +14,10 @@ from pathlib import Path
 # ── Paths ──────────────────────────────────────────────────────────────
 PIPELINE_DIR = Path(__file__).parent
 PROJECT_ROOT = PIPELINE_DIR.parent
+# NOTE: SCHEMA_PATH is presently unused (grep shows zero call sites). The
+# v1.2.1 JSON is kept as a historical reference; the v1.2.2 enum source of
+# truth lives in this file (config.py). A canonical v1.2.2 JSON will be
+# generated when Stage 3 IAA work needs JSON Schema validation downstream.
 SCHEMA_PATH = PIPELINE_DIR / "schema" / "ontology_v1.2.1.json"
 PROMPTS_DIR = PIPELINE_DIR / "prompts"
 OUTPUT_DIR = PIPELINE_DIR / "output"
@@ -90,11 +94,16 @@ SPLITTING_DECISIONS = {"composite_split", "macro_aggregate", "nested_exception",
 CHILD_LOGIC = {"AND", "OR"}  # v1.2.2: XOR removed (stress test 0 occurrence in 30 trials)
 
 VARIANT_TYPES = {
-    "mutation", "rearrangement", "fusion", "deletion", "insertion",
-    "amplification", "expression", "methylation", "unknown",
+    "mutation", "rearrangement", "fusion", "deletion", "insertion", "expression",
 }
+# v1.2.2 removed: amplification, methylation, unknown
+# Affected production cases (5 total, all in non-IAA trials):
+#   NCT01884285 — amplification 1, unknown 3
+#   NCT03219268 — amplification 1
+# Reprocess when those trials enter scope (e.g., 22 follow-up corpus).
 
-## variant_notation: deferred to v1.3 (auto-assigned by LLM, not annotator-facing)
+## variant_notation: kept stripped (v1.2.2 spec activates it with 5 enum values
+## protein/cdna/genomic/exon_level/wildcard; revisit when Stage 3 IAA work begins).
 
 OPERATORS = {"≤", "<", "=", "≥", ">", "within"}
 
@@ -148,7 +157,7 @@ LLM_OUTPUT_STRIP_FIELDS = {
     "review_reason",     # pipeline-internal, not in schema
     "needs_human_review",# pipeline-internal flag
     "strictness",        # deferred to v1.3: insufficient real-world usage
-    "variant_notation",  # deferred to v1.3: auto-assigned, not annotator-facing
+    "variant_notation",  # v1.2.2 activates it, but kept stripped here until Stage 3 IAA work
     "t_descriptor",      # deferred to v1.3: belongs in Layer 3, not annotation
     "n_descriptor",      # deferred to v1.3: belongs in Layer 3, not annotation
     "m_descriptor",      # deferred to v1.3: belongs in Layer 3, not annotation
