@@ -353,6 +353,21 @@ def render_annotation_page(trial_id: str, annotator: str) -> None:
         return
 
     sess_key = _session_key(trial_id, annotator)
+
+    # Detect (trial, annotator) switch: criterion widget keys (`crit_{i}_*`)
+    # are not scoped by trial_id, so without clearing them they bleed values
+    # from the previously-viewed trial into the new trial's form. Clear and
+    # reseed from the new trial's saved draft (if any).
+    current_key = (trial_id, annotator)
+    if st.session_state.get("_current_trial_key") != current_key:
+        for k in list(st.session_state.keys()):
+            if k.startswith("crit_"):
+                del st.session_state[k]
+        saved_for_new = st.session_state.get(sess_key)
+        if saved_for_new:
+            _seed_widget_state(trial_id, saved_for_new)
+        st.session_state["_current_trial_key"] = current_key
+
     saved = st.session_state.get(sess_key)
     is_committed_already = envelope_is_committed(saved)
     existing_by_id = (
