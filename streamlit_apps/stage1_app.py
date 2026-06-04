@@ -182,6 +182,47 @@ def _build_envelope(
 # Sidebar
 # ──────────────────────────────────────────────────────────────────────
 
+def _seed_widget_state(trial_id: str, envelope: dict) -> None:
+    """Write each saved record's values directly into widget session_state
+    keys so the criterion forms reflect the uploaded envelope on next render.
+
+    Widget keys mirror those built in `_render_form_with_seed`
+    (`crit_{i}_decision`, `crit_{i}_sub_{j}_span`, …). The index `i` is the
+    position of the criterion in `input.json`, NOT the record's position in
+    the envelope, so we map by `criterion_id`.
+    """
+    trial_input = load_bundled_input(trial_id) or {}
+    criteria_order = [
+        c.get("criterion_id") for c in trial_input.get("criteria", [])
+    ]
+    records_by_id = {
+        r.get("criterion_id"): r for r in envelope.get("records", [])
+    }
+    for i, crit_id in enumerate(criteria_order):
+        rec = records_by_id.get(crit_id)
+        if not rec:
+            continue
+        prefix = f"crit_{i}"
+        if rec.get("splitting_decision"):
+            st.session_state[f"{prefix}_decision"] = rec["splitting_decision"]
+        if rec.get("child_logic"):
+            st.session_state[f"{prefix}_child_logic"] = rec["child_logic"]
+        if rec.get("cohort_scope") is not None:
+            st.session_state[f"{prefix}_cohorts"] = list(rec["cohort_scope"])
+        subs = rec.get("sub_criteria") or []
+        if subs:
+            st.session_state[f"{prefix}_n_subs"] = max(1, len(subs))
+            for j, sub in enumerate(subs):
+                if sub.get("text_span") is not None:
+                    st.session_state[f"{prefix}_sub_{j}_span"] = sub["text_span"]
+                if sub.get("rationale") is not None:
+                    st.session_state[f"{prefix}_sub_{j}_rat"] = sub["rationale"]
+        if rec.get("confidence"):
+            st.session_state[f"{prefix}_confidence"] = rec["confidence"]
+        if rec.get("notes"):
+            st.session_state[f"{prefix}_notes"] = rec["notes"]
+
+
 def render_sidebar() -> tuple[str | None, str]:
     """Returns (trial_id, annotator_id). Either may be empty."""
     with st.sidebar:
@@ -226,36 +267,63 @@ def render_sidebar() -> tuple[str | None, str]:
             help="If you saved a draft last session, upload it here to continue.",
         )
         if uploaded is not None and annotator and trial_id:
-            try:
-                data = json.loads(uploaded.read().decode("utf-8"))
-            except json.JSONDecodeError as e:
-                st.error(f"Invalid JSON: {e}")
-            else:
-                # Sanity checks before restoring
-                if data.get("trial_id") != trial_id:
-                    st.error(
-                        f"Uploaded draft is for `{data.get('trial_id')}`, "
-                        f"but you selected `{trial_id}`. Switch trials or pick "
-                        "a matching draft."
-                    )
-                elif data.get("annotator") != annotator:
-                    st.error(
-                        f"Uploaded draft was created by annotator "
-                        f"`{data.get('annotator')!r}`, not `{annotator!r}`. "
-                        "Refusing to load to prevent identity mix-up."
-                    )
-                elif envelope_is_committed(data):
-                    st.warning(
-                        "Uploaded envelope is already committed. Loading "
-                        "into the form is allowed but you cannot re-commit."
-                    )
-                    st.session_state[_session_key(trial_id, annotator)] = data
-                    st.success("Committed envelope loaded (read-only).")
+            # file_uploader retains the file across reruns; gate processing so
+            # we only apply each uploaded file once.
+            uploaded_id = getattr(uploaded, "file_id", None) \
+                or (uploaded.name, uploaded.size)
+            if st.session_state.get("_resume_loaded_id") != uploaded_id:
+                try:
+                    data = json.loads(uploaded.read().decode("utf-8"))
+                except json.JSONDecodeError as e:
+                    st.error(f"Invalid JSON: {e}")
                 else:
-                    st.session_state[_session_key(trial_id, annotator)] = data
-                    st.success(
-                        f"Draft restored: {len(data.get('records', []))} records."
-                    )
+                    # Sanity checks before restoring
+                    if data.get("trial_id") != trial_id:
+                        st.error(
+                            f"Uploaded draft is for `{data.get('trial_id')}`, "
+                            f"but you selected `{trial_id}`. Switch trials or pick "
+                            "a matching draft."
+                        )
+                    elif data.get("annotator") != annotator:
+                        st.error(
+                            f"Uploaded draft was created by annotator "
+                            f"`{data.get('annotator')!r}`, not `{annotator!r}`. "
+                            "Refusing to load to prevent identity mix-up."
+                        )
+                    else:
+                        # Clear stale per-criterion widget keys, then write
+                        # each saved value DIRECTLY into st.session_state.
+                        # Streamlit's selectbox honors session_state[key]
+                        # over `index=`; this is the reliable way to
+                        # programmatically populate it.
+                        for k in list(st.session_state.keys()):
+                            if k.startswith("crit_"):
+                                del st.session_state[k]
+                        _seed_widget_state(trial_id, data)
+                        st.session_state[_session_key(trial_id, annotator)] = data
+                        st.session_state["_resume_loaded_id"] = uploaded_id
+                        # Stash flash messages to show after the rerun below
+                        # (st.rerun discards anything rendered before it).
+                        if envelope_is_committed(data):
+                            st.session_state["_resume_flash"] = [
+                                ("warning",
+                                 "Uploaded envelope is already committed. "
+                                 "Loading into the form is allowed but you "
+                                 "cannot re-commit."),
+                                ("success",
+                                 "Committed envelope loaded (read-only)."),
+                            ]
+                        else:
+                            st.session_state["_resume_flash"] = [
+                                ("success",
+                                 f"Draft restored: "
+                                 f"{len(data.get('records', []))} records."),
+                            ]
+                        st.rerun()
+
+        # Show any flash messages queued by a prior upload (consumed once).
+        for level, msg in st.session_state.pop("_resume_flash", []):
+            getattr(st, level)(msg)
 
         st.divider()
         st.caption(
