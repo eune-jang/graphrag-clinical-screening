@@ -94,6 +94,7 @@ class Stage1SubCriterion(TypedDict, total=False):
     """One sub-criterion produced by splitting."""
     child_id: str                       # required: "a", "b", "c", ...
     text_span: str                      # required: exact text from parent
+    cohort_scope: list[str] | None      # optional: cohorts this child applies to
     rationale: str                      # optional
 
 
@@ -102,7 +103,9 @@ class Stage1Record(TypedDict, total=False):
     criterion_id: str                   # required: parent criterion ID
     splitting_decision: str             # required: one of SPLITTING_DECISIONS
     child_logic: str | None             # optional: "AND" | "OR" | None  (v1.2.2: XOR removed)
-    cohort_scope: list[str] | None      # optional
+    cohort_scope: list[str] | None      # optional: record-level scope; used only
+                                        #   for non-split ("none"). Split criteria
+                                        #   carry cohort_scope per sub_criterion.
     sub_criteria: list[Stage1SubCriterion]  # required (empty list if decision="none")
     confidence: Literal["high", "medium", "low"]  # optional
     notes: str                          # optional
@@ -246,6 +249,23 @@ def validate_stage1_record(record: dict) -> list[str]:
         errors.append(
             f"invalid child_logic: {child_logic!r} (must be one of {sorted(CHILD_LOGIC)} or null)"
         )
+
+    # cohort_scope type checks — record-level (non-split) and per-child (split).
+    rec_scope = record.get("cohort_scope")
+    if rec_scope is not None and not isinstance(rec_scope, list):
+        errors.append(
+            f"cohort_scope must be a list or null, got {type(rec_scope).__name__}"
+        )
+    if isinstance(record.get("sub_criteria"), list):
+        for sub in record["sub_criteria"]:
+            if not isinstance(sub, dict):
+                continue
+            sub_scope = sub.get("cohort_scope")
+            if sub_scope is not None and not isinstance(sub_scope, list):
+                errors.append(
+                    f"sub_criteria[{sub.get('child_id', '?')}].cohort_scope must "
+                    f"be a list or null, got {type(sub_scope).__name__}"
+                )
 
     return errors
 

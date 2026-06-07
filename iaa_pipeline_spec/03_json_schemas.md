@@ -66,7 +66,9 @@ class Stage1Record(TypedDict):
     criterion_id: str                   # parent criterion ID
     splitting_decision: str             # one of SPLITTING_DECISIONS
     child_logic: NotRequired[str | None]  # "AND" | "OR" | "XOR" | None
-    cohort_scope: NotRequired[list[str] | None]
+    cohort_scope: NotRequired[list[str] | None]  # record-level scope; used only
+                                                 #   for non-split ("none"). Split
+                                                 #   criteria scope per child below.
     sub_criteria: list[Stage1SubCriterion]
     confidence: NotRequired[Literal["high", "medium", "low"]]
     notes: NotRequired[str]
@@ -74,8 +76,17 @@ class Stage1Record(TypedDict):
 class Stage1SubCriterion(TypedDict):
     child_id: str                       # "a" | "b" | "c" ...
     text_span: str                      # exact text from parent
+    cohort_scope: NotRequired[list[str] | None]  # cohorts this child applies to
     rationale: NotRequired[str]
 ```
+
+> **cohort_scope placement.** For split criteria (`composite_split`,
+> `macro_aggregate`, `nested_exception`) cohort_scope is set **per child**
+> inside each `sub_criteria` entry, because different children may apply to
+> different cohorts. For non-split criteria (`none`) there are no children, so
+> cohort_scope stays at the record level. Drafts created before this change
+> stored a single record-level cohort_scope shared by all children; importers
+> copy that legacy value to every child.
 
 ### Example
 
@@ -91,11 +102,10 @@ class Stage1SubCriterion(TypedDict):
       "criterion_id": "NCT03425643_I1",
       "splitting_decision": "composite_split",
       "child_logic": "AND",
-      "cohort_scope": null,
       "sub_criteria": [
-        {"child_id": "a", "text_span": "Male/female ≥18 years"},
-        {"child_id": "b", "text_span": "previously untreated NSCLC"},
-        {"child_id": "c", "text_span": "ECOG ≤1"}
+        {"child_id": "a", "text_span": "Male/female ≥18 years", "cohort_scope": null},
+        {"child_id": "b", "text_span": "previously untreated NSCLC", "cohort_scope": null},
+        {"child_id": "c", "text_span": "ECOG ≤1", "cohort_scope": null}
       ]
     }
   ]
@@ -108,7 +118,7 @@ class Stage1SubCriterion(TypedDict):
 |---|---|---|
 | `splitting_decision` | 4-class | Cohen's κ (primary) |
 | `child_logic` | 3-class + null | Cohen's κ (only for `composite_split`) |
-| `cohort_scope` | list | exact set match |
+| `cohort_scope` | list (per-child for splits, record-level for `none`) | exact set match over normalized `(child_id, cohort)` pairs |
 | `sub_criteria.text_span` | string | **NOT direct IAA** — used for downstream alignment only |
 | `confidence`, `notes`, `rationale` | various | excluded from IAA |
 

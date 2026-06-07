@@ -66,10 +66,19 @@ def validate_prompt1(output: dict) -> list[str]:
         if subs:
             errors.append(f"splitting_decision=none but sub_criteria is non-empty ({len(subs)} items)")
 
-    # cohort_scope type check
+    # cohort_scope type check — record-level (non-split) and per-child (split).
     cs = output.get("cohort_scope")
     if cs is not None and not isinstance(cs, list):
         errors.append(f"cohort_scope must be list or null, got {type(cs).__name__}")
+    for i, sub in enumerate(output.get("sub_criteria") or []):
+        if not isinstance(sub, dict):
+            continue
+        sub_cs = sub.get("cohort_scope")
+        if sub_cs is not None and not isinstance(sub_cs, list):
+            errors.append(
+                f"sub_criteria[{i}].cohort_scope must be list or null, "
+                f"got {type(sub_cs).__name__}"
+            )
 
     return errors
 

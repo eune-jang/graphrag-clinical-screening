@@ -288,22 +288,34 @@ def _render_form_with_seed(
             child_logic_val = None
             st.markdown("_child_logic only applies to composite_split_")
 
-    if cohort_options:
+    has_children = decision in ("composite_split", "macro_aggregate", "nested_exception")
+
+    # cohort_scope placement:
+    #   - split decisions  → per-child (rendered inside each sub-criterion)
+    #   - non-split ("none") → a single record-level multiselect, since there
+    #     are no children to attach the scope to.
+    # Backward compatibility: drafts saved before cohort_scope became per-child
+    # carry a single record-level `cohort_scope`. For split criteria we reuse
+    # that legacy value as the default for EVERY child (see `legacy_scope`).
+    record_cohort_scope: list[str] | None = None
+    if cohort_options and not has_children:
         cohort_default = seed.get("cohort_scope") or []
-        cohort_scope = st.multiselect(
+        record_cohort_scope = st.multiselect(
             "cohort_scope (leave empty = applies to all cohorts)",
             cohort_options,
             default=[c for c in cohort_default if c in cohort_options],
             key=f"{key_prefix}_cohorts",
         )
-    else:
-        cohort_scope = None
 
     sub_criteria: list[dict] = []
-    if decision in ("composite_split", "macro_aggregate", "nested_exception"):
+    if has_children:
         st.caption("Sub-criteria — child_id auto-assigned (a, b, c, ...). "
-                   "text_span must come from the parent text.")
+                   "text_span must come from the parent text. "
+                   "cohort_scope is set per child.")
         seed_subs = seed.get("sub_criteria") or []
+        # Legacy record-level scope: default for any child lacking its own
+        # (covers drafts created before cohort_scope moved per-child).
+        legacy_scope = seed.get("cohort_scope") or []
         n_subs = st.number_input(
             "Number of sub-criteria",
             min_value=1, max_value=20,
@@ -312,17 +324,34 @@ def _render_form_with_seed(
         )
         for i in range(int(n_subs)):
             child_id = chr(ord("a") + i)
-            default_span = seed_subs[i].get("text_span", "") if i < len(seed_subs) else ""
-            default_rat = seed_subs[i].get("rationale", "") if i < len(seed_subs) else ""
+            seed_sub = seed_subs[i] if i < len(seed_subs) else {}
+            default_span = seed_sub.get("text_span", "")
+            default_rat = seed_sub.get("rationale", "")
+            # per-child scope: the child's own value if present, else the
+            # legacy record-level value (applied to all children).
+            child_scope_seed = seed_sub.get("cohort_scope")
+            if child_scope_seed is None:
+                child_scope_seed = legacy_scope
             with st.container(border=True):
                 st.markdown(f"**child `{child_id}`**")
                 span = st.text_area("text_span", value=default_span,
                                     key=f"{key_prefix}_sub_{i}_span", height=68)
                 rationale = st.text_input("rationale (optional)", value=default_rat,
                                           key=f"{key_prefix}_sub_{i}_rat")
+                if cohort_options:
+                    child_scope = st.multiselect(
+                        "cohort_scope (leave empty = applies to all cohorts)",
+                        cohort_options,
+                        default=[c for c in child_scope_seed if c in cohort_options],
+                        key=f"{key_prefix}_sub_{i}_cohorts",
+                    )
+                else:
+                    child_scope = None
                 entry: dict[str, Any] = {"child_id": child_id, "text_span": span.strip()}
                 if rationale.strip():
                     entry["rationale"] = rationale.strip()
+                if child_scope:
+                    entry["cohort_scope"] = child_scope
                 sub_criteria.append(entry)
 
     confidence = st.select_slider(
@@ -340,8 +369,8 @@ def _render_form_with_seed(
     }
     if child_logic_val is not None:
         record["child_logic"] = child_logic_val
-    if cohort_scope:
-        record["cohort_scope"] = cohort_scope
+    if record_cohort_scope:
+        record["cohort_scope"] = record_cohort_scope
     if confidence:
         record["confidence"] = confidence
     if notes.strip():

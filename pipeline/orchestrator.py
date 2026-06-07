@@ -150,7 +150,11 @@ def process_criterion(
         targets = [{"child_id": None, "text": criterion_text}]
     elif sd in ("composite_split", "macro_aggregate"):
         targets = [
-            {"child_id": sub["child_id"], "text": sub["text_span"]}
+            {
+                "child_id": sub["child_id"],
+                "text": sub["text_span"],
+                "cohort_scope": sub.get("cohort_scope"),
+            }
             for sub in p1.get("sub_criteria", [])
         ]
         if not targets:
@@ -359,6 +363,7 @@ def process_criterion(
             prompt2_output=p2,
             relations_assembled=assembled_relations,
             parent_criterion_id=parent_id,
+            child_cohort_scope=target.get("cohort_scope"),
         )
         all_criteria_records.append(crit_record)
 

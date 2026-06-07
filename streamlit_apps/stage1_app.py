@@ -207,9 +207,12 @@ def _seed_widget_state(trial_id: str, envelope: dict) -> None:
             st.session_state[f"{prefix}_decision"] = rec["splitting_decision"]
         if rec.get("child_logic"):
             st.session_state[f"{prefix}_child_logic"] = rec["child_logic"]
-        if rec.get("cohort_scope") is not None:
-            st.session_state[f"{prefix}_cohorts"] = list(rec["cohort_scope"])
         subs = rec.get("sub_criteria") or []
+        # Legacy drafts stored a single record-level cohort_scope shared by all
+        # children. cohort_scope is now per-child for split criteria and only
+        # record-level for non-split ("none"). Seed accordingly so old drafts
+        # import without loss.
+        legacy_scope = rec.get("cohort_scope")
         if subs:
             st.session_state[f"{prefix}_n_subs"] = max(1, len(subs))
             for j, sub in enumerate(subs):
@@ -217,6 +220,16 @@ def _seed_widget_state(trial_id: str, envelope: dict) -> None:
                     st.session_state[f"{prefix}_sub_{j}_span"] = sub["text_span"]
                 if sub.get("rationale") is not None:
                     st.session_state[f"{prefix}_sub_{j}_rat"] = sub["rationale"]
+                # per-child scope: own value if present, else legacy
+                # record-level value copied to every child.
+                sub_scope = sub.get("cohort_scope")
+                if sub_scope is None:
+                    sub_scope = legacy_scope
+                if sub_scope is not None:
+                    st.session_state[f"{prefix}_sub_{j}_cohorts"] = list(sub_scope)
+        elif legacy_scope is not None:
+            # non-split criterion: keep cohort_scope at record level.
+            st.session_state[f"{prefix}_cohorts"] = list(legacy_scope)
         if rec.get("confidence"):
             st.session_state[f"{prefix}_confidence"] = rec["confidence"]
         if rec.get("notes"):
