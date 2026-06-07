@@ -31,11 +31,15 @@ Three splitting patterns are defined:
 For macro_aggregate, child_logic is always AND (omit).
 For nested_exception, child_logic is not used.
 
-# cohort_scope Detection
+# cohort_scope Detection (surface form, per child)
 
-If the criterion text mentions a specific cohort/part/arm (e.g., "Part F-1", "Cohort A", "patients in Arm 2"), record cohort_scope as an array of cohort identifiers.
+When the criterion text restricts applicability to specific cohort(s)/part(s)/arm(s) (e.g., "Part F-1", "Cohort A", "In Parts B and D"), record cohort_scope by copying the matching entries VERBATIM from the provided TRIAL_HAS_COHORTS list. Do NOT normalize, rename, or invent identifiers — use the surface strings exactly as given.
 
-If the criterion applies to all cohorts in a multi-cohort trial OR if the trial has a single cohort, omit cohort_scope.
+Placement:
+- SPLIT criteria (composite_split / macro_aggregate / nested_exception): put cohort_scope on EACH child (sub_criterion) the text scopes. Different children MAY carry different cohorts. A child with no cohort restriction → omit / null.
+- NON-split (splitting_decision="none"): put cohort_scope at the TOP level instead.
+
+If the criterion applies to all cohorts, or the trial has a single cohort, omit cohort_scope (null).
 
 IMPORTANT: Only use cohort_scope when the criterion TEXT ITSELF restricts applicability to specific cohorts. Do NOT infer cohort_scope from trial metadata (e.g., arm descriptions). Most multi-arm trials (drug vs placebo) share the same eligibility criteria across all arms → null.
 
@@ -46,11 +50,12 @@ Return JSON with the following structure:
 {
   "splitting_decision": "composite_split | macro_aggregate | nested_exception | none",
   "child_logic": "AND | OR | null",
-  "cohort_scope": ["cohort_id_1", "cohort_id_2"] or null,
+  "cohort_scope": ["<verbatim cohort from TRIAL_HAS_COHORTS>"] or null,   // ONLY when splitting_decision="none"
   "sub_criteria": [
     {
       "child_id": "a | b | c | ...",
       "text_span": "exact text from original criterion",
+      "cohort_scope": ["<verbatim cohort from TRIAL_HAS_COHORTS>"] or null,   // per child; omit/null if unscoped
       "rationale": "brief 1-sentence reason"
     }
   ],
@@ -66,7 +71,7 @@ See examples.json (key: "prompt_1_splitting") for 5 worked examples covering:
 1. composite_split with explicit OR (inclusion) — SEQUOIA I1
 2. macro_aggregate (organ function) — KEYNOTE-671 I5
 3. nested_exception with condition_carveout — KEYNOTE-671 E5
-4. nested_exception with requirement waiver (exception_qualifier) — KEYNOTE-001
+4. nested_exception with requirement waiver (exception_qualifier) + per-child cohort_scope — KEYNOTE-001
 5. none (simple criterion) — KEYNOTE-671 I4 (ECOG)
 
 # Now process the following criterion:

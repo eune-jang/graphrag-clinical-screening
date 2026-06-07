@@ -140,20 +140,25 @@
       "output": {
         "splitting_decision": "nested_exception",
         "child_logic": null,
-        "cohort_scope": [
-          "F-1",
-          "F-2",
-          "F-3"
-        ],
         "sub_criteria": [
           {
             "child_id": "main",
             "text_span": "molecular testing for EGFR mutation and ALK translocation",
-            "rationale": "Main REQUIRES_BIOMARKER target (testing requirement)"
+            "cohort_scope": [
+              "F-1",
+              "F-2",
+              "F-3"
+            ],
+            "rationale": "Main REQUIRES_BIOMARKER target (testing requirement); scoped to F-1/F-2/F-3 per text"
           },
           {
             "child_id": "exception",
             "text_span": "patients with predominantly squamous histology",
+            "cohort_scope": [
+              "F-1",
+              "F-2",
+              "F-3"
+            ],
             "rationale": "Requirement waiver via INCLUDES_EXCEPTION with exception_qualifier (waiver_type: requirement_exempt)"
           }
         ],

@@ -109,6 +109,30 @@ def cohens_kappa(labels_a: list[Any], labels_b: list[Any]) -> CategoricalAgreeme
     )
 
 
+def _cohort_scope_repr(record: dict) -> frozenset:
+    """Normalized, comparable representation of a record's cohort_scope.
+
+    cohort_scope can appear in two places:
+      - record level (non-split criteria, and legacy drafts)
+      - per sub-criterion (split criteria — the current model)
+
+    Each element is a ``(child_id, cohort)`` tuple so that the same cohort
+    assigned to different children does not spuriously "match". Record-level
+    scope is tagged with the sentinel child id ``"*"``. This keeps exact-set
+    and Jaccard comparison meaningful across both placements.
+    """
+    pairs: set[tuple[str, Any]] = set()
+    for cohort in record.get("cohort_scope") or []:
+        pairs.add(("*", cohort))
+    for sub in record.get("sub_criteria") or []:
+        if not isinstance(sub, dict):
+            continue
+        child_id = sub.get("child_id", "?")
+        for cohort in sub.get("cohort_scope") or []:
+            pairs.add((child_id, cohort))
+    return frozenset(pairs)
+
+
 def set_agreement(set_a: Iterable[Any] | None, set_b: Iterable[Any] | None) -> dict[str, Any]:
     """Compare two unordered sets (e.g., cohort_scope lists).
 
@@ -186,9 +210,12 @@ def compute_stage1_iaa(envelope_a: dict, envelope_b: dict) -> dict[str, Any]:
             cl_b.append(b.get("child_logic"))
     cl_agree = cohens_kappa(cl_a, cl_b)
 
-    # cohort_scope per pair (set-level agreement)
+    # cohort_scope per pair (set-level agreement). cohort_scope lives at the
+    # record level for non-split criteria and per sub-criterion for split
+    # criteria, so we compare a normalized (child_id, cohort) representation
+    # that accounts for both placements (and legacy record-level data).
     cs_stats = [
-        set_agreement(a.get("cohort_scope"), b.get("cohort_scope"))
+        set_agreement(_cohort_scope_repr(a), _cohort_scope_repr(b))
         for a, b in alignment.matched
     ]
     n_cs = len(cs_stats)

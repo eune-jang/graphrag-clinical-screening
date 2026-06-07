@@ -98,10 +98,16 @@ def assemble_criterion_record(
     prompt2_output: dict,
     relations_assembled: list[dict],
     parent_criterion_id: str | None = None,
+    child_cohort_scope: list[str] | None = None,
 ) -> dict:
     """
     Assemble a single Criterion record from pipeline stage outputs.
     This is the final schema-compliant structure.
+
+    `child_cohort_scope` is the cohort_scope of the specific sub-criterion
+    this record represents (split criteria carry cohort_scope per child). It
+    takes precedence over the parent's record-level `cohort_scope`, which is
+    used as a fallback for non-split criteria (and legacy data).
     """
     record: dict[str, Any] = {
         "criterion_id": criterion_id,
@@ -129,8 +135,9 @@ def assemble_criterion_record(
             # This is a child record
             record["parent_criterion_id"] = parent_criterion_id
 
-    # Cohort scope
-    cs = prompt1_output.get("cohort_scope")
+    # Cohort scope: prefer the per-child scope; fall back to the parent's
+    # record-level scope (non-split criteria and legacy data).
+    cs = child_cohort_scope if child_cohort_scope else prompt1_output.get("cohort_scope")
     if cs:
         record["cohort_scope"] = cs
 
