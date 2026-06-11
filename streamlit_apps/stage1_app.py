@@ -338,6 +338,37 @@ def render_sidebar() -> tuple[str | None, str]:
         for level, msg in st.session_state.pop("_resume_flash", []):
             getattr(st, level)(msg)
 
+        # Bulk unlock: uncommit every committed envelope held in this session
+        # (only the trials you have loaded/worked on this session).
+        committed_keys = [
+            k for k, v in st.session_state.items()
+            if isinstance(k, str) and k.startswith("draft::")
+            and isinstance(v, dict) and v.get("committed")
+        ]
+        if committed_keys:
+            st.divider()
+            st.subheader("Unlock committed")
+            st.caption(
+                f"{len(committed_keys)} committed trial(s) in this session."
+            )
+            if st.button(
+                "🔓 Unlock ALL committed (this session)",
+                use_container_width=True,
+                help="Removes the committed lock from every committed trial "
+                     "currently loaded in this browser session so you can edit "
+                     "them again.",
+            ):
+                for k in committed_keys:
+                    env = st.session_state[k]
+                    env.pop("committed", None)
+                    env.pop("committed_at", None)
+                    st.session_state[k] = env
+                st.session_state["_resume_flash"] = [
+                    ("success", f"Unlocked {len(committed_keys)} trial(s). "
+                                "They are editable drafts again.")
+                ]
+                st.rerun()
+
         st.divider()
         st.caption(
             f"**Stage**: {STAGE} · **Mode**: `{MODE}` · "
@@ -401,6 +432,25 @@ def render_annotation_page(trial_id: str, annotator: str) -> None:
             st.info(f"💾 Draft in session ({len(saved.get('records', []))} records).")
         else:
             st.info("New session — no draft yet.")
+
+    # Unlock: strip the committed flag so a mislabeled committed envelope can be
+    # re-edited and re-committed. (Re-upload the committed download, then unlock.)
+    if is_committed_already:
+        unlock_cols = st.columns([3, 1])
+        with unlock_cols[0]:
+            st.warning(
+                "🔒 This trial is committed — editing is locked. Click "
+                "**Unlock** to re-open it for editing (e.g. to fix criteria "
+                "labelled by mistake), then re-commit + re-download."
+            )
+        with unlock_cols[1]:
+            if st.button("🔓 Unlock (uncommit)", key="unlock_current",
+                         type="primary", use_container_width=True):
+                env = dict(saved)
+                env.pop("committed", None)
+                env.pop("committed_at", None)
+                st.session_state[sess_key] = env
+                st.rerun()
 
     st.info(
         "**Phase 1 — blind annotation.** This app does not show LLM "
