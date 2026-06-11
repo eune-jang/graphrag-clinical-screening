@@ -316,6 +316,7 @@ def render_sidebar() -> tuple[str | None, str]:
                                 del st.session_state[k]
                         _seed_widget_state(trial_id, data)
                         st.session_state[_session_key(trial_id, annotator)] = data
+                        st.session_state[f"_seeded::{trial_id}::{annotator}"] = True
                         st.session_state["_resume_loaded_id"] = uploaded_id
                         # Stash flash messages to show after the rerun below
                         # (st.rerun discards anything rendered before it).
@@ -401,19 +402,18 @@ def render_annotation_page(trial_id: str, annotator: str) -> None:
     sess_key = _session_key(trial_id, annotator)
 
     # Criterion widget keys are scoped by trial_id (`crit_{trial_id}_{i}_*`),
-    # so values can never bleed between trials. On entering a trial, clear this
-    # trial's keys and reseed from its saved draft (if any) so the form always
-    # reflects the saved state, not stale in-form edits.
-    current_key = (trial_id, annotator)
-    if st.session_state.get("_current_trial_key") != current_key:
-        prefix = f"crit_{trial_id}_"
-        for k in list(st.session_state.keys()):
-            if k.startswith(prefix):
-                del st.session_state[k]
+    # so each trial's form state lives under its own keys and PERSISTS across
+    # trial switches — leave a trial and come back and your work is still there
+    # (values never bleed between trials either). Seed a trial's widgets from
+    # its saved draft only ONCE (first view, or right after an upload);
+    # re-seeding on every visit would clobber in-form edits with the older
+    # saved draft.
+    seeded_key = f"_seeded::{trial_id}::{annotator}"
+    if not st.session_state.get(seeded_key):
         saved_for_new = st.session_state.get(sess_key)
         if saved_for_new:
             _seed_widget_state(trial_id, saved_for_new)
-        st.session_state["_current_trial_key"] = current_key
+        st.session_state[seeded_key] = True
 
     saved = st.session_state.get(sess_key)
     is_committed_already = envelope_is_committed(saved)
