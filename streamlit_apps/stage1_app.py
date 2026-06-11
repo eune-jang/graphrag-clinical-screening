@@ -187,7 +187,8 @@ def _seed_widget_state(trial_id: str, envelope: dict) -> None:
     keys so the criterion forms reflect the uploaded envelope on next render.
 
     Widget keys mirror those built in `_render_form_with_seed`
-    (`crit_{i}_decision`, `crit_{i}_sub_{j}_span`, …). The index `i` is the
+    (`crit_{trial_id}_{i}_decision`, `crit_{trial_id}_{i}_sub_{j}_span`, …).
+    The index `i` is the
     position of the criterion in `input.json`, NOT the record's position in
     the envelope, so we map by `criterion_id`.
     """
@@ -202,7 +203,7 @@ def _seed_widget_state(trial_id: str, envelope: dict) -> None:
         rec = records_by_id.get(crit_id)
         if not rec:
             continue
-        prefix = f"crit_{i}"
+        prefix = f"crit_{trial_id}_{i}"
         if rec.get("splitting_decision"):
             st.session_state[f"{prefix}_decision"] = rec["splitting_decision"]
         if rec.get("child_logic"):
@@ -309,8 +310,9 @@ def render_sidebar() -> tuple[str | None, str]:
                         # Streamlit's selectbox honors session_state[key]
                         # over `index=`; this is the reliable way to
                         # programmatically populate it.
+                        prefix = f"crit_{trial_id}_"
                         for k in list(st.session_state.keys()):
-                            if k.startswith("crit_"):
+                            if k.startswith(prefix):
                                 del st.session_state[k]
                         _seed_widget_state(trial_id, data)
                         st.session_state[_session_key(trial_id, annotator)] = data
@@ -398,14 +400,15 @@ def render_annotation_page(trial_id: str, annotator: str) -> None:
 
     sess_key = _session_key(trial_id, annotator)
 
-    # Detect (trial, annotator) switch: criterion widget keys (`crit_{i}_*`)
-    # are not scoped by trial_id, so without clearing them they bleed values
-    # from the previously-viewed trial into the new trial's form. Clear and
-    # reseed from the new trial's saved draft (if any).
+    # Criterion widget keys are scoped by trial_id (`crit_{trial_id}_{i}_*`),
+    # so values can never bleed between trials. On entering a trial, clear this
+    # trial's keys and reseed from its saved draft (if any) so the form always
+    # reflects the saved state, not stale in-form edits.
     current_key = (trial_id, annotator)
     if st.session_state.get("_current_trial_key") != current_key:
+        prefix = f"crit_{trial_id}_"
         for k in list(st.session_state.keys()):
-            if k.startswith("crit_"):
+            if k.startswith(prefix):
                 del st.session_state[k]
         saved_for_new = st.session_state.get(sess_key)
         if saved_for_new:
@@ -469,7 +472,7 @@ def render_annotation_page(trial_id: str, annotator: str) -> None:
                 crit,
                 existing_record=existing_rec,
                 cohort_options=cohort_options,
-                key_prefix=f"crit_{i}",
+                key_prefix=f"crit_{trial_id}_{i}",
             )
             errs = validate_stage1_record(rec)
             if errs:
