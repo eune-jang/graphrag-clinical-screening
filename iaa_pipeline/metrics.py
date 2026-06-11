@@ -21,6 +21,7 @@ which fields go into IAA computation per stage.
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Any, Iterable
 
@@ -110,27 +111,27 @@ def cohens_kappa(labels_a: list[Any], labels_b: list[Any]) -> CategoricalAgreeme
 
 
 def _cohort_scope_repr(record: dict) -> frozenset:
-    """Normalized, comparable representation of a record's cohort_scope.
+    """Union of all cohorts a criterion applies to, ignoring child_id.
 
-    cohort_scope can appear in two places:
-      - record level (non-split criteria, and legacy drafts)
-      - per sub-criterion (split criteria — the current model)
+    cohort_scope can sit at the record level (non-split criteria, and legacy
+    drafts) and/or per sub-criterion (split criteria). For IAA we compare the
+    UNION of cohorts a criterion touches, **decoupled from how the annotator
+    split it**: two annotators who pick the same cohorts but distribute them
+    across a different number of children still count as agreeing on cohort
+    scope. The splitting structure itself is measured separately by
+    :func:`compute_split_degree_agreement`.
 
-    Each element is a ``(child_id, cohort)`` tuple so that the same cohort
-    assigned to different children does not spuriously "match". Record-level
-    scope is tagged with the sentinel child id ``"*"``. This keeps exact-set
-    and Jaccard comparison meaningful across both placements.
+    (A previous version keyed each cohort by ``(child_id, cohort)``, which
+    entangled cohort agreement with splitting — e.g. identical cohort sets
+    placed record-level vs per-child, or split into 3 vs 8 children, were
+    scored as cohort disagreement. The union representation removes that
+    artifact.)
     """
-    pairs: set[tuple[str, Any]] = set()
-    for cohort in record.get("cohort_scope") or []:
-        pairs.add(("*", cohort))
+    cohorts: set[Any] = set(record.get("cohort_scope") or [])
     for sub in record.get("sub_criteria") or []:
-        if not isinstance(sub, dict):
-            continue
-        child_id = sub.get("child_id", "?")
-        for cohort in sub.get("cohort_scope") or []:
-            pairs.add((child_id, cohort))
-    return frozenset(pairs)
+        if isinstance(sub, dict):
+            cohorts |= set(sub.get("cohort_scope") or [])
+    return frozenset(cohorts)
 
 
 def set_agreement(set_a: Iterable[Any] | None, set_b: Iterable[Any] | None) -> dict[str, Any]:
@@ -210,10 +211,9 @@ def compute_stage1_iaa(envelope_a: dict, envelope_b: dict) -> dict[str, Any]:
             cl_b.append(b.get("child_logic"))
     cl_agree = cohens_kappa(cl_a, cl_b)
 
-    # cohort_scope per pair (set-level agreement). cohort_scope lives at the
-    # record level for non-split criteria and per sub-criterion for split
-    # criteria, so we compare a normalized (child_id, cohort) representation
-    # that accounts for both placements (and legacy record-level data).
+    # cohort_scope per pair (set-level agreement). Compared as the UNION of
+    # cohorts a criterion touches, ignoring child_id (see _cohort_scope_repr),
+    # so the metric reflects cohort agreement decoupled from splitting.
     cs_stats = [
         set_agreement(_cohort_scope_repr(a), _cohort_scope_repr(b))
         for a, b in alignment.matched
@@ -233,7 +233,126 @@ def compute_stage1_iaa(envelope_a: dict, envelope_b: dict) -> dict[str, Any]:
             "n_pairs": n_cs,
             "exact_match_rate": round(cs_exact, 4),
             "mean_jaccard": round(cs_jaccard, 4),
+            "method": "union (cohorts ignoring child_id)",
         },
+        "split_degree": compute_split_degree_agreement(envelope_a, envelope_b),
+    }
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Split-degree agreement (auxiliary — NOT part of the primary κ panel)
+# ──────────────────────────────────────────────────────────────────────
+#
+# splitting_decision κ only compares the decision *label* (composite_split,
+# none, …); it is blind to HOW FINELY two annotators split a criterion (3 vs
+# 8 children). text_span is "NOT direct IAA" per spec §112. These auxiliary
+# stats surface that structural disagreement explicitly so it is not silently
+# dropped (or leaked into cohort_scope).
+
+_WORD_RE = re.compile(r"\w+", re.UNICODE)
+
+
+def _span_tokens(span: str | None) -> frozenset:
+    return frozenset(_WORD_RE.findall((span or "").lower()))
+
+
+def _span_similarity(a: str | None, b: str | None) -> float:
+    """Token-set Jaccard between two text_spans (annotators copy spans from the
+    same parent text, so token overlap is a robust alignment signal)."""
+    ta, tb = _span_tokens(a), _span_tokens(b)
+    if not ta and not tb:
+        return 1.0
+    if not ta or not tb:
+        return 0.0
+    return len(ta & tb) / len(ta | tb)
+
+
+def _greedy_span_matches(spans_a: list[str], spans_b: list[str],
+                         threshold: float) -> int:
+    """Count 1-1 span matches via greedy best-similarity assignment."""
+    cands = [
+        (_span_similarity(sa, sb), i, j)
+        for i, sa in enumerate(spans_a)
+        for j, sb in enumerate(spans_b)
+    ]
+    cands.sort(key=lambda x: x[0], reverse=True)
+    used_a: set[int] = set()
+    used_b: set[int] = set()
+    matched = 0
+    for sim, i, j in cands:
+        if sim < threshold:
+            break
+        if i in used_a or j in used_b:
+            continue
+        used_a.add(i)
+        used_b.add(j)
+        matched += 1
+    return matched
+
+
+def compute_split_degree_agreement(
+    envelope_a: dict, envelope_b: dict, *, span_threshold: float = 0.5,
+) -> dict[str, Any]:
+    """How similarly did two annotators DECOMPOSE each criterion?
+
+    Auxiliary to the primary κ panel. Two complementary views:
+
+    - child-count agreement: do they produce the same number of sub_criteria?
+      Reported over all matched criteria, and (separately) over only the
+      criteria where at least one annotator split — the trivial 0-vs-0
+      "none/none" agreements would otherwise inflate the rate.
+    - span-alignment F1: greedily align sub_criteria text_spans by token-set
+      Jaccard (≥ `span_threshold`) and report micro-averaged Dice/F1
+      (2·matches / (|A|+|B|)) over all matched criteria. F1=1.0 means they
+      carved the same pieces; lower means they split into different spans.
+    """
+    alignment = align_stage1(envelope_a, envelope_b)
+    n = len(alignment.matched)
+
+    count_exact = 0
+    either_split = 0
+    either_split_exact = 0
+    abs_diffs: list[int] = []
+    tot_a = tot_b = tot_m = 0
+    worst: list[dict] = []
+
+    for a, b in alignment.matched:
+        spans_a = [s.get("text_span", "") for s in (a.get("sub_criteria") or [])]
+        spans_b = [s.get("text_span", "") for s in (b.get("sub_criteria") or [])]
+        na, nb = len(spans_a), len(spans_b)
+        if na == nb:
+            count_exact += 1
+        abs_diffs.append(abs(na - nb))
+        if na > 0 or nb > 0:
+            either_split += 1
+            if na == nb:
+                either_split_exact += 1
+        m = _greedy_span_matches(spans_a, spans_b, span_threshold)
+        tot_a += na
+        tot_b += nb
+        tot_m += m
+        if abs(na - nb) > 0:
+            worst.append({
+                "criterion_id": a.get("criterion_id") or b.get("criterion_id"),
+                "n_subs_a": na, "n_subs_b": nb,
+                "span_matches": m,
+            })
+
+    worst.sort(key=lambda w: abs(w["n_subs_a"] - w["n_subs_b"]), reverse=True)
+    span_f1 = (2 * tot_m / (tot_a + tot_b)) if (tot_a + tot_b) else 1.0
+    mean_diff = (sum(abs_diffs) / len(abs_diffs)) if abs_diffs else 0.0
+
+    return {
+        "n_criteria": n,
+        "child_count_exact_match_rate": round(count_exact / n, 4) if n else 1.0,
+        "n_either_split": either_split,
+        "child_count_exact_among_split": (
+            round(either_split_exact / either_split, 4) if either_split else 1.0
+        ),
+        "mean_abs_child_count_diff": round(mean_diff, 4),
+        "span_alignment_f1": round(span_f1, 4),
+        "span_threshold": span_threshold,
+        "worst_disagreements": worst[:10],
     }
 
 

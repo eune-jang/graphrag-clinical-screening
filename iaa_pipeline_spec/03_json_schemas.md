@@ -118,9 +118,19 @@ class Stage1SubCriterion(TypedDict):
 |---|---|---|
 | `splitting_decision` | 4-class | Cohen's κ (primary) |
 | `child_logic` | 3-class + null | Cohen's κ (only for `composite_split`) |
-| `cohort_scope` | list (per-child for splits, record-level for `none`) | exact set match over normalized `(child_id, cohort)` pairs |
-| `sub_criteria.text_span` | string | **NOT direct IAA** — used for downstream alignment only |
+| `cohort_scope` | list (per-child for splits, record-level for `none`) | exact set + Jaccard over the **union** of cohorts a criterion touches, **ignoring `child_id`** — decoupled from how it was split |
+| `sub_criteria` (split degree) | structure | **auxiliary** (not in primary κ): child-count exact-match rate + token-Jaccard span-alignment F1, surfacing how differently annotators decomposed a criterion |
+| `sub_criteria.text_span` | string | **NOT direct IAA** — used for downstream alignment (and the auxiliary span-alignment F1 above) |
 | `confidence`, `notes`, `rationale` | various | excluded from IAA |
+
+> **cohort_scope is measured as a union set, not per-`child_id`.** Two
+> annotators who select the same cohorts but distribute them across a
+> different number of children (or place them record-level vs per-child) agree
+> on cohort scope. The splitting difference is captured separately by the
+> auxiliary split-degree stats (`compute_split_degree_agreement`). Keying
+> cohort_scope by `(child_id, cohort)` was rejected because `child_id` does
+> not align across annotators (e.g. one splits into 3 children, the other
+> into 8), which spuriously depressed cohort agreement.
 
 ## Stage 2 — Semantic Category + Relation + Subtype
 
