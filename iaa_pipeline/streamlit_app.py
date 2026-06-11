@@ -608,10 +608,29 @@ def section_iaa_dashboard(stage_dir: Path, *, current_annotator: str) -> None:
 
     st.markdown("#### cohort_scope")
     cs = iaa["cohort_scope"]
+    st.caption(f"method: {cs.get('method', 'set match')} — decoupled from splitting")
     c1, c2, c3 = st.columns(3)
     c1.metric("n pairs", cs["n_pairs"])
     c2.metric("exact match rate", f"{cs['exact_match_rate']:.3f}")
     c3.metric("mean Jaccard", f"{cs['mean_jaccard']:.3f}")
+
+    if "split_degree" in iaa:
+        sdg = iaa["split_degree"]
+        st.markdown("#### split degree (auxiliary — not in primary κ)")
+        st.caption(
+            "How similarly the two annotators decomposed each criterion "
+            "(splitting_decision κ only compares the label, not the depth)."
+        )
+        c1, c2, c3 = st.columns(3)
+        c1.metric("child-count exact (all)",
+                  f"{sdg['child_count_exact_match_rate']:.3f}")
+        c2.metric(f"child-count exact (split, n={sdg['n_either_split']})",
+                  f"{sdg['child_count_exact_among_split']:.3f}")
+        c3.metric("span alignment F1", f"{sdg['span_alignment_f1']:.3f}")
+        st.caption(f"mean |Δ child count| = {sdg['mean_abs_child_count_diff']:.2f}")
+        if sdg.get("worst_disagreements"):
+            with st.expander("Largest split-degree disagreements"):
+                st.table(sdg["worst_disagreements"])
 
     with st.expander("Raw metric output (JSON)"):
         st.json(iaa)
