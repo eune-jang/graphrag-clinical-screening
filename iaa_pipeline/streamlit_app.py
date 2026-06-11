@@ -163,7 +163,13 @@ def list_trials(workspace: Path, *, stage: int) -> list[str]:
 
 
 def list_committed_annotator_envelopes(stage_dir: Path) -> list[Path]:
-    """Return only envelopes with `committed: true`.
+    """Return committed annotator envelopes in stage_dir, identified by
+    CONTENT (committed + source=="annotator") rather than by filename.
+
+    This accepts files dropped in with their hosted-app download name
+    (e.g. `EHJ_NCT01295827_stage1_committed.json`) just as well as the local
+    `annotator_{id}.json` — no renaming required. `input.json` and
+    `llm_output.json` are skipped (they are not annotator envelopes).
 
     Used by the IAA dashboard. In Phase 1 (annotation), this list is
     intentionally not surfaced anywhere except the IAA tab — and the IAA
@@ -172,9 +178,11 @@ def list_committed_annotator_envelopes(stage_dir: Path) -> list[Path]:
     if not stage_dir.exists():
         return []
     paths = []
-    for p in sorted(stage_dir.glob("annotator_*.json")):
+    for p in sorted(stage_dir.glob("*.json")):
+        if p.name in ("input.json", "llm_output.json"):
+            continue
         env = load_json(p)
-        if envelope_is_committed(env):
+        if envelope_is_committed(env) and (env or {}).get("source") == "annotator":
             paths.append(p)
     return paths
 
@@ -520,9 +528,19 @@ def section_iaa_dashboard(stage_dir: Path, *, current_annotator: str) -> None:
     """Phase 2 only. Enumerates committed envelopes only."""
     committed_files = list_committed_annotator_envelopes(stage_dir)
     llm_file = stage_dir / "llm_output.json"
-    sources: list[tuple[str, Path]] = [
-        (f.stem.replace("annotator_", ""), f) for f in committed_files
-    ]
+    sources: list[tuple[str, Path]] = []
+    seen: dict[str, int] = {}
+    for f in committed_files:
+        env = load_json(f) or {}
+        # Label by the envelope's annotator id (filename-independent), so a
+        # download-named file like `EHJ_..._committed.json` shows as "EHJ".
+        label = env.get("annotator") or f.stem.replace("annotator_", "")
+        if label in seen:
+            seen[label] += 1
+            label = f"{label}#{seen[label]}"
+        else:
+            seen[label] = 1
+        sources.append((label, f))
     if llm_file.exists():
         sources.append(("__llm__", llm_file))
 
@@ -748,6 +766,15 @@ def main() -> None:
         existing = None
 
     annotator_committed = envelope_is_committed(existing)
+    if not annotator_committed and annotator:
+        # Also open the IAA tab when this annotator's committed envelope was
+        # dropped in under its hosted-app download name (annotator field
+        # matches) rather than `annotator_{id}.json` — no renaming required.
+        for p in list_committed_annotator_envelopes(stage_dir):
+            env = load_json(p)
+            if env and env.get("annotator") == annotator:
+                annotator_committed = True
+                break
     tab_labels = build_tab_spec(
         mode=mode, phase=phase, annotator_committed=annotator_committed
     )
