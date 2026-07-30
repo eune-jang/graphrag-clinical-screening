@@ -48,18 +48,25 @@ def _load(p: Path) -> dict | None:
         return None
 
 
-def discover_sources(stage_dir: Path) -> tuple[dict[str, dict], dict | None]:
-    """Return ({annotator_id: committed_envelope}, llm_envelope_or_None)."""
+def discover_sources(stage_dir: Path, round_dir: Path | None = None) -> tuple[dict[str, dict], dict | None]:
+    """Return ({annotator_id: committed_envelope}, llm_envelope_or_None).
+
+    Committed annotator envelopes are read from `round_dir` when given (the
+    round-subfolder layout, e.g. stage1/round2/), otherwise straight from
+    `stage_dir`. The LLM envelope is always read from `stage_dir` because
+    llm_output.json is shared across rounds.
+    """
     annotators: dict[str, dict] = {}
     llm: dict | None = None
-    for p in sorted(stage_dir.glob("*.json")):
+    ann_dir = round_dir or stage_dir
+    for p in sorted(ann_dir.glob("*.json")):
         env = _load(p)
-        if not env:
-            continue
-        if env.get("source") == "annotator" and env.get("committed") is True:
+        if env and env.get("source") == "annotator" and env.get("committed") is True:
             label = env.get("annotator") or p.stem
             annotators[label] = env  # last write wins on duplicate annotator id
-        elif env.get("source") == "llm" or p.name == "llm_output.json":
+    for p in sorted(stage_dir.glob("*.json")):
+        env = _load(p)
+        if env and (env.get("source") == "llm" or p.name == "llm_output.json"):
             llm = env
     return annotators, llm
 
@@ -143,6 +150,9 @@ def main() -> int:
     ap.add_argument("--workspace", default=str(_PROJECT_ROOT / "iaa_workspace"),
                     help="workspace dir holding {trial}/stage{N}/ (default: iaa_workspace)")
     ap.add_argument("--stage", type=int, default=1, help="stage number (default 1)")
+    ap.add_argument("--round", type=int, default=None, dest="round_num",
+                    help="read committed envelopes from {trial}/stage{N}/round{R}/ "
+                         "(llm_output.json stays at the stage level)")
     ap.add_argument("--include-llm", action="store_true",
                     help="also compute annotator-vs-LLM pairs")
     ap.add_argument("--out", default=None,
@@ -166,7 +176,10 @@ def main() -> int:
         stage_dir = trial_dir / f"stage{stage}"
         if not stage_dir.is_dir():
             continue
-        annotators, llm = discover_sources(stage_dir)
+        round_dir = stage_dir / f"round{args.round_num}" if args.round_num else None
+        if round_dir is not None and not round_dir.is_dir():
+            continue
+        annotators, llm = discover_sources(stage_dir, round_dir)
         if annotators:
             per_trial[trial_dir.name] = (annotators, llm)
 
@@ -191,7 +204,8 @@ def main() -> int:
               "(one annotator + --include-llm, or two annotators).")
         return 1
 
-    report: dict = {"workspace": str(workspace), "stage": stage, "pairs": {}}
+    report: dict = {"workspace": str(workspace), "stage": stage,
+                    "round": args.round_num, "pairs": {}}
     md_sections: list[str] = []
 
     for (la, lb) in pairs:
@@ -230,7 +244,8 @@ def main() -> int:
         json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2),
                              encoding="utf-8")
         md_path.write_text(
-            f"# Stage {stage} IAA report\n\n"
+            f"# Stage {stage} IAA report"
+            + (f" (round {args.round_num})" if args.round_num else "") + "\n\n"
             f"Workspace: `{workspace}`\n\n" + "\n\n".join(md_sections) + "\n",
             encoding="utf-8",
         )
