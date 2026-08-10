@@ -31,9 +31,9 @@ For the given concept entity (drug, condition, biomarker, observation, procedure
 
 For Biomarker targets, you MUST specify:
 
-**variant_type** (9-enum): mutation / rearrangement / fusion / deletion / insertion / amplification / expression / methylation / unknown
+**variant_type** (6-enum): mutation / rearrangement / fusion / deletion / insertion / expression
 
-**variant_notation** (6-enum): protein / cdna / genomic / exon_level / wildcard / class_level
+**variant_notation** (5-enum): protein / cdna / genomic / exon_level / wildcard
 
 For multi-variant biomarker criteria, produce ONE entry per variant.
 

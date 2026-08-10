@@ -65,7 +65,7 @@ class CriterionInput(TypedDict):
 class Stage1Record(TypedDict):
     criterion_id: str                   # parent criterion ID
     splitting_decision: str             # one of SPLITTING_DECISIONS
-    child_logic: NotRequired[str | None]  # "AND" | "OR" | "XOR" | None
+    child_logic: NotRequired[str | None]  # "AND" | "OR" | None  (v1.2.2: XOR removed)
     cohort_scope: NotRequired[list[str] | None]  # record-level scope; used only
                                                  #   for non-split ("none"). Split
                                                  #   criteria scope per child below.
