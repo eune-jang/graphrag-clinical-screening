@@ -178,6 +178,110 @@ def test_stage1_iaa_missing_criterion_one_side():
 
 
 # ──────────────────────────────────────────────────────────────────────
+# Stage 1 — SD two-axis decomposition (adjudication_handover.md §A-1)
+# ──────────────────────────────────────────────────────────────────────
+
+def test_sd_axes_binary_type_and_direction():
+    """5 criteria covering every disagreement direction.
+
+      I1: composite vs macro   -> both split, type mismatch
+      I2: none      vs none    -> binary agree
+      I3: none      vs composite -> b-only-split
+      I4: macro     vs macro   -> full agree
+      I5: nested    vs none    -> a-only-split (nested counts as split)
+    """
+    env_a = _make_stage1_envelope("A", {
+        "I1": "composite_split", "I2": "none", "I3": "none",
+        "I4": "macro_aggregate", "I5": "nested_exception",
+    })
+    env_b = _make_stage1_envelope("B", {
+        "I1": "macro_aggregate", "I2": "none", "I3": "composite_split",
+        "I4": "macro_aggregate", "I5": "none",
+    })
+    iaa = compute_stage1_iaa(env_a, env_b)
+
+    # binary axis: a = [split, none, none, split, split], b = [split, none, split, split, none]
+    assert iaa["sd_binary"]["n"] == 5
+    assert iaa["sd_binary"]["n_agree"] == 3
+    # type axis: only I1 + I4 have both sides split
+    assert iaa["sd_type"]["n"] == 2
+    assert iaa["sd_type"]["n_agree"] == 1
+    # direction
+    db = iaa["direction_bias"]
+    assert db["n_a_only_split"] == 1   # I5
+    assert db["n_b_only_split"] == 1   # I3
+    assert db["n_type_mismatch"] == 1  # I1
+    # total disagreements = 4-class disagreements
+    n_disagree = iaa["splitting_decision"]["n"] - iaa["splitting_decision"]["n_agree"]
+    assert db["n_a_only_split"] + db["n_b_only_split"] + db["n_type_mismatch"] == n_disagree
+    # expected agreement is now reported alongside κ
+    assert iaa["splitting_decision"]["expected_agreement"] is not None
+
+
+def test_sd_type_kappa_undefined_falls_back_to_observed():
+    """Both split everything identically as composite -> type κ undefined (variance 0),
+    but observed agreement must still be reported (§A-1 완료 기준)."""
+    env_a = _make_stage1_envelope("A", {"I1": "composite_split", "I2": "composite_split"})
+    env_b = _make_stage1_envelope("B", {"I1": "composite_split", "I2": "composite_split"})
+    iaa = compute_stage1_iaa(env_a, env_b)
+    assert iaa["sd_type"]["cohens_kappa"] is None
+    assert iaa["sd_type"]["observed_agreement"] == 1.0
+
+
+def _load_round_envelopes(round_num: int) -> tuple[list[dict], list[dict]] | None:
+    """Pooled (EHJ records, DYK records) from the local workspace, or None
+    if the workspace isn't present (it is git-untracked — skip silently)."""
+    import json
+    ws = Path(__file__).resolve().parent.parent / "iaa_workspace"
+    if not ws.exists():
+        return None
+    recs_e: list[dict] = []
+    recs_d: list[dict] = []
+    for round_dir in sorted(ws.glob(f"*/stage1/round{round_num}")):
+        found: dict[str, dict] = {}
+        for p in sorted(round_dir.glob("*.json")):
+            try:
+                env = json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            if isinstance(env, dict) and env.get("source") == "annotator" \
+                    and env.get("committed") is True:
+                found[env.get("annotator") or p.stem] = env
+        if "EHJ" in found and "DYK" in found:
+            recs_e += found["EHJ"].get("records", [])
+            recs_d += found["DYK"].get("records", [])
+    return (recs_e, recs_d) if recs_e and recs_d else None
+
+
+def test_regression_round_direction_bias_matches_measured():
+    """Regression anchors from adjudication_handover.md §9-6 (measured 2026-07-30):
+      round1: matched 172, SD agree 136, direction EHJ9/DYK20/type7
+      round2: matched 172, SD agree 138, direction EHJ3/DYK24/type7
+    Skips silently when iaa_workspace/ (git-untracked) is absent."""
+    expected = {
+        1: {"agree": 136, "ehj_only": 9, "dyk_only": 20, "type": 7},
+        2: {"agree": 138, "ehj_only": 3, "dyk_only": 24, "type": 7},
+    }
+    for round_num, exp in expected.items():
+        loaded = _load_round_envelopes(round_num)
+        if loaded is None:
+            return  # workspace not present in this checkout
+        recs_e, recs_d = loaded
+        iaa = compute_stage1_iaa({"records": recs_e}, {"records": recs_d})
+        sd = iaa["splitting_decision"]
+        db = iaa["direction_bias"]
+        assert sd["n"] == 172, f"round{round_num}: matched {sd['n']} != 172"
+        assert sd["n_agree"] == exp["agree"], (
+            f"round{round_num}: SD agree {sd['n_agree']} != {exp['agree']}")
+        assert db["n_a_only_split"] == exp["ehj_only"], (
+            f"round{round_num}: EHJ-only-split {db['n_a_only_split']} != {exp['ehj_only']}")
+        assert db["n_b_only_split"] == exp["dyk_only"], (
+            f"round{round_num}: DYK-only-split {db['n_b_only_split']} != {exp['dyk_only']}")
+        assert db["n_type_mismatch"] == exp["type"], (
+            f"round{round_num}: type-mismatch {db['n_type_mismatch']} != {exp['type']}")
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Stage 2 alignment (fuzzy span)
 # ──────────────────────────────────────────────────────────────────────
 

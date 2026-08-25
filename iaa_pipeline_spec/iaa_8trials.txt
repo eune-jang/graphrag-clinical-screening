@@ -1,3 +1,15 @@
+# Trial ID filter for the HOSTED annotation app dropdown (streamlit_apps/stage1_app.py).
+#
+# ⚠️ This is NOT the definition of the IAA trial set.
+#   - This file lists 9 ids (filename says "8trials" for historical reasons).
+#   - The IAA experiment ran on 8 trials = this list MINUS NCT03425643.
+#   - NCT03425643 = KEYNOTE-671 is the PILOT / worked-example trial: it is the
+#     source of the prompt few-shot examples (pipeline/prompts/examples.json)
+#     and has no round1/round2 annotator labels. Excluding it from IAA and from
+#     any held-out evaluation avoids leakage.
+# See iaa_pipeline_spec/streamlit_status_and_gaps_2026-08-25.md §8.
+#
+# Lines starting with '#' and blank lines are ignored by the loader.
 NCT03425643
 NCT02125461
 NCT03728556

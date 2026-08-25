@@ -23,6 +23,14 @@ Workspace layout (per trial, per stage):
         input.json                Stage N input — required
         llm_output.json           LLM Stage N output — used only in llm_assisted mode
         annotator_{id}.json       per-annotator envelope (this annotator's only)
+        round{R}/                 committed envelopes for one IAA round
+            {ID}_{trial}_stage{N}_committed.json
+            gap_tickets.json      tier-3 adjudication items (not an envelope)
+
+Adjudication (role = "adjudicator") reuses the same envelope I/O and the same
+blinding architecture, with peers (EHJ/DYK) in the position the LLM occupies
+for annotation: a blind first pass, then a revealed second pass. See
+`iaa_pipeline_spec/adjudication_handover.md` §B.
 """
 from __future__ import annotations
 
@@ -47,6 +55,23 @@ from iaa_pipeline.stage_schemas import (  # noqa: E402
     validate_stage1_record,
     validate_envelope,
 )
+from iaa_pipeline.adjudication import (  # noqa: E402
+    RULE_STATUSES,
+    TIER_LABELS,
+    TIERS,
+    build_gap_ticket,
+    build_gold_envelope,
+    build_gold_record,
+    committed_envelope_name,
+    envelope_dir,
+    gap_tickets_path,
+    load_queue,
+    merge_gap_tickets,
+    peer_summary,
+    queue_index,
+    span_violations,
+    validate_adjudication,
+)
 
 # ──────────────────────────────────────────────────────────────────────
 # Mode / Phase machinery
@@ -54,6 +79,14 @@ from iaa_pipeline.stage_schemas import (  # noqa: E402
 
 Mode = Literal["from_scratch", "llm_assisted"]
 Phase = Literal["phase_1_annotate", "phase_2_review"]
+Role = Literal["annotator", "adjudicator"]
+
+# The adjudicator writes under this actor id. It lands in the same round folder
+# as EHJ/DYK so compute_iaa.py's single-directory discovery yields E-D/E-G/D-G
+# (handover §7.4-🔴1).
+GOLD_ACTOR = "GOLD"
+DEFAULT_QUEUE_PATH = str(_PROJECT_ROOT / "results" / "adjudication"
+                         / "adjudication_queue.csv")
 
 STAGE_MODE: dict[int, Mode] = {
     1: "from_scratch",   # Splitting
@@ -122,6 +155,42 @@ def build_tab_spec(
     return tabs
 
 
+def build_adjudication_tab_spec(*, blind: bool) -> list[str]:
+    """Tab list for the adjudicator.
+
+    The peer tab is appended only when blind is OFF — the same gating shape as
+    the LLM tab in `build_tab_spec` (audit leak A3), applied to the peer labels
+    the adjudicator must not see during the first pass (handover §B-2).
+    """
+    tabs = ["⚖️ Adjudicate"]
+    if not blind:
+        tabs.append("👥 Peer labels")
+    tabs.append("📊 IAA")
+    return tabs
+
+
+def build_adjudication_seed(
+    *,
+    blind: bool,
+    existing_gold: dict | None,
+    blind_label: dict | None,
+) -> dict:
+    """Form defaults for the adjudication form — the single chokepoint.
+
+    Peer records are NOT a parameter here, which is the structural guarantee
+    that no EHJ/DYK value can seed an adjudication default (the adjudication
+    analogue of audit leaks A1/A7).
+
+    In blind mode the seed is the adjudicator's own blind pass only, so
+    reopening a blind item does not surface a later revealed-pass edit.
+    """
+    if blind:
+        return dict(blind_label) if blind_label else {}
+    if existing_gold:
+        return dict(existing_gold)
+    return dict(blind_label) if blind_label else {}
+
+
 def envelope_is_committed(envelope: dict | None) -> bool:
     """An envelope is committed iff it carries the explicit flag."""
     return bool(envelope and envelope.get("committed") is True)
@@ -153,13 +222,27 @@ def save_envelope(envelope: dict, path: Path) -> None:
     )
 
 
-def list_trials(workspace: Path, *, stage: int) -> list[str]:
+def list_trials(workspace: Path, *, stage: int,
+                round_num: int | None = None) -> list[str]:
+    """Trials with a Stage N input file.
+
+    With `round_num`, restrict to trials that actually have that round folder.
+    The workspace holds 31 trials but only the 8 IAA trials have round1/round2,
+    so without this filter the adjudicator's dropdown is mostly dead ends.
+    """
     if not workspace.exists():
         return []
-    return sorted(
-        d.name for d in workspace.iterdir()
-        if d.is_dir() and (d / f"stage{stage}" / "input.json").exists()
-    )
+    out = []
+    for d in sorted(workspace.iterdir()):
+        if not d.is_dir():
+            continue
+        stage_dir = d / f"stage{stage}"
+        if not (stage_dir / "input.json").exists():
+            continue
+        if round_num is not None and not (stage_dir / f"round{round_num}").is_dir():
+            continue
+        out.append(d.name)
+    return out
 
 
 def list_committed_annotator_envelopes(stage_dir: Path) -> list[Path]:
@@ -190,6 +273,75 @@ def list_committed_annotator_envelopes(stage_dir: Path) -> list[Path]:
 def annotator_envelope_path(stage_dir: Path, annotator: str) -> Path:
     safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in annotator).strip("_")
     return stage_dir / f"annotator_{safe or 'unknown'}.json"
+
+
+def find_actor_envelope(env_dir: Path, actor: str) -> Path | None:
+    """Locate an existing envelope written by `actor`, identified by CONTENT.
+
+    The round folders were assembled by hand and hold hosted-app download
+    names (`EHJ_NCT..._committed.json`), so matching on filename would miss
+    them. Mirrors `compute_iaa.discover_sources` except that drafts count too.
+    """
+    if not env_dir.exists():
+        return None
+    for p in sorted(env_dir.glob("*.json")):
+        if p.name in ("input.json", "llm_output.json", "gap_tickets.json"):
+            continue
+        env = load_json(p)
+        if isinstance(env, dict) and env.get("annotator") == actor:
+            return p
+    return None
+
+
+def resolve_envelope_path(env_dir: Path, actor: str, *, trial_id: str,
+                          stage: int) -> Path:
+    """Where to write `actor`'s envelope: reuse its file if one exists.
+
+    Without the reuse step a second save would create a duplicate file for the
+    same actor in the same directory, and `discover_sources` would keep only
+    whichever sorted last ("last write wins on duplicate annotator id").
+    """
+    found = find_actor_envelope(env_dir, actor)
+    if found is not None:
+        return found
+    return env_dir / committed_envelope_name(actor, trial_id, stage)
+
+
+def load_peer_records(env_dir: Path, peers: list[str]) -> dict[str, dict[str, dict]]:
+    """{actor: {criterion_id: record}} for the peer annotators.
+
+    Callers MUST NOT invoke this while blind — the blind path skips the read
+    entirely rather than loading and hiding, because Streamlit session state
+    would otherwise keep the data alive across a blind/revealed toggle (same
+    reasoning as the `llm_envelope` read in `main`).
+    """
+    out: dict[str, dict[str, dict]] = {}
+    for actor in peers:
+        p = find_actor_envelope(env_dir, actor)
+        if p is None:
+            continue
+        env = load_json(p) or {}
+        out[actor] = {r.get("criterion_id"): r for r in env.get("records", [])
+                      if r.get("criterion_id")}
+    return out
+
+
+def discover_peer_actors(env_dir: Path, *, exclude: str) -> list[str]:
+    """Committed actor ids in a round folder, minus `exclude` (i.e. GOLD)."""
+    actors: list[str] = []
+    if not env_dir.exists():
+        return actors
+    for p in sorted(env_dir.glob("*.json")):
+        if p.name in ("input.json", "llm_output.json", "gap_tickets.json"):
+            continue
+        env = load_json(p)
+        if not isinstance(env, dict):
+            continue
+        actor = env.get("annotator")
+        if (env.get("source") == "annotator" and env.get("committed") is True
+                and actor and actor != exclude and actor not in actors):
+            actors.append(actor)
+    return actors
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -394,6 +546,187 @@ def _safe_index(options: list[str], value: Any, default: int) -> int:
 
 
 # ──────────────────────────────────────────────────────────────────────
+# Adjudication forms — TWO functions, one per pass
+# ──────────────────────────────────────────────────────────────────────
+#
+# The blind variant does NOT accept `peer_records`. Same
+# function-signature-level guarantee the annotation forms use for `llm_record`:
+# the first adjudication pass must be an independent third opinion, because
+# the case this whole exercise hunts for is "both annotators were wrong"
+# (handover §B-2). If a future maintainer tries to pass peer labels into the
+# blind form, Python raises TypeError.
+# ──────────────────────────────────────────────────────────────────────
+
+def render_adjudication_form_blind(
+    criterion: dict,
+    *,
+    blind_label: dict | None,
+    cohort_options: list[str],
+    key_prefix: str,
+) -> dict:
+    """Pass 1. Sees the criterion text and the adjudicator's own prior blind work."""
+    seed = build_adjudication_seed(
+        blind=True, existing_gold=None, blind_label=blind_label,
+    )
+    return _render_form_with_seed(
+        criterion,
+        seed=seed,
+        cohort_options=cohort_options,
+        key_prefix=key_prefix,
+        show_llm_suggestion=None,
+    )
+
+
+def render_adjudication_form_open(
+    criterion: dict,
+    *,
+    existing_gold: dict | None,
+    blind_label: dict | None,
+    peer_records: dict[str, dict],
+    cohort_options: list[str],
+    key_prefix: str,
+) -> dict:
+    """Pass 2. Peer labels and notes are revealed, then gold is confirmed."""
+    seed = build_adjudication_seed(
+        blind=False, existing_gold=existing_gold, blind_label=blind_label,
+    )
+    _render_peer_panel(peer_records, blind_label=blind_label)
+    return _render_form_with_seed(
+        criterion,
+        seed=seed,
+        cohort_options=cohort_options,
+        key_prefix=key_prefix,
+        show_llm_suggestion=None,
+    )
+
+
+def _render_peer_panel(peer_records: dict[str, dict], *,
+                       blind_label: dict | None) -> None:
+    """C-1: show each peer's label and their note VERBATIM.
+
+    Notes exist for only ~7% of records (§9-1), so "(no note)" is the normal
+    case and is stated explicitly rather than left blank. Notes are never
+    summarised or rewritten — the wording is the evidence.
+    """
+    if blind_label:
+        st.caption(
+            f"🔒 Your blind label: `{blind_label.get('splitting_decision')}` · "
+            f"{len(blind_label.get('sub_criteria') or [])} child(ren)"
+        )
+    if not peer_records:
+        st.info("No peer envelopes found in this round folder.")
+        return
+    cols = st.columns(len(peer_records))
+    for col, (actor, rec) in zip(cols, sorted(peer_records.items())):
+        with col:
+            if rec is None:
+                st.markdown(f"**{actor}** — _no record_")
+                continue
+            s = peer_summary(rec)
+            st.markdown(
+                f"**{actor}** · `{s['splitting_decision']}`"
+                + (f" · child_logic `{s['child_logic']}`" if s.get("child_logic") else "")
+                + f" · {s['n_children']} child(ren)"
+            )
+            note = s.get("notes") or ""
+            if note.strip():
+                st.markdown(f"> {note}")
+            else:
+                st.caption("(no note)")
+            spans = [x.get("text_span", "") for x in (rec.get("sub_criteria") or [])]
+            if spans:
+                with st.expander(f"{actor} spans", expanded=False):
+                    for i, sp in enumerate(spans):
+                        st.markdown(f"`{chr(ord('a') + i)}` {sp}")
+
+
+def render_adjudication_meta(
+    *,
+    key_prefix: str,
+    existing_adj: dict | None,
+    span_problems: list[dict],
+) -> dict:
+    """C-2 fields — the actual deliverable of this exercise.
+
+    No `rule_id` autocomplete on purpose: suggesting a rule pushes the
+    adjudicator to force-fit an existing one and hides the `new` / `gap`
+    findings that guideline v1.2 has to be induced from (§C-2 주의).
+    """
+    seed = existing_adj or {}
+    st.markdown("##### 판정 기록 (C-2)")
+    c1, c2 = st.columns([2, 3])
+    with c1:
+        tier = st.selectbox(
+            "tier *", TIERS,
+            index=_safe_index(list(TIERS), seed.get("tier"), default=2),
+            format_func=lambda t: TIER_LABELS[t],
+            key=f"{key_prefix}_tier",
+        )
+    with c2:
+        rationale_short = st.text_input(
+            "rationale_short *  — 왜 그렇게 정했는가 (한 줄)",
+            value=seed.get("rationale_short", ""),
+            key=f"{key_prefix}_rationale",
+        )
+
+    c3, c4, c5 = st.columns([2, 2, 1])
+    with c3:
+        rule_id = st.text_input(
+            "rule_id (기존 규칙으로 설명 안 되면 공란)",
+            value=seed.get("rule_id") or "",
+            key=f"{key_prefix}_rule_id",
+        )
+    with c4:
+        rs_options = ["(unset)"] + list(RULE_STATUSES)
+        rule_status_choice = st.selectbox(
+            "rule_status", rs_options,
+            index=_safe_index(rs_options, seed.get("rule_status"), default=0),
+            key=f"{key_prefix}_rule_status",
+        )
+        rule_status = None if rule_status_choice == "(unset)" else rule_status_choice
+    with c5:
+        escalate_pi = st.checkbox(
+            "escalate PI", value=bool(seed.get("escalate_pi")),
+            key=f"{key_prefix}_escalate",
+        )
+
+    conflicting_rule = ""
+    if rule_status == "conflict":
+        conflicting_rule = st.text_input(
+            "conflicting_rule — 오답을 유도한 기존 규칙 (예외 조항 폐쇄의 직접 재료)",
+            value=seed.get("conflicting_rule", ""),
+            key=f"{key_prefix}_conflicting",
+        )
+
+    span_override = ""
+    if span_problems:
+        st.warning(
+            "text_span이 원문의 정확한 부분문자열이 아닙니다. 수정하거나, "
+            "가이드라인의 의도적 예외(공통 전제 복제·병기 표현)라면 사유를 적어 override하세요."
+        )
+        for p in span_problems:
+            msg = f"child `{p['child_id']}` — {p['code']}"
+            st.markdown(f"- {msg}")
+            if p.get("suggestion"):
+                st.code(p["suggestion"], language=None)
+        span_override = st.text_input(
+            "span_override 사유 (입력 시 저장 허용)",
+            value=seed.get("span_override") or "",
+            key=f"{key_prefix}_span_override",
+        )
+
+    return {
+        "tier": tier,
+        "rationale_short": rationale_short,
+        "rule_id": rule_id,
+        "rule_status": rule_status,
+        "conflicting_rule": conflicting_rule,
+        "escalate_pi": escalate_pi,
+        "span_override": span_override,
+    }
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Page sections
 # ──────────────────────────────────────────────────────────────────────
 
@@ -524,9 +857,298 @@ def section_annotate(
             st.success(f"💾 Draft saved → {save_path}")
 
 
-def section_iaa_dashboard(stage_dir: Path, *, current_annotator: str) -> None:
-    """Phase 2 only. Enumerates committed envelopes only."""
-    committed_files = list_committed_annotator_envelopes(stage_dir)
+def section_adjudicate(
+    *,
+    trial_input: dict,
+    env_dir: Path,
+    stage_dir: Path,
+    round_num: int | None,
+    blind: bool,
+    queue: list[dict],
+    cohort_options: list[str],
+    peers: list[str],
+    stage: int,
+) -> None:
+    """Adjudication tab (handover §B/§C).
+
+    Two passes over the same form: blind first (independent third opinion),
+    then revealed. `tier == 3` items are diverted to `gap_tickets.json` so the
+    gold envelope holds only settled answers.
+    """
+    trial_id = trial_input["trial_id"]
+    criteria = {c["criterion_id"]: c for c in trial_input.get("criteria", [])}
+    q_by_id = queue_index(queue)
+
+    gold_path = resolve_envelope_path(env_dir, GOLD_ACTOR,
+                                      trial_id=trial_id, stage=stage)
+    gold_env = load_json(gold_path) or {}
+    gold_by_id = {r.get("criterion_id"): r for r in gold_env.get("records", [])
+                  if r.get("criterion_id")}
+    gap_path = gap_tickets_path(stage_dir, round_num)
+    gap_existing = load_json(gap_path)
+    if gap_existing is None and gap_path.exists():
+        # a JSON array parses fine through load_json only if it is a dict;
+        # read it directly so we never silently drop existing tickets.
+        try:
+            gap_existing = json.loads(gap_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            gap_existing = None
+    gap_list = merge_gap_tickets(gap_existing, [])
+    gap_by_id = {t.get("criterion_id"): t for t in gap_list}
+
+    # Peer data is read ONLY when revealed. In blind mode we skip the read
+    # entirely rather than load-and-hide (see load_peer_records docstring).
+    peer_records_all: dict[str, dict[str, dict]] = {}
+    if not blind:
+        peer_records_all = load_peer_records(env_dir, peers)
+
+    # ── worklist ─────────────────────────────────────────────────────
+    if q_by_id:
+        items = [cid for cid in q_by_id if cid in criteria]
+        if not items:
+            st.info(
+                f"판정 큐에 `{trial_id}` 항목이 없습니다. "
+                "다른 trial을 선택하거나 큐를 다시 생성하세요."
+            )
+            return
+    else:
+        items = sorted(criteria)
+        st.caption(
+            "판정 큐 파일이 없어 전체 criterion을 순서대로 보여줍니다. "
+            "`python scripts/build_adjudication_queue.py --out results/adjudication` "
+            "를 실행하면 우선순위 순서로 정렬됩니다."
+        )
+
+    done = sum(1 for cid in items if cid in gold_by_id or cid in gap_by_id)
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("queue (this trial)", len(items))
+    c2.metric("adjudicated", done)
+    c3.metric("gap tickets", sum(1 for cid in items if cid in gap_by_id))
+    c4.metric("pass", "blind" if blind else "revealed")
+    st.progress(done / len(items) if items else 0.0)
+
+    only_pending = st.checkbox("미판정 항목만 보기", value=False, key="adj_pending_only")
+    view = [cid for cid in items
+            if not (only_pending and (cid in gold_by_id or cid in gap_by_id))]
+    if not view:
+        st.success("이 trial의 큐 항목을 모두 판정했습니다.")
+        return
+
+    idx_labels = [
+        f"{q_by_id.get(cid, {}).get('priority', '?')} · {cid}"
+        f"{'  ✅' if cid in gold_by_id else ''}{'  🎫' if cid in gap_by_id else ''}"
+        for cid in view
+    ]
+    pick = st.selectbox("판정 항목", range(len(view)),
+                        format_func=lambda i: idx_labels[i], key="adj_pick")
+    cid = view[pick]
+    crit = criteria[cid]
+    qrow = q_by_id.get(cid, {})
+
+    st.divider()
+    if qrow:
+        bits = [f"stratum **{qrow.get('stratum','?')}**"]
+        if qrow.get("s1_kind"):
+            bits.append(f"({qrow['s1_kind']})")
+        if str(qrow.get("is_72_conflict") or "") in ("1", "True", "true"):
+            bits.append("· ⚠️ §7.2 예외조항 충돌 — 최우선")
+        if qrow.get("tier0_flag"):
+            bits.append(f"· 🚩 Tier 0 위반: `{qrow['tier0_flag']}`")
+        st.markdown(" ".join(bits))
+        if qrow.get("risk_signals"):
+            with st.expander("S2 위험 신호", expanded=False):
+                st.code(qrow["risk_signals"], language=None)
+
+    existing_gold = gold_by_id.get(cid)
+    blind_label = (existing_gold or {}).get("blind_label")
+    key_prefix = f"adj_{trial_id}_{cid}"
+
+    if blind:
+        st.info(
+            "🔒 **1차 통과 (blind)** — EHJ/DYK 라벨을 보지 않고 독립 판정합니다. "
+            "두 사람이 모두 틀린 경우를 발견하려면 제3의 독립 라벨이 먼저 있어야 합니다."
+        )
+        gold_draft = render_adjudication_form_blind(
+            crit,
+            blind_label=blind_label,
+            cohort_options=cohort_options,
+            key_prefix=key_prefix,
+        )
+    else:
+        peer_records = {a: peer_records_all.get(a, {}).get(cid) for a in peers}
+        gold_draft = render_adjudication_form_open(
+            crit,
+            existing_gold=existing_gold,
+            blind_label=blind_label,
+            peer_records=peer_records,
+            cohort_options=cohort_options,
+            key_prefix=key_prefix,
+        )
+
+    problems = span_violations(crit.get("text", ""), gold_draft.get("sub_criteria") or [])
+    meta = render_adjudication_meta(
+        key_prefix=key_prefix,
+        existing_adj=(existing_gold or {}).get("adjudication")
+                     or (gap_by_id.get(cid) or None),
+        span_problems=problems,
+    )
+
+    errs = validate_adjudication(
+        splitting_decision=gold_draft.get("splitting_decision"),
+        sub_criteria=gold_draft.get("sub_criteria") or [],
+        tier=meta["tier"],
+        rationale_short=meta["rationale_short"],
+        rule_status=meta["rule_status"],
+        span_override=meta["span_override"],
+        span_problems=problems,
+    )
+    is_gap = meta["tier"] == 3
+    if is_gap:
+        # A gap ticket records that no tier settled the answer; the gold-label
+        # requirements do not apply to it (and must not, or tier 3 would be
+        # unreachable). Only the rationale is still needed.
+        errs = [e for e in errs
+                if "rationale_short" in e or "rule_status" in e]
+        st.warning(
+            "**tier 3 → gap ticket.** 이 항목은 GOLD envelope에 저장되지 않고 "
+            "`gap_tickets.json`으로 분리됩니다 — gold set에 `null` 라벨이 들어가면 "
+            "κ 계산에서 별도 클래스로 계수되어 GOLD 축 지표가 오염됩니다 (§7.4-🔴2)."
+        )
+
+    st.divider()
+    col_save, col_status = st.columns([1, 4])
+    with col_save:
+        save_clicked = st.button(
+            "🎫 gap ticket 저장" if is_gap else "⚖️ 판정 저장",
+            type="primary", use_container_width=True, disabled=bool(errs),
+        )
+    with col_status:
+        if errs:
+            for e in errs:
+                st.error(e)
+        elif blind:
+            st.success("저장 시 `blind_label`로 보존됩니다 (2차에서 gold를 바꿔도 유지).")
+        else:
+            st.success("저장 시 record 최상위 gold + `adjudication` 메타로 기록됩니다.")
+
+    if not save_clicked:
+        return
+
+    now = _utc_now_iso()
+    compared = {a: (peer_records_all.get(a, {}).get(cid) or {}).get("splitting_decision")
+                for a in peers} if not blind else {}
+    compared = {k: v for k, v in compared.items() if v is not None}
+
+    if is_gap:
+        ticket = build_gap_ticket(
+            criterion_id=cid,
+            reason=meta["rationale_short"],
+            blind_label=blind_label or (_blind_snapshot(gold_draft) if blind else None),
+            compared=compared,
+            escalate_pi=meta["escalate_pi"],
+            note=gold_draft.get("notes"),
+            queue_stratum=qrow.get("stratum"),
+            adjudicated_at=now,
+        )
+        gap_list = merge_gap_tickets(gap_list, [ticket])
+        gap_path.parent.mkdir(parents=True, exist_ok=True)
+        gap_path.write_text(json.dumps(gap_list, ensure_ascii=False, indent=2),
+                            encoding="utf-8")
+        # If this criterion had previously been gold, drop it — an item cannot
+        # be both a settled answer and an open gap.
+        if cid in gold_by_id:
+            records = [r for r in gold_env.get("records", [])
+                       if r.get("criterion_id") != cid]
+            _write_gold(gold_path, gold_env, records, trial_id, stage, now)
+            st.info(f"이전 gold 라벨을 제거했습니다: `{cid}`")
+        st.success(f"🎫 gap ticket 저장 → {gap_path}")
+        return
+
+    if blind:
+        # Pass 1: persist ONLY blind_label. The gold label is not settled yet,
+        # but the record needs a top-level decision to stay schema-valid, so we
+        # seed it from the blind pass and let pass 2 confirm or overwrite it.
+        snapshot = _blind_snapshot(gold_draft)
+    else:
+        snapshot = blind_label
+
+    record = build_gold_record(
+        criterion_id=cid,
+        gold=gold_draft,
+        blind_label=snapshot,
+        tier=meta["tier"],
+        rationale_short=meta["rationale_short"],
+        rule_id=meta["rule_id"],
+        rule_status=meta["rule_status"],
+        conflicting_rule=meta["conflicting_rule"],
+        escalate_pi=meta["escalate_pi"],
+        span_override=meta["span_override"],
+        adjudicated_at=now,
+        queue_stratum=qrow.get("stratum"),
+        compared=compared or None,
+    )
+    record["adjudication"]["pass"] = "blind" if blind else "revealed"
+
+    records = [r for r in gold_env.get("records", [])
+               if r.get("criterion_id") != cid]
+    records.append(record)
+    records.sort(key=lambda r: r.get("criterion_id") or "")
+    _write_gold(gold_path, gold_env, records, trial_id, stage, now)
+
+    # Leaving gold and gap in sync: a settled answer clears any prior ticket.
+    if cid in gap_by_id:
+        gap_list = [t for t in gap_list if t.get("criterion_id") != cid]
+        gap_path.write_text(json.dumps(gap_list, ensure_ascii=False, indent=2),
+                            encoding="utf-8")
+        st.info(f"이전 gap ticket을 해소 처리했습니다: `{cid}`")
+
+    st.success(f"⚖️ 저장 → {gold_path.name} ({len(records)} records)")
+
+
+def _blind_snapshot(record: dict) -> dict:
+    """The subset of a blind-pass label worth preserving for D-3."""
+    snap: dict[str, Any] = {
+        "splitting_decision": record.get("splitting_decision"),
+        "sub_criteria": [{"child_id": s.get("child_id"),
+                          "text_span": s.get("text_span", "")}
+                         for s in (record.get("sub_criteria") or [])],
+    }
+    if record.get("child_logic") is not None:
+        snap["child_logic"] = record["child_logic"]
+    return snap
+
+
+def _write_gold(path: Path, prev_env: dict, records: list[dict],
+                trial_id: str, stage: int, now: str) -> None:
+    """Write the GOLD envelope, keeping `committed` so discovery still sees it.
+
+    GOLD is committed from the first save on purpose: `compute_iaa.py` only
+    discovers `committed is True` envelopes, and the adjudicator needs the
+    E-G / D-G numbers while the work is still in progress. Unlike the
+    annotators, there is no anchoring risk in letting them look.
+    """
+    env = build_gold_envelope(
+        trial_id=trial_id,
+        stage=stage,
+        annotator=GOLD_ACTOR,
+        records=records,
+        created_at=prev_env.get("created_at") or now,
+        committed=True,
+    )
+    env["committed_at"] = now
+    save_envelope(env, path)
+
+
+def section_iaa_dashboard(stage_dir: Path, *, current_annotator: str,
+                          env_dir: Path | None = None) -> None:
+    """Phase 2 only. Enumerates committed envelopes only.
+
+    `env_dir` selects the round folder to read envelopes from; `llm_output.json`
+    always comes from the stage dir because it is shared across rounds (same
+    split as `compute_iaa.discover_sources`).
+    """
+    ann_dir = env_dir or stage_dir
+    committed_files = list_committed_annotator_envelopes(ann_dir)
     llm_file = stage_dir / "llm_output.json"
     sources: list[tuple[str, Path]] = []
     seen: dict[str, int] = {}
@@ -547,7 +1169,7 @@ def section_iaa_dashboard(stage_dir: Path, *, current_annotator: str) -> None:
     if len(sources) < 2:
         st.info(
             "Need at least 2 committed sources (annotator and/or LLM) to "
-            f"compute IAA. Found {len(sources)} committed in {stage_dir}.\n\n"
+            f"compute IAA. Found {len(sources)} committed in {ann_dir}.\n\n"
             "Other annotators in progress are not listed — only committed work is shown."
         )
         return
@@ -580,6 +1202,18 @@ def section_iaa_dashboard(stage_dir: Path, *, current_annotator: str) -> None:
     except Exception as e:
         st.error(f"IAA computation failed: {type(e).__name__}: {e}")
         return
+
+    # Handover §0.4-🟠1: a GOLD-axis pair is computed over the adjudicated
+    # subset only (disagreement-oversampled), so its κ is NOT comparable to the
+    # all-172 EHJ-vs-DYK κ shown in the same layout. Say so where the number is.
+    if GOLD_ACTOR in (labels[idx_a], labels[idx_b]):
+        st.warning(
+            f"**GOLD 축 지표 해석 주의 (§0.4-🟠1)** — GOLD envelope에는 판정한 항목만 "
+            f"들어 있고 그 표본은 불일치가 과대표집된 층화 표본입니다. 따라서 이 κ는 "
+            f"구조적으로 낮게 나오며, 전수 172건 기준 어노테이터 간 κ와 **직접 비교하거나 "
+            f"논문에 병렬 인용하면 안 됩니다.** 정확도 보고는 층별 분모를 명시해서 "
+            f"수행하세요 (D-1)."
+        )
 
     st.markdown("#### Alignment")
     al = iaa["alignment"]
@@ -615,6 +1249,38 @@ def section_iaa_dashboard(stage_dir: Path, *, current_annotator: str) -> None:
 
     with st.expander("Raw metric output (JSON)"):
         st.json(iaa)
+
+
+def section_peer_overview(env_dir: Path, *, peers: list[str],
+                          trial_input: dict) -> None:
+    """Revealed-pass reference table of peer labels for the whole trial.
+
+    Only reachable when blind is OFF — `build_adjudication_tab_spec` omits this
+    tab entirely during the blind pass, so the read cannot happen there.
+    """
+    records = load_peer_records(env_dir, peers)
+    if not records:
+        st.info(f"No peer envelopes in `{env_dir}`.")
+        return
+    st.caption(
+        "판정 참고용 대조표. notes는 원문 그대로 표시하며 요약·재작성하지 않습니다 "
+        "(§C-1). 실측상 notes는 약 7% 항목에만 존재하므로 공란이 정상입니다."
+    )
+    rows = []
+    for crit in trial_input.get("criteria", []):
+        cid = crit["criterion_id"]
+        row: dict[str, Any] = {"criterion_id": cid}
+        labels = []
+        for actor in sorted(records):
+            rec = records[actor].get(cid)
+            s = peer_summary(rec)
+            row[f"{actor}"] = s.get("splitting_decision") or "—"
+            row[f"{actor}_n"] = s.get("n_children", "—")
+            row[f"{actor}_note"] = s.get("notes") or ""
+            labels.append(s.get("splitting_decision"))
+        row["agree"] = "✅" if len(set(labels)) == 1 else "⚠️"
+        rows.append(row)
+    st.dataframe(rows, use_container_width=True, hide_index=True)
 
 
 def section_llm_view(llm_envelope: dict | None) -> None:
@@ -684,62 +1350,149 @@ def main() -> None:
                               key="stage_pick")
         mode: Mode = STAGE_MODE[stage]
 
-        phase: Phase = st.radio(
-            "Phase",
-            options=["phase_1_annotate", "phase_2_review"],
-            format_func=lambda p: (
-                "Phase 1 — Annotate (IAA hidden)" if p == "phase_1_annotate"
-                else "Phase 2 — Review (post-commit IAA)"
-            ),
-            key="phase_pick",
-            help="Phase 1 is blind annotation. Phase 2 unlocks the IAA tab "
-                 "but only after you have committed your envelope.",
+        role: Role = st.radio(
+            "Role",
+            options=["annotator", "adjudicator"],
+            format_func=lambda r: ("Annotator — blind annotation"
+                                   if r == "annotator"
+                                   else "Adjudicator — gold set (GOLD)"),
+            key="role_pick",
+            help="Adjudicator writes the GOLD envelope for an existing round. "
+                 "See adjudication_handover.md §B.",
         )
+
+        round_num: int | None = None
+        if role == "adjudicator" or st.checkbox(
+            "Use round subfolder", value=False, key="round_toggle",
+            help="Read/write committed envelopes under stage{N}/round{R}/.",
+        ):
+            round_num = int(st.number_input(
+                "Round", min_value=1, max_value=9,
+                value=2, step=1, key="round_pick",
+            ))
+
+        phase: Phase = "phase_2_review"
+        blind = True
+        queue_path_str = DEFAULT_QUEUE_PATH
+        if role == "annotator":
+            phase = st.radio(
+                "Phase",
+                options=["phase_1_annotate", "phase_2_review"],
+                format_func=lambda p: (
+                    "Phase 1 — Annotate (IAA hidden)" if p == "phase_1_annotate"
+                    else "Phase 2 — Review (post-commit IAA)"
+                ),
+                key="phase_pick",
+                help="Phase 1 is blind annotation. Phase 2 unlocks the IAA tab "
+                     "but only after you have committed your envelope.",
+            )
+        else:
+            st.divider()
+            st.subheader("Adjudication")
+            blind = st.toggle(
+                "🔒 Blind pass (1차)", value=True, key="adj_blind",
+                help="ON: EHJ/DYK 라벨·notes·span을 전부 숨기고 독립 판정. "
+                     "OFF: 공개 후 최종 gold 확정. 1차 라벨은 blind_label로 보존됩니다.",
+            )
+            if blind:
+                st.caption("🔒 peer 라벨을 **읽지 않습니다** (숨기는 것이 아니라 미로드).")
+            else:
+                st.caption("👥 peer 라벨 공개 — blind_label은 그대로 유지됩니다.")
+            queue_path_str = st.text_input(
+                "판정 큐 파일", value=DEFAULT_QUEUE_PATH, key="adj_queue_path",
+                help="scripts/build_adjudication_queue.py 산출물. 없으면 전체 criterion을 표시.",
+            )
 
         st.divider()
         st.subheader("Identity")
-        annotator = st.text_input("Your annotator ID", value="", key="annotator_id").strip()
-        st.caption(
-            "⚠️ Honor system. Typing another annotator's ID will load and "
-            "**permanently contaminate** your view of their work. The IAA "
-            "statistic depends on your independence."
-        )
+        if role == "adjudicator":
+            annotator = GOLD_ACTOR
+            st.markdown(f"Actor: **`{GOLD_ACTOR}`** (고정)")
+            st.caption(
+                "판정자의 blind 라벨은 제3의 독립 의견이며 **투표권이 아닙니다.** "
+                "2:1 다수결 자동 판정은 구현되어 있지 않습니다 (§5)."
+            )
+        else:
+            annotator = st.text_input("Your annotator ID", value="",
+                                      key="annotator_id").strip()
+            st.caption(
+                "⚠️ Honor system. Typing another annotator's ID will load and "
+                "**permanently contaminate** your view of their work. The IAA "
+                "statistic depends on your independence."
+            )
 
         st.divider()
         st.subheader("Trial")
-        trials = list_trials(workspace, stage=stage)
+        # The adjudicator works on an existing round, so only trials that have
+        # that round folder are selectable — the other 23 workspace trials
+        # would just dead-end.
+        trials = list_trials(
+            workspace, stage=stage,
+            round_num=round_num if role == "adjudicator" else None,
+        )
         if not trials:
-            st.info(f"No trials in `{workspace}` for stage {stage}. Use Upload tab.")
+            st.info(f"No trials in `{workspace}` for stage {stage}"
+                    + (f" with a round{round_num}/ folder." if role == "adjudicator"
+                       else ". Use Upload tab."))
         trial_id = st.selectbox("Trial", trials, key="trial_pick") if trials else None
+        if role == "adjudicator" and trials:
+            st.caption(f"{len(trials)} trial(s) with `round{round_num}/` labels.")
 
         if trial_id and annotator:
             stage_dir = workspace / trial_id / f"stage{stage}"
-            own_path = annotator_envelope_path(stage_dir, annotator)
-            own_env = load_json(own_path)
-            st.markdown("**Your envelope status:**")
-            if own_env is None:
-                st.markdown("- _not started_")
-            elif envelope_is_committed(own_env):
-                st.markdown(f"- 🔒 **committed** ({own_env.get('committed_at','?')})")
+            env_dir_sb = envelope_dir(stage_dir, round_num)
+            if role == "adjudicator":
+                own_path = find_actor_envelope(env_dir_sb, GOLD_ACTOR)
+                own_env = load_json(own_path) if own_path else None
+                st.markdown("**GOLD envelope:**")
+                if own_env is None:
+                    st.markdown(f"- _not started_ (`round{round_num}/`)")
+                else:
+                    st.markdown(f"- ⚖️ {len(own_env.get('records', []))} records "
+                                f"({own_env.get('committed_at', '?')})")
+                gp = gap_tickets_path(stage_dir, round_num)
+                if gp.exists():
+                    try:
+                        n_gap = len(json.loads(gp.read_text(encoding="utf-8")) or [])
+                    except (json.JSONDecodeError, TypeError):
+                        n_gap = 0
+                    st.markdown(f"- 🎫 gap tickets: {n_gap}")
             else:
-                st.markdown(f"- 💾 draft saved ({own_env.get('created_at','?')})")
+                own_path = annotator_envelope_path(stage_dir, annotator)
+                own_env = load_json(own_path)
+                st.markdown("**Your envelope status:**")
+                if own_env is None:
+                    st.markdown("- _not started_")
+                elif envelope_is_committed(own_env):
+                    st.markdown(f"- 🔒 **committed** ({own_env.get('committed_at','?')})")
+                else:
+                    st.markdown(f"- 💾 draft saved ({own_env.get('created_at','?')})")
             # NOTE: we intentionally do NOT enumerate other annotators'
             # files here. Only the current annotator's own status is shown.
             # See audit_streamlit_v1.md issue A4.
 
     # ── Header ───────────────────────────────────────────────────────
     st.title(f"IAA · Stage {stage}")
-    st.caption(
-        f"Mode: **{mode}** · Phase: **{phase}**. "
-        f"See `iaa_pipeline_spec/03_json_schemas.md` for the data contract "
-        f"and `audit_streamlit_v1.md` for the blinding rationale."
-    )
+    if role == "adjudicator":
+        st.caption(
+            f"Role: **adjudicator** (`{GOLD_ACTOR}`) · round **{round_num}** · "
+            f"pass: **{'blind' if blind else 'revealed'}**. "
+            f"See `adjudication_handover.md` §B/§C. Gold labels sit at the record "
+            f"top level so `compute_iaa.py` picks GOLD up as an actor (§7.4)."
+        )
+    else:
+        st.caption(
+            f"Mode: **{mode}** · Phase: **{phase}**. "
+            f"See `iaa_pipeline_spec/03_json_schemas.md` for the data contract "
+            f"and `audit_streamlit_v1.md` for the blinding rationale."
+        )
 
     if not trial_id:
         section_upload(workspace, stage=stage)
         return
 
     stage_dir = workspace / trial_id / f"stage{stage}"
+    env_dir = envelope_dir(stage_dir, round_num)
     trial_input = load_json(stage_dir / "input.json")
     if trial_input is None:
         st.error(f"Missing input file: {stage_dir / 'input.json'}")
@@ -758,8 +1511,52 @@ def main() -> None:
         if isinstance(c, dict) and c.get("cohort_id")
     ]
 
+    # ── Adjudicator: separate tab set, separate section ──────────────
+    if role == "adjudicator":
+        if stage != 1:
+            st.warning("Adjudication is wired for Stage 1 (Splitting) only.")
+            return
+        if not env_dir.is_dir():
+            st.error(
+                f"Round folder not found: `{env_dir}`. "
+                f"판정은 기존 라운드 라벨을 대상으로 하므로 해당 폴더가 있어야 합니다."
+            )
+            return
+        peers = discover_peer_actors(env_dir, exclude=GOLD_ACTOR)
+        if not peers:
+            st.warning(
+                f"`{env_dir.name}/`에 committed 어노테이터 envelope이 없습니다. "
+                f"peer 라벨 없이도 판정은 가능하지만 2차 통과가 무의미합니다."
+            )
+        queue = load_queue(Path(queue_path_str).expanduser(), trial_id=trial_id)
+        adj_tabs = build_adjudication_tab_spec(blind=blind)
+        for label, tab in zip(adj_tabs, st.tabs(adj_tabs)):
+            with tab:
+                if label == "⚖️ Adjudicate":
+                    section_adjudicate(
+                        trial_input=trial_input,
+                        env_dir=env_dir,
+                        stage_dir=stage_dir,
+                        round_num=round_num,
+                        blind=blind,
+                        queue=queue,
+                        cohort_options=cohort_options,
+                        peers=peers,
+                        stage=stage,
+                    )
+                elif label == "👥 Peer labels":
+                    section_peer_overview(env_dir, peers=peers,
+                                          trial_input=trial_input)
+                elif label == "📊 IAA":
+                    section_iaa_dashboard(stage_dir, current_annotator=GOLD_ACTOR,
+                                          env_dir=env_dir)
+        return
+
     if annotator:
-        save_path = annotator_envelope_path(stage_dir, annotator)
+        save_path = (annotator_envelope_path(stage_dir, annotator)
+                     if round_num is None
+                     else resolve_envelope_path(env_dir, annotator,
+                                                trial_id=trial_id, stage=stage))
         existing = load_json(save_path)
     else:
         save_path = stage_dir / "annotator_unknown.json"
@@ -770,7 +1567,7 @@ def main() -> None:
         # Also open the IAA tab when this annotator's committed envelope was
         # dropped in under its hosted-app download name (annotator field
         # matches) rather than `annotator_{id}.json` — no renaming required.
-        for p in list_committed_annotator_envelopes(stage_dir):
+        for p in list_committed_annotator_envelopes(env_dir):
             env = load_json(p)
             if env and env.get("annotator") == annotator:
                 annotator_committed = True
@@ -803,7 +1600,8 @@ def main() -> None:
             elif label == "🤖 LLM Output":
                 section_llm_view(llm_envelope)
             elif label == "📊 IAA":
-                section_iaa_dashboard(stage_dir, current_annotator=annotator)
+                section_iaa_dashboard(stage_dir, current_annotator=annotator,
+                                      env_dir=env_dir)
             elif label == "⬆️ Upload":
                 section_upload(workspace, stage=stage)
 

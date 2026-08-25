@@ -77,6 +77,8 @@ def discover_sources(stage_dir: Path, round_dir: Path | None = None) -> tuple[di
 
 def _row(trial: str, iaa: dict) -> dict:
     sd = iaa["splitting_decision"]
+    sdb = iaa.get("sd_binary", {})
+    sdt = iaa.get("sd_type", {})
     cl = iaa["child_logic"]
     cs = iaa["cohort_scope"]
     sg = iaa.get("split_degree", {})
@@ -84,6 +86,12 @@ def _row(trial: str, iaa: dict) -> dict:
         "trial": trial,
         "n_matched": iaa["alignment"]["n_matched"],
         "sd_kappa": sd["cohens_kappa"],
+        "sd_obs": sd["observed_agreement"],
+        "sdbin_kappa": sdb.get("cohens_kappa"),
+        "sdtyp_kappa": sdt.get("cohens_kappa"),
+        # sd_type κ can be undefined (variance 0, e.g. both always composite);
+        # keep the observed rate so the report can fall back to it.
+        "sdtyp_obs": sdt.get("observed_agreement"),
         "cl_kappa": cl["cohens_kappa"],
         "cohort_exact": cs["exact_match_rate"],
         "cohort_jaccard": cs["mean_jaccard"],
@@ -100,6 +108,9 @@ _COLS = [
     ("trial", "trial", 14),
     ("n_matched", "matched", 8),
     ("sd_kappa", "SD κ", 8),
+    ("sd_obs", "SD obs", 8),
+    ("sdbin_kappa", "SDbin κ", 9),
+    ("sdtyp_kappa", "SDtyp κ", 9),
     ("cl_kappa", "CL κ", 8),
     ("cohort_exact", "cohort.ex", 10),
     ("cohort_jaccard", "cohort.J", 9),
@@ -108,7 +119,17 @@ _COLS = [
 ]
 
 
-def _print_table(pair_label: str, rows: list[dict], pooled: dict) -> None:
+def _direction_line(la: str, lb: str, iaa: dict) -> str:
+    db = iaa.get("direction_bias")
+    if not db:
+        return ""
+    return (f"direction bias (POOLED): {la}-only-split={db['n_a_only_split']}  "
+            f"{lb}-only-split={db['n_b_only_split']}  "
+            f"type-mismatch={db['n_type_mismatch']}")
+
+
+def _print_table(pair_label: str, rows: list[dict], pooled: dict,
+                 direction: str = "") -> None:
     print(f"\n=== {pair_label} ===")
     header = "".join(f"{h:>{w}}" if k != "trial" else f"{h:<{w}}"
                      for k, h, w in _COLS)
@@ -125,19 +146,27 @@ def _print_table(pair_label: str, rows: list[dict], pooled: dict) -> None:
         (f"{pr[k]:<{w}}" if k == "trial" else f"{_fmt(pr[k]):>{w}}")
         for k, _, w in _COLS
     ))
+    if direction:
+        print(direction)
 
 
-def _md_table(pair_label: str, rows: list[dict], pooled: dict) -> str:
-    head = "| trial | matched | SD κ | CL κ | cohort.exact | cohort.J | child#.exact(split) | spanF1 |"
-    sep = "|---|--:|--:|--:|--:|--:|--:|--:|"
+def _md_table(pair_label: str, rows: list[dict], pooled: dict,
+              direction: str = "") -> str:
+    head = ("| trial | matched | SD κ | SD obs | SDbin κ | SDtyp κ | CL κ "
+            "| cohort.exact | cohort.J | child#.exact(split) | spanF1 |")
+    sep = "|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|"
     lines = [f"### {pair_label}", "", head, sep]
     for r in list(rows) + [_row("**POOLED**", pooled)]:
         lines.append(
             f"| {r['trial']} | {r['n_matched']} | {_fmt(r['sd_kappa'])} | "
+            f"{_fmt(r['sd_obs'])} | {_fmt(r['sdbin_kappa'])} | "
+            f"{_fmt(r['sdtyp_kappa'])} | "
             f"{_fmt(r['cl_kappa'])} | {_fmt(r['cohort_exact'])} | "
             f"{_fmt(r['cohort_jaccard'])} | {_fmt(r['childcnt_exact_split'])} | "
             f"{_fmt(r['span_f1'])} |"
         )
+    if direction:
+        lines += ["", direction]
     return "\n".join(lines)
 
 
@@ -227,12 +256,13 @@ def main() -> int:
             continue
         pooled = compute_stage1_iaa({"records": recs_a}, {"records": recs_b})
         pair_label = f"{la} vs {lb}"
-        _print_table(pair_label, rows, pooled)
+        direction = _direction_line(la, lb, pooled)
+        _print_table(pair_label, rows, pooled, direction)
         report["pairs"][pair_label] = {
             "per_trial": per_trial_detail,
             "pooled": pooled,
         }
-        md_sections.append(_md_table(pair_label, rows, pooled))
+        md_sections.append(_md_table(pair_label, rows, pooled, direction))
 
     if args.out:
         out_dir = Path(args.out).expanduser()

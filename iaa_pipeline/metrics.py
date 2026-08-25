@@ -47,12 +47,14 @@ class CategoricalAgreement:
     observed: float             # n_agree / n
     kappa: float | None         # Cohen's κ; None when undefined (e.g. only one class)
     classes: list[str]          # observed classes (sorted, for reporting)
+    expected: float | None = None  # chance agreement p_e (marginal-distribution tracking)
 
     def as_dict(self) -> dict[str, Any]:
         return {
             "n": self.n,
             "n_agree": self.n_agree,
             "observed_agreement": round(self.observed, 4),
+            "expected_agreement": round(self.expected, 4) if self.expected is not None else None,
             "cohens_kappa": round(self.kappa, 4) if self.kappa is not None else None,
             "classes": self.classes,
         }
@@ -107,6 +109,7 @@ def cohens_kappa(labels_a: list[Any], labels_b: list[Any]) -> CategoricalAgreeme
         observed=p_o,
         kappa=kappa,
         classes=[c for c in classes if c != "__NONE__"] + (["null"] if "__NONE__" in classes else []),
+        expected=p_e,
     )
 
 
@@ -185,12 +188,68 @@ def per_field_match_rate(
 # Stage 1 — splitting IAA
 # ──────────────────────────────────────────────────────────────────────
 
+# The three decisions that produce sub_criteria. nested_exception is grouped
+# with "split" in the binary axis: it also generates a sub_criterion (a single
+# child) and — like composite/macro — represents "did NOT leave the criterion
+# whole", which is exactly the contrast the binary axis measures against
+# `none`. (adjudication_handover.md §A-1)
+SPLIT_DECISIONS = frozenset({"composite_split", "macro_aggregate", "nested_exception"})
+
+
+def _sd_binary(label: Any) -> Any:
+    """Collapse the 4-class splitting_decision to split-vs-none."""
+    if label in SPLIT_DECISIONS:
+        return "split"
+    return label  # "none" stays "none"; None/invalid stay as-is (own class)
+
+
+def compute_sd_axes(sd_a: list[Any], sd_b: list[Any]) -> dict[str, Any]:
+    """Decompose splitting_decision agreement into its two sub-decisions.
+
+    The 4-class label compresses two decisions of different nature:
+      1. whether to split at all (split vs none)  -> sd_binary
+      2. if split, which type (composite/macro/nested) -> sd_type,
+         computed only over pairs where BOTH annotators split
+    plus a direction-bias breakdown of the disagreements.
+    """
+    binary = cohens_kappa([_sd_binary(x) for x in sd_a],
+                          [_sd_binary(x) for x in sd_b])
+
+    type_a = [a for a, b in zip(sd_a, sd_b)
+              if a in SPLIT_DECISIONS and b in SPLIT_DECISIONS]
+    type_b = [b for a, b in zip(sd_a, sd_b)
+              if a in SPLIT_DECISIONS and b in SPLIT_DECISIONS]
+    type_agree = cohens_kappa(type_a, type_b)
+
+    n_a_only = sum(1 for a, b in zip(sd_a, sd_b)
+                   if a in SPLIT_DECISIONS and b == "none")
+    n_b_only = sum(1 for a, b in zip(sd_a, sd_b)
+                   if a == "none" and b in SPLIT_DECISIONS)
+    n_type_mismatch = sum(1 for a, b in zip(sd_a, sd_b)
+                          if a in SPLIT_DECISIONS and b in SPLIT_DECISIONS and a != b)
+
+    return {
+        "sd_binary": binary.as_dict() | {"scope": "split(3종 통합) vs none"},
+        "sd_type": type_agree.as_dict() | {
+            "scope": "pairs where both split (3-class)",
+        },
+        "direction_bias": {
+            "n_a_only_split": n_a_only,
+            "n_b_only_split": n_b_only,
+            "n_type_mismatch": n_type_mismatch,
+            "note": "a/b = first/second envelope argument",
+        },
+    }
+
+
 def compute_stage1_iaa(envelope_a: dict, envelope_b: dict) -> dict[str, Any]:
     """Compute Stage 1 IAA between two annotator envelopes.
 
     Returns a dict with:
       - alignment       : presence stats
       - splitting_decision : Cohen's κ (primary)
+      - sd_binary / sd_type / direction_bias : two-axis decomposition of the
+                             splitting_decision (see compute_sd_axes)
       - child_logic        : Cohen's κ on the subset where BOTH annotators
                              marked the parent as composite_split
                              (per spec §111 "only for composite_split")
@@ -201,6 +260,7 @@ def compute_stage1_iaa(envelope_a: dict, envelope_b: dict) -> dict[str, Any]:
     sd_a = [a.get("splitting_decision") for a, _ in alignment.matched]
     sd_b = [b.get("splitting_decision") for _, b in alignment.matched]
     sd_agree = cohens_kappa(sd_a, sd_b)
+    sd_axes = compute_sd_axes(sd_a, sd_b)
 
     # child_logic only on pairs where both said composite_split
     cl_a, cl_b = [], []
@@ -226,6 +286,7 @@ def compute_stage1_iaa(envelope_a: dict, envelope_b: dict) -> dict[str, Any]:
         "stage": 1,
         "alignment": _alignment_summary(alignment),
         "splitting_decision": sd_agree.as_dict(),
+        **sd_axes,
         "child_logic": cl_agree.as_dict() | {
             "scope": "pairs where both = composite_split",
         },
