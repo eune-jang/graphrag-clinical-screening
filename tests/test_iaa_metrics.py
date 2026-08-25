@@ -592,25 +592,41 @@ def test_envelope_is_committed():
 # Hosted app — IAA trial filtering
 # ──────────────────────────────────────────────────────────────────────
 
+#: The pilot / worked-example trial. It sources the prompt few-shot examples
+#: (pipeline/prompts/examples.json) and has no round1/round2 annotator labels,
+#: so it is in the hosted dropdown but NOT in the IAA experiment.
+PILOT_TRIAL = "NCT03425643"  # KEYNOTE-671 — pipeline/HANDOFF.md:512
+
+#: Trials the IAA experiment actually ran on. This is the dropdown filter list
+#: minus the pilot, and is the set the "eight trials" figure refers to.
+IAA_TRIAL_COUNT = 8
+
+
 def test_iaa_filter_file_exists_and_parses():
-    """iaa_8trials.txt should exist and contain exactly 8 NCT IDs."""
+    """iaa_8trials.txt is the hosted dropdown filter, not the IAA trial set.
+
+    Despite the filename it holds 9 ids: the 8 IAA trials plus the pilot.
+    """
     iaa_ids = hosted._load_iaa_trial_filter()
     assert iaa_ids is not None, "iaa_pipeline_spec/iaa_8trials.txt is missing"
-    assert len(iaa_ids) == 8, f"expected 8 trials, got {len(iaa_ids)}: {iaa_ids}"
-    # spec doc names KEYNOTE-671 explicitly as the pilot
-    assert "NCT03425643" in iaa_ids
+    assert PILOT_TRIAL in iaa_ids, "pilot trial should stay browsable in the app"
+    labelled = iaa_ids - {PILOT_TRIAL}
+    assert len(labelled) == IAA_TRIAL_COUNT, (
+        f"expected {IAA_TRIAL_COUNT} IAA trials besides the pilot, "
+        f"got {len(labelled)}: {sorted(labelled)}"
+    )
 
 
-def test_hosted_app_lists_only_iaa_trials():
-    """When the filter file is present, list_bundled_trials returns only the 8."""
+def test_hosted_app_lists_exactly_the_filter_file():
+    """The dropdown shows the filter list and nothing else."""
     trials = hosted.list_bundled_trials()
     iaa_ids = hosted._load_iaa_trial_filter()
     assert iaa_ids is not None
     assert set(trials) == iaa_ids, (
-        f"hosted app dropdown leaked non-IAA trials: "
+        f"hosted app dropdown leaked non-listed trials: "
         f"{set(trials) - iaa_ids}"
     )
-    assert len(trials) == 8
+    assert len(trials) == IAA_TRIAL_COUNT + 1
 
 
 def test_iaa_filter_skips_comments_and_blanks():

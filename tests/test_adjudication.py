@@ -28,6 +28,7 @@ from iaa_pipeline.adjudication import (  # noqa: E402
     gap_tickets_path,
     load_queue,
     merge_gap_tickets,
+    normalize_text_span,
     peer_summary,
     queue_index,
     span_violations,
@@ -132,19 +133,88 @@ def test_span_violation_blocks_save_until_override():
             "rationale": "r"},
            {"child_id": "b", "text_span": "lobectomy", "rationale": "r"}]
     problems = span_violations(_TEXT, bad)
-    errs = validate_adjudication(
+    common = dict(
         splitting_decision="composite_split", sub_criteria=bad, tier=2,
-        rationale_short="ok", rule_status=None, span_override=None,
-        span_problems=problems,
+        rationale_short="ok", rule_status=None, span_problems=problems,
+        child_logic="AND",
     )
-    assert any("span_override" in e for e in errs)
+    # Assert on the violation code rather than the prose: the message was
+    # rewritten when override became an error path rather than a sanctioned
+    # exception, and the test should not pin the wording.
+    errs = validate_adjudication(span_override=None, **common)
+    assert any("NOT_SUBSTRING" in e for e in errs)
 
     errs_override = validate_adjudication(
-        splitting_decision="composite_split", sub_criteria=bad, tier=2,
-        rationale_short="ok", rule_status=None,
-        span_override="가이드라인 예외: 공통 전제 복제", span_problems=problems,
+        span_override="드래그 복사 불가 — 원문 문자 재현 실패", **common
     )
-    assert not any("span_override" in e for e in errs_override)
+    assert errs_override == []
+
+
+# ── text_span as a segment array (spec v1.2.3 변경 6) ─────────────────
+
+def test_normalize_text_span_accepts_both_storage_forms():
+    """Round 1/2 envelopes hold strings; new gold holds arrays."""
+    assert normalize_text_span("sleeve resection") == ["sleeve resection"]
+    assert normalize_text_span(["a", "b"]) == ["a", "b"]
+    assert normalize_text_span(None) == []
+    assert normalize_text_span("   ") == []
+    assert normalize_text_span(["  padded  ", "", None]) == ["padded"]
+
+
+def test_segments_checked_independently_so_split_phrase_needs_no_override():
+    """The case 변경 6 exists for: "locally advanced" … "Stage III".
+
+    Joined into one string it is not a substring and used to need an override.
+    As two segments each is a substring, so it passes clean.
+    """
+    text = ("Histologically confirmed locally advanced or metastatic NSCLC, "
+            "Stage III per AJCC 8th edition")
+    joined = [{"child_id": "a", "text_span": "locally advanced Stage III"}]
+    assert [p["code"] for p in span_violations(text, joined)] == ["NOT_SUBSTRING"]
+
+    segmented = [{"child_id": "a", "text_span": ["locally advanced", "Stage III"]}]
+    assert span_violations(text, segmented) == []
+
+
+def test_bad_segment_is_reported_with_its_index():
+    text = "Planned surgery must comprise lobectomy or bilobectomy"
+    subs = [{"child_id": "a", "text_span": ["lobectomy", "pneumonectomy"]}]
+    problems = span_violations(text, subs)
+    assert len(problems) == 1
+    assert problems[0]["seg_index"] == 1
+    assert problems[0]["span"] == "pneumonectomy"
+
+
+# ── child_logic scope (guideline v1.2.1 #2 / spec v1.2.3 변경 1) ──────
+
+def test_child_logic_required_for_both_split_decisions():
+    subs = [{"child_id": "a", "text_span": ["lobectomy"], "rationale": "r"},
+            {"child_id": "b", "text_span": ["bilobectomy"], "rationale": "r"}]
+    for decision in ("composite_split", "macro_aggregate"):
+        errs = validate_adjudication(
+            splitting_decision=decision, sub_criteria=subs, tier=1,
+            rationale_short="ok", rule_status=None, span_override=None,
+            span_problems=[], child_logic=None,
+        )
+        assert any("child_logic" in e for e in errs), decision
+        assert validate_adjudication(
+            splitting_decision=decision, sub_criteria=subs, tier=1,
+            rationale_short="ok", rule_status=None, span_override=None,
+            span_problems=[], child_logic="OR",
+        ) == [], decision
+
+
+def test_child_logic_forbidden_for_nested_exception_and_none():
+    """The forbid direction: a stale value must not ride into gold."""
+    for decision in ("nested_exception", "none"):
+        subs = ([{"child_id": "a", "text_span": ["except vitiligo"],
+                  "rationale": "r"}] if decision == "nested_exception" else [])
+        errs = validate_adjudication(
+            splitting_decision=decision, sub_criteria=subs, tier=2,
+            rationale_short="ok", rule_status=None, span_override=None,
+            span_problems=[], child_logic="AND",
+        )
+        assert any("child_logic" in e for e in errs), decision
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -162,12 +232,12 @@ def test_tier_and_rationale_required():
 
 
 def test_child_rationale_required_when_split():
-    subs = [{"child_id": "a", "text_span": "lobectomy"},
-            {"child_id": "b", "text_span": "bilobectomy"}]
+    subs = [{"child_id": "a", "text_span": ["lobectomy"]},
+            {"child_id": "b", "text_span": ["bilobectomy"]}]
     errs = validate_adjudication(
         splitting_decision="composite_split", sub_criteria=subs, tier=1,
         rationale_short="ok", rule_status=None, span_override=None,
-        span_problems=[],
+        span_problems=[], child_logic="AND",
     )
     assert sum(1 for e in errs if "rationale 필수" in e) == 2
 
@@ -176,7 +246,7 @@ def test_child_rationale_required_when_split():
     assert validate_adjudication(
         splitting_decision="composite_split", sub_criteria=subs, tier=1,
         rationale_short="ok", rule_status=None, span_override=None,
-        span_problems=[],
+        span_problems=[], child_logic="AND",
     ) == []
 
 
@@ -189,11 +259,11 @@ def test_child_rationale_not_required_when_none():
 
 
 def test_composite_split_needs_two_children():
-    subs = [{"child_id": "a", "text_span": "lobectomy", "rationale": "r"}]
+    subs = [{"child_id": "a", "text_span": ["lobectomy"], "rationale": "r"}]
     errs = validate_adjudication(
         splitting_decision="composite_split", sub_criteria=subs, tier=0,
         rationale_short="ok", rule_status=None, span_override=None,
-        span_problems=[],
+        span_problems=[], child_logic="AND",
     )
     assert any("sub_criteria < 2" in e for e in errs)
 
@@ -316,6 +386,36 @@ def test_gap_tickets_upsert_by_criterion_id():
     assert len(merged) == 2
     assert merged[0]["reason"] == "r2"  # replaced, not duplicated
     assert merged[1]["criterion_id"] == "Y"
+
+
+def test_needs_recursion_flag_recorded_on_gold():
+    """guide v2 §3-3: the flag IS the abstract's both-wrong exclusion list."""
+    plain = _gold_record()
+    assert "needs_recursion" not in plain["adjudication"]
+
+    flagged = _gold_record(needs_recursion=True,
+                           recursion_note="b 갈래가 OR 하위 계층")
+    assert flagged["adjudication"]["needs_recursion"] is True
+    assert flagged["adjudication"]["recursion_note"] == "b 갈래가 OR 하위 계층"
+
+
+def test_needs_recursion_flag_recorded_on_gap_ticket():
+    """A tier-3 item can be mixed-logic too; the index must stay complete."""
+    ticket = build_gap_ticket(
+        criterion_id="NCT03425643_I3", reason="미결정", blind_label=None,
+        compared=None, escalate_pi=False, note=None, queue_stratum="S1",
+        adjudicated_at="2026-08-26T00:00:00Z",
+        needs_recursion=True, recursion_note="혼합 로직",
+    )
+    assert ticket["needs_recursion"] is True
+    assert ticket["recursion_note"] == "혼합 로직"
+
+    plain = build_gap_ticket(
+        criterion_id="X", reason="r", blind_label=None, compared=None,
+        escalate_pi=False, note=None, queue_stratum=None,
+        adjudicated_at="2026-08-26T00:00:00Z",
+    )
+    assert "needs_recursion" not in plain
 
 
 def test_tier3_only_needs_rationale():

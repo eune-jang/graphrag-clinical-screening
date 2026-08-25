@@ -17,9 +17,15 @@ Design constraints that come straight from `iaa_pipeline_spec/adjudication_hando
   GOLD envelope: `cohens_kappa` normalizes None to a `"__NONE__"` sentinel and
   counts it as its own class, so a null `splitting_decision` in the gold
   envelope would corrupt the GOLD-axis κ (§7.4-🔴2).
-- `text_span` must be an exact contiguous substring of the parent criterion
-  text; the guideline's deliberate exceptions are allowed only with a recorded
-  `span_override` reason (§B-3, §0.4-🟡2).
+- `text_span` is an ARRAY of contiguous segments (spec v1.2.3 변경 6), each of
+  which must be an exact substring of the criterion text. With segments
+  available, every deliberate exception the guideline used to need
+  (떨어진 병기 표현, 공통 전제) is expressible as a substring, so
+  `span_override` is now an ERROR path rather than a sanctioned exception —
+  see `validate_adjudication`.
+- `child_logic` is required for BOTH `composite_split` and `macro_aggregate`
+  and forbidden for `nested_exception` / `none` (guideline v1.2.1 변경 #2,
+  spec v1.2.3 변경 1 — the default-omission rule was retired).
 """
 from __future__ import annotations
 
@@ -31,6 +37,12 @@ from pathlib import Path
 from typing import Any
 
 TIERS: tuple[int, ...] = (0, 1, 2, 3)
+
+# Decisions that produce child Criterion nodes and therefore carry a
+# combination rule. Kept as a tuple here (rather than imported) so this module
+# stays dependency-free; the enum source of truth is `pipeline.config`.
+SPLIT_DECISIONS: tuple[str, ...] = ("composite_split", "macro_aggregate")
+NO_LOGIC_DECISIONS: tuple[str, ...] = ("nested_exception", "none")
 
 TIER_LABELS: dict[int, str] = {
     0: "Tier 0 — spec v1.2.2 구조 제약 (논의 불가)",
@@ -122,40 +134,74 @@ def _collapse(s: str) -> str:
     return _WS_RE.sub(" ", s).strip()
 
 
-def span_violations(criterion_text: str, sub_criteria: list[dict]) -> list[dict]:
-    """Check every child span against the parent text.
+def normalize_text_span(value: Any) -> list[str]:
+    """`text_span` as a list of segments, accepting both storage forms.
 
-    Returns one dict per offending child:
-        {child_id, code, span, suggestion}
+    v1.1 stored a single string; spec v1.2.3 변경 6 makes it an array of
+    contiguous segments. Round 1/2 annotator envelopes are still strings, so
+    every reader goes through here rather than touching `text_span` directly.
+    Blank segments are dropped.
+    """
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [value.strip()] if value.strip() else []
+    if isinstance(value, (list, tuple)):
+        return [s.strip() for s in value if isinstance(s, str) and s.strip()]
+    return []
+
+
+def text_span_join(value: Any, sep: str = " ") -> str:
+    """Flatten a segment array into one string for display or comparison."""
+    return sep.join(normalize_text_span(value))
+
+
+def span_violations(criterion_text: str, sub_criteria: list[dict]) -> list[dict]:
+    """Check every child span SEGMENT against the criterion text.
+
+    Returns one dict per offending segment:
+        {child_id, seg_index, code, span, suggestion}
 
     Codes:
-      EMPTY_SPAN          — no text entered
-      NOT_SUBSTRING       — not an exact contiguous substring of the parent
+      EMPTY_SPAN          — no segment entered for this child
+      NOT_SUBSTRING       — not an exact contiguous substring of the criterion
       WHITESPACE_ONLY_DIFF— matches after collapsing whitespace; the raw text
                             does not. Reported separately because it is almost
                             always a stray double space, and because we must
                             NOT auto-normalize (§B-3: 원문 그대로가 원칙).
+
+    Each segment is checked independently: a span made of two segments that are
+    each substrings is valid even though their concatenation is not. That is
+    the whole point of 변경 6 — "locally advanced" + "Stage III" no longer
+    needs an override.
     """
     text = criterion_text or ""
     collapsed_text = _collapse(text)
     out: list[dict] = []
     for i, sub in enumerate(sub_criteria or []):
-        span = (sub.get("text_span") or "")
         child_id = sub.get("child_id") or chr(ord("a") + i)
-        if not span.strip():
-            out.append({"child_id": child_id, "code": "EMPTY_SPAN",
-                        "span": span, "suggestion": ""})
+        segments = normalize_text_span(sub.get("text_span"))
+        if not segments:
+            out.append({"child_id": child_id, "seg_index": 0,
+                        "code": "EMPTY_SPAN", "span": "", "suggestion": ""})
             continue
-        if span in text:
-            continue
-        if _collapse(span) in collapsed_text:
-            out.append({"child_id": child_id, "code": "WHITESPACE_ONLY_DIFF",
-                        "span": span,
-                        "suggestion": _nearest_span(text, span)})
-            continue
-        out.append({"child_id": child_id, "code": "NOT_SUBSTRING",
-                    "span": span, "suggestion": _nearest_span(text, span)})
+        for j, span in enumerate(segments):
+            if span in text:
+                continue
+            code = ("WHITESPACE_ONLY_DIFF" if _collapse(span) in collapsed_text
+                    else "NOT_SUBSTRING")
+            out.append({"child_id": child_id, "seg_index": j, "code": code,
+                        "span": span, "suggestion": _nearest_span(text, span)})
     return out
+
+
+def nearest_span(criterion_text: str, span: str) -> str:
+    """Public wrapper for the UI's "did you mean" hint.
+
+    Never applied automatically — the adjudicator has to accept it, which is
+    what makes the correction auditable.
+    """
+    return _nearest_span(criterion_text, span)
 
 
 def _nearest_span(criterion_text: str, span: str) -> str:
@@ -193,18 +239,24 @@ def validate_adjudication(
     rule_status: str | None,
     span_override: str | None,
     span_problems: list[dict],
+    child_logic: str | None = None,
 ) -> list[str]:
     """Block saving until the adjudication record is usable as gold.
 
     `tier` and `rationale_short` are hard requirements because C-2's
     `rationale_short` is effectively the ONLY source for inducing guideline
-    v1.2 — the annotators' own notes exist for ~7% of records and
+    v1.3 — the annotators' own notes exist for ~7% of records and
     `sub_criteria[].rationale` for none at all (§9-1).
 
     `child_rationale` is required whenever the decision is a split: which
     items become few-shot examples is decided later (D-4), so "required only
     for few-shot candidates" is not enforceable at adjudication time
     (§0.3-🟡4).
+
+    `child_logic` is checked in BOTH directions. Requiring it for splits
+    without forbidding it elsewhere would leave a path for a stale value to
+    ride along into a `nested_exception` / `none` gold record — the UI clears
+    it, but the validator is what the record contract rests on.
     """
     errs: list[str] = []
     if tier not in TIERS:
@@ -213,6 +265,21 @@ def validate_adjudication(
         errs.append("rationale_short는 필수 — v1.2 귀납의 유일한 논거 소스 (§C-2)")
     if rule_status is not None and rule_status not in RULE_STATUSES:
         errs.append(f"rule_status가 유효하지 않음: {rule_status!r}")
+
+    # guideline v1.2.1 변경 #2 / spec v1.2.3 변경 1 — 기본값 생략 규칙 폐지.
+    if splitting_decision in SPLIT_DECISIONS:
+        if not (child_logic or "").strip():
+            errs.append(
+                f"{splitting_decision}은 child_logic(AND/OR) 명시가 필수 — "
+                f"생략 시 omit/default 의도를 구분할 수 없음 "
+                f"(guideline v1.2.1 #2 / spec v1.2.3 변경 1)"
+            )
+    elif splitting_decision in NO_LOGIC_DECISIONS:
+        if child_logic:
+            errs.append(
+                f"{splitting_decision}에는 child_logic을 부여하지 않습니다 "
+                f"(현재 {child_logic!r})"
+            )
 
     if splitting_decision and splitting_decision != "none":
         if not sub_criteria:
@@ -232,8 +299,10 @@ def validate_adjudication(
     if span_problems and not (span_override or "").strip():
         codes = ", ".join(sorted({p["code"] for p in span_problems}))
         errs.append(
-            f"text_span이 원문과 불일치 ({codes}) — 수정하거나 "
-            f"span_override 사유를 기록해야 저장 가능 (§B-3)"
+            f"text_span이 원문과 불일치 ({codes}) — 세그먼트를 원문 그대로 "
+            f"고치세요. 세그먼트 배열(spec v1.2.3 변경 6)이 있으면 가이드라인의 "
+            f"모든 케이스가 부분문자열로 표현되므로, override는 예외가 아니라 "
+            f"오류 경로입니다 (§B-3)"
         )
     return errs
 
@@ -257,11 +326,21 @@ def build_gold_record(
     adjudicated_at: str,
     queue_stratum: str | None,
     compared: dict[str, Any] | None,
+    needs_recursion: bool = False,
+    recursion_note: str | None = None,
 ) -> dict:
     """Assemble one GOLD record: gold at top level, meta in `adjudication`.
 
     `blind_label` is kept verbatim so D-3 can measure where the adjudicator
     changed their mind once the peer labels were revealed (§B-2).
+
+    `needs_recursion` marks a mixed-logic criterion — "A AND (B1 OR B2)" —
+    where guideline v1.2.1 would require several levels but this pass records
+    only the top level plus its direct fragments. The annotators labelled in a
+    FLAT frame, so a top-level mismatch on such an item is a frame difference,
+    not an error: the abstract's both-wrong counts exclude these. The flag is
+    the exclusion list, which is why it has to be captured at judgement time
+    rather than reconstructed afterwards (guide v2 §3-3).
     """
     record: dict[str, Any] = {"criterion_id": criterion_id}
     # Top level = the gold label itself. Order mirrors the annotator envelopes.
@@ -290,6 +369,10 @@ def build_gold_record(
     }
     if conflicting_rule and conflicting_rule.strip():
         adj["conflicting_rule"] = conflicting_rule.strip()
+    if needs_recursion:
+        adj["needs_recursion"] = True
+        if (recursion_note or "").strip():
+            adj["recursion_note"] = recursion_note.strip()
     if queue_stratum:
         adj["queue_stratum"] = queue_stratum
     if compared:
@@ -308,6 +391,8 @@ def build_gap_ticket(
     note: str | None,
     queue_stratum: str | None,
     adjudicated_at: str,
+    needs_recursion: bool = False,
+    recursion_note: str | None = None,
 ) -> dict:
     """A tier-3 item. Deliberately NOT a gold record.
 
@@ -328,6 +413,12 @@ def build_gap_ticket(
         ticket.update(compared)
     if queue_stratum:
         ticket["queue_stratum"] = queue_stratum
+    if needs_recursion:
+        # A tier-3 item can also be a mixed-logic one; the exclusion list has to
+        # cover gap tickets too or the flag stops being a complete index.
+        ticket["needs_recursion"] = True
+        if (recursion_note or "").strip():
+            ticket["recursion_note"] = recursion_note.strip()
     if note and note.strip():
         ticket["note"] = note.strip()
     return ticket

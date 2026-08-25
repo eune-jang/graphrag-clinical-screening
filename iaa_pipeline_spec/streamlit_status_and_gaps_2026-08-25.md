@@ -138,7 +138,26 @@
 
 ---
 
-## 4. 판정 시작 전 반드시 고쳐야 할 것 (4건)
+## 4. 판정 시작 전 반드시 고쳐야 할 것 (4건) — ✅ **전부 구현 완료 (2026-08-26)**
+
+> 아래 4건은 커밋 `adjudication-freeze-20260825` **이후** 별도 커밋으로 구현됐다.
+> 동결 태그는 준거 문서 상태를 가리키고, 도구 수정은 그 뒤에 온다 — Methods의
+> "guideline frozen prior to adjudication" 주장이 diff로 검증되도록 분리했다.
+>
+> | 갭 | 구현 위치 | 검증 |
+> |---|---|---|
+> | 1 child_logic | `streamlit_app.py` 폼 + `adjudication.py validate_adjudication` (양방향) | 테스트 2건 + AppTest 실측 (macro 선택 시 위젯 생성·미지정 시 저장 차단) |
+> | 2 needs_recursion | `render_adjudication_meta` + `build_gold_record` / `build_gap_ticket` + 목록 🔁 배지 | 테스트 2건 + AppTest |
+> | 3 큐 재정렬 | **`scripts/reorder_adjudication_queue.py`** (신규) | S4 25건 재추첨 0 확인 |
+> | 4 세그먼트 배열 | `streamlit_app.py` 세그먼트 입력 + 실시간 검증 + 후보 교체 버튼, `span_violations` 세그먼트 단위 | 테스트 3건 + AppTest (교체 버튼 클릭까지) |
+>
+> 예방책 2건도 함께 반영: **복사 안전 렌더링**(criterion 원문을 `st.markdown` →
+> `st.code(wrap_lines=True)`로, 마크다운 렌더링에 의한 문자 변형 차단)과
+> **후보 원클릭 채택**(`↩︎ 후보로 교체` 버튼 — `on_click` 콜백으로 구현).
+>
+> 테스트: 판정 **43/43**, IAA **37/37** 통과 (§8의 낡은 단언 2건도 정리).
+
+
 
 ### ❌ 갭 1 — `child_logic`이 macro_aggregate에서 입력 불가
 

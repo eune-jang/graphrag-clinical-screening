@@ -45,6 +45,7 @@ from iaa_pipeline.streamlit_app import (  # noqa: E402
     build_form_seed,
     envelope_is_committed,
 )
+from iaa_pipeline.adjudication import normalize_text_span  # noqa: E402
 from iaa_pipeline.stage_schemas import (  # noqa: E402
     validate_stage1_record,
     validate_envelope,
@@ -187,7 +188,7 @@ def _seed_widget_state(trial_id: str, envelope: dict) -> None:
     keys so the criterion forms reflect the uploaded envelope on next render.
 
     Widget keys mirror those built in `_render_form_with_seed`
-    (`crit_{trial_id}_{i}_decision`, `crit_{trial_id}_{i}_sub_{j}_span`, …).
+    (`crit_{trial_id}_{i}_decision`, `crit_{trial_id}_{i}_sub_{j}_seg_{k}`, …).
     The index `i` is the
     position of the criterion in `input.json`, NOT the record's position in
     the envelope, so we map by `criterion_id`.
@@ -217,8 +218,14 @@ def _seed_widget_state(trial_id: str, envelope: dict) -> None:
         if subs:
             st.session_state[f"{prefix}_n_subs"] = max(1, len(subs))
             for j, sub in enumerate(subs):
-                if sub.get("text_span") is not None:
-                    st.session_state[f"{prefix}_sub_{j}_span"] = sub["text_span"]
+                # text_span is a segment array as of spec v1.2.3 변경 6; drafts
+                # downloaded before that hold a plain string, so normalize
+                # rather than branching. One widget key per segment.
+                segments = normalize_text_span(sub.get("text_span"))
+                if segments:
+                    st.session_state[f"{prefix}_sub_{j}_nsegs"] = len(segments)
+                    for k, seg in enumerate(segments):
+                        st.session_state[f"{prefix}_sub_{j}_seg_{k}"] = seg
                 if sub.get("rationale") is not None:
                     st.session_state[f"{prefix}_sub_{j}_rat"] = sub["rationale"]
                 # per-child scope: own value if present, else legacy

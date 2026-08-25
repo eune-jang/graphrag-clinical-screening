@@ -93,7 +93,14 @@ class Stage1Input(TypedDict):
 class Stage1SubCriterion(TypedDict, total=False):
     """One sub-criterion produced by splitting."""
     child_id: str                       # required: "a", "b", "c", ...
-    text_span: str                      # required: exact text from parent
+    text_span: list[str] | str          # required. Spec v1.2.3 변경 6 makes this
+                                        #   an ARRAY of contiguous segments of the
+                                        #   criterion text, always an array even
+                                        #   for one segment. Round 1/2 annotator
+                                        #   envelopes predate the change and hold
+                                        #   a plain string, so readers go through
+                                        #   `adjudication.normalize_text_span`
+                                        #   rather than indexing this directly.
     cohort_scope: list[str] | None      # optional: cohorts this child applies to
     rationale: str                      # optional
 

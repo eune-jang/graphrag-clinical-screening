@@ -57,6 +57,7 @@ from iaa_pipeline.stage_schemas import (  # noqa: E402
 )
 from iaa_pipeline.adjudication import (  # noqa: E402
     RULE_STATUSES,
+    SPLIT_DECISIONS,
     TIER_LABELS,
     TIERS,
     build_gap_ticket,
@@ -67,6 +68,8 @@ from iaa_pipeline.adjudication import (  # noqa: E402
     gap_tickets_path,
     load_queue,
     merge_gap_tickets,
+    nearest_span,
+    normalize_text_span,
     peer_summary,
     queue_index,
     span_violations,
@@ -416,8 +419,16 @@ def _render_form_with_seed(
     """
     crit_id = criterion["criterion_id"]
     crit_type = criterion.get("type", "?")
+    root_text = criterion.get("text", "") or ""
     st.markdown(f"### `{crit_id}` _({crit_type})_")
-    st.markdown(f"> {criterion.get('text', '')}")
+    # Copy-safe rendering. `st.code` does not run the text through the markdown
+    # renderer, so a drag-copy returns the source bytes unchanged and gets a
+    # built-in copy button. Copying out of `st.markdown` can silently
+    # substitute characters (non-breaking space, µ vs μ, en/em dashes, runs of
+    # whitespace collapsed) and every one of those turns a correctly-selected
+    # span into a NOT_SUBSTRING violation — i.e. it manufactures exactly the
+    # `span_override` uses we want to be rare.
+    st.code(root_text, language=None, wrap_lines=True)
 
     if show_llm_suggestion is not None:
         with st.expander("🤖 LLM suggestion", expanded=False):
@@ -433,10 +444,13 @@ def _render_form_with_seed(
             key=f"{key_prefix}_decision",
         )
     with col2:
-        if decision == "composite_split":
+        # guideline v1.2.1 변경 #2 / spec v1.2.3 변경 1: the default-omission
+        # rule was retired, and macro_aggregate can be OR ("at least one of the
+        # following"), so BOTH split decisions carry an explicit child_logic.
+        if decision in SPLIT_DECISIONS:
             cl_value = seed.get("child_logic") or "(unset)"
             child_logic_choice = st.selectbox(
-                "child_logic",
+                "child_logic *",
                 CHILD_LOGIC_OPTIONS,
                 index=_safe_index(CHILD_LOGIC_OPTIONS, cl_value, default=0),
                 key=f"{key_prefix}_child_logic",
@@ -444,9 +458,11 @@ def _render_form_with_seed(
             child_logic_val: str | None = (
                 None if child_logic_choice == "(unset)" else child_logic_choice
             )
+            if child_logic_val is None:
+                st.caption("⚠️ AND/OR 명시 필수 — 표면 접속사가 아니라 의미로 판정")
         else:
             child_logic_val = None
-            st.markdown("_child_logic only applies to composite_split_")
+            st.markdown("_child_logic은 composite_split · macro_aggregate에만 부여_")
 
     has_children = decision in ("composite_split", "macro_aggregate", "nested_exception")
 
@@ -469,9 +485,12 @@ def _render_form_with_seed(
 
     sub_criteria: list[dict] = []
     if has_children:
-        st.caption("Sub-criteria — child_id auto-assigned (a, b, c, ...). "
-                   "text_span must come from the parent text. "
-                   "cohort_scope is set per child.")
+        st.caption(
+            "Sub-criteria — child_id는 자동 배정 (a, b, c, ...). "
+            "text_span은 **원문의 연속 구간 세그먼트 배열**입니다 "
+            "(spec v1.2.3 변경 6): 떨어져 있는 표현은 이어붙이지 말고 "
+            "세그먼트를 늘려 나눠 담으세요. cohort_scope는 child별로 지정합니다."
+        )
         seed_subs = seed.get("sub_criteria") or []
         # Legacy record-level scope: default for any child lacking its own
         # (covers drafts created before cohort_scope moved per-child).
@@ -485,7 +504,9 @@ def _render_form_with_seed(
         for i in range(int(n_subs)):
             child_id = chr(ord("a") + i)
             seed_sub = seed_subs[i] if i < len(seed_subs) else {}
-            default_span = seed_sub.get("text_span", "")
+            # normalize_text_span accepts the legacy string form, so drafts and
+            # round1/2 envelopes saved before 변경 6 still seed the form.
+            seed_segments = normalize_text_span(seed_sub.get("text_span"))
             default_rat = seed_sub.get("rationale", "")
             # per-child scope: the child's own value if present, else the
             # legacy record-level value (applied to all children).
@@ -494,8 +515,23 @@ def _render_form_with_seed(
                 child_scope_seed = legacy_scope
             with st.container(border=True):
                 st.markdown(f"**child `{child_id}`**")
-                span = st.text_area("text_span", value=default_span,
-                                    key=f"{key_prefix}_sub_{i}_span", height=68)
+                n_segs = st.number_input(
+                    "세그먼트 수", min_value=1, max_value=8,
+                    value=max(1, len(seed_segments)),
+                    key=f"{key_prefix}_sub_{i}_nsegs",
+                    help='떨어진 표현은 별도 세그먼트로. 예: '
+                         '["locally advanced", "Stage III"]',
+                )
+                segments: list[str] = []
+                for j in range(int(n_segs)):
+                    seg_key = f"{key_prefix}_sub_{i}_seg_{j}"
+                    default_seg = seed_segments[j] if j < len(seed_segments) else ""
+                    seg = st.text_input(
+                        f"text_span[{j}]", value=default_seg, key=seg_key,
+                    ).strip()
+                    if seg:
+                        segments.append(seg)
+                        _render_segment_check(root_text, seg, seg_key=seg_key)
                 rationale = st.text_input("rationale (optional)", value=default_rat,
                                           key=f"{key_prefix}_sub_{i}_rat")
                 if cohort_options:
@@ -507,7 +543,8 @@ def _render_form_with_seed(
                     )
                 else:
                     child_scope = None
-                entry: dict[str, Any] = {"child_id": child_id, "text_span": span.strip()}
+                # Always an array, even for one segment (spec v1.2.3 변경 6).
+                entry: dict[str, Any] = {"child_id": child_id, "text_span": segments}
                 if rationale.strip():
                     entry["rationale"] = rationale.strip()
                 if child_scope:
@@ -536,6 +573,41 @@ def _render_form_with_seed(
     if notes.strip():
         record["notes"] = notes.strip()
     return record
+
+
+def _render_segment_check(root_text: str, segment: str, *, seg_key: str) -> None:
+    """Live substring check for one segment, with one-click correction.
+
+    Two things keep `span_override` an error path rather than a routine one:
+    the copy-safe rendering above (so the segment usually matches to begin
+    with) and this button (so a segment that drifted gets fixed in place
+    instead of overridden). The candidate is never applied automatically —
+    accepting it is the adjudicator's action, which keeps it auditable.
+
+    The button uses `on_click` rather than assigning inside the `if` body:
+    Streamlit refuses to mutate a widget's session_state entry after that
+    widget has been instantiated in the same run, and callbacks fire at the
+    start of the next run, before the widgets are built.
+    """
+    if not root_text or segment in root_text:
+        return
+    suggestion = nearest_span(root_text, segment)
+    st.markdown(
+        f"<span style='color:#c62828'>⚠️ 원문에 없는 문자열 — "
+        f"세그먼트를 원문 그대로 잘라내세요.</span>",
+        unsafe_allow_html=True,
+    )
+    if not suggestion:
+        return
+    cols = st.columns([5, 2])
+    with cols[0]:
+        st.code(suggestion, language=None, wrap_lines=True)
+    with cols[1]:
+        def _adopt(k: str = seg_key, v: str = suggestion) -> None:
+            st.session_state[k] = v
+        st.button("↩︎ 후보로 교체", key=f"{seg_key}_fix", on_click=_adopt,
+                  use_container_width=True,
+                  help="가장 가까운 원문 구간으로 이 세그먼트를 교체합니다.")
 
 
 def _safe_index(options: list[str], value: Any, default: int) -> int:
@@ -633,11 +705,14 @@ def _render_peer_panel(peer_records: dict[str, dict], *,
                 st.markdown(f"> {note}")
             else:
                 st.caption("(no note)")
-            spans = [x.get("text_span", "") for x in (rec.get("sub_criteria") or [])]
+            # Peer envelopes are round 1/2, i.e. still the pre-변경6 string
+            # form; normalize so both storage shapes render identically.
+            spans = [normalize_text_span(x.get("text_span"))
+                     for x in (rec.get("sub_criteria") or [])]
             if spans:
                 with st.expander(f"{actor} spans", expanded=False):
-                    for i, sp in enumerate(spans):
-                        st.markdown(f"`{chr(ord('a') + i)}` {sp}")
+                    for i, segs in enumerate(spans):
+                        st.markdown(f"`{chr(ord('a') + i)}` " + " ⋯ ".join(segs))
 
 
 def render_adjudication_meta(
@@ -698,19 +773,47 @@ def render_adjudication_meta(
             key=f"{key_prefix}_conflicting",
         )
 
+    # 보류 플래그 (guide v2 §3-3). Mixed-logic criteria — "A AND (B1 OR B2)" —
+    # would need several levels under guideline v1.2.1, but the annotators
+    # laballed in a FLAT frame, so this pass records the top level plus its
+    # direct fragments and defers the rest. Flagging is what builds the
+    # exclusion list for the abstract's both-wrong counts; reconstructing it
+    # after the fact is not possible once the judgement context is gone.
+    needs_recursion = st.checkbox(
+        "🔁 needs_recursion — 혼합 로직이라 하위 계층 판정을 보류함",
+        value=bool(seed.get("needs_recursion")),
+        key=f"{key_prefix}_needs_recursion",
+        help='"A이고 그리고 (B1 또는 B2)" 유형. 최상위 라벨 + 직계 조각까지만 '
+             "확정하고 켜두세요. 이 항목은 초록 오답 집계에서 제외되고 "
+             "(라벨 차이가 아니라 표기 프레임 차이), 마감 후 계층 완성 대상이 됩니다.",
+    )
+    recursion_note = ""
+    if needs_recursion:
+        recursion_note = st.text_input(
+            "recursion_note — 어떤 계층이 남았는지 한 줄",
+            value=seed.get("recursion_note", ""),
+            key=f"{key_prefix}_recursion_note",
+        )
+
     span_override = ""
     if span_problems:
-        st.warning(
-            "text_span이 원문의 정확한 부분문자열이 아닙니다. 수정하거나, "
-            "가이드라인의 의도적 예외(공통 전제 복제·병기 표현)라면 사유를 적어 override하세요."
+        # With text_span as a segment array (spec v1.2.3 변경 6), every case the
+        # guideline used to treat as a deliberate exception is expressible as a
+        # substring: 떨어진 표현 → separate segments, 공통 전제 → 상위 AND 계층
+        # (v1.2.1에서 복제 폐지), 예외 조각 → 트리거부터의 연속 구간. So an
+        # override here means a segment was cut wrong, not that the guideline
+        # needed an escape.
+        st.error(
+            "**세그먼트가 원문과 일치하지 않습니다.** 세그먼트 배열에서는 "
+            "가이드라인의 모든 케이스가 부분문자열로 표현되므로, override는 "
+            "예외가 아니라 **잘못 잘랐다는 신호**입니다. 위 입력란의 "
+            "`↩︎ 후보로 교체` 버튼으로 고치는 것이 정상 경로입니다."
         )
         for p in span_problems:
-            msg = f"child `{p['child_id']}` — {p['code']}"
-            st.markdown(f"- {msg}")
-            if p.get("suggestion"):
-                st.code(p["suggestion"], language=None)
+            st.markdown(f"- child `{p['child_id']}` seg[{p.get('seg_index', 0)}] "
+                        f"— {p['code']}")
         span_override = st.text_input(
-            "span_override 사유 (입력 시 저장 허용)",
+            "span_override 사유 — 고칠 수 없는 경우에만 (기록되며 few-shot에서 제외됩니다)",
             value=seed.get("span_override") or "",
             key=f"{key_prefix}_span_override",
         )
@@ -723,6 +826,8 @@ def render_adjudication_meta(
         "conflicting_rule": conflicting_rule,
         "escalate_pi": escalate_pi,
         "span_override": span_override,
+        "needs_recursion": needs_recursion,
+        "recursion_note": recursion_note,
     }
 
 
@@ -934,9 +1039,16 @@ def section_adjudicate(
         st.success("이 trial의 큐 항목을 모두 판정했습니다.")
         return
 
+    def _recursion_flagged(cid: str) -> bool:
+        rec = gold_by_id.get(cid) or {}
+        if (rec.get("adjudication") or {}).get("needs_recursion"):
+            return True
+        return bool((gap_by_id.get(cid) or {}).get("needs_recursion"))
+
     idx_labels = [
         f"{q_by_id.get(cid, {}).get('priority', '?')} · {cid}"
         f"{'  ✅' if cid in gold_by_id else ''}{'  🎫' if cid in gap_by_id else ''}"
+        f"{'  🔁' if _recursion_flagged(cid) else ''}"
         for cid in view
     ]
     pick = st.selectbox("판정 항목", range(len(view)),
@@ -1001,6 +1113,7 @@ def section_adjudicate(
         rule_status=meta["rule_status"],
         span_override=meta["span_override"],
         span_problems=problems,
+        child_logic=gold_draft.get("child_logic"),
     )
     is_gap = meta["tier"] == 3
     if is_gap:
@@ -1049,6 +1162,8 @@ def section_adjudicate(
             note=gold_draft.get("notes"),
             queue_stratum=qrow.get("stratum"),
             adjudicated_at=now,
+            needs_recursion=meta["needs_recursion"],
+            recursion_note=meta["recursion_note"],
         )
         gap_list = merge_gap_tickets(gap_list, [ticket])
         gap_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1086,6 +1201,8 @@ def section_adjudicate(
         adjudicated_at=now,
         queue_stratum=qrow.get("stratum"),
         compared=compared or None,
+        needs_recursion=meta["needs_recursion"],
+        recursion_note=meta["recursion_note"],
     )
     record["adjudication"]["pass"] = "blind" if blind else "revealed"
 
@@ -1110,7 +1227,7 @@ def _blind_snapshot(record: dict) -> dict:
     snap: dict[str, Any] = {
         "splitting_decision": record.get("splitting_decision"),
         "sub_criteria": [{"child_id": s.get("child_id"),
-                          "text_span": s.get("text_span", "")}
+                          "text_span": normalize_text_span(s.get("text_span"))}
                          for s in (record.get("sub_criteria") or [])],
     }
     if record.get("child_logic") is not None:
