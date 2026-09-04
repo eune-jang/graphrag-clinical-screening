@@ -1,0 +1,34 @@
+AMIA 2027 abstract — Stage 1 adjudicated dataset
+regenerated: 2026-09-01
+
+combined file
+AMIA_2027_STAGE1_ADJUDICATED_61items_2026-09-01.jsonl
+
+publication-review export (recommended)
+AMIA_2027_STAGE1_ADJUDICATED_61items_WITH_TEXT_2026-09-01.jsonl
+- adds unnormalized source `criterion_text`
+- adds `criterion_type` (inclusion/exclusion)
+- preserves original `protocol_ref` and input-file `source_order`
+- explicitly exports omitted `needs_recursion` values as false
+- validation: all 61 source records matched
+- validation: every text_span segment is a verbatim contiguous substring
+  of its criterion_text (0 violations)
+
+contents
+- total lines: 61
+- confirmed gold records: 60 (record_type="gold")
+- Tier-3 gap tickets: 1 (record_type="gap_ticket")
+- trials: 8
+- unique criterion IDs: 61
+- duplicate criterion IDs: 0
+- missing criterion IDs: 0
+- criterion types: inclusion 22, exclusion 39
+
+source
+- iaa_workspace/*/stage1/round2/GOLD_*_stage1_committed.json
+- iaa_workspace/NCT03728556/stage1/round2/gap_tickets.json
+
+format
+Each JSONL line contains record_type, trial/envelope metadata, and the original
+gold record or gap ticket under the `record` key. The gap ticket is deliberately
+distinguished from confirmed gold so it cannot be treated as a gold label.

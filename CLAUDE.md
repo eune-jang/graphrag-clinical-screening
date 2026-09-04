@@ -6,9 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 GraphRAG-based AI agent for clinical trial eligibility screening (NSCLC primary domain). The current phase is **Phase 1: LLM-assisted annotation of clinical trial eligibility criteria** + a manual review workflow, plus an **inter-annotator agreement (IAA) evaluation track**. The downstream 4-layer medical ontology (Neo4j) and RAG agent are scaffolded but not the active work.
 
-There are **two parallel tracks** that share code but serve different goals:
+There are **three tracks** that share code but serve different goals:
 - `pipeline/` — **production annotation pipeline**. Turns raw ClinicalTrials.gov / AACT criteria text into annotated JSON, loads it into Neo4j, and runs Cypher review queries.
 - `iaa_pipeline/` + `streamlit_apps/` — **IAA evaluation framework**. Imports `pipeline/` as a library, re-runs stages for dual-annotator comparison, and computes Cohen's κ. Only **Stage 1 (Splitting)** is wired end-to-end; Stages 2–5 are stubs.
+- `iaa_pipeline/adjudication.py` + `scripts/` — **adjudication → gold set**, the currently active work (AMIA 2027 abstract). Turns the IAA disagreements into a single adjudicated gold standard and freezes it as a hashed, dated export.
 
 `src/graphrag_screening/` is an empty scaffold for a future folder restructure — not used yet.
 
@@ -24,15 +25,19 @@ The two design docs below are kept current and contain far more detail than is s
 
 - `pipeline/schema/ontology_full_specification_unified_v1_2_2_ko.md` — v1.2.2 spec body
 - `pipeline/schema/ontology_spec_v1_2_3_patch.md` — **v1.2.3 patch, NOT merged into the body.** 7 changes; the two that bite most often are `child_logic` now required for *both* `composite_split` and `macro_aggregate` (change 1) and `text_span` being an **array of contiguous segments** rather than a string (change 6). Read both documents together.
-- `pipeline/schema/annotation_guideline_v1_2_1.md` — **frozen annotation guideline** (2026-08-25). The operational rules annotators and adjudicators apply. Frozen for the duration of adjudication: revisions found mid-adjudication are recorded as `rule_status=conflict/gap`, not edited in.
+- `pipeline/schema/annotation_guideline_v1_2_2_notion.md` — **frozen annotation guideline** (2026-08-26). The operational rules annotators and adjudicators apply, and the source of the `§1-1` / `§T2-3` / `§C1-1` **rule IDs** that every adjudication record's `rule_id` cites (appendix 3 is the index). v1.2.2 added the IDs only — no rule text changed from v1.2.1. Frozen for the duration of adjudication: revisions found mid-adjudication are recorded as `rule_status=conflict/gap`, not edited in.
+- `pipeline/schema/annotation_guideline_v1_2_1.md` — the 2026-08-25 freeze, superseded by v1.2.2. Same rules, no IDs; cite v1.2.2.
 - `pipeline/schema/stage1_iaa_review_and_guideline_v1_1.md` — Round 2 IAA review record (difference areas + examples). Not guideline text.
 
 ### Adjudication track (active work, AMIA 2027 abstract critical path)
 
 - `iaa_pipeline_spec/streamlit_status_and_gaps_2026-08-25.md` — **start here.** Implementation status vs docs, the open gaps, verification log.
-- `iaa_pipeline_spec/adjudication_guide_v2_notion.md` — adjudicator-facing guide (61-item abstract scope)
+- `iaa_pipeline_spec/adjudication_guide_v2_over_v1.md` — adjudicator-facing guide **v2**, with the v1→v2 change table. §2-0 fixes the adjudication reference standard: **spec v1.2.2 + v1.2.3 patch + guideline v1.2.2**. `adjudication_guide_v2_notion.md` is the trimmed Notion copy of the same guide.
 - `iaa_pipeline_spec/adjudication_handover.md` — technical design rationale (§3 task list A–D, §10 implementation record)
 - `iaa_pipeline_spec/audit_streamlit_v1.md` — blinding architecture (leaks A1–A7). **Read before touching any UI code.**
+- `docs/amia2027_gold_freeze_2026-09-03.md` — the **current gold freeze record** (74 items). Each freeze gets its own dated doc; read the newest.
+- `docs/amia2027_work_summary.md` — research-status narrative for the abstract (sampling funnel, per-area status, verified numbers).
+- `docs/amia_stage1_numbers.md` / `docs/amia_stage1_trajectories.md` — **generated, do not hand-edit.** Regenerate with the scripts below.
 
 ## Production annotation pipeline (`pipeline/`)
 
@@ -68,6 +73,28 @@ Evaluation track that imports `pipeline.config`, `pipeline.llm_client`, etc. Key
 
 The IAA experiment uses a **stratified trial subset** listed in `iaa_pipeline_spec/iaa_8trials.txt` — the filename says 8 but the file now holds **9 trials** (NCT03800134 / AEGEAN was added later, commit `e0da99c`); the hosted app filters its dropdown to this list. Bundled trial data lives in `streamlit_apps/data/{trial_id}/stage1/{input,llm_output}.json`.
 
+## Adjudication → gold set (`iaa_pipeline/adjudication.py` + `scripts/`)
+
+One adjudicator (actor `GOLD`), not annotator consensus, settles each item — two annotators can agree and still both be wrong, so the gold answer is decided against the frozen reference standard with a cited `rule_id` and an evidence `tier` (0 = spec/structure alone decides, up through clinical judgement). Unresolvable items become tier-3 **gap tickets** rather than forced labels; `record_type` keeps them distinguishable from gold on every exported line.
+
+Data flows one way and never backwards:
+
+```
+iaa_workspace/{trial}/stage1/round2/   committed envelopes (git-ignored, the live source)
+  → results/adjudication/adjudication_queue.json   stratified worklist (S1/S2/S3/S4 strata)
+  → AMIA_2027_STAGE1_GOLD_{N}items_{date}/         dated frozen export + MANIFEST.txt (sha256)
+  → docs/amia_stage1_*.md                          numbers recomputed FROM the frozen export
+```
+
+Every freeze is a **new dated directory**, never an edit of an existing one, and the numbers docs are regenerated from the export rather than transcribed — so an abstract figure can always be traced back to a hashed file.
+
+**The 2026-09-03 freeze is closed.** `AMIA_2027_STAGE1_GOLD_74items_2026-09-03/` (74 gold, 0 open gap, 8 trials, S1 49 + S4 25 — S1 stratum complete) is committed and tagged `amia2027-stage1-gold-74items-20260903`, and the adjudication reference standard is frozen at **spec v1.2.2 + v1.2.3 patch + guideline v1.2.2**. Do not edit that directory, its freeze doc, or the guideline. Remaining adjudication (S2 35, S3 4, the S4 second tranche, and the 6 `needs_recursion=true` hierarchies) continues on a new branch and lands as a **new dated freeze**; guideline v1.3 is deliberately deferred until that evidence is in, so that an item resolved by an existing rule stays distinguishable from one resolved by a rule v1.3 just added.
+
+`build_adjudication_queue.py` **redraws the S4 audit sample** every time it runs; the seed is fixed but the sampling frame is not, and that sample is reported in the paper's Methods. To change only the working order of an existing queue, use `reorder_adjudication_queue.py`, which rewrites the `priority` column and asserts the row set is unchanged.
+
+`iaa_workspace/` is git-ignored (bundled UI data lives in `streamlit_apps/data/` instead), so the frozen export directories are the only committed record of an adjudication result — treat them as append-only.
+
+
 ## Common commands
 
 ```bash
@@ -98,12 +125,18 @@ python scripts/convert_production_to_iaa.py                      # production ou
 
 # Adjudication / gold set (iaa_pipeline_spec/adjudication_handover.md)
 python scripts/build_adjudication_queue.py --out results/adjudication   # stratified worklist (113 items)
+                                                                       # WARNING: redraws the S4 audit sample
+python scripts/reorder_adjudication_queue.py                            # reorder an EXISTING queue (priority only, row set asserted identical)
 python scripts/tier0_check.py --round 2 --out results/adjudication      # spec-violation hygiene check
+python scripts/export_adjudicated_dataset.py --strict                   # freeze committed GOLD → dated export dir + MANIFEST (sha256)
+python scripts/amia_stage1_numbers.py --out docs/amia_stage1_numbers.md # abstract numbers, recomputed from the frozen export
+python scripts/amia_stage1_trajectories.py --strict \
+    --out docs/amia_stage1_trajectories.md                              # Table 1 round1→round2 trajectories (read-only; cross-checks vs the frozen export)
 streamlit run iaa_pipeline/streamlit_app.py    # sidebar: Role = Adjudicator, Round = 2
 
 # Tests (no LLM / no streamlit runtime needed)
-python tests/test_iaa_metrics.py        # 37 tests, script mode
-python tests/test_adjudication.py       # 36 tests, adjudication logic
+python tests/test_iaa_metrics.py        # 44 tests, script mode
+python tests/test_adjudication.py       # 50 tests, adjudication logic
 python -m pytest tests/test_iaa_metrics.py tests/test_adjudication.py -v
 ```
 
@@ -120,3 +153,5 @@ python -m pytest tests/test_iaa_metrics.py tests/test_adjudication.py -v
 - Promote a review finding to a `validators.py` rule (R1–R4 relation / C1–C3 criterion) only when the same pattern appears in **≥3 trials**.
 - Push to remote **only when explicitly asked**. Get user confirmation before large changes.
 - The user prefers **Korean responses**, honest tradeoff assessments, and simple practical solutions over elaborate automation (see HANDOFF §9 "사용자 선호").
+- `AGENTS.md` is a Codex-facing mirror of this file; when you change CLAUDE.md's shared content, update it too. Its current copy was produced by a find/replace that mangled some strings (e.g. it claims `Codex-*` model names route to Anthropic — the real rule is `claude-*`), so read `CLAUDE.md` as authoritative where the two disagree.
+- Numbers that appear in the abstract are **generated, never transcribed** — regenerate `docs/amia_stage1_*.md` from the frozen export instead of editing a figure by hand.

@@ -92,7 +92,7 @@
 | `scripts/compute_iaa.py` | 288 | κ 계산 (`--round` 지원) |
 
 ### 테스트
-`tests/test_adjudication.py` (36건) · `tests/test_iaa_metrics.py` (37건)
+`tests/test_adjudication.py` (50건) · `tests/test_iaa_metrics.py` (44건) *(2026-09-03 기준)*
 
 ---
 

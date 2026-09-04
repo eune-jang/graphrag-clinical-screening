@@ -1,0 +1,60 @@
+AMIA 2027 abstract — Stage 1 adjudicated dataset
+regenerated: 2026-09-03
+
+combined file
+AMIA_2027_STAGE1_ADJUDICATED_74items_2026-09-03.jsonl
+
+publication-review export (recommended)
+AMIA_2027_STAGE1_ADJUDICATED_74items_WITH_TEXT_2026-09-03.jsonl
+- adds unnormalized source `criterion_text`
+- adds `criterion_type` (inclusion/exclusion)
+- preserves original `protocol_ref` and input-file `source_order`
+- explicitly exports omitted `needs_recursion` values as false
+- validation: all 74 source records matched
+- validation: every text_span segment is a verbatim contiguous substring
+  of its criterion_text (0 violations)
+
+contents
+- total lines: 74
+- confirmed gold records: 74 (record_type="gold")
+- Tier-3 gap tickets: 0 (record_type="gap_ticket")
+- trials: 8
+- unique criterion IDs: 74
+- duplicate criterion IDs: 0
+- missing criterion IDs: 0
+- criterion types: exclusion 42, inclusion 32
+
+adjudication profile
+- adjudication pass: blind 74
+- tier: 0 6, 1 2, 2 66
+- splitting_decision: none 39, composite_split 28, nested_exception 5, macro_aggregate 2
+- rule_status: existing 64, new 9, conflict 1
+- queue stratum: S1 49, S4 25
+- escalate_pi=true: 3 (NCT02125461_I2, NCT03728556_I3, NCT05756153_E6)
+- rule_status=conflict: 1 (NCT05756153_E6)
+
+blind → gold provenance
+- Adjudication was run as a SINGLE BLIND PASS: no record carries
+  `adjudication.pass == "revealed"`, so no gold label was ever revised
+  after peer labels were unblinded.
+- `blind_label` is therefore the adjudicator's own (possibly re-worked)
+  blind decision, and equals the top-level gold by construction. It is
+  re-snapshotted on every blind-mode save; it is frozen only once an
+  item moves to a revealed pass (streamlit_app.py, save handler).
+- records where blind_label differs from gold: 0
+- D-3 (blind ≠ gold) analysis has no sample in this dataset.
+
+source
+- iaa_workspace/*/stage1/round2/GOLD_*_stage1_committed.json
+- iaa_workspace/*/stage1/round2/gap_tickets.json
+- iaa_workspace/*/stage1/input.json (criterion_text / type / protocol_ref)
+
+format
+Each JSONL line contains record_type, trial/envelope metadata, and the original
+gold record or gap ticket under the `record` key. Gap tickets are deliberately
+distinguished from confirmed gold so they cannot be treated as gold labels.
+The .txt files are byte-identical copies of the .jsonl files.
+
+sha256 (jsonl and its .txt copy share the hash)
+- AMIA_2027_STAGE1_ADJUDICATED_74items_2026-09-03.jsonl: cc018fbc4f45a91c2d21a489c8ea798648ead25c5ac4c2a08fd895ed1745750f
+- AMIA_2027_STAGE1_ADJUDICATED_74items_WITH_TEXT_2026-09-03.jsonl: 97ec0277c8279ef76d273023641b2b2d6f672e1b8786d3e57bf212516b45c57d
