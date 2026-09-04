@@ -22,6 +22,7 @@ from iaa_pipeline.aligners import (
 )
 from iaa_pipeline.metrics import (
     cohens_kappa,
+    compute_split_degree_agreement,
     set_agreement,
     compute_stage1_iaa,
     compute_stage2_iaa,
@@ -32,6 +33,7 @@ from iaa_pipeline.streamlit_app import (
     build_form_seed,
     build_tab_spec,
     envelope_is_committed,
+    list_committed_annotator_envelopes,
     render_criterion_form_blind,
     render_criterion_form_assisted,
     STAGE_MODE,
@@ -279,6 +281,37 @@ def test_regression_round_direction_bias_matches_measured():
             f"round{round_num}: DYK-only-split {db['n_b_only_split']} != {exp['dyk_only']}")
         assert db["n_type_mismatch"] == exp["type"], (
             f"round{round_num}: type-mismatch {db['n_type_mismatch']} != {exp['type']}")
+
+
+def test_split_degree_handles_array_text_span():
+    """`text_span` in the v1.2.3 ARRAY form must compare against the v1.1 string.
+
+    Annotator envelopes (round 1/2) still store one string; GOLD envelopes are
+    written as an array of contiguous segments. Every GOLD-vs-annotator pair
+    therefore meets both forms on the same criterion, and treating the array as
+    a string raised `AttributeError: 'list' object has no attribute 'lower'`.
+    The array's segments are pieces of ONE span, so they pool into one token set
+    and the pair must align exactly as if both sides were strings.
+    """
+    string_side = {"records": [{
+        "criterion_id": "T_E1",
+        "splitting_decision": "composite_split",
+        "sub_criteria": [{"child_id": "a", "text_span": "no active infection within 28 days"}],
+    }]}
+    array_side = {"records": [{
+        "criterion_id": "T_E1",
+        "splitting_decision": "composite_split",
+        "sub_criteria": [{"child_id": "a",
+                          "text_span": ["no active infection", "within 28 days"]}],
+    }]}
+
+    degree = compute_split_degree_agreement(string_side, array_side)
+    assert degree["span_alignment_f1"] == 1.0
+    assert degree["child_count_exact_match_rate"] == 1.0
+
+    # And the full panel runs end-to-end on the mixed pair.
+    iaa = compute_stage1_iaa(string_side, array_side)
+    assert iaa["splitting_decision"]["n"] == 1
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -586,6 +619,25 @@ def test_envelope_is_committed():
     assert envelope_is_committed({"committed": "yes"}) is False  # not boolean
     assert envelope_is_committed({}) is False
     assert envelope_is_committed(None) is False
+    # `gap_tickets.json` is a JSON ARRAY and sits in the same round folder as
+    # the envelopes, so a folder scan hands it straight to this predicate.
+    assert envelope_is_committed([{"criterion_id": "X", "tier": 3}]) is False
+
+
+def test_envelope_scan_ignores_the_gap_ticket_array(tmp_path=None):
+    """A saved tier-3 ticket must not crash or pollute envelope discovery."""
+    import json
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        d = Path(td)
+        (d / "gap_tickets.json").write_text(
+            json.dumps([{"criterion_id": "NCT0_E17", "tier": 3}]), encoding="utf-8")
+        (d / "input.json").write_text("{}", encoding="utf-8")
+        (d / "EHJ_x_committed.json").write_text(json.dumps(
+            {"source": "annotator", "annotator": "EHJ", "committed": True,
+             "records": []}), encoding="utf-8")
+        found = [p.name for p in list_committed_annotator_envelopes(d)]
+    assert found == ["EHJ_x_committed.json"]
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -644,6 +696,116 @@ def test_iaa_filter_skips_comments_and_blanks():
     finally:
         hosted.IAA_TRIAL_LIST = original
         os.unlink(tmp_path)
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Trajectory cross-validation (scripts/amia_stage1_trajectories.py)
+# ──────────────────────────────────────────────────────────────────────
+#
+# The script itself does not touch metrics.py — it only calls it. What is worth
+# pinning is the cross-validation logic, because a check that silently passes on
+# malformed input is worse than no check: it would bless a wrong Table 1.
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+import amia_stage1_trajectories as traj  # noqa: E402
+
+
+def _traj_rounds(labels: dict[str, tuple[str, str, str, str]]):
+    """`{cid: (ehj_r1, dyk_r1, ehj_r2, dyk_r2)}` → the script's two round dicts."""
+    r1 = {"EHJ": {}, "DYK": {}}
+    r2 = {"EHJ": {}, "DYK": {}}
+    for cid, (e1, d1, e2, d2) in labels.items():
+        r1["EHJ"][cid] = {"criterion_id": cid, "splitting_decision": e1}
+        r1["DYK"][cid] = {"criterion_id": cid, "splitting_decision": d1}
+        r2["EHJ"][cid] = {"criterion_id": cid, "splitting_decision": e2}
+        r2["DYK"][cid] = {"criterion_id": cid, "splitting_decision": d2}
+    return r1, r2
+
+
+def test_trajectory_classification_covers_all_four_paths():
+    r1, r2 = _traj_rounds({
+        "A": ("none", "none", "none", "none"),                      # stable
+        "B": ("none", "composite_split", "none", "none"),           # resolved
+        "C": ("none", "composite_split", "none", "macro_aggregate"),  # persistent
+        "D": ("none", "none", "none", "composite_split"),           # newly emerged
+    })
+    buckets, corpus = traj.classify_trajectories(r1, r2)
+    assert corpus == ["A", "B", "C", "D"]
+    assert buckets["stable agreement"] == ["A"]
+    assert buckets["resolved"] == ["B"]
+    assert buckets["persistent"] == ["C"]
+    assert buckets["newly emerged"] == ["D"]
+
+
+def test_trajectory_corpus_excludes_partially_labelled_criteria():
+    """A criterion missing from any one of the four label sets has no trajectory.
+
+    Bucketing it anyway would inflate whichever bucket the missing side defaults
+    into — both `None` decisions would read as agreement.
+    """
+    r1, r2 = _traj_rounds({"A": ("none", "none", "none", "none")})
+    r2["DYK"].pop("A")
+    r1["EHJ"]["ORPHAN"] = {"criterion_id": "ORPHAN", "splitting_decision": "none"}
+    buckets, corpus = traj.classify_trajectories(r1, r2)
+    assert corpus == []
+    assert all(v == [] for v in buckets.values())
+
+
+def test_trajectory_cross_validation_flags_stratum_mismatch():
+    """S1 == every non-stable trajectory, and S4 must sit inside stable."""
+    buckets = {"stable agreement": ["A"], "resolved": ["B"],
+               "persistent": ["C"], "newly emerged": ["D"]}
+    rounds = {1: {"n": 172, "n_agree": 136, "observed": 0.791, "kappa": 0.608},
+              2: {"n": 172, "n_agree": 138, "observed": 0.802, "kappa": 0.650}}
+
+    good = traj.cross_validate(buckets, rounds, {"S1": {"B", "C", "D"}, "S4": {"A"}})
+    assert [ok for ok, _ in good[:2]] == [True, True]
+
+    # S1 carrying an item that stayed in agreement is exactly the drift the
+    # check exists to catch.
+    bad = traj.cross_validate(buckets, rounds, {"S1": {"B", "C", "D", "A"}, "S4": {"A"}})
+    assert bad[0][0] is False and "A" in bad[0][1]
+
+    # `newly emerged` is an S1 cell too (queue s1_kind="new"), so an S1 that
+    # drops it is a shortfall the check must report, not silently accept.
+    short = traj.cross_validate(buckets, rounds, {"S1": {"B", "C"}, "S4": {"A"}})
+    assert short[0][0] is False and "trajectory-only ['D']" in short[0][1]
+
+    # S4 is sampled from settled criteria, so a disagreeing id must fail.
+    bad_s4 = traj.cross_validate(buckets, rounds, {"S1": {"B", "C", "D"}, "S4": {"A", "D"}})
+    assert bad_s4[1][0] is False and "D" in bad_s4[1][1]
+
+
+def test_trajectory_cross_validation_flags_expected_value_drift():
+    """The measured anchors are asserted, not just printed."""
+    buckets = {"stable agreement": ["A"], "resolved": ["B"],
+               "persistent": ["C"], "newly emerged": ["D"]}
+    rounds = {1: {"n": 172, "n_agree": 136, "observed": 0.791, "kappa": 0.608},
+              2: {"n": 172, "n_agree": 999, "observed": 0.802, "kappa": 0.650}}
+    checks = traj.cross_validate(buckets, rounds, {"S1": {"B", "C"}, "S4": {"A"}})
+    failed = [msg for ok, msg in checks if not ok]
+    # 4 bucket counts are off (1 vs 123/15/21/13) plus the round-2 agree count.
+    assert any("round 2 observed" in m for m in failed)
+    assert sum(1 for m in failed if "expected" in m) == 5
+
+
+def test_trajectory_child_logic_cohort_is_fixed_across_rounds():
+    """Cohort = composite_split on BOTH sides in BOTH rounds, nothing looser.
+
+    A per-round cohort would change membership between the two numbers, so the
+    comparison would measure the membership change, not the agreement change.
+    """
+    r1, r2 = _traj_rounds({
+        "KEEP": ("composite_split",) * 4,
+        "DROP": ("composite_split", "composite_split", "composite_split", "none"),
+    })
+    for rnd, logic in ((r1, ("AND", "OR")), (r2, ("AND", "AND"))):
+        rnd["EHJ"]["KEEP"]["child_logic"] = logic[0]
+        rnd["DYK"]["KEEP"]["child_logic"] = logic[1]
+    result = traj.child_logic_cohort(r1, r2, ["KEEP", "DROP"])
+    assert result["cohort"] == ["KEEP"]
+    assert result["agree"] == {1: 0, 2: 1}
+    assert result["reproduced"] is False  # anchors are the real 31-item cohort
 
 
 # ──────────────────────────────────────────────────────────────────────

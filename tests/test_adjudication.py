@@ -41,6 +41,9 @@ from iaa_pipeline.streamlit_app import (  # noqa: E402
     build_adjudication_tab_spec,
     discover_peer_actors,
     find_actor_envelope,
+    _blind_snapshot,
+    is_blind_pass_record,
+    parse_adjudication_upload,
     render_adjudication_form_blind,
     resolve_envelope_path,
 )
@@ -70,6 +73,33 @@ def test_blind_adjudication_form_rejects_peer_records():
 def test_blind_tab_spec_hides_peer_tab():
     assert "👥 Peer labels" not in build_adjudication_tab_spec(blind=True)
     assert "👥 Peer labels" in build_adjudication_tab_spec(blind=False)
+    assert "⬆️ GOLD Upload" in build_adjudication_tab_spec(blind=True)
+
+
+def test_parse_native_gold_envelope_upload():
+    raw = json.dumps({
+        "trial_id": "NCT1", "stage": 1, "source": "annotator",
+        "annotator": "GOLD", "committed": True,
+        "records": [{"criterion_id": "NCT1_E1", "splitting_decision": "none",
+                     "sub_criteria": []}],
+    }).encode()
+    parsed = parse_adjudication_upload(raw)
+    assert [r["criterion_id"] for r in parsed["NCT1"]["gold"]] == ["NCT1_E1"]
+    assert parsed["NCT1"]["gaps"] == []
+
+
+def test_parse_combined_jsonl_keeps_gap_separate():
+    lines = [
+        {"record_type": "gold", "trial_id": "NCT1", "stage": 1,
+         "record": {"criterion_id": "NCT1_E1", "splitting_decision": "none",
+                    "sub_criteria": []}},
+        {"record_type": "gap_ticket", "trial_id": "NCT1", "stage": 1,
+         "record": {"criterion_id": "NCT1_E2", "tier": 3, "reason": "gap"}},
+    ]
+    raw = "\n".join(json.dumps(x) for x in lines).encode()
+    parsed = parse_adjudication_upload(raw)["NCT1"]
+    assert [r["criterion_id"] for r in parsed["gold"]] == ["NCT1_E1"]
+    assert [r["criterion_id"] for r in parsed["gaps"]] == ["NCT1_E2"]
 
 
 def test_blind_seed_ignores_existing_gold():
@@ -84,6 +114,80 @@ def test_blind_seed_ignores_existing_gold():
     seed_open = build_adjudication_seed(blind=False, existing_gold=gold,
                                         blind_label=blind)
     assert seed_open["splitting_decision"] == "macro_aggregate"
+
+
+def test_blind_seed_keeps_the_adjudicators_own_blind_record():
+    """A blind-pass record re-seeds the blind form IN FULL.
+
+    `blind_label` is decision-only, so seeding from it alone blanked each
+    child's rationale/cohort_scope, the notes and the confidence — and the
+    next save wrote the blanks back over the stored gold.
+    """
+    gold = {
+        "splitting_decision": "composite_split",
+        "child_logic": "OR",
+        "sub_criteria": [{"child_id": "a", "text_span": ["Pregnancy"],
+                          "rationale": "임신과 수유는 별개 상태",
+                          "cohort_scope": ["Arm A"]}],
+        "confidence": "high",
+        "notes": "메모",
+        "adjudication": {"tier": 2, "pass": "blind"},
+    }
+    blind = {"splitting_decision": "composite_split",
+             "sub_criteria": [{"child_id": "a", "text_span": ["Pregnancy"]}]}
+    seed = build_adjudication_seed(blind=True, existing_gold=gold,
+                                   blind_label=blind)
+    assert seed["sub_criteria"][0]["rationale"] == "임신과 수유는 별개 상태"
+    assert seed["sub_criteria"][0]["cohort_scope"] == ["Arm A"]
+    assert seed["notes"] == "메모"
+    assert seed["confidence"] == "high"
+
+
+def test_blind_seed_still_ignores_a_revealed_pass_record():
+    gold = {"splitting_decision": "macro_aggregate", "sub_criteria": [],
+            "notes": "peer 공개 후 작성", "adjudication": {"pass": "revealed"}}
+    blind = {"splitting_decision": "none", "sub_criteria": []}
+    seed = build_adjudication_seed(blind=True, existing_gold=gold,
+                                   blind_label=blind)
+    assert seed["splitting_decision"] == "none"
+    assert "notes" not in seed
+
+
+def test_is_blind_pass_record_defaults_to_not_blind():
+    assert is_blind_pass_record({"adjudication": {"pass": "blind"}}) is True
+    assert is_blind_pass_record({"adjudication": {"pass": "revealed"}}) is False
+    assert is_blind_pass_record({"adjudication": {}}) is False
+    assert is_blind_pass_record({}) is False
+    assert is_blind_pass_record(None) is False
+
+
+def test_blind_snapshot_preserves_child_rationale_and_scope():
+    snap = _blind_snapshot({
+        "splitting_decision": "composite_split",
+        "child_logic": "AND",
+        "cohort_scope": ["Arm A"],
+        "confidence": "high",
+        "notes": "  메모  ",
+        "sub_criteria": [
+            {"child_id": "a", "text_span": "Pregnancy", "rationale": "r1",
+             "cohort_scope": ["Arm A"]},
+            {"child_id": "b", "text_span": ["lactation"]},
+        ],
+    })
+    assert snap["sub_criteria"][0]["text_span"] == ["Pregnancy"]  # legacy string form
+    assert snap["sub_criteria"][0]["rationale"] == "r1"
+    assert snap["sub_criteria"][0]["cohort_scope"] == ["Arm A"]
+    assert "rationale" not in snap["sub_criteria"][1]
+    assert snap["child_logic"] == "AND"
+    assert snap["cohort_scope"] == ["Arm A"]
+    assert snap["confidence"] == "high"
+    assert snap["notes"] == "메모"
+
+
+def test_blind_form_accepts_existing_gold_but_never_peers():
+    params = inspect.signature(render_adjudication_form_blind).parameters
+    assert "existing_gold" in params
+    assert "peer_records" not in params
 
 
 def test_open_seed_falls_back_to_blind_label():

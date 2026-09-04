@@ -25,6 +25,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Iterable
 
+from .adjudication import normalize_text_span
 from .aligners import (
     AlignmentResult,
     Stage2Alignment,
@@ -313,11 +314,23 @@ def compute_stage1_iaa(envelope_a: dict, envelope_b: dict) -> dict[str, Any]:
 _WORD_RE = re.compile(r"\w+", re.UNICODE)
 
 
-def _span_tokens(span: str | None) -> frozenset:
-    return frozenset(_WORD_RE.findall((span or "").lower()))
+def _span_tokens(span: Any) -> frozenset:
+    """Tokens of one `text_span`, in either storage form.
+
+    v1.1 envelopes store a single string; spec v1.2.3 변경 6 makes `text_span`
+    an ARRAY of contiguous segments, and GOLD envelopes are written in the new
+    form — so a GOLD-vs-annotator comparison meets both on the same criterion.
+    The token set is the union across segments: they are pieces of one span,
+    not competing candidates.
+    """
+    return frozenset(
+        tok
+        for segment in normalize_text_span(span)
+        for tok in _WORD_RE.findall(segment.lower())
+    )
 
 
-def _span_similarity(a: str | None, b: str | None) -> float:
+def _span_similarity(a: Any, b: Any) -> float:
     """Token-set Jaccard between two text_spans (annotators copy spans from the
     same parent text, so token overlap is a robust alignment signal)."""
     ta, tb = _span_tokens(a), _span_tokens(b)
@@ -328,7 +341,7 @@ def _span_similarity(a: str | None, b: str | None) -> float:
     return len(ta & tb) / len(ta | tb)
 
 
-def _greedy_span_matches(spans_a: list[str], spans_b: list[str],
+def _greedy_span_matches(spans_a: list[Any], spans_b: list[Any],
                          threshold: float) -> int:
     """Count 1-1 span matches via greedy best-similarity assignment."""
     cands = [

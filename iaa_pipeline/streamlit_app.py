@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import json
 import sys
+from collections.abc import Iterable
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
@@ -169,7 +170,20 @@ def build_adjudication_tab_spec(*, blind: bool) -> list[str]:
     if not blind:
         tabs.append("👥 Peer labels")
     tabs.append("📊 IAA")
+    tabs.append("⬆️ GOLD Upload")
     return tabs
+
+
+def is_blind_pass_record(record: object) -> bool:
+    """True iff `record` was last written by the blind (pass 1) adjudication.
+
+    A record with no `adjudication.pass` is treated as NOT blind: unknown
+    provenance falls to the conservative side, where it cannot seed a blind
+    form.
+    """
+    if not isinstance(record, dict):
+        return False
+    return (record.get("adjudication") or {}).get("pass") == "blind"
 
 
 def build_adjudication_seed(
@@ -184,19 +198,109 @@ def build_adjudication_seed(
     that no EHJ/DYK value can seed an adjudication default (the adjudication
     analogue of audit leaks A1/A7).
 
-    In blind mode the seed is the adjudicator's own blind pass only, so
-    reopening a blind item does not surface a later revealed-pass edit.
+    In blind mode the seed is the adjudicator's own blind-pass work only. A
+    record whose `adjudication.pass` is `"blind"` *is* that work, so it seeds
+    in FULL: `blind_label` is a decision-only snapshot kept for D-3 and never
+    carried the per-child `rationale`/`cohort_scope`, the record-level
+    `cohort_scope`, `confidence` or `notes` — seeding a blind re-open from it
+    alone blanks all of those on screen, and the next save writes the blanks
+    back over the stored gold. A `"revealed"` record is peer-influenced and
+    must not leak back into a blind pass, so it still falls through to the
+    snapshot.
     """
     if blind:
+        if is_blind_pass_record(existing_gold):
+            return dict(existing_gold)  # type: ignore[arg-type]
         return dict(blind_label) if blind_label else {}
     if existing_gold:
         return dict(existing_gold)
     return dict(blind_label) if blind_label else {}
 
 
-def envelope_is_committed(envelope: dict | None) -> bool:
-    """An envelope is committed iff it carries the explicit flag."""
-    return bool(envelope and envelope.get("committed") is True)
+def envelope_is_committed(envelope: object) -> bool:
+    """An envelope is committed iff it carries the explicit flag.
+
+    The isinstance check is load-bearing, not defensive noise: the round
+    folder also holds `gap_tickets.json`, whose top level is a JSON ARRAY.
+    Anything scanning the folder will hand that list in here.
+    """
+    return isinstance(envelope, dict) and envelope.get("committed") is True
+
+
+def parse_adjudication_upload(raw: bytes) -> dict[str, dict[str, list[dict]]]:
+    """Parse a trial GOLD envelope or the combined adjudication JSONL export.
+
+    The return shape is ``{trial_id: {"gold": [...], "gaps": [...]}}``.
+    Tier-3 gap tickets stay separate by construction, so importing a combined
+    publication export cannot accidentally turn a gap into a GOLD label.
+    """
+    try:
+        text = raw.decode("utf-8-sig")
+    except UnicodeDecodeError as exc:
+        raise ValueError(f"UTF-8 파일이 아닙니다: {exc}") from exc
+    if not text.strip():
+        raise ValueError("빈 파일입니다.")
+
+    parsed: list[Any]
+    try:
+        parsed = [json.loads(text)]
+    except json.JSONDecodeError:
+        parsed = []
+        for line_no, line in enumerate(text.splitlines(), 1):
+            if not line.strip():
+                continue
+            try:
+                parsed.append(json.loads(line))
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"JSONL {line_no}번 줄을 파싱할 수 없습니다: {exc}") from exc
+
+    result: dict[str, dict[str, list[dict]]] = {}
+    seen: set[tuple[str, str, str]] = set()
+    for item in parsed:
+        if not isinstance(item, dict):
+            raise ValueError("최상위 JSON은 object여야 합니다.")
+
+        # Native per-trial committed GOLD envelope.
+        if "records" in item:
+            if item.get("annotator") != GOLD_ACTOR or item.get("stage") != 1:
+                raise ValueError("Stage 1 GOLD envelope(annotator='GOLD')만 업로드할 수 있습니다.")
+            trial_id = item.get("trial_id")
+            records = item.get("records")
+            if not trial_id or not isinstance(records, list):
+                raise ValueError("GOLD envelope에 trial_id 또는 records list가 없습니다.")
+            bucket = result.setdefault(str(trial_id), {"gold": [], "gaps": []})
+            for record in records:
+                if not isinstance(record, dict):
+                    raise ValueError(f"{trial_id}: GOLD record가 object가 아닙니다.")
+                bucket["gold"].append(record)
+            continue
+
+        # Combined JSONL export: one wrapped gold/gap record per line.
+        record_type = item.get("record_type")
+        trial_id = item.get("trial_id")
+        record = item.get("record")
+        if record_type not in ("gold", "gap_ticket") or not trial_id or not isinstance(record, dict):
+            raise ValueError("JSONL은 record_type, trial_id, record object를 포함해야 합니다.")
+        if item.get("stage", 1) != 1:
+            raise ValueError("Stage 1 adjudication 파일만 업로드할 수 있습니다.")
+        bucket = result.setdefault(str(trial_id), {"gold": [], "gaps": []})
+        bucket["gold" if record_type == "gold" else "gaps"].append(record)
+
+    for trial_id, groups in result.items():
+        for kind, records in groups.items():
+            for record in records:
+                cid = record.get("criterion_id")
+                if not cid:
+                    raise ValueError(f"{trial_id}: {kind} record에 criterion_id가 없습니다.")
+                key = (trial_id, kind, str(cid))
+                if key in seen:
+                    raise ValueError(f"중복 criterion_id: {trial_id} / {kind} / {cid}")
+                seen.add(key)
+        overlap = ({r["criterion_id"] for r in groups["gold"]}
+                   & {r["criterion_id"] for r in groups["gaps"]})
+        if overlap:
+            raise ValueError(f"{trial_id}: GOLD와 gap에 동시에 있는 criterion_id: {sorted(overlap)}")
+    return result
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -254,8 +358,9 @@ def list_committed_annotator_envelopes(stage_dir: Path) -> list[Path]:
 
     This accepts files dropped in with their hosted-app download name
     (e.g. `EHJ_NCT01295827_stage1_committed.json`) just as well as the local
-    `annotator_{id}.json` — no renaming required. `input.json` and
-    `llm_output.json` are skipped (they are not annotator envelopes).
+    `annotator_{id}.json` — no renaming required. `input.json`,
+    `llm_output.json` and `gap_tickets.json` are skipped (none of them are
+    annotator envelopes; the last one is a JSON array, not even a dict).
 
     Used by the IAA dashboard. In Phase 1 (annotation), this list is
     intentionally not surfaced anywhere except the IAA tab — and the IAA
@@ -265,10 +370,10 @@ def list_committed_annotator_envelopes(stage_dir: Path) -> list[Path]:
         return []
     paths = []
     for p in sorted(stage_dir.glob("*.json")):
-        if p.name in ("input.json", "llm_output.json"):
+        if p.name in ("input.json", "llm_output.json", "gap_tickets.json"):
             continue
         env = load_json(p)
-        if envelope_is_committed(env) and (env or {}).get("source") == "annotator":
+        if envelope_is_committed(env) and env.get("source") == "annotator":
             paths.append(p)
     return paths
 
@@ -632,13 +737,21 @@ def _safe_index(options: list[str], value: Any, default: int) -> int:
 def render_adjudication_form_blind(
     criterion: dict,
     *,
+    existing_gold: dict | None,
     blind_label: dict | None,
     cohort_options: list[str],
     key_prefix: str,
 ) -> dict:
-    """Pass 1. Sees the criterion text and the adjudicator's own prior blind work."""
+    """Pass 1. Sees the criterion text and the adjudicator's own prior blind work.
+
+    `existing_gold` is that prior work and nothing else: `build_adjudication_seed`
+    drops it unless `adjudication.pass == "blind"`, so handing a revealed-pass
+    record in here still cannot surface a peer-influenced edit. It is what
+    makes a re-opened blind item show the rationale/notes/scope the
+    adjudicator already wrote instead of an empty form.
+    """
     seed = build_adjudication_seed(
-        blind=True, existing_gold=None, blind_label=blind_label,
+        blind=True, existing_gold=existing_gold, blind_label=blind_label,
     )
     return _render_form_with_seed(
         criterion,
@@ -1080,8 +1193,16 @@ def section_adjudicate(
             "🔒 **1차 통과 (blind)** — EHJ/DYK 라벨을 보지 않고 독립 판정합니다. "
             "두 사람이 모두 틀린 경우를 발견하려면 제3의 독립 라벨이 먼저 있어야 합니다."
         )
+        if existing_gold is not None and not is_blind_pass_record(existing_gold):
+            st.warning(
+                "⚠️ 이 항목은 **revealed 패스**에서 확정된 gold입니다. blind 폼은 "
+                "peer 공개 이후의 편집을 되살리지 않으므로(되살리면 blind가 깨집니다) "
+                "지금 저장하면 확정 gold를 blind 스냅샷 값으로 덮어씁니다. "
+                "수정하려면 사이드바에서 🔒 Blind pass를 끄세요."
+            )
         gold_draft = render_adjudication_form_blind(
             crit,
+            existing_gold=existing_gold,
             blind_label=blind_label,
             cohort_options=cohort_options,
             key_prefix=key_prefix,
@@ -1223,15 +1344,38 @@ def section_adjudicate(
 
 
 def _blind_snapshot(record: dict) -> dict:
-    """The subset of a blind-pass label worth preserving for D-3."""
+    """The blind-pass label preserved for D-3 — and the blind form's fallback.
+
+    D-3 only compares the decision (splitting_decision / child_logic / spans),
+    but the snapshot also keeps each child's `rationale` and `cohort_scope`
+    plus the record-level scope/confidence/notes. Once an item moves to the
+    revealed pass this is the only surviving copy of what the blind pass
+    actually wrote, and it is what re-seeds the form if the adjudicator flips
+    back to blind — a decision-only snapshot silently blanked those fields.
+    """
+    subs: list[dict[str, Any]] = []
+    for s in (record.get("sub_criteria") or []):
+        child: dict[str, Any] = {
+            "child_id": s.get("child_id"),
+            "text_span": normalize_text_span(s.get("text_span")),
+        }
+        if s.get("rationale"):
+            child["rationale"] = s["rationale"]
+        if s.get("cohort_scope"):
+            child["cohort_scope"] = s["cohort_scope"]
+        subs.append(child)
     snap: dict[str, Any] = {
         "splitting_decision": record.get("splitting_decision"),
-        "sub_criteria": [{"child_id": s.get("child_id"),
-                          "text_span": normalize_text_span(s.get("text_span"))}
-                         for s in (record.get("sub_criteria") or [])],
+        "sub_criteria": subs,
     }
     if record.get("child_logic") is not None:
         snap["child_logic"] = record["child_logic"]
+    if record.get("cohort_scope"):
+        snap["cohort_scope"] = record["cohort_scope"]
+    if record.get("confidence"):
+        snap["confidence"] = record["confidence"]
+    if (record.get("notes") or "").strip():
+        snap["notes"] = record["notes"].strip()
     return snap
 
 
@@ -1398,6 +1542,151 @@ def section_peer_overview(env_dir: Path, *, peers: list[str],
         row["agree"] = "✅" if len(set(labels)) == 1 else "⚠️"
         rows.append(row)
     st.dataframe(rows, use_container_width=True, hide_index=True)
+
+
+def clear_adjudication_widget_state(trial_ids: Iterable[str]) -> None:
+    """Drop the adjudication form's widget state for `trial_ids`.
+
+    Streamlit honours a widget's `value=` argument only while its key is
+    ABSENT from session_state; once the form has rendered in this session the
+    keys are set, so freshly imported records keep showing whatever was on
+    screen before the upload — the import looks like it did nothing. Every
+    form key is `adj_{trial_id}_{criterion_id}_*` (`key_prefix` in
+    `section_adjudicate`), so clearing that prefix makes the next run re-seed
+    from disk. The sidebar keys (`adj_blind`, `adj_pick`, …) do not match the
+    prefix and are left alone.
+    """
+    prefixes = tuple(f"adj_{t}_" for t in trial_ids)
+    if not prefixes:
+        return
+    for key in [k for k in st.session_state if k.startswith(prefixes)]:
+        del st.session_state[key]
+
+
+def section_gold_upload(workspace: Path, *, round_num: int, stage: int) -> None:
+    """Import native GOLD envelopes or the combined adjudication JSONL export."""
+    st.markdown("#### Adjudication GOLD 업로드")
+    st.caption(
+        "trial별 `GOLD_*_committed.json` 또는 통합 `.jsonl`을 받습니다. "
+        "기존 record와 criterion_id가 겹치면 아래 확인 후에만 업로드 값으로 교체하고, "
+        "파일에 없는 기존 record는 유지합니다. gap ticket은 별도 파일로 복원됩니다."
+    )
+    done_msg = st.session_state.pop("gold_upload_result", None)
+    if done_msg:
+        st.success(done_msg)
+    # Bumped after every import so the uploader and its confirm box reset —
+    # otherwise the just-applied file sits there re-offering itself.
+    nonce = st.session_state.get("gold_upload_nonce", 0)
+    uploaded = st.file_uploader(
+        "GOLD JSON / adjudication JSONL", type=["json", "jsonl"],
+        key=f"gold_upload_file_{nonce}",
+    )
+    if uploaded is None:
+        return
+    try:
+        imported = parse_adjudication_upload(uploaded.getvalue())
+    except ValueError as exc:
+        st.error(str(exc))
+        return
+
+    rows = []
+    conflicts = 0
+    missing_inputs: list[str] = []
+    unknown_ids: list[str] = []
+    for trial_id, groups in imported.items():
+        stage_dir = workspace / trial_id / f"stage{stage}"
+        trial_input = load_json(stage_dir / "input.json")
+        if not trial_input:
+            missing_inputs.append(trial_id)
+            continue
+        env_dir = envelope_dir(stage_dir, round_num)
+        old_path = find_actor_envelope(env_dir, GOLD_ACTOR)
+        old_env = load_json(old_path) if old_path else {}
+        old_gold_ids = {r.get("criterion_id") for r in (old_env or {}).get("records", [])}
+        gp = gap_tickets_path(stage_dir, round_num)
+        try:
+            old_gaps = json.loads(gp.read_text(encoding="utf-8")) if gp.exists() else []
+        except json.JSONDecodeError:
+            st.error(f"기존 gap ticket을 파싱할 수 없습니다: {gp}")
+            return
+        old_gap_ids = {r.get("criterion_id") for r in merge_gap_tickets(old_gaps, [])}
+        incoming_ids = {r["criterion_id"] for r in groups["gold"]}
+        incoming_gap_ids = {r["criterion_id"] for r in groups["gaps"]}
+        # A record whose criterion_id is not in input.json would be written to
+        # the gold envelope and then be invisible in the queue — but still be
+        # counted by compute_iaa.py. Block it rather than import it blind.
+        known = {c.get("criterion_id")
+                 for c in (trial_input.get("criteria") or [])}
+        unknown_ids += sorted((incoming_ids | incoming_gap_ids) - known)
+        n_conflict = len((incoming_ids & old_gold_ids) | (incoming_gap_ids & old_gap_ids))
+        conflicts += n_conflict
+        rows.append({"trial_id": trial_id, "GOLD": len(incoming_ids),
+                     "gap": len(incoming_gap_ids), "conflicts": n_conflict})
+
+    if missing_inputs:
+        st.error(
+            f"다음 trial은 workspace에 stage{stage}/input.json이 없어(또는 읽을 수 없어) "
+            "업로드할 수 없습니다: " + ", ".join(sorted(missing_inputs))
+        )
+        return
+    if unknown_ids:
+        st.error(
+            "input.json에 없는 criterion_id가 있어 업로드를 중단했습니다 "
+            f"({len(unknown_ids)}건): " + ", ".join(unknown_ids[:10])
+            + (" …" if len(unknown_ids) > 10 else "")
+        )
+        return
+    st.dataframe(rows, use_container_width=True, hide_index=True)
+    confirm = st.checkbox(
+        f"위 내용을 round{round_num}에 반영합니다"
+        + (f" (기존 {conflicts}건 교체)" if conflicts else ""),
+        key=f"gold_upload_confirm_{nonce}",
+    )
+    if not st.button("⬆️ GOLD 업로드", type="primary", disabled=not confirm):
+        return
+
+    now = _utc_now_iso()
+    total_gold = total_gaps = 0
+    for trial_id, groups in imported.items():
+        stage_dir = workspace / trial_id / f"stage{stage}"
+        env_dir = envelope_dir(stage_dir, round_num)
+        gold_path = resolve_envelope_path(env_dir, GOLD_ACTOR,
+                                          trial_id=trial_id, stage=stage)
+        old_env = load_json(gold_path) or {}
+        by_id = {r.get("criterion_id"): r for r in old_env.get("records", [])
+                 if r.get("criterion_id")}
+        for record in groups["gold"]:
+            by_id[record["criterion_id"]] = record
+        # A newly imported gap supersedes old gold, and vice versa.
+        for ticket in groups["gaps"]:
+            by_id.pop(ticket["criterion_id"], None)
+        records = sorted(by_id.values(), key=lambda r: r.get("criterion_id") or "")
+        _write_gold(gold_path, old_env, records, trial_id, stage, now)
+
+        gp = gap_tickets_path(stage_dir, round_num)
+        try:
+            old_gaps = json.loads(gp.read_text(encoding="utf-8")) if gp.exists() else []
+        except json.JSONDecodeError:
+            old_gaps = []  # already validated above; unreachable unless file changed mid-click
+        merged_gaps = merge_gap_tickets(old_gaps, groups["gaps"])
+        gold_ids = {r["criterion_id"] for r in groups["gold"]}
+        merged_gaps = [t for t in merged_gaps if t.get("criterion_id") not in gold_ids]
+        if merged_gaps or gp.exists():
+            gp.parent.mkdir(parents=True, exist_ok=True)
+            gp.write_text(json.dumps(merged_gaps, ensure_ascii=False, indent=2),
+                          encoding="utf-8")
+        total_gold += len(groups["gold"])
+        total_gaps += len(groups["gaps"])
+    # The Adjudicate tab already rendered this run against the pre-import
+    # files, and its widgets are pinned to those values in session_state.
+    # Clear them and rerun so the form actually shows what was imported.
+    clear_adjudication_widget_state(imported)
+    st.session_state["gold_upload_nonce"] = nonce + 1
+    st.session_state["gold_upload_result"] = (
+        f"업로드 완료: {len(imported)} trials · GOLD {total_gold} records · "
+        f"gap tickets {total_gaps}."
+    )
+    st.rerun()
 
 
 def section_llm_view(llm_envelope: dict | None) -> None:
@@ -1667,6 +1956,9 @@ def main() -> None:
                 elif label == "📊 IAA":
                     section_iaa_dashboard(stage_dir, current_annotator=GOLD_ACTOR,
                                           env_dir=env_dir)
+                elif label == "⬆️ GOLD Upload":
+                    section_gold_upload(workspace, round_num=round_num or 2,
+                                        stage=stage)
         return
 
     if annotator:
