@@ -394,7 +394,36 @@ PHASE 1·2에서 기록한 drift는 v1.2.3 기준이었다. v1.3.0이 forward �
 
 ---
 
-## 10. 이 단계에서 하지 않은 것
+## 9-B. PHASE 4 진행 상황 (2026-09-08 갱신)
+
+이 재고는 **레거시 프로덕션 경로** 기준으로 작성되었고, 그 상태는 PHASE 4에서 **바뀌지 않았다**.
+PHASE 4는 병렬 개발 실행 경로 `pipeline/stage1_v13/`(LAYER 3.5)를 신설했을 뿐이다.
+
+| Phase 4 작업 범주 (§9) | 개발 경로 상태 | 프로덕션 경로 상태 |
+|---|---|---|
+| **B.** 입력 컨텍스트 배선 (ROOT/TARGET/PARENT/TYPE) | ✅ `stage1_v13/context.py` | 미변경 |
+| **C.** 출력 계약 확장 (recursion·provenance 필드) | ✅ `stage1_v13/contracts.py` | 미변경 |
+| **D.** 재귀 실행 루프 (H6) | ✅ `stage1_v13/runner.py` + main 파생 | 미변경 |
+| **E.** 검증기 정렬 (H4 nested_exception, H5 필수, X1 span, X4 scope, provenance) | ✅ `stage1_v13/validators.py` | **미변경** — `pipeline/validators.py`의 `≥2` 규칙 그대로 |
+| **H.** 테스트 | ✅ `tests/test_stage1_v13.py` 80건 | 기존 94건 통과 유지 |
+| **A.** 프롬프트 재작성 | ✅ 반입된 v1.3.1 DEV 프롬프트가 담당 | `prompt_1_splitting.txt` **미변경** |
+| **F.** 소비자 수정 (`orchestrator.py:155` 배열 소비) | 해당 없음 (개발 경로는 Prompt 2–4로 넘기지 않음) | **미변경** |
+| **G.** IAA 정렬 확장 (`aligners.py`) | ⏸️ **연기** — 프롬프트 개발에 불필요 | 미변경 |
+| **I.** few-shot 예제 | ⏸️ `examples.json` **미사용·미변경** | 미변경 |
+
+연기된 두 건:
+
+- **G. 정렬** — 재귀 출력은 criterion당 1 record가 아니므로 `aligners.align_stage1`의 1:1 전제와
+  맞지 않는다. 프롬프트 개발 단계에서는 정렬이 필요 없어 손대지 않았다. 필요해지면 경로형 키
+  (`root.a.b`) 설계가 선행되어야 한다.
+- **I. 예제** — v1.3.1 프롬프트가 자체 synthetic 예제를 포함한다. historical 113건을 few-shot에
+  넣으면 평가 대상을 오염시키므로 추가 예제가 필요하면 별도 versioned 산출물로 만들고 사람 승인을 받는다.
+
+상세: [`../methods/stage1_v1_3_runtime.md`](../methods/stage1_v1_3_runtime.md)
+
+---
+
+## 10. 이 단계(PHASE 3)에서 하지 않은 것
 
 - 코드 수정 0건
 - `stage_schemas.py` 필드 추가 없음, JSON 계약 변경 없음

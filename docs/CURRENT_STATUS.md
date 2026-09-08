@@ -3,7 +3,7 @@
 > **최종 갱신**: 2026-09-08
 > **활성 브랜치**: `feat/adjudication-prep` (main 미병합)
 > **동결 checkpoint**: commit `80f0f28` / tag `stage1-adjudication-complete-2026-09-08`
-> **Phase 2**: 완료 (`7f7fb7e` → `a27b0f0`) · **Phase 3**: 완료 (v1.3 방법론 반입) · **Phase 4**: 대기
+> **Phase 2**: 완료 · **Phase 3**: 완료 (v1.3 반입) · **Phase 4**: 완료 (v1.3 개발 런타임) · **Phase 5**: 대기
 > 이 문서는 **빠르게 변하는 연구 진행 상태**의 entry point다.
 > 무엇을 authoritative하게 읽어야 하는지는 [`repository/SOURCE_OF_TRUTH.md`](repository/SOURCE_OF_TRUTH.md)를 본다.
 
@@ -32,7 +32,8 @@ export와 함께 Git에 보존·원격 백업되었다. 저장소 구조가 안�
 | 판정 증거 동결 + 원격 백업 | ✅ 완료 (PHASE 1, commit `80f0f28`) |
 | 저장소 구조 안정화 | ✅ **완료 (PHASE 2)** — source / frozen evidence / historical / generated 경계 문서화 |
 | v1.3 방법론 반입 (PHASE 3) | ✅ **완료** — canonical core v1.3.0 + 개발 프롬프트 v1.3.1 반입, 4층 governance 정의 (§5) |
-| v1.3 런타임 구현 (PHASE 4) | ⏸️ **대기** — 런타임은 아직 v1.3 비준수 (§6) |
+| v1.3 **개발** 런타임 (PHASE 4) | ✅ **완료** — `pipeline/stage1_v13/` 병렬 실행 경로. 프로덕션 경로는 무변경 |
+| v1.3 프롬프트 개발·동결 (PHASE 5) | ⏸️ **대기** — 실제 모델 호출·튜닝 미착수 |
 | Stage 2–5 IAA | ⛔ 미착수 (stage_runner에서 `NotImplementedError`) |
 | Neo4j 온톨로지 / RAG 에이전트 | ⛔ scaffold만 존재 |
 
@@ -121,15 +122,20 @@ sha256  canonical_core_v1_3_0.md      16e56569b7570acea8b50aaab82d31292d7421c8fe
 sha256  stage1_prompt_v1_3_1.txt      dfce30245473b8f69627d5030cb772be3ef84f8e23957b09d170e6ac288590f9
 ```
 
-### 네 개의 층
+### 층 구조
 
 ```
-LAYER 1  HISTORICAL  v1.2.2 guideline + ontology v1.2.2/v1.2.3 + 113-item evidence
-                     + iaa_pipeline/adjudication.py @ tag stage1-adjudication-complete-2026-09-08
-LAYER 2  NORMATIVE   canonical_core_v1_3_0.md
-LAYER 3  DEV PROMPT  stage1_prompt_v1_3_1.txt  (비규범)
-LAYER 4  RUNTIME     ⚠️ 아직 v1.3 비준수
+LAYER 1    HISTORICAL   v1.2.2 guideline + ontology v1.2.2/v1.2.3 + 113-item evidence
+                        + iaa_pipeline/adjudication.py @ tag stage1-adjudication-complete-2026-09-08
+LAYER 2    NORMATIVE    canonical_core_v1_3_0.md
+LAYER 3    DEV PROMPT   stage1_prompt_v1_3_1.txt              (비규범)
+LAYER 3.5  DEV RUNTIME  pipeline/stage1_v13/                  (PHASE 4 신설, 개발 전용)
+LAYER 4    PRODUCTION   ⚠️ 여전히 v1.3 비준수 — PHASE 4에서 변경하지 않음
 ```
+
+**PHASE 4는 Layer 4를 고치지 않았다.** 새 층(3.5)을 추가했을 뿐이며, §6의 `incompatible` 6건은
+레거시 프로덕션 경로에 그대로 남아 있다. 개발 런타임 상세:
+[`methods/stage1_v1_3_runtime.md`](methods/stage1_v1_3_runtime.md)
 
 전체 정의: [`guidelines/stage1/CURRENT.md`](guidelines/stage1/CURRENT.md) §0
 
@@ -171,6 +177,9 @@ H6 재귀 루프 · `recursion_targets` · `primary_rule_id` / `supporting_rule_
 이 항목들은 semantic 변경이므로 **연구 측 판단 없이 고치지 않는다.**
 v1.2.3 중간 상태를 따로 만들지 않고 **v1.3에서 한 번에 해소**한다.
 
+> **PHASE 4 이후 주의.** `pipeline/stage1_v13/`는 위 규칙들을 **개발 경로 안에서** 올바르게 구현하지만,
+> 레거시 프로덕션 경로의 표는 여전히 그대로다. 개발 런타임의 존재가 프로덕션 준수를 뜻하지 않는다.
+
 ---
 
 ## 7. 다음 단계
@@ -208,6 +217,7 @@ v1.2.3 중간 상태를 따로 만들지 않고 **v1.3에서 한 번에 해소**
 | [`guidelines/stage1/canonical_core_v1_3_0.md`](guidelines/stage1/canonical_core_v1_3_0.md) | **현행 규범** — Stage 1 Canonical Core v1.3.0 |
 | [`project_state/stage1_v1_3_implementation_gap.md`](project_state/stage1_v1_3_implementation_gap.md) | v1.3 구현 격차 재고 (Phase 4 입력) |
 | [`decisions/0001-stage1-v1-3-method-import.md`](decisions/0001-stage1-v1-3-method-import.md) | v1.3 반입 ADR |
+| [`methods/stage1_v1_3_runtime.md`](methods/stage1_v1_3_runtime.md) | v1.3 **개발** 런타임 — 아키텍처·계약·재귀·검증·실행법 |
 | [`papers/amia2027/README.md`](papers/amia2027/README.md) | AMIA 제출 당시 산출물 vs post-AMIA 113건 분리 |
 | [`project_state/PHASE2_HANDOVER_2026-09-08.md`](project_state/PHASE2_HANDOVER_2026-09-08.md) | PHASE 2 인계 — 최종 tree, move/archive 목록, 미결 질문, Phase 3 설계 입력 |
 | [`../evidence/stage1/adjudication_v1_2_2_2026-09-07/README.md`](../evidence/stage1/adjudication_v1_2_2_2026-09-07/README.md) | 동결 증거 번들 provenance·재검증 절차 |

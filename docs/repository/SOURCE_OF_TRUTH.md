@@ -48,6 +48,19 @@ H0–H6, X1–X7, 라벨 의미, split/merge 경계, child-logic 의미, criteri
 v1.3.0을 프롬프트로 구현한 것. 현행 프로덕션 프롬프트도, 최종 동결 프롬프트도, 런타임 준수 증거도 **아니다**.
 프로덕션 로더가 읽지 않는다(§5-B).
 
+### 1-C-2. Development execution path — 비규범
+
+| 순위 | 경로 | Status | Mutability |
+|---|---|---|---|
+| 1 | `pipeline/stage1_v13/` | **개발 실행 경로 (LAYER 3.5)** | mutable |
+
+canonical v1.3.0을 실제로 실행해 보기 위한 병렬 런타임. 2026-09-08(PHASE 4) 신설.
+**프로덕션 경로를 대체하지 않는다** — `pipeline/orchestrator.py`, `pipeline/validators.py`,
+`pipeline/prompts/prompt_1_splitting.txt`는 무변경이다.
+
+이 패키지가 존재한다는 사실은 **런타임이 v1.3을 따른다는 뜻이 아니다**. 1-B가 여전히 실행 계약이다.
+상세: [`../methods/stage1_v1_3_runtime.md`](../methods/stage1_v1_3_runtime.md)
+
 ### 1-D. Historical adjudication semantics — "113건은 무엇을 근거로 판정됐나"
 
 | 순위 | 경로 | Status | Mutability |
@@ -92,7 +105,8 @@ git show stage1-adjudication-complete-2026-09-08:iaa_pipeline/adjudication.py
 
 ```
 질문이 "규칙이 무엇인가"       → 1-A (canonical v1.3.0)
-질문이 "지금 무엇이 도는가"     → 1-B (config / stage_schemas / 실행 코드)
+질문이 "지금 무엇이 도는가"     → 1-B (config / stage_schemas / 프로덕션 실행 코드)
+질문이 "v1.3을 어떻게 돌려보나" → 1-C-2 (개발 실행 경로, 프로덕션 아님)
 질문이 "113건 판정 근거"        → 1-D + 1-E (v1.2.2 기준 + 태그 앵커)
 질문이 "결과 수치"             → 1-F (동결 증거)
 1-A와 1-B가 다르면            → 구현 격차. 조용히 고치지 말고 gap inventory에 기록
@@ -230,6 +244,9 @@ gpt_context_package/  =  generated LLM context snapshot; never a source of truth
 
 **113 gold의 유효성에는 영향이 없다** — gold는 판정 트랙(1-E)으로 생성되었고 프로덕션 프롬프트를 거치지 않았다.
 실제로 gold의 sub_criteria 123/123은 이미 `text_span` 배열이다.
+
+> PHASE 4의 개발 런타임(1-C-2)은 이 규칙들을 **자기 경로 안에서** 올바르게 구현한다.
+> 위 표는 **레거시 프로덕션 경로**의 상태이며 PHASE 4에서 바뀌지 않았다.
 
 이 항목들은 Stage 1 semantic 계약을 건드리므로 **연구 측 판단 없이 수정하지 않는다.**
 v1.2.3 중간 상태를 따로 만들지 않고 **v1.3에서 한 번에 해소**한다.
