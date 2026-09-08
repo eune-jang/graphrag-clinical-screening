@@ -1,0 +1,24 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Adequate cardiac reserve as judged by the treating investigator."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "none",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "X5",
+    "supporting_rule_ids": [
+      "H0"
+    ],
+    "notes": "Broad adequacy statement with investigator judgment and no concrete local subrequirements."
+  },
+  "children": []
+}

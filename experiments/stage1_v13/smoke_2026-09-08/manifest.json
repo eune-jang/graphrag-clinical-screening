@@ -1,0 +1,189 @@
+{
+  "artifact": "Stage 1 v1.3 PHASE 5A smoke set",
+  "status": "DEVELOPMENT ARTIFACT — not normative evidence, not held-out evaluation",
+  "created": "2026-09-08",
+  "provenance": "newly written synthetic criteria; none copied from the v1.3.1 prompt examples and none drawn from the historical 113-item adjudication set",
+  "n_cases": 14,
+  "coverage": {
+    "none": 4,
+    "composite_split": 4,
+    "macro_aggregate": 2,
+    "nested_exception": 3,
+    "boundary_axes": [
+      "explicit AND (S03,S06,S13)",
+      "explicit OR (S04,S05)",
+      "multi-segment text_span (S05,S12)",
+      "shared qualifier (S04,S05,S12)",
+      "open/non-exhaustive list (S08)",
+      "closed list (S07)",
+      "diagnosis + biomarker (S03)",
+      "confirmation belongs to diagnosis (S03)",
+      "conditional allowance / exception (S11)",
+      "negative requirement that is NOT an exception (S12)",
+      "recursion expected (S10,S13)",
+      "nested_exception -> ['main'] (S10)",
+      "cohort scope (S14)",
+      "broad adequacy / delegation (S02)"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "S01",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "Eastern Cooperative Oncology Group performance status of 0 or 1 at screening.",
+      "trial_has_cohorts": null,
+      "boundary": "H0/H1 — surface 'or' names a value range, not two propositions",
+      "expected_mechanical_property": {
+        "family": "none",
+        "recursion": false
+      }
+    },
+    {
+      "case_id": "S02",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "Adequate cardiac reserve as judged by the treating investigator.",
+      "trial_has_cohorts": null,
+      "boundary": "X5 — broad adequacy statement with no concrete local subrequirements",
+      "expected_mechanical_property": {
+        "family": "none",
+        "recursion": false
+      }
+    },
+    {
+      "case_id": "S03",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "Cytologically confirmed pancreatic ductal adenocarcinoma with a documented germline BRCA2 pathogenic variant.",
+      "trial_has_cohorts": null,
+      "boundary": "H2-B — diagnosis + independently required biomarker; confirmation stays with diagnosis",
+      "expected_mechanical_property": {
+        "family": "composite_split",
+        "recursion": null
+      }
+    },
+    {
+      "case_id": "S04",
+      "criterion_type": "exclusion",
+      "root_criterion_text": "Women who are pregnant or breastfeeding at the time of screening.",
+      "trial_has_cohorts": null,
+      "boundary": "H1-B + H5 — separate states, explicit OR",
+      "expected_mechanical_property": {
+        "family": "composite_split",
+        "recursion": false
+      }
+    },
+    {
+      "case_id": "S05",
+      "criterion_type": "exclusion",
+      "root_criterion_text": "Grade 3 peripheral neuropathy or Grade 3 ototoxicity, each persisting for more than 6 weeks after the last dose.",
+      "trial_has_cohorts": null,
+      "boundary": "X2 — shared dependent qualifier copied into both children; multi-segment text_span expected",
+      "expected_mechanical_property": {
+        "family": "composite_split",
+        "recursion": null
+      }
+    },
+    {
+      "case_id": "S06",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "Adequate bone marrow reserve, defined as absolute neutrophil count at least 1.0 x 10^9/L, hemoglobin at least 8.0 g/dL, and platelets at least 75 x 10^9/L.",
+      "trial_has_cohorts": null,
+      "boundary": "H3/H4 — true umbrella fully operationalized by children",
+      "expected_mechanical_property": {
+        "family": "macro_aggregate",
+        "recursion": false
+      }
+    },
+    {
+      "case_id": "S07",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "The participant must satisfy all of the following renal parameters: serum creatinine no greater than 1.5 mg/dL, and estimated creatinine clearance at least 50 mL/min.",
+      "trial_has_cohorts": null,
+      "boundary": "H3 — closed, operationally exhaustive list under an umbrella",
+      "expected_mechanical_property": {
+        "family": "macro_aggregate",
+        "recursion": false
+      }
+    },
+    {
+      "case_id": "S08",
+      "criterion_type": "exclusion",
+      "root_criterion_text": "Active autoimmune disease requiring systemic therapy, such as rheumatoid arthritis, psoriasis, or Sjogren syndrome.",
+      "trial_has_cohorts": null,
+      "boundary": "H3 — open/non-exhaustive list; named examples must not be split out",
+      "expected_mechanical_property": {
+        "family": "none",
+        "recursion": false
+      }
+    },
+    {
+      "case_id": "S09",
+      "criterion_type": "exclusion",
+      "root_criterion_text": "Participants with a second primary malignancy are excluded, other than adequately treated cervical carcinoma in situ.",
+      "trial_has_cohorts": null,
+      "boundary": "H4/X3 — single exception span with explicit trigger at the end",
+      "expected_mechanical_property": {
+        "family": "nested_exception",
+        "recursion": false
+      }
+    },
+    {
+      "case_id": "S10",
+      "criterion_type": "exclusion",
+      "root_criterion_text": "Prior thoracic irradiation and prior systemic chemotherapy are exclusionary, unless completed more than 12 months before enrollment.",
+      "trial_has_cohorts": null,
+      "boundary": "H4 + H6 — exception waives a composite main rule; main should recurse",
+      "expected_mechanical_property": {
+        "family": "nested_exception",
+        "recursion": true
+      }
+    },
+    {
+      "case_id": "S11",
+      "criterion_type": "exclusion",
+      "root_criterion_text": "Anticoagulant therapy is prohibited; low-dose prophylactic heparin is permitted if the participant remains within therapeutic monitoring range.",
+      "trial_has_cohorts": null,
+      "boundary": "H4 — conditional allowance ('permitted if') encodes a waiver",
+      "expected_mechanical_property": {
+        "family": "nested_exception",
+        "recursion": null
+      }
+    },
+    {
+      "case_id": "S12",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "Serum potassium within normal limits without the use of oral or intravenous supplementation at screening.",
+      "trial_has_cohorts": null,
+      "boundary": "H4 — negative requirement 'without X' is NOT an exception",
+      "expected_mechanical_property": {
+        "family": "not_nested_exception",
+        "recursion": null
+      }
+    },
+    {
+      "case_id": "S13",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "Confirmed diagnosis of relapsed or refractory multiple myeloma and at least two prior lines of therapy.",
+      "trial_has_cohorts": null,
+      "boundary": "H6 — composite whose diagnosis child may itself split (mixed logic)",
+      "expected_mechanical_property": {
+        "family": "composite_split",
+        "recursion": null
+      }
+    },
+    {
+      "case_id": "S14",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "In Cohort B only, participants must have received at least one prior anti-angiogenic agent.",
+      "trial_has_cohorts": [
+        "Cohort A",
+        "Cohort B"
+      ],
+      "boundary": "X4 — criterion text itself restricts applicability; cohort label copied verbatim",
+      "expected_mechanical_property": {
+        "family": "none",
+        "recursion": false
+      }
+    }
+  ],
+  "note": "expected_* are MECHANICAL properties for integration checking only. This is not a hand-written gold standard and must not be used as an accuracy benchmark."
+}

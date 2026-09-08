@@ -1,0 +1,33 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Participants with a second primary malignancy are excluded, other than adequately treated cervical carcinoma in situ."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "nested_exception",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "other than adequately treated cervical carcinoma in situ"
+        ],
+        "cohort_scope": null,
+        "rationale": "H4: removing this phrase restores the broader exclusion of participants with a second primary malignancy; it carves out adequately treated cervical carcinoma in situ from that otherwise excluded category."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H4",
+    "supporting_rule_ids": [
+      "X3"
+    ],
+    "notes": "Main content is one exclusion proposition; no further structure remains."
+  },
+  "children": []
+}

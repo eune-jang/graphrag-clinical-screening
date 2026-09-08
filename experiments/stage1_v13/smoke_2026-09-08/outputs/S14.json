@@ -1,0 +1,26 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "In Cohort B only, participants must have received at least one prior anti-angiogenic agent."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "none",
+    "child_logic": null,
+    "cohort_scope": [
+      "Cohort B"
+    ],
+    "sub_criteria": [],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H0",
+    "supporting_rule_ids": [
+      "X4"
+    ],
+    "notes": "The cohort phrase is explicit applicability scope; prior anti-angiogenic exposure is one eligibility proposition."
+  },
+  "children": []
+}

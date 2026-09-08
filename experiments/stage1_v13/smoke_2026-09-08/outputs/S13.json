@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Confirmed diagnosis of relapsed or refractory multiple myeloma and at least two prior lines of therapy."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Confirmed diagnosis of relapsed or refractory multiple myeloma"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A: the confirmed relapsed/refractory multiple myeloma diagnosis is an independently asserted diagnosis requirement."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "at least two prior lines of therapy"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A: prior lines of therapy is an independently asserted treatment-history requirement distinct from the diagnosis."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H2-A",
+    "supporting_rule_ids": [
+      "H1-B",
+      "H2-B"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

@@ -1,0 +1,88 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Prior thoracic irradiation and prior systemic chemotherapy are exclusionary, unless completed more than 12 months before enrollment."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "nested_exception",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "unless completed more than 12 months before enrollment"
+        ],
+        "cohort_scope": null,
+        "rationale": "H4: removing this explicit 'unless' phrase restores the broader exclusion of prior thoracic irradiation and prior systemic chemotherapy. The phrase waives that exclusion when the applicable prior treatment was completed more than 12 months before enrollment."
+      }
+    ],
+    "needs_recursion": true,
+    "recursion_targets": [
+      "main"
+    ],
+    "recursion_note": "The main content contains two distinct prior-treatment screening targets joined as coordinate exclusionary conditions and requires next-level structural evaluation; the shared exception remains attached to the propagated main material.",
+    "primary_rule_id": "H4",
+    "supporting_rule_ids": [
+      "H1-B",
+      "X3"
+    ],
+    "notes": ""
+  },
+  "children": [
+    {
+      "node_id": "root.main",
+      "depth": 1,
+      "target_segments": [
+        "Prior thoracic irradiation and prior systemic chemotherapy are exclusionary,"
+      ],
+      "parent_context": {
+        "parent_decision": "nested_exception",
+        "parent_child_logic": null,
+        "current_child_id": "main",
+        "sibling_spans": {
+          "a": [
+            "unless completed more than 12 months before enrollment"
+          ]
+        }
+      },
+      "incomplete_reason": null,
+      "output": {
+        "splitting_decision": "composite_split",
+        "child_logic": "AND",
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Prior thoracic irradiation"
+            ],
+            "cohort_scope": null,
+            "rationale": "H1-B: prior thoracic irradiation is a distinct treatment-exposure screening target."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "prior systemic chemotherapy"
+            ],
+            "cohort_scope": null,
+            "rationale": "H1-B: prior systemic chemotherapy is a distinct treatment-exposure screening target."
+          }
+        ],
+        "needs_recursion": false,
+        "recursion_targets": [],
+        "recursion_note": "",
+        "primary_rule_id": "H1-B",
+        "supporting_rule_ids": [
+          "H5",
+          "X1"
+        ],
+        "notes": "The shared exclusionary predicate is supplied by the current target context. The parent-level exception has already been separated and is not within the current TARGET_SEGMENTS."
+      },
+      "children": []
+    }
+  ]
+}

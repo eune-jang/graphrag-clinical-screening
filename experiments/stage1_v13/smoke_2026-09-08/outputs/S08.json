@@ -1,0 +1,24 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Active autoimmune disease requiring systemic therapy, such as rheumatoid arthritis, psoriasis, or Sjogren syndrome."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "none",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H3",
+    "supporting_rule_ids": [
+      "H0"
+    ],
+    "notes": "The 'such as' conditions are non-exhaustive examples within the broader active autoimmune disease requirement; systemic therapy qualifies the parent condition."
+  },
+  "children": []
+}

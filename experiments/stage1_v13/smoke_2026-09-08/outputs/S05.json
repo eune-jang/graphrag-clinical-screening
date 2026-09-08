@@ -1,0 +1,43 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Grade 3 peripheral neuropathy or Grade 3 ototoxicity, each persisting for more than 6 weeks after the last dose."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "OR",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Grade 3 peripheral neuropathy",
+          "each persisting for more than 6 weeks after the last dose"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: peripheral neuropathy and ototoxicity are distinct screening targets. The phrase 'each persisting' explicitly applies the grade-duration requirement to both alternatives (X2)."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "Grade 3 ototoxicity, each persisting for more than 6 weeks after the last dose."
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: ototoxicity is independently evaluable from peripheral neuropathy and carries the shared grade-duration requirement."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "X2",
+      "H5"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

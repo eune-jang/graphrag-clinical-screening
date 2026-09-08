@@ -1,0 +1,11 @@
+{
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "medium",
+  "max_completion_tokens": 8000,
+  "sdk_param_channel": "extra_body (openai SDK 1.6.1 has no named reasoning_effort)",
+  "call_cap": 45,
+  "prompt_artifact": "pipeline/prompts/development/stage1/stage1_prompt_v1_3_1.txt",
+  "prompt_sha256": "dfce30245473b8f69627d5030cb772be3ef84f8e23957b09d170e6ac288590f9",
+  "runtime": "pipeline/stage1_v13 (llm injected; no runtime source change)",
+  "secrets": "read from pipeline/.env at runtime; never logged"
+}

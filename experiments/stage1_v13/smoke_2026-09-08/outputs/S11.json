@@ -1,0 +1,33 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Anticoagulant therapy is prohibited; low-dose prophylactic heparin is permitted if the participant remains within therapeutic monitoring range."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "nested_exception",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "low-dose prophylactic heparin is permitted if the participant remains within therapeutic monitoring range"
+        ],
+        "cohort_scope": null,
+        "rationale": "H4 conditional allowance: prophylactic heparin is an anticoagulant therapy that the main prohibition would otherwise exclude; this phrase permits it when the monitoring condition is met."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H4",
+    "supporting_rule_ids": [
+      "X3"
+    ],
+    "notes": "The main anticoagulant-therapy prohibition is one proposition; the monitoring condition is part of the conditional allowance."
+  },
+  "children": []
+}

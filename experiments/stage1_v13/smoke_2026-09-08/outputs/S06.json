@@ -1,0 +1,51 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Adequate bone marrow reserve, defined as absolute neutrophil count at least 1.0 x 10^9/L, hemoglobin at least 8.0 g/dL, and platelets at least 75 x 10^9/L."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "macro_aggregate",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "absolute neutrophil count at least 1.0 x 10^9/L"
+        ],
+        "cohort_scope": null,
+        "rationale": "The absolute neutrophil count threshold is an independently assessed component of the explicitly defined bone marrow reserve requirement."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "hemoglobin at least 8.0 g/dL"
+        ],
+        "cohort_scope": null,
+        "rationale": "The hemoglobin threshold is an independently assessed component of the explicitly defined bone marrow reserve requirement."
+      },
+      {
+        "child_id": "c",
+        "text_span": [
+          "platelets at least 75 x 10^9/L"
+        ],
+        "cohort_scope": null,
+        "rationale": "The platelet threshold is an independently assessed component of the explicitly defined bone marrow reserve requirement."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H3",
+    "supporting_rule_ids": [
+      "H1-B",
+      "H4",
+      "H5"
+    ],
+    "notes": "The three thresholds exhaustively define the broad bone marrow reserve umbrella; no residual pass/fail meaning remains in the wrapper."
+  },
+  "children": []
+}

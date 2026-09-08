@@ -1,0 +1,41 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Cytologically confirmed pancreatic ductal adenocarcinoma with a documented germline BRCA2 pathogenic variant."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Cytologically confirmed pancreatic ductal adenocarcinoma"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A/H2-B: cytologic confirmation remains part of the diagnosis proposition; pancreatic ductal adenocarcinoma is an independently required diagnosis."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "with a documented germline BRCA2 pathogenic variant."
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A/H2-B: the documented germline BRCA2 pathogenic variant is an independently asserted biomarker requirement requiring a separate semantic category."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H2-A",
+    "supporting_rule_ids": [
+      "H2-B"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

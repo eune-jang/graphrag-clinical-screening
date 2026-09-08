@@ -1,0 +1,24 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Eastern Cooperative Oncology Group performance status of 0 or 1 at screening."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "none",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-A",
+    "supporting_rule_ids": [
+      "H0"
+    ],
+    "notes": "Performance-status values 0 or 1 are alternative values within one integrated performance-status eligibility assessment at screening."
+  },
+  "children": []
+}
