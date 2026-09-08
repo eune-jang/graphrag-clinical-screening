@@ -430,4 +430,5 @@ python pipeline/07_neo4j_ingest.py --trial NCT_NEW --reset
 - [`PIPELINE.md`](PIPELINE.md) — 스크립트 인벤토리 + 데이터 흐름
 - [`review_queries.cypher`](review_queries.cypher) — Neo4j Browser용 쿼리 모음
 - [`schema/ontology_full_specification_unified_v1_2_2_ko.md`](schema/ontology_full_specification_unified_v1_2_2_ko.md) — 4-layer ontology 전체 스펙
-- [`schema/annotation_guideline_v0_2_stage1 (1).md`](<schema/annotation_guideline_v0_2_stage1 (1).md>) — annotation guideline (현재 stage 1)
+- [`schema/annotation_guideline_v1_2_2_notion.md`](schema/annotation_guideline_v1_2_2_notion.md) — annotation guideline (현재 Stage 1, 판정 동결본)
+- [`schema/annotation_guideline_v0_2_stage1 (1).md`](<schema/annotation_guideline_v0_2_stage1 (1).md>) — (구) v0.2, superseded

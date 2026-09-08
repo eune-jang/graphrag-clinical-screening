@@ -50,7 +50,7 @@
 | `pipeline/schema/ontology_v1.2.1.json` | **dead reference** | `pipeline/config.py:21`이 `SCHEMA_PATH`로 대입하지만 **호출부 0곳**이며 코드 주석이 "presently unused"라고 명시. v1.2.2 enum 정본은 `config.py`다. 이동하지 않는다 — active 코드가 경로를 참조하기 때문 |
 | `pipeline/schema/ontology_full_specification_v1.2.1.md` | superseded | v1.2.2 통합본이 대체. **v1.2.2 본문이 링크하므로 제자리 유지** |
 | `pipeline/schema/annotation_guideline_v1_2_1.md` | superseded | 규칙 내용은 v1.2.2와 동일, 규칙 ID가 없다. 인용은 v1.2.2로 |
-| `pipeline/schema/annotation_guideline_v0_2_stage1 (1).md` | **legacy (v0.2)** | ⚠️ `pipeline/REVIEW.md:368` / `REVIEW_notion.md:433`이 이 파일을 "annotation guideline (**현재** stage 1)"로 가리키는 **stale pointer**. 현재 Stage 1 가이드라인은 #6(v1.2.2)이다. 포인터 수정은 리뷰어 작업 지시를 바꾸므로 사람 승인 대기 중 |
+| `pipeline/schema/annotation_guideline_v0_2_stage1 (1).md` | **legacy (v0.2)** | 인용하지 않는다. 현재 Stage 1 가이드라인은 #6(v1.2.2)이다. `pipeline/REVIEW.md` / `REVIEW_notion.md`가 이 파일을 "현재 stage 1"로 가리키던 stale pointer는 2026-09-08에 #6으로 교정되었고, v0.2 링크는 superseded로 표시해 보존한다 |
 | `pipeline/schema/stage1_iaa_review_and_guideline_v1_1.md` | 검토 기록 | 가이드라인 본문 아님 |
 | `pipeline/schema/cohort_standard_unit_proposal_v0.md` | DEFERRED 결정문 | 2026-06-07 미채택. cohort_scope는 표면형 유지 |
 | `AGENTS.md` | 훼손된 미러 | CLAUDE.md의 find/replace 사본이며 문자열이 깨져 있다(예: `Codex-*`가 Anthropic으로 라우팅된다는 잘못된 서술). **CLAUDE.md가 authoritative**. 현재 git 미추적 |

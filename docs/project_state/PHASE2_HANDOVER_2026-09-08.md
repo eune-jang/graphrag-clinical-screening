@@ -260,7 +260,7 @@ results/README.md  재작성 — 존재하지 않는 scripts/run_evaluation.py �
 | # | 질문 | 왜 자동 결정하지 않았는가 |
 |---|---|---|
 | 1 | `docs/project_state/` 2개 파일 추적 전환을 유지할지 | Phase 1에서 명시적으로 제외했던 파일이다 |
-| 2 | **stale pointer 해소** — `pipeline/REVIEW.md:368` / `REVIEW_notion.md:433`이 **v0.2 가이드라인**을 "annotation guideline (**현재** stage 1)"으로 가리킨다 | 리뷰어가 실제 참조할 문서를 바꾸는 일 = 운영 지시 변경 |
+| 2 | ~~stale pointer 해소~~ — **2026-09-08 해결.** `pipeline/REVIEW.md` / `REVIEW_notion.md`의 "현재 Stage 1" 라벨을 v1.2.2로 교정(쌍으로), v0.2는 superseded로 보존 | — |
 | 3 | `AGENTS.md` — 실제 Codex consumer가 있는가 | 없으면 삭제, 있으면 find/replace 미러가 아닌 관리 정책 필요 |
 | 4 | `AMIA_2027_ABSTRACT_REVIEW_BUNDLE_2026-08-24.zip` gitignore 추가 여부 | 논문 산출물인지 generated인지 판단 필요 |
 | 5 | 로컬 전용 태그 2개 push 여부 (`adjudication-freeze-20260825`, `amia2027-stage1-gold-74items-20260903`) | Phase 1에서 "위 tag만" 지시받음 |
@@ -373,7 +373,7 @@ v1.3 부재의 근거(파일명 검색 0건, `primary_rule_id`/`supporting_rule_
 | `pipeline/schema/ontology_v1.2.1.json` | **dead reference** | `pipeline/config.py:21`이 `SCHEMA_PATH`로 대입하지만 **호출부 0곳**이며 코드 주석이 "presently unused"라고 명시. v1.2.2 enum 정본은 `config.py`다. 이동하지 않는다 — active 코드가 경로를 참조하기 때문 |
 | `pipeline/schema/ontology_full_specification_v1.2.1.md` | superseded | v1.2.2 통합본이 대체. **v1.2.2 본문이 링크하므로 제자리 유지** |
 | `pipeline/schema/annotation_guideline_v1_2_1.md` | superseded | 규칙 내용은 v1.2.2와 동일, 규칙 ID가 없다. 인용은 v1.2.2로 |
-| `pipeline/schema/annotation_guideline_v0_2_stage1 (1).md` | **legacy (v0.2)** | ⚠️ `pipeline/REVIEW.md:368` / `REVIEW_notion.md:433`이 이 파일을 "annotation guideline (**현재** stage 1)"로 가리키는 **stale pointer**. 현재 Stage 1 가이드라인은 #6(v1.2.2)이다. 포인터 수정은 리뷰어 작업 지시를 바꾸므로 사람 승인 대기 중 |
+| `pipeline/schema/annotation_guideline_v0_2_stage1 (1).md` | **legacy (v0.2)** | 인용하지 않는다. 현재 Stage 1 가이드라인은 #6(v1.2.2)이다. `pipeline/REVIEW.md` / `REVIEW_notion.md`가 이 파일을 "현재 stage 1"로 가리키던 stale pointer는 2026-09-08에 #6으로 교정되었고, v0.2 링크는 superseded로 표시해 보존한다 |
 | `pipeline/schema/stage1_iaa_review_and_guideline_v1_1.md` | 검토 기록 | 가이드라인 본문 아님 |
 | `pipeline/schema/cohort_standard_unit_proposal_v0.md` | DEFERRED 결정문 | 2026-06-07 미채택. cohort_scope는 표면형 유지 |
 | `AGENTS.md` | 훼손된 미러 | CLAUDE.md의 find/replace 사본이며 문자열이 깨져 있다(예: `Codex-*`가 Anthropic으로 라우팅된다는 잘못된 서술). **CLAUDE.md가 authoritative**. 현재 git 미추적 |
@@ -647,7 +647,6 @@ handoff 정합성**.
   `amia2027-stage1-gold-74items-20260903`
 - `docs/amia_stage1_*.md`를 113 기준으로 재생성할지 여부
   (재생성하면 AMIA 제출 당시 74-item 숫자가 사라진다 — [`papers/amia2027/README.md`](papers/amia2027/README.md) 참조)
-- `pipeline/REVIEW.md` / `REVIEW_notion.md`가 v0.2 가이드라인을 "현재 stage 1"로 가리키는 **stale pointer**
 - prompt_1 드리프트(§6) 처리 시점
 
 ---

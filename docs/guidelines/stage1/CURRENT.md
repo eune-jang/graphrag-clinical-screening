@@ -55,7 +55,7 @@ v1.3이 도입될 때는 **새 날짜의 별도 evidence 디렉터리**를 만�
 |---|---|---|
 | `annotation_guideline_v1_2_2_notion.md` | **현행 동결본** | ✅ **이것을 인용한다** |
 | `annotation_guideline_v1_2_1.md` | superseded (2026-08-25 동결) | 규칙 내용 동일, **규칙 ID 없음** → v1.2.2로 인용 |
-| `annotation_guideline_v0_2_stage1 (1).md` | legacy v0.2 (2026-05-11) | ❌ 인용 금지. §6 경고 참조 |
+| `annotation_guideline_v0_2_stage1 (1).md` | legacy v0.2 (2026-05-11) | ❌ 인용 금지 (§6 참조) |
 | `stage1_iaa_review_and_guideline_v1_1.md` | Round 2 IAA 검토 기록 | 가이드라인 본문 **아님** |
 | `ontology_full_specification_unified_v1_2_2_ko.md` | **현행 온톨로지 본문** | ✅ v1.2.3 패치와 **함께** |
 | `ontology_spec_v1_2_3_patch.md` | **현행 정합성 패치** | ✅ 위와 함께 |
@@ -84,17 +84,18 @@ Tier 3  미해결 → gap ticket (억지로 gold로 만들지 않는다)
 
 ---
 
-## 6. 알려진 stale pointer — 미해결
+## 6. 해소된 stale pointer (2026-09-08)
 
-`pipeline/REVIEW.md:368`과 `pipeline/REVIEW_notion.md:433`이
+`pipeline/REVIEW.md`와 `pipeline/REVIEW_notion.md`의 "관련 문서" 목록이
 `schema/annotation_guideline_v0_2_stage1 (1).md`를 **"annotation guideline (현재 stage 1)"** 으로
-가리키고 있다. **v0.2는 현재 Stage 1 가이드라인이 아니다** — §1의 v1.2.2가 맞다.
+가리키고 있었다. v0.2는 현재 Stage 1 가이드라인이 아니다 — §1의 v1.2.2가 맞다.
 
-`iaa_pipeline_spec/streamlit_status_and_gaps_2026-08-25.md`도 이 파일을 "⛔ 구버전(v0.2), 혼동 위험"으로
-이미 표시하고 있다.
+두 파일을 **쌍으로** 교정해 "현재 Stage 1" 라벨을
+`schema/annotation_guideline_v1_2_2_notion.md`로 옮겼고, v0.2 링크는 `(구) v0.2, superseded`로
+표시해 보존했다. 규칙 내용은 건드리지 않았다.
 
-이 포인터를 고치는 것은 리뷰어가 실제로 참조할 문서를 바꾸는 일이라 **사람 승인 대기 중**이다.
-그때까지 이 index가 우선한다.
+`iaa_pipeline_spec/streamlit_status_and_gaps_2026-08-25.md`는 이 파일을 "⛔ 구버전(v0.2), 혼동 위험"으로
+이미 표시하고 있었다 — 그 판단이 옳았다.
 
 ---
 

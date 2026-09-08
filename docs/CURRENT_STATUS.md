@@ -170,7 +170,6 @@ handoff 정합성**.
   `amia2027-stage1-gold-74items-20260903`
 - `docs/amia_stage1_*.md`를 113 기준으로 재생성할지 여부
   (재생성하면 AMIA 제출 당시 74-item 숫자가 사라진다 — [`papers/amia2027/README.md`](papers/amia2027/README.md) 참조)
-- `pipeline/REVIEW.md` / `REVIEW_notion.md`가 v0.2 가이드라인을 "현재 stage 1"로 가리키는 **stale pointer**
 - prompt_1 드리프트(§6) 처리 시점
 
 ---
