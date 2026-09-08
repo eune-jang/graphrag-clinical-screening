@@ -3,6 +3,7 @@
 > **최종 갱신**: 2026-09-08
 > **활성 브랜치**: `feat/adjudication-prep` (main 미병합)
 > **동결 checkpoint**: commit `80f0f28` / tag `stage1-adjudication-complete-2026-09-08`
+> **Phase 2**: 완료 (`7f7fb7e` → `a27b0f0`) · **Phase 3**: 대기 — 착수 blocker는 §5
 > 이 문서는 **빠르게 변하는 연구 진행 상태**의 entry point다.
 > 무엇을 authoritative하게 읽어야 하는지는 [`repository/SOURCE_OF_TRUTH.md`](repository/SOURCE_OF_TRUTH.md)를 본다.
 
@@ -29,8 +30,8 @@ export와 함께 Git에 보존·원격 백업되었다. 다음 단계는 **저�
 | Stage 1 IAA 산출 | ✅ 완료 |
 | Stage 1 판정 (adjudication) | ✅ **전건 완료** — 큐 113건 = gold 113건 |
 | 판정 증거 동결 + 원격 백업 | ✅ 완료 (PHASE 1, commit `80f0f28`) |
-| 저장소 구조 안정화 | 🔄 **진행 중 (PHASE 2)** |
-| v1.3 방법론 반입 | ⛔ **미착수 — 파일이 저장소에 없음** (§5) |
+| 저장소 구조 안정화 | ✅ **완료 (PHASE 2)** — source / frozen evidence / historical / generated 경계 문서화 |
+| v1.3 방법론 반입 (PHASE 3) | ⏸️ **대기 — 파일이 저장소에 없음** (§5) |
 | Stage 2–5 IAA | ⛔ 미착수 (stage_runner에서 `NotImplementedError`) |
 | Neo4j 온톨로지 / RAG 에이전트 | ⛔ scaffold만 존재 |
 
@@ -148,8 +149,10 @@ handoff 정합성**.
 
 ## 7. 다음 단계
 
-1. **저장소 구조 안정화** (현재) — source / frozen evidence / historical / generated 경계 명확화
-2. v1.3.0 Canonical Core + v1.3.1 development prompt **저장소 반입** (선행조건, §5)
+1. ~~저장소 구조 안정화~~ — **완료 (PHASE 2)**. 인계 문서는
+   [`project_state/PHASE2_HANDOVER_2026-09-08.md`](project_state/PHASE2_HANDOVER_2026-09-08.md)
+2. **(현재) PHASE 3** — v1.3.0 Canonical Core + v1.3.1 development prompt **저장소 반입**.
+   코드 변경 없는 반입·governance 정렬 단계이며, 선행조건은 §5
 3. H/X semantics를 바꾸지 않는 범위에서 v1.3 파이프라인 메커니즘 구현·검증
 4. 사전 지정 개발 모델로 테스트 → **최종 Stage 1 프롬프트 동결**
 5. 모델 계열 간 비교 평가
@@ -179,6 +182,7 @@ handoff 정합성**.
 | [`repository/SOURCE_OF_TRUTH.md`](repository/SOURCE_OF_TRUTH.md) | 무엇을 authoritative하게 읽을 것인가 |
 | [`guidelines/stage1/CURRENT.md`](guidelines/stage1/CURRENT.md) | Stage 1 규범 문서 우선순위 index |
 | [`papers/amia2027/README.md`](papers/amia2027/README.md) | AMIA 제출 당시 산출물 vs post-AMIA 113건 분리 |
+| [`project_state/PHASE2_HANDOVER_2026-09-08.md`](project_state/PHASE2_HANDOVER_2026-09-08.md) | PHASE 2 인계 — 최종 tree, move/archive 목록, 미결 질문, Phase 3 설계 입력 |
 | [`../evidence/stage1/adjudication_v1_2_2_2026-09-07/README.md`](../evidence/stage1/adjudication_v1_2_2_2026-09-07/README.md) | 동결 증거 번들 provenance·재검증 절차 |
 | `../CLAUDE.md` | 저장소 운영 지침 (Claude Code) |
 | `../pipeline/PIPELINE.md`, `../pipeline/HANDOFF.md` | 프로덕션 파이프라인 |
