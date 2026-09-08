@@ -1,0 +1,523 @@
+{
+  "trial_id": "NCT02474355",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "GOLD",
+  "created_at": "2026-08-26T05:06:09Z",
+  "records": [
+    {
+      "criterion_id": "NCT02474355_E10",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "이상반응 기록 확인하면서 독성 종류와 grade를 함께 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T09:01:49Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_E11",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "AZD9291 계열 과민반응 단일 조회",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T09:03:35Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_E2",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "currently receiving (or unable to stop use at least 1 week prior to receiving the first dose of AZD9291)",
+            "potent inhibitors",
+            "of cytochrome P450 (CYP) 3A4"
+          ],
+          "rationale": "inhibitors 와 inducers 구분 필요"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "currently receiving (or unable to stop use at least 1 week prior to receiving the first dose of AZD9291)",
+            "potent",
+            "inducers of cytochrome P450 (CYP) 3A4"
+          ],
+          "rationale": "inhibitors 와 inducers 구분 필요"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "currently receiving (or unable to stop use at least 1 week prior to receiving the first dose of AZD9291)",
+              "potent inhibitors",
+              "of cytochrome P450 (CYP) 3A4"
+            ],
+            "rationale": "inhibitors 와 inducers 구분 필요"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "currently receiving (or unable to stop use at least 1 week prior to receiving the first dose of AZD9291)",
+              "potent",
+              "inducers of cytochrome P450 (CYP) 3A4"
+            ],
+            "rationale": "inhibitors 와 inducers 구분 필요"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "CYP3A4 inhibitor와 inducer는 독립적인 약물 노출 판정 항목이므로 §3-1에 따라 분리함. 공통 exposure/temporal 조건과 potency qualifier는 두 child에 각각 보존함.",
+        "rule_id": "§3-1",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-02T00:35:39Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_E3",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Any evidence of severe or uncontrolled systemic diseases, including uncontrolled hypertension, active bleeding diatheses, active infection including hepatitis B, hepatitis C, and human immunodeficiency virus"
+          ],
+          "rationale": "systemic disease/comorbidity condition 판단 축"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "significantly impaired bone marrow reserve or organ function, including hepatic and renal impairment, which in the investigator's opinion would significantly alter the risk/benefit balance"
+          ],
+          "rationale": "bone marrow/organ-function impairment라는 별도의 eligibility 판단 축"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Any evidence of severe or uncontrolled systemic diseases, including uncontrolled hypertension, active bleeding diatheses, active infection including hepatitis B, hepatitis C, and human immunodeficiency virus"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "significantly impaired bone marrow reserve or organ function, including hepatic and renal impairment, which in the investigator's opinion would significantly alter the risk/benefit balance"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "두 파트의 eligibility 판단 축이 다름",
+        "rule_id": "§2-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T03:38:12Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_E5",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Past medical history of ILD"
+          ],
+          "rationale": "ILD type 1"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "Past medical history of",
+            "drug-induced ILD"
+          ],
+          "rationale": "ILD type 2"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "Past medical history of",
+            "radiation pneumonitis requiring steroid treatment"
+          ],
+          "rationale": "ILD type 3. 참고로 스테로이드 치료는 독립적인 기준을 형성하는 대신 방사선 폐렴을 한정하는 역할 (semantic_category  = condition)"
+        },
+        {
+          "child_id": "d",
+          "text_span": [
+            "any evidence of clinically active ILD"
+          ],
+          "rationale": "ILD type 4"
+        }
+      ],
+      "confidence": "medium",
+      "notes": "의학적으로 drug-induced ILD는 ILD의 subtype이지만, 여기서는 protocol 저자가 그것을 별도의 명시적 exclusion alternative로 병렬화. “개념적으로 겹친다”는 이유로 none으로 처리 시, protocol이 굳이 4개 타입의 ILD를 명시한 정보를 Stage 1에서 지워버리는 방향이 됨.",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Past medical history of ILD"
+            ],
+            "rationale": "ILD type 1"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "Past medical history of",
+              "drug-induced ILD"
+            ],
+            "rationale": "ILD type 2"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "Past medical history of",
+              "radiation pneumonitis requiring steroid treatment"
+            ],
+            "rationale": "ILD type 3. 참고로 스테로이드 치료는 독립적인 기준을 형성하는 대신 방사선 폐렴을 한정하는 역할 (semantic_category  = condition)"
+          },
+          {
+            "child_id": "d",
+            "text_span": [
+              "any evidence of clinically active ILD"
+            ],
+            "rationale": "ILD type 4"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium",
+        "notes": "의학적으로 drug-induced ILD는 ILD의 subtype이지만, 여기서는 protocol 저자가 그것을 별도의 명시적 exclusion alternative로 병렬화. “개념적으로 겹친다”는 이유로 none으로 처리 시, protocol이 굳이 4개 타입의 ILD를 명시한 정보를 Stage 1에서 지워버리는 방향이 됨."
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "에이전트가 네 가지 ILD 관련 제외 상태를 각각 확인해야함.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T23:44:36Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_E7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:40:47Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_E8",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "Resting ECG의 clinically important abnormality를 단일 판정으로 평가하며, 괄호 안 항목들은 e.g.로 제시된 예시이므로 §4-3에 따라 none으로 판정함.",
+        "rule_id": "§4-3",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T23:53:00Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_E9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "QTc 연장 및 부정맥 사건은 하나의 전반적인 위험 요인 평가 내에서 대체적인 심장 질환 위험 결과를 정의하며, 독립적으로 평가 가능한 위험 요인이 열거되지 않음.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T00:47:14Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_I1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "동의서 서명 관련 기록 -> 단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:42:55Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_I3",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Locally advanced (stage IIIB) or metastatic (stage IV)"
+          ],
+          "rationale": "병기"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "EGFRm",
+            "with confirmation of the presence of the T790M mutation"
+          ],
+          "rationale": "바이오마커"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "NSCLC"
+          ],
+          "rationale": "(조직학적으로 확진된) 진단"
+        },
+        {
+          "child_id": "d",
+          "text_span": [
+            "not amenable to curative surgery or radiotherapy"
+          ],
+          "rationale": "절제가능성"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Locally advanced (stage IIIB) or metastatic (stage IV)"
+            ],
+            "rationale": "병기"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "EGFRm",
+              "with confirmation of the presence of the T790M mutation"
+            ],
+            "rationale": "바이오마커"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "NSCLC"
+            ],
+            "rationale": "(조직학적으로 확진된) 진단"
+          },
+          {
+            "child_id": "d",
+            "text_span": [
+              "not amenable to curative surgery or radiotherapy"
+            ],
+            "rationale": "절제가능성"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "진단, 병기, 절제가능성, 바이오마커는 독립적인 임상 판정 축이므로 분리함.",
+        "rule_id": "§6-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T00:39:45Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_I4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "과거 EGFR-TKI 치료 이력을 확인하는 단일 판정이며, 추가 치료 line은 허용사항으로 필수조건이 아님.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T00:42:08Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_I6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "외부 문서 위임(thresholds delegated to IB)",
+        "rule_id": "§3-4",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T23:54:01Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02474355_I8",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Female patients of childbearing potential must be using adequate contraceptive measures, must not be breast feeding, and must have a negative pregnancy test prior to start of dosing"
+          ],
+          "rationale": "childbearing potential 여성 → 피임 + 비수유 + 음성 임신검사"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "Otherwise, they must have evidence of nonchildbearing potential"
+          ],
+          "rationale": "그렇지 않으면 → nonchildbearing potential의 근거 필요"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Female patients of childbearing potential must be using adequate contraceptive measures, must not be breast feeding, and must have a negative pregnancy test prior to start of dosing"
+            ],
+            "rationale": "childbearing potential 여성 → 피임 + 비수유 + 음성 임신검사"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "Otherwise, they must have evidence of nonchildbearing potential"
+            ],
+            "rationale": "그렇지 않으면 → nonchildbearing potential의 근거 필요"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "가임 가능 여성의 세 가지 요구조건과 비가임 가능성 입증은 서로 대체되는 eligibility pathway이므로 상위에서 OR로 분리하고, 첫 번째 pathway는 추가 분해가 필요함",
+        "rule_id": "§2-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T03:48:55Z",
+        "needs_recursion": true,
+        "recursion_note": "가임 가능 여성의 세 가지 요구조건 분리 필요",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-09-07T00:42:08Z"
+}

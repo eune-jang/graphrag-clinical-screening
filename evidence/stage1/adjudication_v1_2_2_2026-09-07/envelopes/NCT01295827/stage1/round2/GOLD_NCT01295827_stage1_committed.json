@@ -1,0 +1,758 @@
+{
+  "trial_id": "NCT01295827",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "GOLD",
+  "created_at": "2026-08-26T05:51:08Z",
+  "records": [
+    {
+      "criterion_id": "NCT01295827_E1",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Chemotherapy, radioactive, or biological cancer therapy within 4 weeks prior to the first dose of study therapy"
+          ],
+          "rationale": "semantic_category = conmedication"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "not recovered to Common Terminology Criteria for Adverse Events (CTCAE) Grade 1 or better from the adverse events caused by therapy administered more than 4 weeks prior to first dose"
+          ],
+          "rationale": "semantic_category = condition"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Chemotherapy, radioactive, or biological cancer therapy within 4 weeks prior to the first dose of study therapy"
+            ],
+            "rationale": "semantic_category = conmedication"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "not recovered to Common Terminology Criteria for Adverse Events (CTCAE) Grade 1 or better from the adverse events caused by therapy administered more than 4 weeks prior to first dose"
+            ],
+            "rationale": "semantic_category = condition"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "독립 판정 조건이며, 서로 다른 semantic_category이므로 §3-2에 따라 분리함",
+        "rule_id": "§3-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T05:03:47Z",
+        "needs_recursion": true,
+        "recursion_note": "Chemotherapy, radioactive, or biological cancer therapy 는 서로 다른 조회 항목이므로 분리 필요",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E10",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "except vitiligo or resolved childhood asthma/atopy"
+          ],
+          "rationale": "앞 문장 전체의 제외 조건."
+        }
+      ],
+      "confidence": "medium",
+      "notes": "임상적으로 의미 있는 autoimmune disease/syndrome의 현재 또는 과거력이 있는가라는 하나의 condition query 이므로 needs_recursion 대상 아님",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "except vitiligo or resolved childhood asthma/atopy"
+            ],
+            "rationale": "앞 문장 전체의 제외 조건."
+          }
+        ],
+        "confidence": "medium",
+        "notes": "임상적으로 의미 있는 autoimmune disease/syndrome의 현재 또는 과거력이 있는가라는 하나의 condition query 이므로 needs_recursion 대상 아님"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "\"백반증 또는 완치된 소아 천식/아토피 제외\"가 앞 문장 전체의 제외조건이므로 nested_exception",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T05:13:33Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E14",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "두 조건 모두 약물 오남용을 일컫으며, 단순 Active/prior 상태 차이에 해당되므로 하나의 query-unit으로 판단함.",
+        "rule_id": "§3-1",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T05:26:53Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E16",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "pregnant"
+          ],
+          "rationale": "임신"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "breastfeeding"
+          ],
+          "rationale": "모유 수유"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "expecting to conceive or father children within the projected duration of the study"
+          ],
+          "rationale": "연구기간 중 임신이나 출산을 계획"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "pregnant"
+            ],
+            "rationale": "임신"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "breastfeeding"
+            ],
+            "rationale": "모유 수유"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "expecting to conceive or father children within the projected duration of the study"
+            ],
+            "rationale": "연구기간 중 임신이나 출산을 계획"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "a, b, c는 모두 서로 다른 조건이며 독립 복수 판정에 해당되어 §3-1에 따라 분리함",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T05:30:32Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E2",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "with the exception of participants in the follow-up phase"
+          ],
+          "rationale": "추적 관찰 기간은 참여 가능하므로 예외 처리"
+        }
+      ],
+      "confidence": "medium",
+      "notes": "v1.3: §T5-1에서 with the exception of와 같은 다단어 exception trigger는 일부 표현(exception of)만 자르지 않고, 전체 trigger phrase의 첫 단어부터 span에 포함하도록 명확히 함",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "with the exception of participants in the follow-up phase"
+            ],
+            "rationale": "추적 관찰 기간은 참여 가능하므로 예외 처리"
+          }
+        ],
+        "confidence": "medium",
+        "notes": "v1.3: §T5-1에서 with the exception of와 같은 다단어 exception trigger는 일부 표현(exception of)만 자르지 않고, 전체 trigger phrase의 첫 단어부터 span에 포함하도록 명확히 함"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "with the exception of가 앞선 exclusion requirement 전체에 적용되는 예외를 도입하므로 nested_exception으로 판정함. 예외 span은 §T5-1에 따라 trigger 표현의 첫 단어부터 포함함.",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T07:23:22Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E5",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Medical condition that requires chronic systemic steroid therapy"
+          ],
+          "rationale": "semantic category = condition"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "on any other form of immunosuppressive medication, excepting use of inhaled steroids"
+          ],
+          "rationale": "semantic category = conmedication"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Medical condition that requires chronic systemic steroid therapy"
+            ],
+            "rationale": "semantic category = condition"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "on any other form of immunosuppressive medication, excepting use of inhaled steroids"
+            ],
+            "rationale": "semantic category = conmedication"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "excepting use of inhaled steroids가 b의 일부 예외조건이며(§2-3) 종류가 다른 항목이 섞여있으므로 (질병, 약물) semantic_category 분해 조건에 따라 composite_split(§3-2)",
+        "rule_id": "§2-3, §3-2",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T23:27:12Z",
+        "needs_recursion": true,
+        "recursion_note": "child b의 \"excepting use of inhaled steroids\" 예외 처리 필요",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "notes": "세 예시를 각각 독립적인 pass/fail criterion으로 평가하는 것이 아니라, ‘bowel obstruction/perforation risk factor가 있는가?’라는 하나의 broad query-unit을 판단",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium",
+        "notes": "세 예시를 각각 독립적인 pass/fail criterion으로 평가하는 것이 아니라, ‘bowel obstruction/perforation risk factor가 있는가?’라는 하나의 broad query-unit을 판단"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "bowel obstruction/perforation risk factor라는 하나의 broad clinical judgment + 비포괄적 examples",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-02T00:31:27Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E7",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "unless no evidence of that disease for 5 years"
+          ],
+          "rationale": "5년 동안 해당 질병의 증거가 없는 경우 = 완치 판정 받은 환자는 등록 가능. 예외 조건에 해당"
+        }
+      ],
+      "confidence": "medium",
+      "notes": "모든 암종 종류를 포괄하지 못하므로 parent 문장 (기본 requirement)는 재귀 판정 대상에 해당되지 않음.",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "unless no evidence of that disease for 5 years"
+            ],
+            "rationale": "5년 동안 해당 질병의 증거가 없는 경우 = 완치 판정 받은 환자는 등록 가능. 예외 조건에 해당"
+          }
+        ],
+        "confidence": "medium",
+        "notes": "모든 암종 종류를 포괄하지 못하므로 parent 문장 (기본 requirement)는 재귀 판정 대상에 해당되지 않음."
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "기본 requirement의 일부를 완화·면제하는 예외조건이므로 nested_exception으로 판단함.",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T05:40:50Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_E8",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Active central nervous system (CNS) metastases"
+          ],
+          "rationale": "CNS 실질 전이 -> Brain MR"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "carcinomatous meningitis"
+          ],
+          "rationale": "뇌+척추 MRI에 CSF 세포검사"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Active central nervous system (CNS) metastases"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "carcinomatous meningitis"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "별도 기록지에서 별도 항목으로 조회",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:24:15Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_I1",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "In Part A: Histological or cytological diagnosis of MEL or any type of carcinoma, progressive metastatic disease, or progressive locally advanced disease not amenable to local therapy"
+          ],
+          "rationale": "코호트 분리",
+          "cohort_scope": [
+            "Solid Tumors: Pembrolizumab 1 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 3 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 10 mg/kg Q2W (Parts A+A1)",
+            "Solid Tumors: Pembrolizumab Titration Cohort 1 Q3W (Part A2)",
+            "Solid Tumors: Pembrolizumab Titration Cohort 2 Q3W (Part A2)",
+            "Solid Tumors: Pembrolizumab Titration Cohort 3 Q3W (Part A2)"
+          ]
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "In Parts B and D of the study, histological or cytological diagnoses of metastatic MEL with progressive locally advanced or metastatic disease"
+          ],
+          "rationale": "코호트 분리",
+          "cohort_scope": [
+            "MEL: Pembrolizumab 2 mg/kg Q3W (Parts B+D)",
+            "MEL: Pembrolizumab 10 mg/kg Q3W (Parts B+D)",
+            "MEL: Pembrolizumab 10 mg/kg Q2W (Part B)"
+          ]
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "In Parts C and F, histological or cytological diagnosis of NSCLC"
+          ],
+          "rationale": "코호트 분리",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        },
+        {
+          "child_id": "d",
+          "text_span": [
+            "In Part F1, participants with Stage IV NSCLC without prior systemic therapy may be eligible"
+          ],
+          "rationale": "코호트 분리",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "In Part A: Histological or cytological diagnosis of MEL or any type of carcinoma, progressive metastatic disease, or progressive locally advanced disease not amenable to local therapy"
+            ],
+            "rationale": "코호트 분리",
+            "cohort_scope": [
+              "Solid Tumors: Pembrolizumab 1 mg/kg Q2W (Part A)",
+              "Solid Tumors: Pembrolizumab 3 mg/kg Q2W (Part A)",
+              "Solid Tumors: Pembrolizumab 10 mg/kg Q2W (Parts A+A1)",
+              "Solid Tumors: Pembrolizumab Titration Cohort 1 Q3W (Part A2)",
+              "Solid Tumors: Pembrolizumab Titration Cohort 2 Q3W (Part A2)",
+              "Solid Tumors: Pembrolizumab Titration Cohort 3 Q3W (Part A2)"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "In Parts B and D of the study, histological or cytological diagnoses of metastatic MEL with progressive locally advanced or metastatic disease"
+            ],
+            "rationale": "코호트 분리",
+            "cohort_scope": [
+              "MEL: Pembrolizumab 2 mg/kg Q3W (Parts B+D)",
+              "MEL: Pembrolizumab 10 mg/kg Q3W (Parts B+D)",
+              "MEL: Pembrolizumab 10 mg/kg Q2W (Part B)"
+            ]
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "In Parts C and F, histological or cytological diagnosis of NSCLC"
+            ],
+            "rationale": "코호트 분리",
+            "cohort_scope": [
+              "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+            ]
+          },
+          {
+            "child_id": "d",
+            "text_span": [
+              "In Part F1, participants with Stage IV NSCLC without prior systemic therapy may be eligible"
+            ],
+            "rationale": "코호트 분리",
+            "cohort_scope": [
+              "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+            ]
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "서로 다른 tumor type / disease population에 해당되어 별도 cohort로 분리함.",
+        "rule_id": "§C1-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T06:27:34Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_I2",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Failure of established standard medical anti-cancer therapies for a given tumor type"
+          ],
+          "rationale": "약을 썼는데 병이 진행함. 효과 부족. 영상 판독문, 치료 반응 평가 기록에서 확인"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "intolerance to such therapy"
+          ],
+          "rationale": "약이 안 맞아서 못 씀. 독성 때문에 중단. 경과기록 및 약물 이상반응 기록에서 확인"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Failure of established standard medical anti-cancer therapies for a given tumor type"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "intolerance to such therapy"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "failure = 효능 부족, intolerance = 독성 중단으로 조회 기록 상이",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:30:53Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_I3",
+      "splitting_decision": "none",
+      "cohort_scope": [
+        "MEL: Pembrolizumab 2 mg/kg Q3W (Parts B+D)",
+        "MEL: Pembrolizumab 10 mg/kg Q3W (Parts B+D)",
+        "MEL: Pembrolizumab 10 mg/kg Q2W (Part B)",
+        "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+        "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+        "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+      ],
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정(§3-1), 선정기준이 특정 cohort에만 적용(§C2-1)",
+        "rule_id": "§3-1, §C2-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T08:18:50Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_I4",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "NSCLC"
+          ],
+          "rationale": "semantic_category = condition",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "PD-L1 gene expression"
+          ],
+          "rationale": "semantic_category = biomarker",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        }
+      ],
+      "confidence": "medium",
+      "notes": "§3-2의 semantic-category mixing mandatory split 기준이 annotation 이후 guideline revision에서 명확화되어 rule_status=new로 기록함",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "NSCLC"
+            ],
+            "rationale": "semantic_category = condition",
+            "cohort_scope": [
+              "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "PD-L1 gene expression"
+            ],
+            "rationale": "semantic_category = biomarker",
+            "cohort_scope": [
+              "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+              "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+            ]
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium",
+        "notes": "§3-2의 semantic-category mixing mandatory split 기준이 annotation 이후 guideline revision에서 명확화되어 rule_status=new로 기록함"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "NSCLC(condition)와 PD-L1 gene expression(biomarker)은 서로 다른 semantic_category이므로 ontology constraint에 따라 별도 child로 분리함. 두 조건은 모두 충족되어야 하므로 AND로 결합함.",
+        "rule_id": "§3-2",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-02T00:23:46Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_I6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T06:28:31Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_I8",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "연구 기간 동안의 피임 동의 -> source document에 한번 기입하므로 단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T06:39:25Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT01295827_I9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "연구 기간 동안의 피임 동의 -> source document에 한번 기입하므로 단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T07:03:30Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-09-04T07:03:30Z"
+}

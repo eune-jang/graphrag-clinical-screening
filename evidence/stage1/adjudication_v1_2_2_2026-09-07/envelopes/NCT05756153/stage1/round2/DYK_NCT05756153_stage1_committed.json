@@ -1,0 +1,201 @@
+{
+  "trial_id": "NCT05756153",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "DYK",
+  "created_at": "2026-06-24T08:29:03Z",
+  "records": [
+    {
+      "criterion_id": "NCT05756153_I1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_I2",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_I3",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_I4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_I5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Have histologically or cytologically confirmed"
+        },
+        {
+          "child_id": "b",
+          "text_span": "advanced"
+        },
+        {
+          "child_id": "c",
+          "text_span": "KRAS G12C-mutated"
+        },
+        {
+          "child_id": "d",
+          "text_span": "NSCLC"
+        }
+      ],
+      "child_logic": "AND",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT05756153_I6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_I7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_I8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "With toxicities left from prior anti-tumor therapy resolved to baseline or CTCAE Grade 1"
+        },
+        {
+          "child_id": "b",
+          "text_span": "With toxicities left from prior anti-tumor therapy resolved CTCAE neurotoxicity or alopecia ≤ Grade 2."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium",
+      "notes": "문장 재구성이 조금 된 거 같긴하지만 기준이 1,2로 상이하기 때문에 스플릿함."
+    },
+    {
+      "criterion_id": "NCT05756153_I9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT05756153_E1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "With active central nervous system (CNS) metastases"
+        },
+        {
+          "child_id": "b",
+          "text_span": "carcinomatous meningitis."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT05756153_E3",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_E4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "With uncontrollable or symptomatic pleural effusion"
+        },
+        {
+          "child_id": "b",
+          "text_span": "With uncontrollable or symptomatic ascites"
+        },
+        {
+          "child_id": "c",
+          "text_span": "With uncontrollable or symptomatic pericardial effusion."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT05756153_E6",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "hypertension"
+        },
+        {
+          "child_id": "b",
+          "text_span": "diabetes."
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT05756153_E7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT05756153_E8",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT05756153_E9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT05756153_E10",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Pregnant"
+        },
+        {
+          "child_id": "b",
+          "text_span": "lactating females"
+        },
+        {
+          "child_id": "c",
+          "text_span": "female patients intend to become pregnant during participation."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-06-24T08:29:03Z"
+}

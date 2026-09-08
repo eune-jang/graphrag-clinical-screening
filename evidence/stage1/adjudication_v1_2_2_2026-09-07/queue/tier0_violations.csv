@@ -1,0 +1,4 @@
+trial,criterion_id,actor,violation_code,spec_clause,detail
+NCT02125461,NCT02125461_E3,DYK,T0_COMPOSITE_NULL_CHILD_LOGIC,spec v1.2.2 composite_split / review query 3.3,child_logic=None
+NCT02474355,NCT02474355_E10,EHJ,T0_COMPOSITE_LT2_CHILDREN,spec v1.2.2 composite_split / review query 3.2,n_sub_criteria=1
+NCT02474355,NCT02474355_E10,EHJ,T0_COMPOSITE_NULL_CHILD_LOGIC,spec v1.2.2 composite_split / review query 3.3,child_logic=None

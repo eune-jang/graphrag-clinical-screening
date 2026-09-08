@@ -1,0 +1,583 @@
+{
+  "trial_id": "NCT02075840",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "GOLD",
+  "created_at": "2026-08-26T07:08:38Z",
+  "records": [
+    {
+      "criterion_id": "NCT02075840_E1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "3년 이내 과거력(재발 가능성 배제) -> 단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:34:40Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_E10",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Pregnancy"
+          ],
+          "rationale": "임신과 수유는 별개 상태"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "lactation"
+          ],
+          "rationale": "임신과 수유는 별개 상태"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Pregnancy"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "lactation"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "임신과 수유는 별개 상태",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T08:26:43Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_E11",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Any clinically significant disease or condition (or history of) that could interfere with",
+            "the conduct of the study or the absorption of oral medications"
+          ],
+          "rationale": "semantic category = condition, comorbidity"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "for which the treatment might interfere with, the conduct of the study or the absorption of oral medications"
+          ],
+          "rationale": "semantic category = comedication"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "in the opinion of the principal investigator, pose an unacceptable risk to the participant in this study"
+          ],
+          "rationale": "연구자가 대상자 참여가 어렵다고 판단. semantic_category = condition, comorbidity?"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Any clinically significant disease or condition (or history of) that could interfere with",
+              "the conduct of the study or the absorption of oral medications"
+            ],
+            "rationale": "semantic category = condition, comorbidity"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "for which the treatment might interfere with, the conduct of the study or the absorption of oral medications"
+            ],
+            "rationale": "semantic category = comedication"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "in the opinion of the principal investigator, pose an unacceptable risk to the participant in this study"
+            ],
+            "rationale": "연구자가 대상자 참여가 어렵다고 판단. semantic_category = condition, comorbidity?"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "semantic_category 가 모두 다르며(§3-2), 복수 판정 필요(§3-1).",
+        "rule_id": "§3-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T07:29:21Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_E12",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "사회적 결정요인(SDoH)은 국내 의무기록에 자세히 기술하지 않음. MIMIC에서는 여러 섹션에 걸쳐 자세하게 기술된 편. 추가 논의 필요.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": true,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T07:39:34Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_E3",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "excluding alopecia"
+          ],
+          "rationale": "전체 조건의 일부 예외 조건"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "excluding alopecia"
+            ],
+            "rationale": "전체 조건의 일부 예외 조건"
+          }
+        ],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "일부 예외 조건만 nested_exception 처리",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T07:54:18Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_E4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "과거력 -> 단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:35:27Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_E5",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "other than those administered in this study"
+          ],
+          "rationale": "본 연구에서 투여되는 항암제 제외 -> 예외 조건"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "other than those administered in this study"
+            ]
+          }
+        ]
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "예외 조건 분리",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T08:31:00Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_E7",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Recipient of strong/potent cytochrome P4503A inhibitors",
+            "within 14 days prior to the first dose until the end of study treatment"
+          ],
+          "rationale": "cytochrome P4503A inhibitors (semantic_category = comedication)와 inducers 구분 필요"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "Recipient of strong/potent cytochrome P4503A",
+            "inducers",
+            "within 14 days prior to the first dose until the end of study treatment"
+          ],
+          "rationale": "cytochrome P4503A inhibitors (semantic_category = conmedication)와 inducers 구분 필요"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Recipient of strong/potent cytochrome P4503A inhibitors",
+              "within 14 days prior to the first dose until the end of study treatment"
+            ],
+            "rationale": "cytochrome P4503A inhibitors (semantic_category = comedication)와 inducers 구분 필요"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "Recipient of strong/potent cytochrome P4503A",
+              "inducers",
+              "within 14 days prior to the first dose until the end of study treatment"
+            ],
+            "rationale": "cytochrome P4503A inhibitors (semantic_category = conmedication)와 inducers 구분 필요"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "inhibitor와 inducer 는 약리학적으로 반대 작용이고 약물 목록이 완전히 다름",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T23:30:53Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_I1",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Histologically or cytologically confirmed",
+            "NSCLC"
+          ],
+          "rationale": "4-way: 조직학적으로 확정된 진단"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "advanced or recurrent (Stage IIIB not amenable for multimodality treatment) or metastatic (Stage IV)"
+          ],
+          "rationale": "4-way: 병기"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "ALK-positive as assessed by the Ventana immunohistochemistry (IHC) test"
+          ],
+          "rationale": "4-way: 바이오마커"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Histologically or cytologically confirmed",
+              "NSCLC"
+            ],
+            "rationale": "4-way: 조직학적으로 확정된 진단"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "advanced or recurrent (Stage IIIB not amenable for multimodality treatment) or metastatic (Stage IV)"
+            ],
+            "rationale": "4-way: 병기"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "ALK-positive as assessed by the Ventana immunohistochemistry (IHC) test"
+            ],
+            "rationale": "4-way: 바이오마커"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "4-way (진단 / 병기 / 절제 가능성 / 바이오마커)에 따라 분리",
+        "rule_id": "§6-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T08:06:32Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_I4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "1st line 에 해당되는 환자 -> 항암 여부 조회 (단일 조회 판정)",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T08:09:42Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_I5",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "장기 및 골수 기능 적정성 -> 상세한 조회 항목 및 수치 없이 하나의 포괄적 기준으로 제시하였으므로, 단일 판정에 해당",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-04T08:56:40Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_I6",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "recovered from effects of any major surgery",
+            "at least 28 days before the first dose of study treatment"
+          ],
+          "rationale": "semantic_category가  다르며, “recovered from effects”와 28일 기간 조건은 두 항목에 공통으로 적용되는 qualifier이므로 별도 적용"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "recovered from effects of any",
+            "significant traumatic injury",
+            "at least 28 days before the first dose of study treatment"
+          ],
+          "rationale": "semantic_category가  다르며, “recovered from effects”와 28일 기간 조건은 두 항목에 공통으로 적용되는 qualifier이므로 별도 적용"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "recovered from effects of any major surgery",
+              "at least 28 days before the first dose of study treatment"
+            ],
+            "rationale": "semantic_category가  다르며, “recovered from effects”와 28일 기간 조건은 두 항목에 공통으로 적용되는 qualifier이므로 별도 적용"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "recovered from effects of any",
+              "significant traumatic injury",
+              "at least 28 days before the first dose of study treatment"
+            ],
+            "rationale": "semantic_category가  다르며, “recovered from effects”와 28일 기간 조건은 두 항목에 공통으로 적용되는 qualifier이므로 별도 적용"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "major surgery와 significant traumatic injury의 semantic_category가 달라 §3-2에 따라 분리함. “recovered from effects”와 28일 기간 조건은 두 항목에 공통으로 적용되는 qualifier임",
+        "rule_id": "§3-2",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-02T00:32:29Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_I7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:37:54Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_I8",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "allowed if asymptomatic"
+          ],
+          "rationale": "LM은 CSF 세포검사 별도 조회, 예외의 적용 양상도 비대칭 -> needs_recursion"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "allowed if asymptomatic"
+            ]
+          }
+        ]
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "allowed if = 예외 트리거, 예외가 main 두 개체 모두에 걸려 nested 우선. main 내부 or 분할은 보류",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-30T04:48:42Z",
+        "needs_recursion": true,
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02075840_I9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:38:23Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-09-04T08:56:40Z"
+}

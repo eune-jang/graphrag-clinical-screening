@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Export the committed Stage 1 adjudication result as a frozen AMIA dataset.
+"""Export the committed Stage 1 adjudication result as a frozen dataset.
 
 Reads the committed GOLD envelopes (and any tier-3 gap tickets) straight out of
 the IAA workspace and writes a dated, self-describing export directory:
 
-    AMIA_2027_STAGE1_GOLD_{N}items_{date}/
-        AMIA_2027_STAGE1_ADJUDICATED_{N}items_{date}.jsonl        (+ .txt copy)
-        AMIA_2027_STAGE1_ADJUDICATED_{N}items_WITH_TEXT_{date}.jsonl (+ .txt copy)
+    STAGE1_GOLD_{N}items_{date}/
+        STAGE1_ADJUDICATED_{N}items_{date}.jsonl        (+ .txt copy)
+        STAGE1_ADJUDICATED_{N}items_WITH_TEXT_{date}.jsonl (+ .txt copy)
         MANIFEST.txt
 
 Two JSONL variants, deliberately:
@@ -259,7 +259,7 @@ def render_manifest(*, date_str: str, stats: dict, problems: list[str],
                     plain: Path, text: Path, sha: dict[str, str],
                     stage: int, rnd: int) -> str:
     lines = [
-        "AMIA 2027 abstract — Stage 1 adjudicated dataset",
+        f"Stage {stage} adjudicated dataset",
         f"regenerated: {date_str}",
         "",
         "combined file",
@@ -336,7 +336,7 @@ def main() -> int:
     ap.add_argument("--date", default=_date.today().isoformat(),
                     help="export date stamp (YYYY-MM-DD), used in every filename")
     ap.add_argument("--out-dir", default=None,
-                    help="defaults to AMIA_2027_STAGE{stage}_GOLD_{N}items_{date}/ at repo root")
+                    help="defaults to STAGE{stage}_GOLD_{N}items_{date}/ at repo root")
     ap.add_argument("--strict", action="store_true",
                     help="exit non-zero if any validation problem is found")
     args = ap.parse_args()
@@ -354,10 +354,10 @@ def main() -> int:
 
     n = stats["total"]
     out_dir = Path(args.out_dir) if args.out_dir else (
-        REPO_ROOT / f"AMIA_2027_STAGE{args.stage}_GOLD_{n}items_{args.date}")
+        REPO_ROOT / f"STAGE{args.stage}_GOLD_{n}items_{args.date}")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    stem = f"AMIA_2027_STAGE{args.stage}_ADJUDICATED_{n}items"
+    stem = f"STAGE{args.stage}_ADJUDICATED_{n}items"
     plain_path = out_dir / f"{stem}_{args.date}.jsonl"
     text_path = out_dir / f"{stem}_WITH_TEXT_{args.date}.jsonl"
 

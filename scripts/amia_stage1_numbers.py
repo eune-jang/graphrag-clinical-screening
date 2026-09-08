@@ -40,15 +40,15 @@ from iaa_pipeline.metrics import compute_stage1_iaa  # noqa: E402
 
 
 def newest_export(root: Path) -> Path:
-    """The most recent `AMIA_*_GOLD_*items_{date}/` export directory.
+    """The most recent `*GOLD_*items_{date}/` export directory.
 
     Sorted on the trailing date, not the whole name: the item count sits earlier
     in the name and sorts lexicographically ("113items" < "61items"), so a plain
     name sort would silently pick an older freeze once the set grows.
     """
-    candidates = sorted(root.glob("AMIA_*_GOLD_*items_*"), key=lambda p: p.name.rsplit("_", 1)[-1])
+    candidates = sorted(root.glob("*GOLD_*items_*"), key=lambda p: p.name.rsplit("_", 1)[-1])
     if not candidates:
-        raise SystemExit("[error] AMIA_*_GOLD_*items_*/ export 디렉터리를 찾지 못했습니다.")
+        raise SystemExit("[error] *GOLD_*items_*/ export 디렉터리를 찾지 못했습니다.")
     return candidates[-1]
 
 
@@ -225,7 +225,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--export", default=None,
-                    help="export directory or .jsonl (default: newest AMIA_*_GOLD_*items_*/)")
+                    help="export directory or .jsonl (default: newest *GOLD_*items_*/)")
     ap.add_argument("--workspace", default=str(REPO_ROOT / "iaa_workspace"))
     ap.add_argument("--stage", type=int, default=1)
     ap.add_argument("--round", type=int, default=2, dest="rnd")

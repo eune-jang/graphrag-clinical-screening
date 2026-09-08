@@ -1,0 +1,151 @@
+{
+  "trial_id": "NCT02075840",
+  "criteria": [
+    {
+      "criterion_id": "NCT02075840_I1",
+      "type": "inclusion",
+      "text": "Histologically or cytologically confirmed diagnosis of advanced or recurrent (Stage IIIB not amenable for multimodality treatment) or metastatic (Stage IV) NSCLC that is ALK-positive as assessed by the Ventana immunohistochemistry (IHC) test",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02075840_I2",
+      "type": "inclusion",
+      "text": "Life expectancy of at least 12 weeks",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02075840_I3",
+      "type": "inclusion",
+      "text": "Eastern cooperative oncology group performance status (ECOG PS) of 0-2",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02075840_I4",
+      "type": "inclusion",
+      "text": "Participants with no prior systemic treatment for advanced or recurrent (Stage IIIB not amenable for multimodality treatment) or metastatic (Stage IV) NSCLC",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02075840_I5",
+      "type": "inclusion",
+      "text": "Adequate renal, and hematologic function",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02075840_I6",
+      "type": "inclusion",
+      "text": "Participants must have recovered from effects of any major surgery or significant traumatic injury at least 28 days before the first dose of study treatment",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT02075840_I7",
+      "type": "inclusion",
+      "text": "Measurable disease by response evaluation criteria in solid tumors (RECIST) version 1.1 (v1.1) prior to the administration of study treatment",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT02075840_I8",
+      "type": "inclusion",
+      "text": "Prior brain or leptomeningeal metastases allowed if asymptomatic (e.g., diagnosed incidentally at study baseline)",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT02075840_I9",
+      "type": "inclusion",
+      "text": "Negative pregnancy test for all females of child bearing potential",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT02075840_I10",
+      "type": "inclusion",
+      "text": "Use of highly effective contraception as defined by the study protocol",
+      "protocol_ref": "Inclusion #10"
+    },
+    {
+      "criterion_id": "NCT02075840_E1",
+      "type": "exclusion",
+      "text": "Participants with a previous malignancy within the past 3 years",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02075840_E2",
+      "type": "exclusion",
+      "text": "Any gastrointestinal (GI) disorder or liver disease",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02075840_E3",
+      "type": "exclusion",
+      "text": "National cancer institute common terminology criteria for adverse events (NCI CTCAE) (version 4.0) Grade 3 or higher toxicities due to any prior therapy (e.g., radiotherapy) (excluding alopecia)",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02075840_E4",
+      "type": "exclusion",
+      "text": "History of organ transplant",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02075840_E5",
+      "type": "exclusion",
+      "text": "Co-administration of anti-cancer therapies other than those administered in this study",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02075840_E6",
+      "type": "exclusion",
+      "text": "Participants with baseline QTc greater than (\\>) 470 milliseconds or symptomatic bradycardia",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT02075840_E7",
+      "type": "exclusion",
+      "text": "Recipient of strong/potent cytochrome P4503A inhibitors or inducers within 14 days prior to the first dose until the end of study treatment",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT02075840_E8",
+      "type": "exclusion",
+      "text": "Recipient of any drug with potential QT interval prolonging effects within 14 days prior to the first dose for all participants and while on treatment through the end of the study for crizotinib-treated participants only",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT02075840_E9",
+      "type": "exclusion",
+      "text": "History of hypersensitivity to any of the additives in the alectinib and crizotinib drug formulation",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT02075840_E10",
+      "type": "exclusion",
+      "text": "Pregnancy or lactation",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT02075840_E11",
+      "type": "exclusion",
+      "text": "Any clinically significant disease or condition (or history of) that could interfere with, or for which the treatment might interfere with, the conduct of the study or the absorption of oral medications or that would, in the opinion of the principal investigator, pose an unacceptable risk to the participant in this study",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT02075840_E12",
+      "type": "exclusion",
+      "text": "Any psychological, familial, sociological, or geographical condition potentially hampering compliance with the study protocol requirements and/or follow-up procedures; those conditions should be discussed with the participant before trial entry",
+      "protocol_ref": "Exclusion #12"
+    }
+  ],
+  "trial_acronym": "ALEX",
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Alectinib",
+      "description": "Participants will receive alectinib from Visit 0 (baseline) until disease progression, unacceptable toxicity, withdrawal of consent or death.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Crizotinib",
+      "description": "Participants will receive crizotinib from Visit 0 (baseline) until disease progression, unacceptable toxicity, withdrawal of consent or death.",
+      "group_type": "ACTIVE_COMPARATOR"
+    }
+  ]
+}

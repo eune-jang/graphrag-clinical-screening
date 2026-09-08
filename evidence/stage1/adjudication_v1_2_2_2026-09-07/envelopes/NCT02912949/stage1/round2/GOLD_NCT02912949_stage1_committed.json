@@ -1,0 +1,799 @@
+{
+  "trial_id": "NCT02912949",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "GOLD",
+  "created_at": "2026-08-30T06:22:46Z",
+  "records": [
+    {
+      "criterion_id": "NCT02912949_E1",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Pregnant"
+          ],
+          "rationale": "임신 중인 여성"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "lactating"
+          ],
+          "rationale": "(출산 후) 수유 중인 여성"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Pregnant"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "lactating"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "female 이란 표현 없이도 '여성'이란 의미 내포됨. 임신과 수유는 별개 상태",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:48:21Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_E2",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "active uncontrolled infection"
+          ],
+          "rationale": "발열이 없더라도 조절되지 않은 감염 있을 수 있음(infection 있음 + fever 없음)"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "unexplained fever"
+          ],
+          "rationale": "조절되지 않은 감염이 검사결과 상 확인되지 않더라도 발열 있을 수 있음(infection 없음 + unexplained fever 있음)"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "active uncontrolled infection"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "unexplained fever"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "조절되지 않는 활성 감염과 원인 불명의 발열은 각각 독립적으로 평가 가능한 배제 조건이며, 이 중 하나만으로도 exclusion 사유가 될 수 있음",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T00:53:44Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_E4",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Known HIV"
+          ]
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "active Hepatitis B without receiving antiviral treatment"
+          ]
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "Hepatitis C; patients treated for Hepatitis C and have undetectable viral loads are eligible"
+          ]
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Known HIV"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "active Hepatitis B without receiving antiviral treatment"
+            ]
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "Hepatitis C; patients treated for Hepatitis C and have undetectable viral loads are eligible"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "각각의 항목이 독립 판정 대상이며 umbrella header 없음",
+        "rule_id": "§4-1, §5-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T05:00:11Z",
+        "needs_recursion": true,
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_E7",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Presence of LVEF below 50% on the screening echocardiogram"
+          ],
+          "rationale": "semantic_category = observation"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "history or presence of any significant cardiovascular disease, including unstable angina or myocardial infarction within 12 months prior to screening, congestive heart failure (NYHA Class III or IV), or ventricular arrhythmia requiring medication"
+          ],
+          "rationale": "semantic_category = condition"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Presence of LVEF below 50% on the screening echocardiogram"
+            ],
+            "rationale": "semantic_category = observation"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "history or presence of any significant cardiovascular disease, including unstable angina or myocardial infarction within 12 months prior to screening, congestive heart failure (NYHA Class III or IV), or ventricular arrhythmia requiring medication"
+            ],
+            "rationale": "semantic_category = condition"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "서로 다른 semantic_category 이므로 Tier 0에 해당되어 분리함",
+        "rule_id": "§3-2",
+        "rule_status": "new",
+        "escalate_pi": true,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T00:51:03Z",
+        "needs_recursion": true,
+        "recursion_note": "구체적인 하위항목과 항목별 기준이 명시되어 있음.  나열된 항목들이 significant cardiovascular disease의 포괄적 예시인지 여부는 PI와 논의 필요함.",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_E8",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "excluding non-basal cell carcinoma of skin or carcinoma in situ of the uterine cervix"
+          ],
+          "rationale": "질환 종류(피부의 기저세포암, 자궁경부의 상피내암 -> 완치가 쉬운 경증 암)에 따라 예외적으로 참여 가능"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "unless the tumor was treated with curative intent more than 2 years prior to study entry"
+          ],
+          "rationale": "완치 시간에 따라 예외적으로 참여 가능"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "excluding non-basal cell carcinoma of skin or carcinoma in situ of the uterine cervix"
+            ],
+            "rationale": "질환 종류(피부의 기저세포암, 자궁경부의 상피내암 -> 완치가 쉬운 경증 암)에 따라 예외적으로 참여 가능"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "unless the tumor was treated with curative intent more than 2 years prior to study entry"
+            ],
+            "rationale": "완치 시간에 따라 예외적으로 참여 가능"
+          }
+        ],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "두 조건 모두 Previous or concurrent malignancy 의 예외 조건으로 nested_exception으로 판단함.",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T01:24:12Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_E9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "연구자가 판단하기에 모종의 신체적, 정신적 이유로 참여가 불가능한 대상자 ->  검색해야 할 구체적인 조건이 명시되어 있지 않으며, 관련 판정은 연구자의 내적 추론에 의해 진행되므로 단일 판정 조건.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T01:27:04Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I10",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Alanine aminotransferase (ALT), aspartate aminotransferase (AST) ≤3 x upper limit of normal (ULN) and total bilirubin ≤1.5 x ULN"
+          ],
+          "rationale": "일반 기준"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "in cases of metastatic liver involvement, ALT/AST ≤5 x ULN and total bilirubin ≤2 x ULN will be allowed"
+          ],
+          "rationale": "metastatic liver involvement pathway"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "in cases of antecedents of Gilbert's syndrome when total bilirubin ≤3.0 x ULN or direct bilirubin ≤1.5 x ULN will be allowed"
+          ],
+          "rationale": "Gilbert's syndrome pathway"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Alanine aminotransferase (ALT), aspartate aminotransferase (AST) ≤3 x upper limit of normal (ULN) and total bilirubin ≤1.5 x ULN"
+            ],
+            "rationale": "일반 기준"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "in cases of metastatic liver involvement, ALT/AST ≤5 x ULN and total bilirubin ≤2 x ULN will be allowed"
+            ],
+            "rationale": "metastatic liver involvement pathway"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "in cases of antecedents of Gilbert's syndrome when total bilirubin ≤3.0 x ULN or direct bilirubin ≤1.5 x ULN will be allowed"
+            ],
+            "rationale": "Gilbert's syndrome pathway"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "일반 기준, 간전이 시 완화 기준, Gilbert syndrome 시 완화 기준이 세미콜론으로 구분된 대체 eligibility pathway이므로 OR로 분리하고 각 내부 조건은 재귀 판정함",
+        "rule_id": "§2-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T04:06:04Z",
+        "needs_recursion": true,
+        "recursion_note": "각 내부 조건 (ALT/AST, total bilirubin)에 대한 재귀판정 필요",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I11",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 조회 항목",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:51:46Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I14",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "효과적인 피임 사용은 단일 eligibility 판정 항목이며, 치료 중 및 치료 종료 후 6개월이라는 기간 표현은 해당 요구사항의 temporal qualifier이므로 §3-1에 따라 none으로 판정함",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T23:56:59Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I15",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Patients must have received prior standard therapy appropriate for their tumor type and stage of disease"
+          ],
+          "rationale": "표준치료를 받음"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "in the opinion of the Investigator, would be unlikely to tolerate or derive clinically meaningful benefit from appropriate standard of care therapy"
+          ],
+          "rationale": "연구자의 판단에 따라 적절한 표준 치료를 견디기 어렵거나 임상적으로 의미 있는 이점을 얻을 가능성이 낮음"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "no satisfactory alternative treatment options are available"
+          ],
+          "rationale": "만족스러운 대체 치료 옵션이 없는 경우"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Patients must have received prior standard therapy appropriate for their tumor type and stage of disease"
+            ],
+            "rationale": "표준치료를 받음"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "in the opinion of the Investigator, would be unlikely to tolerate or derive clinically meaningful benefit from appropriate standard of care therapy"
+            ],
+            "rationale": "연구자의 판단에 따라 적절한 표준 치료를 견디기 어렵거나 임상적으로 의미 있는 이점을 얻을 가능성이 낮음"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "no satisfactory alternative treatment options are available"
+            ],
+            "rationale": "만족스러운 대체 치료 옵션이 없는 경우"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "각 child가 서로 다른 조건에 해당되므로 분리함",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T01:44:24Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I16",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Locally-advanced",
+            "or metastatic solid tumor malignancy"
+          ],
+          "rationale": "병기"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "unresectable"
+          ],
+          "rationale": "절제가능성"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "with documented NRG1 gene fusion, identified through molecular assays such as next generation sequencing-based assays \\[DNA or RNA\\], as routinely performed at CLIA or other similarly-certified laboratories"
+          ],
+          "rationale": "바이오마커 및 검사방법"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Locally-advanced",
+              "or metastatic solid tumor malignancy"
+            ],
+            "rationale": "병기"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "unresectable"
+            ],
+            "rationale": "절제가능성"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "with documented NRG1 gene fusion, identified through molecular assays such as next generation sequencing-based assays \\[DNA or RNA\\], as routinely performed at CLIA or other similarly-certified laboratories"
+            ],
+            "rationale": "바이오마커 및 검사방법"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "병기, 절제가능성, 바이오마커는 독립적인 임상판정축이므로 분리함",
+        "rule_id": "§6-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T04:33:22Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I2",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "ECOG -> 단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T07:13:50Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I5",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Treatment with anti-cancer medication or investigational drugs within the following intervals before the first dose of MCLA-128",
+            "more than 14 days or more than 5 half-lives prior to study entry, whichever is shorter"
+          ],
+          "rationale": "Treatment with anti-cancer medication or investigational drugs 자체가 이미 실제 screening content. 단순한 “다음 조건” 같은 wrapper가 아님."
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "more than 14 days for radiotherapy"
+          ],
+          "rationale": "radiotherapy는 header의 anti-cancer medication or investigational drugs에 제대로 포함되지 않으므로, header를 macro umbrella로 잡으면 child 2를 완전히 포괄하지 못함."
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Treatment with anti-cancer medication or investigational drugs within the following intervals before the first dose of MCLA-128",
+              "more than 14 days or more than 5 half-lives prior to study entry, whichever is shorter"
+            ],
+            "rationale": "Treatment with anti-cancer medication or investigational drugs 자체가 이미 실제 screening content. 단순한 “다음 조건” 같은 wrapper가 아님."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "more than 14 days for radiotherapy"
+            ],
+            "rationale": "radiotherapy는 header의 anti-cancer medication or investigational drugs에 제대로 포함되지 않으므로, header를 macro umbrella로 잡으면 child 2를 완전히 포괄하지 못함."
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "약물치료와 방사선치료에 서로 다른 washout 기준이 적용되는 독립 판정 항목이므로 분리함",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T04:16:23Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I6",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Recovery from major surgery"
+          ],
+          "rationale": "Major surgery는 과거 수술/치료 이력(treatment_history)이며, 수술로부터 회복했는지를 독립적으로 확인해야 함."
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "Recovery from",
+            "other complication to ≤ Grade 2 or baseline"
+          ],
+          "rationale": "Other complication은 수술 이력이 아니라 환자의 임상적 합병증 상태(condition)이며, 해당 합병증이 ≤ Grade 2 또는 baseline까지 회복되었는지를 별도로 확인해야 함."
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Recovery from major surgery"
+            ],
+            "rationale": "Major surgery는 과거 수술/치료 이력(treatment_history)이며, 수술로부터 회복했는지를 독립적으로 확인해야 함."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "Recovery from",
+              "other complication to ≤ Grade 2 or baseline"
+            ],
+            "rationale": "Other complication은 수술 이력이 아니라 환자의 임상적 합병증 상태(condition)이며, 해당 합병증이 ≤ Grade 2 또는 baseline까지 회복되었는지를 별도로 확인해야 함."
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "Major surgery는 treatment_history, other complication은 condition으로 서로 다른 semantic_category에 해당하므로 §3-2에 따라 별도 child로 분리함. ≤ Grade 2 or baseline은 complication의 회복 수준을 한정하는 qualifier로 해석함.",
+        "rule_id": "§3-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:35:41Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I7",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Absolute neutrophil count ≥1.5 x 109/L"
+          ],
+          "rationale": "ANC laboratory threshold를 확인하는 독립 screening requirement"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "without colony stimulating factor support for at least 7 days prior to screening"
+          ],
+          "rationale": "screening 전 최소 7일 동안 colony stimulating factor support를 받지 않았는지를 확인하는 별도 treatment/medication exposure requirement."
+        }
+      ],
+      "confidence": "medium",
+      "notes": "v1.3 가이드라인 고려: Negative preconditions introduced by “without” are not automatically nested exceptions. nested_exception requires a carve-out or waiver of an otherwise applicable requirement; “without X” may instead express an independently required absence condition.",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Absolute neutrophil count ≥1.5 x 109/L"
+            ],
+            "rationale": "ANC laboratory threshold를 확인하는 독립 screening requirement"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "without colony stimulating factor support for at least 7 days prior to screening"
+            ],
+            "rationale": "screening 전 최소 7일 동안 colony stimulating factor support를 받지 않았는지를 확인하는 별도 treatment/medication exposure requirement."
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium",
+        "notes": "v1.3 가이드라인 고려: Negative preconditions introduced by “without” are not automatically nested exceptions. nested_exception requires a carve-out or waiver of an otherwise applicable requirement; “without X” may instead express an independently required absence condition."
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "ANC ≥1.5 × 10⁹/L와 screening 전 최소 7일간 colony stimulating factor support가 없어야 한다는 조건은 각각 독립적으로 확인해야 하는 서로 다른 semantic-category의 screening requirement이므로 §3-2에 따라 composite_split함. without은 예외 waiver가 아니라 두 번째 requirement의 부정 조건임.",
+        "rule_id": "§3-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:35:27Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02912949_I8",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Platelets ≥75 x 109/L"
+          ],
+          "rationale": "혈소판 수치 threshold (semantic_category = observation)"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "without transfusion support for at least 7 days prior to screening"
+          ],
+          "rationale": "screening 전 최소 7일 동안 transfusion support가 없어야 함 (semantic_category = conmedication)"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Platelets ≥75 x 109/L"
+            ],
+            "rationale": "혈소판 수치 threshold (semantic_category = observation)"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "without transfusion support for at least 7 days prior to screening"
+            ],
+            "rationale": "screening 전 최소 7일 동안 transfusion support가 없어야 함 (semantic_category = conmedication)"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "Platelet count threshold와 screening 전 최소 7일간 transfusion support가 없어야 한다는 조건은 각각 독립적으로 확인해야 하는 서로 다른 semantic-category의 screening requirement이므로 §3-2에 따라 분리함. without은 예외가 아니라 두 번째 requirement의 부정 조건임.",
+        "rule_id": "§3-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:40:16Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-09-07T04:33:22Z"
+}

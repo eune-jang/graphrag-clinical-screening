@@ -1,0 +1,389 @@
+{
+  "trial_id": "NCT01295827",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "DYK",
+  "created_at": "2026-06-11T05:53:31Z",
+  "records": [
+    {
+      "criterion_id": "NCT01295827_I1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Histological or cytological diagnosis of MEL",
+          "cohort_scope": [
+            "Solid Tumors: Pembrolizumab 1 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 3 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 10 mg/kg Q2W (Parts A+A1)"
+          ]
+        },
+        {
+          "child_id": "b",
+          "text_span": "Histological or cytological diagnosis any type of carcinoma,",
+          "cohort_scope": [
+            "Solid Tumors: Pembrolizumab 1 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 3 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 10 mg/kg Q2W (Parts A+A1)"
+          ]
+        },
+        {
+          "child_id": "c",
+          "text_span": "progressive metastatic disease,",
+          "cohort_scope": [
+            "Solid Tumors: Pembrolizumab 1 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 3 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 10 mg/kg Q2W (Parts A+A1)"
+          ]
+        },
+        {
+          "child_id": "d",
+          "text_span": "progressive locally advanced disease not amenable to local therapy.",
+          "cohort_scope": [
+            "Solid Tumors: Pembrolizumab 1 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 3 mg/kg Q2W (Part A)",
+            "Solid Tumors: Pembrolizumab 10 mg/kg Q2W (Parts A+A1)"
+          ]
+        },
+        {
+          "child_id": "e",
+          "text_span": "histological or cytological diagnoses of metastatic MEL with progressive locally advanced or metastatic disease.",
+          "cohort_scope": [
+            "MEL: Pembrolizumab 2 mg/kg Q3W (Parts B+D)",
+            "MEL: Pembrolizumab 10 mg/kg Q3W (Parts B+D)"
+          ]
+        },
+        {
+          "child_id": "f",
+          "text_span": "histological or cytological diagnosis of NSCLC",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        },
+        {
+          "child_id": "g",
+          "text_span": "histological or cytological diagnosis of NSCLC",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        },
+        {
+          "child_id": "h",
+          "text_span": "participants with Stage IV NSCLC without prior systemic therapy may be eligible.",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "high",
+      "notes": "cohort를 나누는 경우에는 해당 문장에 대한 조건은 세부적으로 나눌 수 없음. (예를 들어, child h의 경우 하나의 문장이었다면 and 조건으로 묶여야하는데 코호트로 나뉘기때문에 split되지 않고 한 문장으로 진행됨). cohort A라고 적혀있다면, A가 들어가는 cohort는 모두 포함함. (cohort A+X 형태일때도 포함함.)"
+    },
+    {
+      "criterion_id": "NCT01295827_I2",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "MEL must be measurable by imaging.",
+          "cohort_scope": [
+            "MEL: Pembrolizumab 10 mg/kg Q2W (Part B)",
+            "MEL: Pembrolizumab 2 mg/kg Q3W (Parts B+D)",
+            "MEL: Pembrolizumab 10 mg/kg Q3W (Parts B+D)",
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        },
+        {
+          "child_id": "b",
+          "text_span": "NSCLC must be measurable by imaging.",
+          "cohort_scope": [
+            "MEL: Pembrolizumab 2 mg/kg Q3W (Parts B+D)",
+            "MEL: Pembrolizumab 10 mg/kg Q3W (Parts B+D)",
+            "MEL: Pembrolizumab 10 mg/kg Q2W (Part B)",
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+            "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)"
+          ]
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium",
+      "notes": "cohort A라고 적혀있다면, A가 들어가는 cohort는 모두 포함함. (cohort A+X 형태일때도 포함함.)"
+    },
+    {
+      "criterion_id": "NCT01295827_I4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "NSCLC",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)"
+          ]
+        },
+        {
+          "child_id": "b",
+          "text_span": "PD-L1 gene expression.",
+          "cohort_scope": [
+            "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)"
+          ]
+        }
+      ],
+      "child_logic": "AND",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_I5",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT01295827_I6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT01295827_I7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_I8",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_I9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E1",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Chemotherapy, radioactive, or biological cancer therapy within 4 weeks prior to the first dose of study therapy"
+        },
+        {
+          "child_id": "b",
+          "text_span": "not recovered to Common Terminology Criteria for Adverse Events (CTCAE) Grade 1 or better from the adverse events caused by therapy administered more than 4 weeks prior to first dose."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E2",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "with the exception of participants in the follow-up phase."
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E3",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "History of non-infectious pneumonitis requiring treatment with steroids"
+        },
+        {
+          "child_id": "b",
+          "text_span": "has a history of interstitial lung disease."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E5",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "use of inhaled steroids."
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E6",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "a history of acute diverticulitis, intra-abdominal abscess, abdominal carcinomatosis"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E7",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "no evidence of that disease for 5 years."
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E8",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Active central nervous system (CNS) metastases"
+        },
+        {
+          "child_id": "b",
+          "text_span": "carcinomatous meningitis."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E10",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "vitiligo or resolved childhood asthma/atopy."
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E11",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Prior therapy with another anti-programmed cell death (PD)-1 agent"
+        },
+        {
+          "child_id": "b",
+          "text_span": "previously enrolled in any pembrolizumab trial."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E12",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT01295827_E13",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Positive for Human Immunodeficiency Virus (HIV),"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Hepatitis B (Hepatitis B Surface Antigen [HBsAg] reactive)"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Hepatitis C virus (Hepatitis C Virus Ribonucleic Acid [HCV RNA] (qualitative) is detected)."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E14",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Regular use of illicit drugs"
+        },
+        {
+          "child_id": "b",
+          "text_span": "a recent history (within the last year) of substance abuse (including alcohol)."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E15",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Symptomatic ascites"
+        },
+        {
+          "child_id": "b",
+          "text_span": "pleural effusion"
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT01295827_E16",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Participant is pregnant"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Participant is breastfeeding"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Participant is expecting to conceive or father children within the projected duration of the study."
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-06-11T05:53:31Z"
+}

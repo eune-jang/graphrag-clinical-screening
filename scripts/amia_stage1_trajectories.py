@@ -10,7 +10,7 @@ annotation rounds, judged on the 4-class `splitting_decision`:
     newly emerged      agree  → differ
 
 This script is the frozen source for those numbers. It is **read-only**: it
-touches nothing under `AMIA_2027_STAGE1_GOLD_*/`, and it re-uses
+touches nothing under `*_GOLD_*items_*/`, and it re-uses
 `iaa_pipeline.metrics` rather than reimplementing κ, so the trajectory panel and
 the IAA panel can never drift apart.
 
@@ -93,15 +93,15 @@ def load_round(workspace: Path, stage: int, rnd: int) -> dict[str, dict[str, dic
 
 
 def newest_export(root: Path) -> Path:
-    """WITH_TEXT jsonl of the most recent `AMIA_*_GOLD_*items_{date}/` export.
+    """WITH_TEXT jsonl of the most recent `*GOLD_*items_{date}/` export.
 
     Sorted on the trailing date, not the whole name: the item count sits earlier
     in the name and sorts lexicographically ("113items" < "61items"), so a plain
     name sort would silently pick an older freeze once the set grows.
     """
-    candidates = sorted(root.glob("AMIA_*_GOLD_*items_*"), key=lambda p: p.name.rsplit("_", 1)[-1])
+    candidates = sorted(root.glob("*GOLD_*items_*"), key=lambda p: p.name.rsplit("_", 1)[-1])
     if not candidates:
-        raise SystemExit("[error] AMIA_*_GOLD_*items_*/ export 디렉터리를 찾지 못했습니다.")
+        raise SystemExit("[error] *GOLD_*items_*/ export 디렉터리를 찾지 못했습니다.")
     matches = sorted(candidates[-1].glob("*_WITH_TEXT_*.jsonl"))
     if not matches:
         raise SystemExit(f"[error] {candidates[-1].name} 에 WITH_TEXT jsonl이 없습니다.")
@@ -380,7 +380,7 @@ def main() -> int:
     ap.add_argument("--stage", type=int, default=1)
     ap.add_argument("--export", default=None,
                     help="frozen adjudication export used for the stratum cross-checks "
-                         "(default: WITH_TEXT jsonl of the newest AMIA_*_GOLD_*items_*/)")
+                         "(default: WITH_TEXT jsonl of the newest *GOLD_*items_*/)")
     ap.add_argument("--out", default=None, help="write the report to this markdown file")
     ap.add_argument("--strict", action="store_true",
                     help="exit non-zero if any cross-validation check fails")

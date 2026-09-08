@@ -1,0 +1,150 @@
+{
+  "trial_id": "NCT03800134",
+  "criteria": [
+    {
+      "criterion_id": "NCT03800134_I1",
+      "type": "inclusion",
+      "text": "Age ≥18 years",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT03800134_I2",
+      "type": "inclusion",
+      "text": "Newly diagnosed and previously untreated patients with histologically or cytologically documented NSCLC with resectable (Stage IIA to select [ie, N2] Stage IIIB) disease",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT03800134_I3",
+      "type": "inclusion",
+      "text": "World Health Organization (WHO)/ECOG PS of 0 or 1 at enrollment",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT03800134_I4",
+      "type": "inclusion",
+      "text": "At least 1 lesion, not previously irradiated, that qualifies as a RECIST 1.1 Target Lesion (TL) at baseline",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT03800134_I5",
+      "type": "inclusion",
+      "text": "No prior exposure to immune-mediated therapy including, but not limited to, other anti-CTLA-4, anti-PD-1, anti-PD-L1, and anti-PD-L2 antibodies, excluding therapeutic anticancer vaccines",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT03800134_I6",
+      "type": "inclusion",
+      "text": "Adequate organ and marrow function",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT03800134_I7",
+      "type": "inclusion",
+      "text": "Confirmation of a patient's tumour PD-L1 status",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT03800134_I8",
+      "type": "inclusion",
+      "text": "Provision of sufficient tumour biopsy sample for evaluation and confirmation of EGFR and ALK status",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT03800134_I9",
+      "type": "inclusion",
+      "text": "Planned surgery must comprise lobectomy, sleeve resection, or bilobectomy",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT03800134_E1",
+      "type": "exclusion",
+      "text": "History of allogeneic organ transplantation",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT03800134_E2",
+      "type": "exclusion",
+      "text": "Active or prior documented autoimmune or inflammatory disorders (including inflammatory bowel disease, diverticulitis, systemic lupus erythematosus, Sarcoidosis syndrome, or Wegener syndrome)",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT03800134_E3",
+      "type": "exclusion",
+      "text": "History of another primary malignancy",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT03800134_E4",
+      "type": "exclusion",
+      "text": "History of active primary immunodeficiency",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT03800134_E5",
+      "type": "exclusion",
+      "text": "Active infection including tuberculosis hepatitis B and C, or human immunodeficiency virus",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT03800134_E6",
+      "type": "exclusion",
+      "text": "Deemed unresectable NSCLC by multidisciplinary evaluation",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT03800134_E7",
+      "type": "exclusion",
+      "text": "Patients who have pre-operative radiotherapy treatment as part of their care plan",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT03800134_E8",
+      "type": "exclusion",
+      "text": "Patients who have brain metastases or spinal cord compression",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT03800134_E9",
+      "type": "exclusion",
+      "text": "Stage IIIB N3 and Stages IIIC, IVA, and IVB NSCLC",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT03800134_E10",
+      "type": "exclusion",
+      "text": "Known allergy or hypersensitivity to any of the study drugs or excipients",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT03800134_E11",
+      "type": "exclusion",
+      "text": "Existence of more than one primary tumour such as mixed small cell and NSCLC histology",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT03800134_E12",
+      "type": "exclusion",
+      "text": "Patients whose planned surgery at enrollment includes any of the following procedures: pneumonectomy, segmentectomies, or wedge resections",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT03800134_E13",
+      "type": "exclusion",
+      "text": "Patients with a documented test result confirming the presence of EGFRm or ALK translocation",
+      "protocol_ref": "Exclusion #13"
+    }
+  ],
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "Arm 1: Durvalumab with platinum-based chemotherapy",
+      "description": "Patients will receive durvalumab 1500 mg in combination with platinum-based chemotherapy every 3 weeks for up to 4 cycles prior to surgery, followed by durvalumab 1500 mg monotherapy every 4 weeks for up to 12 cycles after surgery unless disease is deemed unresectable, disease recurrence, or unacceptable toxicity\nThe platinum-based chemotherapy will be based on tumour histology and Investigator discretion:\n* cisplatin with pemetrexed\n* carboplatin with pemetrexed\n* carboplatin with paclitaxel\n* cisplatin with gemcitabine (or carboplatin with gemcitabine for patients who have comorbidities or who are unable to tolerate cisplatin per the investigator's judgment)",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Arm 2: Placebo with platinum-based chemotherapy",
+      "description": "Patients will receive placebo in combination with platinum-based chemotherapy every 3 weeks for up to 4 cycles prior to surgery, followed by placebo monotherapy every 4 weeks for up to 12 cycles after surgery unless disease is deemed unresectable, disease recurrence, or unacceptable toxicity\nThe platinum-based chemotherapy will be based on tumour histology and Investigator discretion:\n* cisplatin with pemetrexed\n* carboplatin with pemetrexed\n* carboplatin with paclitaxel\n* cisplatin with gemcitabine (or carboplatin with gemcitabine for patients who have comorbidities or who are unable to tolerate cisplatin per the investigator's judgment)",
+      "group_type": "PLACEBO_COMPARATOR"
+    }
+  ]
+}

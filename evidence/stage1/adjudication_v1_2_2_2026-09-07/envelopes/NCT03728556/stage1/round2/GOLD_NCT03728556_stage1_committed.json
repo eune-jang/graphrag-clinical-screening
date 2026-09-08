@@ -1,0 +1,608 @@
+{
+  "trial_id": "NCT03728556",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "GOLD",
+  "created_at": "2026-08-26T05:17:06Z",
+  "records": [
+    {
+      "criterion_id": "NCT03728556_E1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "histologically identified가 별도 requirement가 아니라 진단 확인 방식/근거이고, mixed small cell lung cancer component가 실제로 판정해야 하는 하나의 병리학적 상태이므로 §3-1에 따라 none으로 판정함.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:45:48Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E10",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "과거 IBD 병력과 active IBD는 동일 질환의 상태 차이로, eligibility에서는 IBD 해당 여부를 하나의 query-unit으로 판정하므로 §3-1에 따라 none으로 판정함. Active/prior 상태를 별도 child로 분리하지 않는 원칙은 라벨링 당시 문서화되지 않아 new로 기록함",
+        "rule_id": "§3-1",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-02T00:14:22Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E11",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "AIDS는 HIV 감염의 진행된 임상 단계/상태이며, 둘이 독립된 screening 조건으로 기능하지 않음. 사실상 \"HIV 관련 병력이 있는지 여부\"의 한 가지 핵심 질문을 확인하기 위한 문장",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T00:57:39Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E13",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T07:14:47Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E14",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "알코올 오남용 관련 단일 판정 항목이므로 none.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:45:39Z",
+        "queue_stratum": "S3",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E17",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "notes": "CRC, PI가 참여에 부적합하다고 판단하는 환자",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium",
+        "notes": "CRC, PI가 참여에 부적합하다고 판단하는 환자"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "CRC/PI가 하나의 subjective suitability judgment로 평가 -> 단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-02T00:38:30Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E5",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Current participation in another clinical study",
+            "Participation in the overall survival follow-up of a study is allowed"
+          ],
+          "rationale": "현재 다른 임상시험 참여 여부를 확인하는 독립 exclusion branch. 최근 28일 내 임상시험약 사용 여부와는 별개로 참/거짓이 결정될 수 있음. 현재 다른 임상시험에는 참여 중이지만 최근 28일 내 임상약 투여하지 않은 경우 A만으로 제외 성립 가능. 반대로 overall survival f/u 에만 참여 중인 경우에는 원문의 명시적 예외가 적용되어 A의 제외 조건은 충족되지 않음. 따라서 이 branch는 후속 재귀 판정에서 nested_exception 구조로 처리해야 함."
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "use of any investigational drug within 28 days prior to the first dose of investigational product in this trial"
+          ],
+          "rationale": "첫 시험약 투여 전 28일 이내 임상시험약 사용 여부를 확인하는 독립 exclusion branch. 현재 다른 임상시험에 참여하고 있는지와 관계없이 참/거짓이 결정될 수 있음. 이전 임상시험 참여는 이미 종료되어 현재 다른 임상시험에는 참여하지 않지만 임상약을 20일 전에 투여받은 경우 B만으로  제외조건 성립함. Overall survival f/u 허용 예외는 이 최근 임상약 노출 branch에는 적용되지 않음."
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Current participation in another clinical study",
+              "Participation in the overall survival follow-up of a study is allowed"
+            ],
+            "rationale": "현재 다른 임상시험 참여 여부를 확인하는 독립 exclusion branch. 최근 28일 내 임상시험약 사용 여부와는 별개로 참/거짓이 결정될 수 있음. 현재 다른 임상시험에는 참여 중이지만 최근 28일 내 임상약 투여하지 않은 경우 A만으로 제외 성립 가능. 반대로 overall survival f/u 에만 참여 중인 경우에는 원문의 명시적 예외가 적용되어 A의 제외 조건은 충족되지 않음. 따라서 이 branch는 후속 재귀 판정에서 nested_exception 구조로 처리해야 함."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "use of any investigational drug within 28 days prior to the first dose of investigational product in this trial"
+            ],
+            "rationale": "첫 시험약 투여 전 28일 이내 임상시험약 사용 여부를 확인하는 독립 exclusion branch. 현재 다른 임상시험에 참여하고 있는지와 관계없이 참/거짓이 결정될 수 있음. 이전 임상시험 참여는 이미 종료되어 현재 다른 임상시험에는 참여하지 않지만 임상약을 20일 전에 투여받은 경우 B만으로  제외조건 성립함. Overall survival f/u 허용 예외는 이 최근 임상약 노출 branch에는 적용되지 않음."
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "현재 다른 임상시험 참여와 최근 28일 이내 임상약 사용은 독립 제외 branch이며, survival follow-up 예외는 전자에만 적용됨. §2-3에 따라 composite_split으로 판정하고 예외가 포함된 branch는 재귀 판정함.",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-02T01:11:57Z",
+        "needs_recursion": true,
+        "recursion_note": "\"Participation in the overall survival follow-up of a study is allowed.\" 부분을 예외처리 해야함",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "immune checkpoints 자체가 T-cell coregulatory proteins를 수식하므로 상위 명사구 아니며, 단일 약물 카테고리로 한 번 조회되고, 뒤에 딸려오는 항목들이 단순 예시",
+        "rule_id": "§3-1, §4-3",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:54:14Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "현재의 \"활동성\" 자가면역 질환과 재발 가능성이 높은 자가면역 질환 \"병력\"은 동일 autoimmune disease의 상태·시간적 변형이며, 하나의 임상적 screening query-unit으로 평가되므로 §3-1에 따라 none으로 판정함.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:48:28Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_E8",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Immune deficient disease"
+          ],
+          "rationale": "semantic_category = condition."
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "systemic corticosteroid treatment within 7 days prior to the first dose of investigational product"
+          ],
+          "rationale": "semantic_category = comedication."
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "any other form of immune suppressing treatment."
+          ],
+          "rationale": "semantic_category = comedication.  7일 시간조건은 문법상 systemic corticosteroid treatment에 직접 결합되어 있어 해당 child에만 적용함. 임의로  복제하지 않음."
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Immune deficient disease"
+            ],
+            "rationale": "semantic_category = condition."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "systemic corticosteroid treatment within 7 days prior to the first dose of investigational product"
+            ],
+            "rationale": "semantic_category = comedication."
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "any other form of immune suppressing treatment."
+            ],
+            "rationale": "semantic_category = comedication.  7일 시간조건은 문법상 systemic corticosteroid treatment에 직접 결합되어 있어 해당 child에만 적용함. 임의로  복제하지 않음."
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 0,
+        "rationale_short": "면역결핍 질환과 두 종류의 면역억제 치료 노출은 독립적인 조건이며, condition과 treatment category가 혼합되어 있어 §3-2에 따라 OR로 분리함",
+        "rule_id": "§3-2",
+        "rule_status": "new",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:01:43Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_I1",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Willing to participate in this trial"
+          ],
+          "rationale": "참여 의사"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "fully understand and informed of this trial"
+          ],
+          "rationale": "이해 능력"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "able to provide written informed consent form (ICF)"
+          ],
+          "rationale": "서면 동의서 제공 가능 여부 (맹인, 치매 노인..)"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Willing to participate in this trial"
+            ],
+            "rationale": "참여 의사"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "fully understand and informed of this trial"
+            ],
+            "rationale": "이해 능력"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "able to provide written informed consent form (ICF)"
+            ],
+            "rationale": "서면 동의서 제공 가능 여부 (맹인, 치매 노인..)"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "시험 참여 의사, 시험에 대한 충분한 설명·이해, 서면 동의서 제공 가능 여부는 모두  동의과정에 속하지만 각각 독립적으로 판별될 수 있는 항목이므로 §3-1에 따라 3개 child로 분리하고 AND로 결합함",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:54:01Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_I10",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "구체적인 수치 기준이 나와있지 않으므로 단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:05:45Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_I11",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Women of childbearing potential or fertile men must agree to use an effective method of birth control from providing signed ICF and for 180 days after last dose of investigational product"
+          ],
+          "rationale": "피임 요구와 임신검사는 독립적으로 판정되는 조건. 가임여성과 가임남성의 구분은 동일 피임 요건의 적용 cohort 차이이므로 추가 분리하지 않음(needs_recusion = False)."
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "Women of childbearing potential must have a negative pregnancy test ≤7 days prior to the first dose of experimental drug"
+          ],
+          "rationale": "피임 요구와 임신검사는 독립적으로 판정되는 조건"
+        }
+      ],
+      "confidence": "medium",
+      "notes": "Women of childbearing potential include premenopausal women and women whose menopause started within prior 2 years. -> 해당 문장은 독립 eligibility requirement가 아니라 women of childbearing potential의 정의/범위 설명이므로 별도 child로 생성하지 않음. (stage 2에서 전체 원문을 context로 llm에 제공할 예정)",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Women of childbearing potential or fertile men must agree to use an effective method of birth control from providing signed ICF and for 180 days after last dose of investigational product"
+            ],
+            "rationale": "피임 요구와 임신검사는 독립적으로 판정되는 조건. 가임여성과 가임남성의 구분은 동일 피임 요건의 적용 cohort 차이이므로 추가 분리하지 않음(needs_recusion = False)."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "Women of childbearing potential must have a negative pregnancy test ≤7 days prior to the first dose of experimental drug"
+            ],
+            "rationale": "피임 요구와 임신검사는 독립적으로 판정되는 조건"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium",
+        "notes": "Women of childbearing potential include premenopausal women and women whose menopause started within prior 2 years. -> 해당 문장은 독립 eligibility requirement가 아니라 women of childbearing potential의 정의/범위 설명이므로 별도 child로 생성하지 않음. (stage 2에서 전체 원문을 context로 llm에 제공할 예정)"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "피임 요구와 임신검사는 독립적으로 판정되는 조건이며, 가임여성의 정의는 cohort 범위를 설명하는 qualifier이므로 별도 child로 분리하지 않음.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:56:43Z",
+        "queue_stratum": "S3",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_I3",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "histologically confirmed",
+            "non-small cell lung cancer"
+          ],
+          "rationale": "조직학적으로 확정된 진단"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "locally advanced",
+            "stage III"
+          ],
+          "rationale": "병기"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "unresectable"
+          ],
+          "rationale": "절제 가능성"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "histologically confirmed",
+              "non-small cell lung cancer"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "locally advanced",
+              "stage III"
+            ]
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "unresectable"
+            ]
+          }
+        ],
+        "child_logic": "AND"
+      },
+      "adjudication": {
+        "tier": 1,
+        "rationale_short": "진단 관련 문장은 3-way로 나누기로 확정함. (단 onco CRC 혹은 PI 컨펌 필요)",
+        "rule_id": "§6-1",
+        "rule_status": "existing",
+        "escalate_pi": true,
+        "span_override": null,
+        "adjudicated_at": "2026-08-30T08:54:04Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_I4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "시간 제약을 나타내는 단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:06:28Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_I5",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T07:15:19Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03728556_I9",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "except for hearing loss, alopecia and fatigue"
+          ],
+          "rationale": "청력 손실, 탈모, 피로만 예외 조건"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "except for hearing loss, alopecia and fatigue"
+            ],
+            "rationale": "청력 손실, 탈모, 피로만 예외 조건"
+          }
+        ],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "해당 절이 전체 조건의 예외항목에 해당되므로 nest_exception으로 분리함.",
+        "rule_id": "§2-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:49:59Z",
+        "queue_stratum": "S3",
+        "pass": "blind"
+      }
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-09-07T02:56:43Z"
+}

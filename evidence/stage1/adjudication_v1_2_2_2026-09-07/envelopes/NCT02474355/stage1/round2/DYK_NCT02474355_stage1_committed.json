@@ -1,0 +1,248 @@
+{
+  "trial_id": "NCT02474355",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "DYK",
+  "created_at": "2026-06-24T07:04:02Z",
+  "records": [
+    {
+      "criterion_id": "NCT02474355_I1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_I2",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT02474355_I3",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Locally advanced (stage IIIB) or metastatic (stage IV)"
+        },
+        {
+          "child_id": "b",
+          "text_span": "EGFRm"
+        },
+        {
+          "child_id": "c",
+          "text_span": "NSCLC"
+        },
+        {
+          "child_id": "d",
+          "text_span": "not amenable to curative surgery or radiotherapy"
+        },
+        {
+          "child_id": "e",
+          "text_span": "with confirmation of the presence of the T790M mutation"
+        }
+      ],
+      "child_logic": "AND",
+      "confidence": "high"
+    },
+    {
+      "criterion_id": "NCT02474355_I4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_I5",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT02474355_I6",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "complete blood count at baseline"
+        },
+        {
+          "child_id": "b",
+          "text_span": "biochemistry at baseline"
+        },
+        {
+          "child_id": "c",
+          "text_span": "urine at baseline"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "criterion_id": "NCT02474355_I7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "high"
+    },
+    {
+      "criterion_id": "NCT02474355_I8",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Otherwise, they must have evidence of nonchildbearing potential"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "criterion_id": "NCT02474355_I9",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_E1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "low"
+    },
+    {
+      "criterion_id": "NCT02474355_E2",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Patients currently receiving any treatment known to be potent inhibitors or inducers of cytochrome P450 (CYP) 3A4"
+        },
+        {
+          "child_id": "b",
+          "text_span": "unable to stop use at least 1 week prior to receiving the first dose of AZD9291"
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "high"
+    },
+    {
+      "criterion_id": "NCT02474355_E3",
+      "splitting_decision": "macro_aggregate",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "uncontrolled hypertension"
+        },
+        {
+          "child_id": "b",
+          "text_span": "active bleeding diatheses"
+        },
+        {
+          "child_id": "c",
+          "text_span": "active infection including hepatitis B, hepatitis C, and human immunodeficiency virus"
+        },
+        {
+          "child_id": "d",
+          "text_span": "significantly impaired bone marrow reserve or organ function, including hepatic and renal impairment"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_E4",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Patient with symptomatic central nervous system (CNS) metastases who is neurologically unstable"
+        },
+        {
+          "child_id": "b",
+          "text_span": "has required increasing doses of steroids to manage CNS symptoms within the 2 weeks prior to start AZD9291 administration;"
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "high"
+    },
+    {
+      "criterion_id": "NCT02474355_E5",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Past medical history of ILD"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Past medical history of  drug-induced ILD"
+        },
+        {
+          "child_id": "c",
+          "text_span": "Past medical history of  radiation pneumonitis requiring steroid treatment"
+        },
+        {
+          "child_id": "d",
+          "text_span": "Past medical history of  any evidence of clinically active ILD"
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_E6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "notes": "E6~E9은 사실 하나의 문장인 거 같음. E6의 세부로 7,8,9"
+    },
+    {
+      "criterion_id": "NCT02474355_E7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_E8",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "notes": "macro와 헷갈리긴 했지만.. 그러한 소견 전체가 ECG 결과지에서 판단 가능하므로 non-split."
+    },
+    {
+      "criterion_id": "NCT02474355_E9",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "Any factors that increase the risk of QTc prolongation"
+        },
+        {
+          "child_id": "b",
+          "text_span": "Any factors that increase the risk of arrhythmic events"
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_E10",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium"
+    },
+    {
+      "criterion_id": "NCT02474355_E11",
+      "splitting_decision": "composite_split",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": "History of hypersensitivity to excipients of AZD9291"
+        },
+        {
+          "child_id": "b",
+          "text_span": "History of hypersensitivity to excipients of AZD9291 or to drugs with a similar chemical structure or class to AZD9291"
+        }
+      ],
+      "child_logic": "OR",
+      "confidence": "medium"
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-06-24T07:04:02Z"
+}

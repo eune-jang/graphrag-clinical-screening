@@ -82,7 +82,7 @@ Data flows one way and never backwards:
 ```
 iaa_workspace/{trial}/stage1/round2/   committed envelopes (git-ignored, the live source)
   → results/adjudication/adjudication_queue.json   stratified worklist (S1/S2/S3/S4 strata)
-  → AMIA_2027_STAGE1_GOLD_{N}items_{date}/         dated frozen export + MANIFEST.txt (sha256)
+  → STAGE1_GOLD_{N}items_{date}/                   dated frozen export + MANIFEST.txt (sha256)
   → docs/amia_stage1_*.md                          numbers recomputed FROM the frozen export
 ```
 

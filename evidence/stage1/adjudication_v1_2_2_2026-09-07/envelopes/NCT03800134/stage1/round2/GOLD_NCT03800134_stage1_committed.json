@@ -1,0 +1,624 @@
+{
+  "trial_id": "NCT03800134",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "GOLD",
+  "created_at": "2026-08-30T08:57:53Z",
+  "records": [
+    {
+      "criterion_id": "NCT03800134_E10",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "notes": "allergy와 hypersensitivity는 임상적으로 같은 판정 대상",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "알레르기가 과민반응의 한 유형이라 별도 조회가 아니므로 나누지 않음.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-30T08:57:53Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E11",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "more than one primary tumour의 단순 예시 나열. 즉, 예시 항목들이 앞선 질환 범주를 모두 커버 하지 않음.",
+        "rule_id": "§3-1, §4-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-30T09:04:16Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E12",
+      "splitting_decision": "macro_aggregate",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "pneumonectomy"
+          ],
+          "rationale": "수술 타입 a"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "segmentectomies"
+          ],
+          "rationale": "수술 타입 b"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "wedge resections"
+          ],
+          "rationale": "수술 타입 c"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "macro_aggregate",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "pneumonectomy"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "segmentectomies"
+            ]
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "wedge resections"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "umbrella header (planned surgery) 존재하며, 뒤에 딸려오는 항목들의 범주가 제한됨. (단순 나열 아님)",
+        "rule_id": "§4-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T07:20:45Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E13",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "바이오마커 종류를 확인하는 단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:09:45Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E2",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "명시된 질환들은 독립적인 적격성 기준이 아니라, 광범위한 자가면역/염증성 질환 배제 범주의 예시일 뿐이며, 이를 세분화하면 제외 대상 범주가 열거된 예시들로 좁혀짐. parent 의 semantic loss 초래",
+        "rule_id": "§4-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T01:17:32Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T07:22:16Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E5",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "notes": "Active infection 이라는 단일 조건으로 볼건지, 아니면 B형 간염, C형 간염, HIV라는 각각의 개별조건으로 볼 건지 PI/CRC와 논의 필요. (헤더가 있는 경우와 없는 경우 혼재)",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium",
+        "notes": "Active infection 이라는 단일 조건으로 볼건지, 아니면 B형 간염, C형 간염, HIV라는 각각의 개별조건으로 볼 건지 PI/CRC와 논의 필요. (헤더가 있는 경우와 없는 경우 혼재)"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "포괄적 기준(Active infection)의 비포괄적 예시이므로 별도 child로 분리하지 않음.",
+        "rule_id": "§4-3",
+        "rule_status": "existing",
+        "escalate_pi": true,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:23:49Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "절제 가능성 및 진단은 독립적인 임상 판단축으로 분리하기로 하였으나, I2에 관련 조건 기술돼있으며 \"다학제적 판단\"에 포인트가 있는 것으로 보임. 다만 관련 기록지 존재여부는 PI/CRC와 논의 필요.",
+        "rule_id": "§6-1",
+        "rule_status": "conflict",
+        "escalate_pi": true,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:35:37Z",
+        "conflicting_rule": "§3-1",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E8",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "brain metastases"
+          ],
+          "rationale": "뇌 전이"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "spinal cord compression"
+          ],
+          "rationale": "척수 압박"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "brain metastases"
+            ],
+            "rationale": "뇌 전이"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "spinal cord compression"
+            ],
+            "rationale": "척수 압박"
+          }
+        ],
+        "child_logic": "OR",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "뇌전이와 척수압박은 각각 독립적으로 확인하는 임상 상태이므로 분리함.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T03:05:34Z",
+        "queue_stratum": "S3",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_E9",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Stage IIIB N3 and Stages IIIC, IVA, and IVB"
+          ],
+          "rationale": "진단과 병기 -> 독립 query-unit으로 분리, 병기 내부의 세부 등급은 한 덩어리로 유지"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "NSCLC"
+          ],
+          "rationale": "진단과 병기 -> 독립 query-unit으로 분리"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Stage IIIB N3 and Stages IIIC, IVA, and IVB"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "NSCLC"
+            ]
+          }
+        ],
+        "child_logic": "AND"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "진단과 병기를 독립 query-unit으로 분리(§6-1), 병기 내부의 세부 등급은 한 덩어리로 유지(§6-2)",
+        "rule_id": "§6-1, §6-2",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T01:26:08Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T07:22:41Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I2",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Newly diagnosed and previously untreated patients"
+          ],
+          "rationale": "1st line"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "histologically or cytologically documented NSCLC"
+          ],
+          "rationale": "조직학적으로 확진된 진단"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "resectable"
+          ],
+          "rationale": "절제 가능성"
+        },
+        {
+          "child_id": "d",
+          "text_span": [
+            "Stage IIA to select [ie, N2] Stage IIIB"
+          ],
+          "rationale": "병기"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Newly diagnosed and previously untreated patients"
+            ],
+            "rationale": "1st line"
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "histologically or cytologically documented NSCLC"
+            ],
+            "rationale": "조직학적으로 확진된 진단"
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "resectable"
+            ],
+            "rationale": "절제 가능성"
+          },
+          {
+            "child_id": "d",
+            "text_span": [
+              "Stage IIA to select [ie, N2] Stage IIIB"
+            ],
+            "rationale": "병기"
+          }
+        ],
+        "child_logic": "AND",
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "치료 이력, 진단, 병기, 절제가능성은 독립적인 임상 판정 축이므로 분리함",
+        "rule_id": "§6-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:39:26Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I3",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T07:23:01Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I5",
+      "splitting_decision": "nested_exception",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "excluding therapeutic anticancer vaccines"
+          ],
+          "rationale": "immune-mediated therapy 중 therapeutic anticancer vaccines 제외"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "nested_exception",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "excluding therapeutic anticancer vaccines"
+            ]
+          }
+        ]
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "본문에서 떨어져 나오는 조건부 예외구조이며(nested), 나열되는 항목들이 단순 예시이므로 recursion 필요 없음",
+        "rule_id": "§1-4, §4-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T02:28:52Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I6",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "장기 및 골수 기능 적정성을 구체적 수치 없이 하나의 포괄적 기준으로 제시해 단일 판정으로 봄. 외부 문서 위임이 없고, organ function과 marrow function의 구체적인 검사/threshold도 제시되지 않아서 현재 텍스트만으로 독립적인 여러 screening unit을 만들 근거가 부족함.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:59:08Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I7",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "바이오마커에 해당되나 I2와 별도 항목으로 기술된 것으로 보임. 단일 항목으로 분리하지 않음.",
+        "rule_id": "§6-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:40:29Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I8",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "충분한 샘플이 존재하는지 여부. 단일 판정이므로 분리하지 않음.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T02:41:17Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT03800134_I9",
+      "splitting_decision": "macro_aggregate",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "lobectomy"
+          ],
+          "rationale": "수술 타입 a"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "sleeve resection"
+          ],
+          "rationale": "수술 타입 b"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "bilobectomy"
+          ],
+          "rationale": "수술 타입 c"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "macro_aggregate",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "lobectomy"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "sleeve resection"
+            ]
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "bilobectomy"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "계획된 수술은 세 가지 명시적으로 허용된 시술 대안을 포함하는 포괄적인 요건. 각 대안은 별개의 시술 개념이며, 어느 하나라도 기준을 충족",
+        "rule_id": "§4-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-01T03:25:59Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-09-07T03:05:34Z"
+}

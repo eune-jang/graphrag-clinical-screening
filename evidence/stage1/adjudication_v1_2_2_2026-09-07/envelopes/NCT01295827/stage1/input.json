@@ -1,0 +1,234 @@
+{
+  "trial_id": "NCT01295827",
+  "criteria": [
+    {
+      "criterion_id": "NCT01295827_I1",
+      "type": "inclusion",
+      "text": "In Part A: Histological or cytological diagnosis of MEL or any type of carcinoma, progressive metastatic disease, or progressive locally advanced disease not amenable to local therapy. In Parts B and D of the study, histological or cytological diagnoses of metastatic MEL with progressive locally advanced or metastatic disease. In Parts C and F, histological or cytological diagnosis of NSCLC. In Part F1, participants with Stage IV NSCLC without prior systemic therapy may be eligible.",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT01295827_I2",
+      "type": "inclusion",
+      "text": "Failure of established standard medical anti-cancer therapies for a given tumor type or intolerance to such therapy.",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT01295827_I3",
+      "type": "inclusion",
+      "text": "In Parts B, C, D, or F of the study, MEL or NSCLC must be measurable by imaging.",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT01295827_I4",
+      "type": "inclusion",
+      "text": "In Part F of the study, NSCLC with PD-L1 gene expression.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT01295827_I5",
+      "type": "inclusion",
+      "text": "Performance status of 0 or 1 on the Eastern Cooperative Oncology Group (ECOG) Performance Scale.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT01295827_I6",
+      "type": "inclusion",
+      "text": "Adequate organ function.",
+      "protocol_ref": "Inclusion #6"
+    },
+    {
+      "criterion_id": "NCT01295827_I7",
+      "type": "inclusion",
+      "text": "Female participants of childbearing potential should have a negative urine or serum pregnancy test prior to receiving study medication",
+      "protocol_ref": "Inclusion #7"
+    },
+    {
+      "criterion_id": "NCT01295827_I8",
+      "type": "inclusion",
+      "text": "Female participants of childbearing potential must be willing to use adequate contraception from study start, through the course of the study, and for 120 days after the last dose of study medication",
+      "protocol_ref": "Inclusion #8"
+    },
+    {
+      "criterion_id": "NCT01295827_I9",
+      "type": "inclusion",
+      "text": "Male participants of childbearing potential must agree to use adequate contraception from the first dose of study medication through 120 days after the last dose of study medication",
+      "protocol_ref": "Inclusion #9"
+    },
+    {
+      "criterion_id": "NCT01295827_E1",
+      "type": "exclusion",
+      "text": "Chemotherapy, radioactive, or biological cancer therapy within 4 weeks prior to the first dose of study therapy, or not recovered to Common Terminology Criteria for Adverse Events (CTCAE) Grade 1 or better from the adverse events caused by therapy administered more than 4 weeks prior to first dose.",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT01295827_E2",
+      "type": "exclusion",
+      "text": "Participation in a study of an investigational agent or using an investigational device within 30 days of administration of pembrolizumab, with the exception of participants in the follow-up phase.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT01295827_E3",
+      "type": "exclusion",
+      "text": "Other form(s) of antineoplastic therapy anticipated during the period of the study.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT01295827_E4",
+      "type": "exclusion",
+      "text": "History of non-infectious pneumonitis requiring treatment with steroids, or has a history of interstitial lung disease.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT01295827_E5",
+      "type": "exclusion",
+      "text": "Medical condition that requires chronic systemic steroid therapy, or on any other form of immunosuppressive medication, excepting use of inhaled steroids.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT01295827_E6",
+      "type": "exclusion",
+      "text": "Risk factors for bowel obstruction or bowel perforation (including a history of acute diverticulitis, intra-abdominal abscess, abdominal carcinomatosis).",
+      "protocol_ref": "Exclusion #6"
+    },
+    {
+      "criterion_id": "NCT01295827_E7",
+      "type": "exclusion",
+      "text": "History of a hematologic malignancy, malignant primary brain tumor, malignant sarcoma, or another malignant primary solid tumor, unless no evidence of that disease for 5 years.",
+      "protocol_ref": "Exclusion #7"
+    },
+    {
+      "criterion_id": "NCT01295827_E8",
+      "type": "exclusion",
+      "text": "Active central nervous system (CNS) metastases and/or carcinomatous meningitis.",
+      "protocol_ref": "Exclusion #8"
+    },
+    {
+      "criterion_id": "NCT01295827_E9",
+      "type": "exclusion",
+      "text": "Previous severe hypersensitivity reaction to another monoclonal antibody (mAb).",
+      "protocol_ref": "Exclusion #9"
+    },
+    {
+      "criterion_id": "NCT01295827_E10",
+      "type": "exclusion",
+      "text": "Active autoimmune disease or a documented history of autoimmune disease or syndrome that requires systemic steroids or immunosuppressive agents, except vitiligo or resolved childhood asthma/atopy.",
+      "protocol_ref": "Exclusion #10"
+    },
+    {
+      "criterion_id": "NCT01295827_E11",
+      "type": "exclusion",
+      "text": "Prior therapy with another anti-programmed cell death (PD)-1 agent or previously enrolled in any pembrolizumab trial.",
+      "protocol_ref": "Exclusion #11"
+    },
+    {
+      "criterion_id": "NCT01295827_E12",
+      "type": "exclusion",
+      "text": "Active infection requiring therapy.",
+      "protocol_ref": "Exclusion #12"
+    },
+    {
+      "criterion_id": "NCT01295827_E13",
+      "type": "exclusion",
+      "text": "Positive for Human Immunodeficiency Virus (HIV), Hepatitis B (Hepatitis B Surface Antigen \\[HBsAg\\] reactive), or Hepatitis C virus (Hepatitis C Virus Ribonucleic Acid \\[HCV RNA\\] (qualitative) is detected).",
+      "protocol_ref": "Exclusion #13"
+    },
+    {
+      "criterion_id": "NCT01295827_E14",
+      "type": "exclusion",
+      "text": "Regular use of illicit drugs or a recent history (within the last year) of substance abuse (including alcohol).",
+      "protocol_ref": "Exclusion #14"
+    },
+    {
+      "criterion_id": "NCT01295827_E15",
+      "type": "exclusion",
+      "text": "Symptomatic ascites or pleural effusion.",
+      "protocol_ref": "Exclusion #15"
+    },
+    {
+      "criterion_id": "NCT01295827_E16",
+      "type": "exclusion",
+      "text": "Participant is pregnant or breastfeeding, or expecting to conceive or father children within the projected duration of the study.",
+      "protocol_ref": "Exclusion #16"
+    }
+  ],
+  "trial_acronym": "KEYNOTE-001",
+  "disease_domain": "Oncology",
+  "cohorts": [
+    {
+      "cohort_id": "Solid Tumors: Pembrolizumab 1 mg/kg Q2W (Part A)",
+      "description": "During Cycle 1 participants received a dose of 1 mg/kg pembrolizumab intravenous (IV) infusion over 30 minutes on Day 1 of a 28-day cycle for evaluation of dose-limiting toxicities and pharmacokinetics. Participants received pembrolizumab IV at a dose of 1 mg/kg every 2 weeks (Q2W) starting with Cycle 2.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Solid Tumors: Pembrolizumab 3 mg/kg Q2W (Part A)",
+      "description": "During Cycle 1 participants received a dose of 3 mg/kg pembrolizumab IV infusion over 30 minutes on Day 1 of a 28-day cycle for evaluation of dose-limiting toxicities and pharmacokinetics. Participants received pembrolizumab IV at a dose of 3 mg/kg Q2W starting with Cycle 2.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Solid Tumors: Pembrolizumab 10 mg/kg Q2W (Parts A+A1)",
+      "description": "During Cycle 1 participants received a dose of 10 mg/kg pembrolizumab IV infusion over 30 minutes on Day 1 of a 28-day cycle for evaluation of dose-limiting toxicities and pharmacokinetics. Participants received pembrolizumab IV at a dose of 10 mg/kg Q2W starting with Cycle 2.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Solid Tumors: Pembrolizumab Titration Cohort 1 Q3W (Part A2)",
+      "description": "During Cycle 1 participants received pembrolizumab dose titration from 0.005 mg/kg to 0.3 mg/kg to 2.0 mg/kg on Days 1, 8, and 22, administered as an IV infusion over 30 minutes. Participants received 2 mg/kg every 3 weeks (Q3W) starting with Cycle 2.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Solid Tumors: Pembrolizumab Titration Cohort 2 Q3W (Part A2)",
+      "description": "During Cycle 1 participants received pembrolizumab dose titration from 0.02 mg/kg to 0.3 mg/kg to 2.0 mg/kg on Days 1, 8, and 22, administered as an IV infusion over 30 minutes. Participants received 2 mg/kg Q3W starting with Cycle 2.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "Solid Tumors: Pembrolizumab Titration Cohort 3 Q3W (Part A2)",
+      "description": "During Cycle 1 participants received pembrolizumab dose titration from 0.06 mg/kg to 1.0 mg/kg to 10 mg/kg on Days 1, 8, and 22, administered as an IV infusion over 30 minutes. Participants received 10 mg/kg Q3W starting with Cycle 2.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "MEL: Pembrolizumab 2 mg/kg Q3W (Parts B+D)",
+      "description": "Participants received pembrolizumab IV at a dose of 2 mg/kg Q2W. After Amendment 3, participants received dosing Q3W. After Amendment 10, all remaining and ongoing participants were treated with a 200 mg fixed dose of pembrolizumab IV Q3W based on analysis of safety and efficacy data.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "MEL: Pembrolizumab 10 mg/kg Q3W (Parts B+D)",
+      "description": "Participants received pembrolizumab IV at a dose of 10 mg/kg Q2W. After Amendment 7, participants received dosing Q3W. After Amendment 10, all remaining and ongoing participants were treated with a 200 mg fixed dose of pembrolizumab IV Q3W based on analysis of safety and efficacy data.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "MEL: Pembrolizumab 10 mg/kg Q2W (Part B)",
+      "description": "Participants received pembrolizumab IV at a dose of 10 mg/kg Q2W. After Amendment 10, all remaining and ongoing participants were treated with a 200 mg fixed dose of pembrolizumab IV Q3W based on analysis of safety and efficacy data.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part F)",
+      "description": "Participants received pembrolizumab IV at a dose of 2 mg/kg Q3W. After Amendment 10, all remaining and ongoing participants were treated with a 200 mg fixed dose of pembrolizumab IV Q3W based on analysis of safety and efficacy data.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "NSCLC: Pembrolizumab 10 mg/kg Q3W (Parts C+F)",
+      "description": "Participants received pembrolizumab IV at a dose of 10 mg/kg Q3W. After Amendment 10, all remaining and ongoing participants were treated with a 200 mg fixed dose of pembrolizumab IV Q3W based on analysis of safety and efficacy data.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "NSCLC: Pembrolizumab 10 mg/kg Q2W (Part F)",
+      "description": "Participants received pembrolizumab IV at a dose of 10 mg/kg Q2W. After Amendment 10, all remaining and ongoing participants were treated with a 200 mg fixed dose of pembrolizumab IV Q3W based on analysis of safety and efficacy data.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "NSCLC: Pembrolizumab 2 mg/kg Q3W (Part E-Not Enrolled)",
+      "description": "Participants were to receive pembrolizumab IV at a dose of 2 mg/kg Q3W. No participants were enrolled in this arm.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "NSCLC: Pembrolizumab 5 mg/kg Q3W (Part E-Not Enrolled)",
+      "description": "Participants were to receive pembrolizumab IV at a dose of 5 mg/kg Q3W. No participants were enrolled in this arm.",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "NSCLC: Pembrolizumab 10 mg/kg Q3W (Part E-Not Enrolled)",
+      "description": "Participants were to receive pembrolizumab IV at a dose of 10 mg/kg Q3W. No participants were enrolled in this arm.",
+      "group_type": "EXPERIMENTAL"
+    }
+  ]
+}

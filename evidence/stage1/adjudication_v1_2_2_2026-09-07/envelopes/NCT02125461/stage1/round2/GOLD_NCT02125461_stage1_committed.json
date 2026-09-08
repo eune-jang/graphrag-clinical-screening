@@ -1,0 +1,237 @@
+{
+  "trial_id": "NCT02125461",
+  "stage": 1,
+  "source": "annotator",
+  "annotator": "GOLD",
+  "created_at": "2026-08-30T06:11:45Z",
+  "records": [
+    {
+      "criterion_id": "NCT02125461_E1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "anti-PD-1과 anti-PD-L1은 같은 checkpoint inhibitor treatment class 안의 대체적인 target class 이므로 분리하지 않음. 과거 anti-PD-1/PD-L1 면역항암제 노출 여부를 확인하는 단일 치료이력 조건임.",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T00:28:21Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02125461_E2",
+      "splitting_decision": "composite_split",
+      "child_logic": "OR",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Active or prior autoimmune disease"
+          ],
+          "rationale": "별개 진단군"
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "history of immunodeficiency"
+          ],
+          "rationale": "별개 진단군"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Active or prior autoimmune disease"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "history of immunodeficiency"
+            ]
+          }
+        ],
+        "child_logic": "OR"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "자가면역질환과 면역결핍성 질환은 별개 진단군",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T09:00:05Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02125461_E3",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "중증 또는 조절되지 않는 전신질환이라는 포괄적 기준의 비포괄적 예시이므로 단일 판정으로 봄.",
+        "rule_id": "§4-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T03:34:13Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02125461_E4",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "such as 이하의 하위 항목들이 모든 uncontrolled illness를 대변하지 않으므로 분리하지 않음. (포괄적 기준의 비포괄적 예시)",
+        "rule_id": "§4-3",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-07T03:05:09Z",
+        "queue_stratum": "S2",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02125461_I1",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": []
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "단일 판정",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-08-31T04:39:42Z",
+        "queue_stratum": "S4",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02125461_I2",
+      "splitting_decision": "composite_split",
+      "child_logic": "AND",
+      "sub_criteria": [
+        {
+          "child_id": "a",
+          "text_span": [
+            "Documented evidence of NSCLC"
+          ],
+          "rationale": "Documented evidence -> histologically confirmed or pathologically confirmed 에 해당. \"조직학적 또는 병리학적으로 진단된 비소세포암\" 전체를 병리기록지(bx)에서 확인."
+        },
+        {
+          "child_id": "b",
+          "text_span": [
+            "locally advanced",
+            "Stage III"
+          ],
+          "rationale": "소스 다양: 병리기록지, 외래 assessment, CT 판독문 등"
+        },
+        {
+          "child_id": "c",
+          "text_span": [
+            "unresectable"
+          ],
+          "rationale": "resectability는 NCCN상 TNM 독립 축이나 EMR에 명시가 없어 실무상 병기에서 추론되는 경우 있음"
+        }
+      ],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "composite_split",
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Documented evidence of NSCLC"
+            ]
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "locally advanced",
+              "Stage III"
+            ]
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "unresectable"
+            ]
+          }
+        ],
+        "child_logic": "AND"
+      },
+      "adjudication": {
+        "tier": 1,
+        "rationale_short": "진단, 병기, 절제가능성은 각자 다른 소스 기록지에서 확인되며 각 요소가 표준 치료법 결정에 영향을 주므로 별개로 확인되어야 함",
+        "rule_id": "§6-1",
+        "rule_status": "existing",
+        "escalate_pi": true,
+        "span_override": null,
+        "adjudicated_at": "2026-08-30T06:11:45Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    },
+    {
+      "criterion_id": "NCT02125461_I3",
+      "splitting_decision": "none",
+      "sub_criteria": [],
+      "confidence": "medium",
+      "blind_label": {
+        "splitting_decision": "none",
+        "sub_criteria": [],
+        "confidence": "medium"
+      },
+      "adjudication": {
+        "tier": 2,
+        "rationale_short": "방사선치료와 병행된 platinum-based chemotherapy ≥2 cycles라는 하나의 prior-treatment regimen을 확인하는 단일 query-unit이며, cycle 수와 concurrency는 해당 치료 이력의 qualifier이므로 §3-1에 따라 none으로 판정함",
+        "rule_id": "§3-1",
+        "rule_status": "existing",
+        "escalate_pi": false,
+        "span_override": null,
+        "adjudicated_at": "2026-09-03T01:16:37Z",
+        "queue_stratum": "S1",
+        "pass": "blind"
+      }
+    }
+  ],
+  "committed": true,
+  "committed_at": "2026-09-07T03:05:09Z"
+}

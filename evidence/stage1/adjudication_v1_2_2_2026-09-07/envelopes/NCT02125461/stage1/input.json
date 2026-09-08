@@ -1,0 +1,85 @@
+{
+  "trial_id": "NCT02125461",
+  "criteria": [
+    {
+      "criterion_id": "NCT02125461_I1",
+      "type": "inclusion",
+      "text": "Age at least 18 years.",
+      "protocol_ref": "Inclusion #1"
+    },
+    {
+      "criterion_id": "NCT02125461_I2",
+      "type": "inclusion",
+      "text": "Documented evidence of NSCLC (locally advanced, unresectable, Stage III)",
+      "protocol_ref": "Inclusion #2"
+    },
+    {
+      "criterion_id": "NCT02125461_I3",
+      "type": "inclusion",
+      "text": "Patients must have received at least 2 cycles of platinum-based chemotherapy concurrent with radiation therapy.",
+      "protocol_ref": "Inclusion #3"
+    },
+    {
+      "criterion_id": "NCT02125461_I4",
+      "type": "inclusion",
+      "text": "World Health Organisation (WHO) Performance Status of 0 to 1.",
+      "protocol_ref": "Inclusion #4"
+    },
+    {
+      "criterion_id": "NCT02125461_I5",
+      "type": "inclusion",
+      "text": "Estimated life expectancy of more than 12 weeks.",
+      "protocol_ref": "Inclusion #5"
+    },
+    {
+      "criterion_id": "NCT02125461_E1",
+      "type": "exclusion",
+      "text": "Prior exposure to any anti-PD-1 or anti-PD-L1 antibody.",
+      "protocol_ref": "Exclusion #1"
+    },
+    {
+      "criterion_id": "NCT02125461_E2",
+      "type": "exclusion",
+      "text": "Active or prior autoimmune disease or history of immunodeficiency.",
+      "protocol_ref": "Exclusion #2"
+    },
+    {
+      "criterion_id": "NCT02125461_E3",
+      "type": "exclusion",
+      "text": "Evidence of severe or uncontrolled systemic diseases, including active bleeding diatheses or active infections including hepatitis B, C and HIV.",
+      "protocol_ref": "Exclusion #3"
+    },
+    {
+      "criterion_id": "NCT02125461_E4",
+      "type": "exclusion",
+      "text": "Evidence of uncontrolled illness such as symptomatic congestive heart failure, uncontrolled hypertension or unstable angina pectoris.",
+      "protocol_ref": "Exclusion #4"
+    },
+    {
+      "criterion_id": "NCT02125461_E5",
+      "type": "exclusion",
+      "text": "Any unresolved toxicity CTCAE \\>Grade 2 from the prior chemoradiation therapy.",
+      "protocol_ref": "Exclusion #5"
+    },
+    {
+      "criterion_id": "NCT02125461_E6",
+      "type": "exclusion",
+      "text": "Active or prior documented inflammatory bowel disease (eg, Crohn's disease, ulcerative colitis).",
+      "protocol_ref": "Exclusion #6"
+    }
+  ],
+  "trial_acronym": "PACIFIC",
+  "disease_domain": "NSCLC",
+  "cohorts": [
+    {
+      "cohort_id": "MEDI4736",
+      "description": "MEDI4736 (intravenous infusion)",
+      "group_type": "EXPERIMENTAL"
+    },
+    {
+      "cohort_id": "PLACEBO",
+      "description": "Placebo (matching placebo for intravenous infusion)",
+      "group_type": "PLACEBO_COMPARATOR"
+    }
+  ]
+}
