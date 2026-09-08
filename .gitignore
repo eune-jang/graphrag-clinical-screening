@@ -58,3 +58,9 @@ pipeline/output/
 
 # Python cache
 **/__pycache__/
+
+# Generated LLM context snapshot — never a source of truth.
+# See docs/repository/SOURCE_OF_TRUTH.md §4. Rebuild from repository sources;
+# do not hand-edit the snapshot to make it look current.
+gpt_context_package/
+gpt_context_package.zip

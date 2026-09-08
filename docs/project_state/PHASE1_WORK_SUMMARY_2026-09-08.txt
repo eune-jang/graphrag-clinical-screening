@@ -1,0 +1,291 @@
+================================================================================
+작업 요약 — Stage 1 adjudication 완료 → 저장소 안정화 PHASE 1
+저장소: graphrag-clinical-screening
+작성일: 2026-09-08
+브랜치: feat/adjudication-prep
+================================================================================
+
+이 문서는 세 단계 작업의 기록이다.
+  (1) 113건 판정 결과를 gold 파일로 묶기 + 파일명에서 AMIA 제거
+  (2) post-adjudication read-only 저장소 감사
+  (3) PHASE 1 — adjudication evidence freeze + 원격 백업
+
+--------------------------------------------------------------------------------
+1. 113-item gold export 생성 (2026-09-07 동결분)
+--------------------------------------------------------------------------------
+
+큐 113건 전건 판정 완료를 확인하고 동결 export를 생성했다.
+
+  검증  큐 113건 ↔ committed GOLD 113건이 criterion_id 단위 완전 일치
+        (queue-only 0건, gold-only 0건)
+        층화도 큐와 동일: S1 49 / S2 35 / S3 4 / S4 25
+
+  산출  STAGE1_GOLD_113items_2026-09-07/
+          STAGE1_ADJUDICATED_113items_2026-09-07.jsonl        (+ .txt)
+          STAGE1_ADJUDICATED_113items_WITH_TEXT_2026-09-07.jsonl (+ .txt)
+          MANIFEST.txt
+
+  결과  113 gold / 0 gap ticket / 8 trials / unique ID 113 / 중복 0
+        text_span 축자 위반 0, --strict exit 0
+        .txt 는 대응 .jsonl 과 바이트 동일
+
+  중간 이슈
+        1차 생성 시 rule_status 누락 2건 발견 (NCT02125461_E4, NCT03800134_E8).
+        rule_id 는 정상(§4-3, §3-1)이었고 rule_status 만 비어 있었음.
+        판정 데이터라 임의로 채우지 않고 보고 → 사용자가 직접 existing 으로
+        수정 → 재생성. 최종 rule_status: existing 99 / new 12 / conflict 2.
+
+  파일명에서 AMIA 제거 (AMIA 제출 완료에 따름)
+        scripts/export_adjudicated_dataset.py
+          출력 디렉터리·파일 stem 에서 AMIA_2027_ 제거,
+          MANIFEST 첫 줄도 "Stage 1 adjudicated dataset" 으로 변경
+        scripts/amia_stage1_numbers.py, scripts/amia_stage1_trajectories.py
+          export 탐색 glob 을 AMIA_*_GOLD_*items_* → *GOLD_*items_* 로 완화
+          (완화하지 않으면 새 export 를 못 찾아 74-item 으로 조용히 회귀)
+        CLAUDE.md
+          데이터 흐름도의 export 경로 패턴 1줄
+        ※ 스크립트 파일명(amia_stage1_*.py), docs/amia*, 기존 freeze 3개
+          디렉터리는 건드리지 않음
+
+--------------------------------------------------------------------------------
+2. Read-only 저장소 감사 (수정 0건)
+--------------------------------------------------------------------------------
+
+docs/CLAUDE_CODE_HANDOFF_POST_ADJUDICATION.md (1,122줄) 전문을 읽고
+지시대로 read-only 감사만 수행. 파일 이동·개명·삭제·refactor 없음.
+
+주요 발견
+
+  [A] v1.3.0 Canonical Core / v1.3.1 개발 프롬프트가 저장소에 없음
+      핸드오프 문서는 "v1.3.0 frozen, v1.3.1 development patch" 를 전제하나
+      실제로는 파일명 검색 0건.
+      primary_rule_id / supporting_rule_ids / recursion_targets /
+      TARGET_SEGMENTS / ROOT_CRITERION_TEXT / PARENT_CONTEXT 전부 0 파일
+      (핸드오프 문서 자신 제외). H0-H6 언급도 핸드오프 문서에만 존재.
+      저장소의 "v1.3" 은 전부 "deferred to v1.3" 미래형 주석.
+      → v1.3 관련 구현의 선행조건이 미충족 상태.
+
+  [B] adjudication 트랙 전체가 원격에 없었음
+      origin 에 feat/adjudication-prep 브랜치 없음, 태그 0개.
+      미push 커밋 6개(당시). 로컬 태그 2개도 원격에 없음.
+
+  [C] 1차 연구 데이터가 버전관리 밖
+      iaa_workspace/ 는 .gitignore 대상 → R1/R2 어노테이터 envelope과
+      GOLD envelope 에 git 이력이 전혀 없음. 노트북이 유일 사본이었음.
+      핸드오프가 요구한 "Git history 로 R1/R2 무결성 확인" 은 수행 불가
+      (mtime 만 가능. R1 전부 2026-06-11, R2 전부 2026-06-26 로 동결 후 무변경).
+
+  [D] adjudication_queue.json 미커밋 + 재생성 불가
+      results/* 가 gitignore 대상. build_adjudication_queue.py 는 실행할 때마다
+      S4 감사표본을 재추첨한다(시드는 고정, 표본틀은 비고정).
+      이 표본은 논문 Methods 에 보고됨 → 파일을 잃으면 복구 불가.
+
+  [E] 프로덕션 트랙의 v1.2.3 미반영 (판정 트랙은 준수)
+      iaa_pipeline/adjudication.py  : child_logic 양방향 필수, text_span 배열
+                                      정규화 → v1.2.3 준수
+      pipeline/validators.py        : child_logic 필수성 미검증
+      pipeline/orchestrator.py      : text_span 을 문자열로 직접 소비
+      pipeline/prompts/prompt_1_splitting.txt (2026-06-07, 버전 표기 없음)
+        - text_span 을 문자열로 출력 (v1.2.3 변경6 = 배열)
+        - child_logic "default, can omit", macro_aggregate 는 항상 AND(omit)
+          (v1.2.3 변경1 = 양쪽 모두 명시 필수)
+        - inclusion=AND / exclusion=OR 암묵 기본값 잔존
+        - NEIGHBORING_CRITERIA 의 인접 criterion 텍스트를 자식 span 출처로 지시
+          (v1.3 X7 과 정면 충돌 예정)
+      ※ 113건 판정 기록은 adjudication.py 로 생성되었으므로 gold 자체는 무영향.
+
+  [F] 계보 검증 — criterion_id 집합이 완전 중첩
+      61(09-01: 60 gold+1 gap) ⊆ 61(09-02: 61 gold) ⊆ 74(09-03) ⊆ 113(09-07)
+      113 − 74 = 39건 (S2 35 + S3 4)
+      61items_2026-09-01 은 WITH_TEXT .txt 1개가 누락된 4파일 선행본.
+
+  [G] stale 생성물
+      docs/amia_stage1_numbers.md, trajectories.md  → 74-item 기준
+      results/iaa/round2_gold/                      → 74-item 시점 GOLD 대비
+      gpt_context_package/                          → 2026-09-01, 0.1.0-example
+
+  [H] κ 재확인
+      Round 2 DYK×EHJ splitting-decision κ = 0.650, n = 172, 8 trials
+      (핸드오프 §2 주장과 일치)
+
+  [I] 보안
+      .env(root, NEO4J_*) / pipeline/.env(OPENAI_API_KEY) 모두 gitignored·untracked
+      configs/neo4j.yaml 은 ${NEO4J_URI} 환경변수 보간, 하드코딩 없음
+      .streamlit 에 실 secrets 없음, git 이력 내 secret 커밋 0건
+      data/external/aact 15GB 는 ClinicalTrials.gov 공개 덤프, PHI 없음
+      tracked 파일 대상 환자식별 패턴 스캔 0건
+
+--------------------------------------------------------------------------------
+3. PHASE 1 — evidence freeze + 원격 백업
+--------------------------------------------------------------------------------
+
+목표: 완료된 Stage 1 판정 상태를 변경 불가 checkpoint 로 Git 에 보존하고
+      원격에 백업. main merge 및 v1.3 semantic 구현은 하지 않음.
+
+3.1 evidence 구조 (이동이 아니라 복사)
+
+  evidence/stage1/adjudication_v1_2_2_2026-09-07/    66 files / 1.2 MB
+    README.md      provenance · 프로파일 · 계보 · 재검증 절차
+    SHA256SUMS     payload 64개 전부
+    gold/          MANIFEST.txt + 113-item export 4종
+    queue/         adjudication_queue.json(113 items) + .csv + tier0_violations.csv
+    envelopes/     56 files — 8 trials × {input, llm_output,
+                   round1 DYK/EHJ, round2 DYK/EHJ/GOLD, gap_tickets}
+
+  envelope 사본 포함 근거: 8 trial 전체가 56 files / 448 KB 로 용량 부담이 없고,
+  감사 [C] 대로 git 이력이 전혀 없는 유일 사본이었음.
+
+  live working file 은 전부 제자리 유지. iaa_workspace/ 와
+  results/adjudication/ 은 손대지 않았고 .gitignore 도 변경하지 않음.
+
+  STAGE1_GOLD_113items_2026-09-07/ (5 files) 도 루트에 함께 커밋.
+  스크립트가 저장소 루트를 glob 하므로 fresh clone 에서 amia_stage1_*.py 가
+  동작하려면 필요. evidence 사본과 바이트 동일이며 갈라지면 SHA256SUMS 로 검출.
+
+3.2 검증 결과
+
+  shasum -c SHA256SUMS               64/64 OK
+  복사본 ↔ 원본                      64/64 바이트 동일 (내용 변형 0)
+  evidence gold ↔ 루트 export        4/4 동일
+  jsonl 113줄 JSON 파싱              OK (양쪽 variant)
+  .txt ↔ .jsonl                      바이트 동일
+  queue ⇄ gold criterion_id          완전 일치
+  text_span 축자 위반                0
+  MANIFEST 기재 sha256 ↔ 실측        일치
+  tests/test_iaa_metrics.py          44/44 PASS
+  tests/test_adjudication.py         50/50 PASS
+
+  재계산 프로파일 (evidence 사본 기준)
+    113 lines / gold 113 / gap 0 / trials 8 / unique 113 / 중복 0
+    criterion type   exclusion 62, inclusion 51
+    stratum          S1 49 · S2 35 · S3 4 · S4 25
+    tier             0→10, 1→2, 2→101
+    splitting        none 59 · composite_split 42 · nested_exception 10
+                     · macro_aggregate 2
+    rule_status      existing 99 · new 12 · conflict 2
+    escalate_pi      7건
+    conflict 2건     NCT03800134_E6, NCT05756153_E6
+    escalate 7건     NCT02075840_E12, NCT02125461_I2, NCT02912949_E7,
+                     NCT03728556_I3, NCT03800134_E5, NCT03800134_E6,
+                     NCT05756153_E6
+
+  판정 provenance — 단일 blind pass
+    adjudication.pass == "revealed" 인 record 0건
+    113건 전부 blind_label == gold, 둘이 다른 record 0건
+    → D-3(blind → revealed 라벨 변경) 표본이 이 데이터셋에 존재하지 않음
+    이 서술을 사후에 2-pass revealed 판정으로 고쳐 쓰지 말 것
+
+3.3 커밋 / 태그 / 원격
+
+  commit  80f0f2890182ee594cb451c0f527d28d413c2c9f
+          "freeze: Stage 1 adjudication complete — 113 gold items"
+          75 files changed, 18406 insertions(+), 18 deletions(-)
+
+  tag     stage1-adjudication-complete-2026-09-08  (annotated) → 80f0f28
+          메시지에 gold 2건 + queue 1건 sha256, 기준표준, blind pass provenance,
+          61⊂74⊂113 계보 기록
+
+  push    * [new branch] feat/adjudication-prep → origin   (커밋 7개 백업)
+          * [new tag]    stage1-adjudication-complete-2026-09-08 → origin
+          main 은 349306d 그대로. merge 하지 않음.
+          HEAD == origin/feat/adjudication-prep 동기화 확인
+
+  주요 sha256
+    STAGE1_ADJUDICATED_113items_2026-09-07.jsonl (+.txt)
+      bb0960577ce876b108cd04485ff60353d1e3f6aa8cf44e338c9884db29062865
+    STAGE1_ADJUDICATED_113items_WITH_TEXT_2026-09-07.jsonl (+.txt)
+      c3e498bee0ef5ba5479c51005a80d375731fd4b1f6272ce68a34bed0a6be9a7f
+    gold/MANIFEST.txt
+      d2f9b44e3f30e8a903b00986e6f30a07d79b5c360cabd0092cff44d48ae36034
+    queue/adjudication_queue.json
+      a42b471c36c5f155d28e64b65b8e768c3e74c71e43edba03d61e1a27a2f427c8
+    queue/adjudication_queue.csv
+      72e3e0427e8f84ab4a9f564a4b6989f3da76039ae7e90116e0e8f9308c147540
+    queue/tier0_violations.csv
+      c6d44931e2be67421a8ff09ed5dde474044af5a9b38cfd2ba2793c326c8fce90
+
+3.4 커밋에서 제외한 것
+
+  gpt_context_package/ , gpt_context_package.zip     지시상 제외 · stale snapshot
+  AMIA_2027_ABSTRACT_REVIEW_BUNDLE_2026-08-24.zip    지시상 제외 · generated
+  AGENTS.md                                          지시상 제외 · 훼손된 미러
+  docs/CLAUDE_CODE_HANDOFF_POST_ADJUDICATION.md      v1.3 설계 문서 → 분리
+  docs/amia_stage1_numbers.md / trajectories.md      74-item stale, 재생성은
+                                                     PHASE 2 판단 사항
+  results/iaa/* , pipeline/output/ , .DS_Store 28개  지시상 제외 + gitignore
+
+  임의 revert 0건.
+
+3.5 workspace 무변경 증명
+
+  PHASE 1 시작 전 live source 104개 파일의 sha256 을 기록하고 종료 후 대조.
+    shasum -c live_before.sha256  →  104/104 OK, FAILED 0
+    대상: R1 envelope 16 · R2 envelope 16 · GOLD 8 · gap_tickets 1
+          input.json 31 · llm_output.json 30 · queue json/csv 2
+  R1/R2/GOLD live source 와 판정 큐 전부 바이트 단위 무변경.
+  JSON 재직렬화 · 재포맷 · 정규화 없음.
+  61/74 스냅샷 3개 디렉터리, guideline/ontology 문서도 미변경.
+
+3.6 보안 스캔 (커밋 대상 72개 파일)
+
+  API key / token 패턴        무검출
+  환자식별자 패턴             무검출
+  로컬 절대경로               1건 — adjudication_queue.json 의 workspace 필드
+                              (/Users/jang-eunhye/.../iaa_workspace)
+                              secret 도 PHI 도 아니며 이미 tracked 인 파일 2개
+                              (pipeline/HANDOFF.md, adjudication_guide_v2_over_v1.md)
+                              에 같은 문자열 존재.
+                              exact queue 보존을 우선해 수정하지 않고 그대로 커밋.
+                              공개 저장소 전환 시 다룰 항목.
+
+--------------------------------------------------------------------------------
+4. 현재 상태 / 미결 사항
+--------------------------------------------------------------------------------
+
+완료
+  Stage 1 판정 113건 전건 완료, 동결 export 생성 및 검증
+  evidence 번들 커밋 + annotated tag + 원격 백업
+  R1/R2/GOLD/queue 가 처음으로 버전관리 하에 들어옴
+
+미결 — PHASE 2 착수 전 결정 필요
+  1) v1.3.0 core / v1.3.1 프롬프트 저장소 반입
+     현재 저장소에 없음. v1.3 관련 작업의 선행조건.
+  2) 로컬 전용 태그 2개 push 여부
+     adjudication-freeze-20260825
+     amia2027-stage1-gold-74items-20260903
+     가리키는 커밋은 이번에 push 됐으나 태그 자체는 로컬에만 있음.
+  3) queue 의 로컬 절대경로 처리 (3.6 참조)
+  4) prompt_1 의 v1.2.3 드리프트 처리 시점
+     지금 반영할지, v1.3 프롬프트 도입 시 일괄 처리할지.
+     semantic 변경이므로 연구 측 판단 필요 — 임의로 진행하지 않음.
+  5) docs/amia_stage1_*.md 재생성 승인
+     113 기준 재생성 시 74-item 숫자가 사라짐. AMIA 제출본 추적성을 위해
+     74판 별도 보존 여부 결정 필요.
+  6) 스크립트/문서 파일명의 AMIA 제거 범위 확대 여부
+     scripts/amia_stage1_*.py, docs/amia*, AMIA_ABSTRACT_EVIDENCE_PACK.md
+     → CLAUDE.md 명령어 목록 연쇄 수정 필요
+
+--------------------------------------------------------------------------------
+5. 절대 수정 금지 (append-only)
+--------------------------------------------------------------------------------
+
+  evidence/stage1/adjudication_v1_2_2_2026-09-07/**
+  STAGE1_GOLD_113items_2026-09-07/**
+  AMIA_2027_STAGE1_GOLD_61items_2026-09-01/**
+  AMIA_2027_STAGE1_GOLD_61items_2026-09-02/**
+  AMIA_2027_STAGE1_GOLD_74items_2026-09-03/**
+  iaa_workspace/*/stage1/round1/**                    (R1 원본)
+  iaa_workspace/*/stage1/round2/{DYK,EHJ}_*           (R2 원본)
+  iaa_workspace/*/stage1/round2/GOLD_*                (판정 원본)
+  pipeline/schema/annotation_guideline_v1_2_1.md
+  pipeline/schema/annotation_guideline_v1_2_2_notion.md
+  pipeline/schema/ontology_full_specification_unified_v1_2_2_ko.md
+  pipeline/schema/ontology_spec_v1_2_3_patch.md
+  docs/amia2027_gold_freeze_2026-09-02.md
+  docs/amia2027_gold_freeze_2026-09-03.md
+
+  JSON 재직렬화도 수정에 해당한다 (해시가 깨진다).
+  61/74 스냅샷을 "113이 최신이니까" 삭제하지 말 것.
+  historical record 를 향후 guideline v1.3 에 맞춰 올려 맞추지 말 것.
+
+================================================================================
