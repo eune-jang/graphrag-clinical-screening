@@ -15,6 +15,8 @@ There are **three tracks** that share code but serve different goals:
 
 ## Key documentation (read these first)
 
+**Start with `docs/CURRENT_STATUS.md`** — research state, latest evidence-set numbers, and known deferred drift. Then `docs/repository/SOURCE_OF_TRUTH.md` tells you which path is authoritative for each category (implementation contract, ontology basis, guideline basis, frozen evidence, generated output), and `docs/guidelines/stage1/CURRENT.md` fixes the Stage 1 normative precedence. Do not infer current truth from the highest-looking filename.
+
 The two design docs below are kept current and contain far more detail than is summarized here. Read them before substantial work:
 - `pipeline/PIPELINE.md` — script inventory, stage graph, data flow, current 30-trial results
 - `pipeline/HANDOFF.md` — session handoff log: source-fix history, open work items, conventions, gotchas, user preferences
@@ -93,6 +95,8 @@ Every freeze is a **new dated directory**, never an edit of an existing one, and
 `build_adjudication_queue.py` **redraws the S4 audit sample** every time it runs; the seed is fixed but the sampling frame is not, and that sample is reported in the paper's Methods. To change only the working order of an existing queue, use `reorder_adjudication_queue.py`, which rewrites the `priority` column and asserts the row set is unchanged.
 
 `iaa_workspace/` is git-ignored (bundled UI data lives in `streamlit_apps/data/` instead), so the frozen export directories are the only committed record of an adjudication result — treat them as append-only.
+
+**Frozen evidence lives under `evidence/`** (`evidence/README.md` for the convention). The current bundle is `evidence/stage1/adjudication_v1_2_2_2026-09-07/` — 113 gold / 0 gap / 8 trials, committed at `80f0f28` and tagged `stage1-adjudication-complete-2026-09-08`. It carries `SHA256SUMS`, the exact adjudication queue (unreproducible — `build_adjudication_queue.py` redraws S4), and immutable copies of the R1/R2/GOLD envelopes that `iaa_workspace/` alone could not preserve. The root `STAGE1_GOLD_113items_2026-09-07/` holds the same gold payload because `scripts/amia_stage1_*.py` glob the repo root for `*GOLD_*items_*`; deleting it silently regresses those scripts to the 74-item freeze.
 
 
 ## Common commands
