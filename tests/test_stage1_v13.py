@@ -25,6 +25,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.stage1_v13.contracts import (  # noqa: E402
+    INCOMPLETE_EMPTY_MAIN,
+    INCOMPLETE_MAX_DEPTH,
     MAIN_TARGET,
     RULE_IDS,
     derive_tier,
@@ -370,6 +372,47 @@ def test_x3_main_derivation_repeated_wording_consumes_one_occurrence():
     assert "except Y" in joined  # the second occurrence survives
 
 
+def test_x3_duplicate_identical_exception_spans_consume_two_occurrences():
+    """같은 문자열이 두 번 나열되면 두 개의 서로 다른 source occurrence를 소비한다.
+
+    합쳐서 하나로 취급하지 않는다. 왼쪽부터 아직 소비되지 않은 occurrence를
+    결정론적으로 차지한다.
+    """
+    text = "No X except Y and no Z except Y."
+    one = derive_main_segments([text], ["except Y"])
+    two = derive_main_segments([text], ["except Y", "except Y"])
+
+    # 1회 나열 → 첫 occurrence만 소비, 두 번째는 남는다
+    assert one == ["No X", "and no Z except Y."]
+    # 2회 나열 → 두 occurrence 모두 소비
+    assert two == ["No X", "and no Z"]
+    assert "except Y" not in " ".join(two)
+    for s in two:
+        assert s in text  # 여전히 축자 부분문자열
+
+
+def test_x3_duplicate_exception_spans_across_separate_span_objects():
+    """두 exception 객체가 각각 같은 문자열을 담아도 동일하게 동작한다."""
+    text = "No X except Y and no Z except Y."
+    ctx = ctx_for(root=text, targets=[text])
+    parent = out(splitting_decision="nested_exception",
+                 sub_criteria=[{"child_id": "a", "text_span": ["except Y"]},
+                               {"child_id": "b", "text_span": ["except Y"]}],
+                 needs_recursion=True, recursion_targets=[MAIN_TARGET], primary_rule_id="H4")
+    assert validate_v13_output(parent, ctx) == []
+    assert main_context(ctx, parent).target_segments == ["No X", "and no Z"]
+
+
+def test_x3_punctuation_attached_to_content_is_preserved_verbatim():
+    """붙어 있는 punctuation은 보존하고, 독립 punctuation-only 조각만 버린다."""
+    text = "Adequate hepatic function (AST, ALT), unless Gilbert syndrome."
+    segs = derive_main_segments([text], ["unless Gilbert syndrome"])
+    assert segs == ["Adequate hepatic function (AST, ALT),"]   # 내부·후행 punctuation 유지
+    assert all(s in text for s in segs)                        # provenance 유지
+    # 독립적으로 남은 "." 은 제거된다 (정규화가 아니라 조각 삭제)
+    assert "." not in segs
+
+
 def test_x3_main_derivation_empty_when_all_consumed():
     assert derive_main_segments(["except Y"], ["except Y"]) == []
 
@@ -514,9 +557,44 @@ def test_h6_max_depth_guard_stops_recursion():
                needs_recursion=True, recursion_targets=["a"], primary_rule_id="H1-B")
     node = run_stage1_v13(root_context(text), llm=scripted_llm(lvl0, lvl1),
                           model="m", template=TEMPLATE, max_depth=1)
-    # depth 1에서 재귀를 더 요구하지만 max_depth가 막고, 그 사실을 노트에 남긴다
-    assert node.children["a"].children == {}
-    assert "max_depth" in node.children["a"].output["recursion_note"]
+    cut = node.children["a"]
+    assert cut.children == {}
+    # 잘린 사실은 런타임 메타데이터에 남는다 — 모델 출력은 건드리지 않는다
+    assert cut.incomplete_reason == INCOMPLETE_MAX_DEPTH
+    assert cut.is_incomplete and not node.is_complete
+    assert [n.node_id for n in node.incomplete_nodes()] == ["root.a"]
+    assert cut.output["recursion_note"] == ""          # 모델이 쓴 그대로
+    assert cut.output["needs_recursion"] is True        # 모델 주장도 그대로
+    assert node.to_dict()["children"][0]["incomplete_reason"] == INCOMPLETE_MAX_DEPTH
+
+
+def test_h6_depth_below_max_completes_normally():
+    """대조군: 한도 안에서 끝나면 어떤 노드도 incomplete로 표시되지 않는다."""
+    text = "alpha beta gamma delta"
+    lvl0 = out(splitting_decision="composite_split", child_logic="AND",
+               sub_criteria=[{"child_id": "a", "text_span": ["alpha beta gamma"]},
+                             {"child_id": "b", "text_span": ["delta"]}],
+               needs_recursion=True, recursion_targets=["a"], primary_rule_id="H1-B")
+    node = run_stage1_v13(root_context(text), llm=scripted_llm(lvl0, out()),
+                          model="m", template=TEMPLATE, max_depth=3)
+    assert node.is_complete
+    assert node.incomplete_nodes() == []
+    assert all(n.incomplete_reason is None for n in node.walk())
+
+
+def test_h6_empty_main_recorded_as_incomplete_not_as_completion():
+    """exception 제거 후 main이 비면 재귀하지 않되, 정상 완료로 오해되면 안 된다."""
+    text = "except Y"
+    parent = out(splitting_decision="nested_exception",
+                 sub_criteria=[{"child_id": "a", "text_span": ["except Y"]}],
+                 needs_recursion=True, recursion_targets=[MAIN_TARGET],
+                 recursion_note="main 남음", primary_rule_id="H4")
+    node = run_stage1_v13(root_context(text), llm=scripted_llm(parent),
+                          model="m", template=TEMPLATE)
+    assert node.children == {}
+    assert node.incomplete_reason == INCOMPLETE_EMPTY_MAIN
+    assert not node.is_complete
+    assert node.output["recursion_note"] == "main 남음"   # 모델 출력 무변경
 
 
 def test_h6_recursion_targets_must_be_known_child_ids():

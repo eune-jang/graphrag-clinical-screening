@@ -118,8 +118,60 @@ root ── pass ── validate ── needs_recursion?
 - **exception span은 절대 재귀하지 않는다.** 그렇게 되는 코드 경로가 없다.
 - 자식은 자기 span만 `TARGET_SEGMENTS`로 받으므로 형제나 루트 전용 텍스트에 닿을 수 없다.
 - 혼합 논리(`A AND (B1 OR B2)`)는 계층으로 유지된다. 각 레벨이 자기 `child_logic`을 갖는다.
-- `max_depth`(기본 5)에 도달하면 예외를 던지지 않고 `recursion_note`에 기록하고 멈춘다.
-  개발 실행이 거기까지 만든 계층은 그대로 반환된다.
+- `max_depth`(기본 5)에 도달하면 예외를 던지지 않고 멈추며, **노드의 런타임 메타데이터**에 기록한다.
+  개발 실행이 거기까지 만든 계층은 그대로 반환된다 (§4-B).
+
+### 4-B. 구현 정책 3가지
+
+이 세 가지는 **구현 정책**이다. canonical v1.3.0의 규범 의미가 아니며, 규범을 새로 정의하지 않는다.
+
+#### (1) punctuation-only 잔여 조각
+
+exception subtraction 이후:
+
+- **의미 있는 텍스트에 붙어 있는 punctuation은 그대로 보존한다.**
+  `"Adequate hepatic function (AST, ALT), unless Gilbert syndrome."` → `["Adequate hepatic function (AST, ALT),"]`
+  (내부 괄호·쉼표, 후행 쉼표 모두 유지)
+- **제거로 독립적인 punctuation-only 조각이 생긴 경우에만** 버린다.
+  `"Stage III NSCLC, unless resectable."` → `["Stage III NSCLC,"]` — 홀로 남은 `"."` 은 버린다.
+- 의미 있는 문자나 punctuation을 **normalize·재작성하지 않는다.** 하는 일은 양끝 공백 트림뿐이며,
+  결과는 여전히 원문의 축자 부분문자열이다.
+- 따라서 TARGET_SEGMENTS의 **source text provenance가 유지된다.**
+
+판정 기준은 "영숫자를 하나라도 포함하는가"이다. `", or"` 는 `or` 때문에 보존된다.
+
+#### (2) 동일한 exception 문자열이 여러 번 나올 때
+
+**occurrence 단위로 왼쪽부터 결정론적으로 소비한다. 같은 문자열을 하나로 합치지 않는다.**
+
+| 모델 출력 | 동작 |
+|---|---|
+| `["except Y"]` 1회 | 첫 번째 미소비 occurrence만 제거 → 두 번째는 main에 남는다 |
+| `["except Y", "except Y"]` 2회 | 첫 번째 → 첫 occurrence, 두 번째 → 두 번째 occurrence |
+
+두 개의 exception span 객체가 각각 같은 문자열을 담아도 동일하다.
+즉 source에 동일 exception 구가 두 번 있고 둘 다 exception이면 **모델 출력에도 두 번 나타나야 한다.**
+
+#### (3) `max_depth` 는 개발용 안전장치다
+
+`max_depth`(기본 5)는 **normative Stage 1 semantics가 아니다.** 잘못된 응답이 재귀를 무한히
+요구하는 상황을 막는 개발 런타임 가드다. canonical 재귀는 레벨이 `none`이 되면 끝난다.
+
+한도에 도달했는데 `needs_recursion`이 여전히 true이면, 그 결과가 **정상 완료된 계층으로 오해되면 안 된다.**
+그래서 러너는 **모델 출력을 건드리지 않고** 노드에 런타임 메타데이터를 남긴다.
+
+```python
+node.incomplete_reason   # None | "max_depth" | "empty_main"
+node.is_incomplete       # 이 레벨이 요구한 재귀가 실행되지 않았다
+node.is_complete         # 하위 트리 전체가 완결되었는가
+node.incomplete_nodes()  # 잘린 노드 목록 (빈 리스트 == 완결)
+```
+
+`recursion_note`는 **모델의 필드**다. 완료 여부를 그 문자열로 추론하지 않는다.
+`to_dict()`와 CLI 경고에도 `incomplete_reason`이 노출된다.
+
+새 ontology property를 만들지 않았고, 프롬프트 출력 스키마도, historical record 계약도 바꾸지 않았다.
+`incomplete_reason`은 `Stage1V13Node`에만 있는 런타임/내부 계층 메타데이터다.
 
 ### nested_exception main 파생 — 안전 임계
 

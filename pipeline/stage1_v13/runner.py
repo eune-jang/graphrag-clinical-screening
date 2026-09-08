@@ -35,7 +35,14 @@ from typing import Any, Callable, Protocol
 from pipeline.config import MAX_RETRIES, MODELS, PIPELINE_DIR
 from pipeline.llm_client import _call_provider, _parse_json_response, _substitute_template
 
-from .contracts import MAIN_TARGET, Stage1V13Node, V13Output, derive_tier
+from .contracts import (
+    INCOMPLETE_EMPTY_MAIN,
+    INCOMPLETE_MAX_DEPTH,
+    MAIN_TARGET,
+    Stage1V13Node,
+    V13Output,
+    derive_tier,
+)
 from .context import Stage1Context, child_context, main_context, root_context
 from .validators import Stage1V13ValidationError, validate_v13_output
 
@@ -163,8 +170,11 @@ def run_stage1_v13(
       **exception spans never recurse**, and there is no code path that would;
     - `none`, or `needs_recursion=false` → stop.
 
-    A depth-limited stop is recorded in the node's `recursion_note` rather than
-    raised, so a development run still returns the hierarchy it did build.
+    A pass that asked to recurse but did not is recorded in the node's
+    `incomplete_reason` (runtime metadata) rather than raised, so a development
+    run still returns the hierarchy it did build. The model's `output` is never
+    rewritten — use `node.is_complete` / `node.incomplete_nodes()` to tell a
+    finished hierarchy from a truncated one.
     """
     llm = llm or _default_llm
     model = model or MODELS["prompt_1"]
@@ -184,14 +194,13 @@ def run_stage1_v13(
 
     targets = output.get("recursion_targets") or []
     if ctx.depth + 1 > max_depth:
-        node.output = {
-            **output,
-            "recursion_note": (
-                f"{output.get('recursion_note', '')} "
-                f"[runner: max_depth={max_depth} 도달, 재귀 중단]"
-            ).strip(),
-        }
-        logger.warning("[%s] max_depth=%d 도달 — 재귀 중단", ctx.node_id, max_depth)
+        # 모델 출력은 그대로 두고 러너의 판단만 노드 메타데이터에 남긴다.
+        # `recursion_note`는 모델의 것이므로 완료 여부를 그 문자열로 추론하지 않는다.
+        node.incomplete_reason = INCOMPLETE_MAX_DEPTH
+        logger.warning(
+            "[%s] max_depth=%d 도달 — 재귀 중단 (needs_recursion=true, targets=%s)",
+            ctx.node_id, max_depth, targets,
+        )
         return node
 
     decision = output.get("splitting_decision")
@@ -201,14 +210,10 @@ def run_stage1_v13(
             return node
         sub_ctx = main_context(ctx, output)
         if sub_ctx is None:
-            node.output = {
-                **output,
-                "recursion_note": (
-                    f"{output.get('recursion_note', '')} "
-                    "[runner: exception span 제거 후 남은 main 내용이 없어 재귀 중단]"
-                ).strip(),
-            }
-            logger.info("[%s] main 내용이 비어 재귀하지 않습니다", ctx.node_id)
+            node.incomplete_reason = INCOMPLETE_EMPTY_MAIN
+            logger.info(
+                "[%s] exception span 제거 후 남은 main 내용이 없어 재귀하지 않습니다", ctx.node_id
+            )
             return node
         node.children[MAIN_TARGET] = run_stage1_v13(
             sub_ctx, llm=llm, model=model, template=template, cache=cache, max_depth=max_depth,
@@ -239,9 +244,10 @@ def summarize(node: Stage1V13Node) -> str:
         out = n.output
         logic = f" logic={out.get('child_logic')}" if out.get("child_logic") else ""
         rec = " ↻" + str(out.get("recursion_targets")) if out.get("needs_recursion") else ""
+        cut = f"  ⚠ INCOMPLETE({n.incomplete_reason})" if n.is_incomplete else ""
         lines.append(
             f"{'  ' * n.depth}{n.node_id}: {out.get('splitting_decision')}{logic}"
-            f" [{out.get('primary_rule_id')} → tier {derive_tier(out.get('primary_rule_id'))}]{rec}"
+            f" [{out.get('primary_rule_id')} → tier {derive_tier(out.get('primary_rule_id'))}]{rec}{cut}"
         )
     return "\n".join(lines)
 
@@ -328,6 +334,13 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     print(summarize(node), file=sys.stderr)
+    cut = node.incomplete_nodes()
+    if cut:
+        print(
+            f"[warn] 계층이 완결되지 않았습니다 — 재귀가 중단된 노드 {len(cut)}개: "
+            + ", ".join(f"{n.node_id}({n.incomplete_reason})" for n in cut),
+            file=sys.stderr,
+        )
     payload = json.dumps(node.to_dict(), ensure_ascii=False, indent=2)
     if args.out:
         _reject_protected(args.out)

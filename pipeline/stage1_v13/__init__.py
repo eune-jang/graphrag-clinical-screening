@@ -34,6 +34,8 @@ from typing import Any
 
 from .contracts import (
     CHILD_LOGIC_VALUES,
+    INCOMPLETE_EMPTY_MAIN,
+    INCOMPLETE_MAX_DEPTH,
     EXECUTION_CONTEXT_FIELDS,
     MAIN_TARGET,
     PIPELINE_CONTROL_FIELDS,
@@ -63,6 +65,8 @@ def __getattr__(name: str) -> Any:  # PEP 562
 
 __all__ = [
     "CHILD_LOGIC_VALUES",
+    "INCOMPLETE_EMPTY_MAIN",
+    "INCOMPLETE_MAX_DEPTH",
     "EXECUTION_CONTEXT_FIELDS",
     "MAIN_TARGET",
     "PIPELINE_CONTROL_FIELDS",

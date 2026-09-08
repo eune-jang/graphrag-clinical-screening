@@ -105,12 +105,23 @@ class ParentContext(TypedDict):
     sibling_spans: dict[str, list[str]]
 
 
+#: Reasons a node asked for another pass that did not happen. Runtime metadata
+#: only — never an ontology property, never part of the prompt output schema,
+#: and never written into a historical record.
+INCOMPLETE_MAX_DEPTH = "max_depth"      # development safety guard tripped
+INCOMPLETE_EMPTY_MAIN = "empty_main"    # nothing substantive left after subtraction
+
+
 @dataclass
 class Stage1V13Node:
     """One pass plus the passes it spawned — the hierarchy this runtime returns.
 
     Mixed logic (`A AND (B1 OR B2)`) stays hierarchical: each level keeps its
     own `child_logic`, and children live under `children`, never flattened up.
+
+    `output` holds the model's response **verbatim**. Anything the runner itself
+    concludes lives in `incomplete_reason`, so a reader can always tell what the
+    model said apart from what the pipeline decided.
     """
     node_id: str                      # "root", "root.a", "root.a.main", ...
     depth: int
@@ -118,16 +129,37 @@ class Stage1V13Node:
     output: V13Output
     children: dict[str, "Stage1V13Node"] = field(default_factory=dict)
     parent_context: ParentContext | None = None
+    #: Set when this pass returned needs_recursion=true but the runner did not
+    #: recurse. None means the level finished on its own terms.
+    incomplete_reason: str | None = None
 
     @property
     def decision(self) -> str:
         return self.output.get("splitting_decision", "none")
+
+    @property
+    def is_incomplete(self) -> bool:
+        """This level asked for another pass that never ran."""
+        return self.incomplete_reason is not None
 
     def walk(self):
         """Depth-first over this node and every descendant."""
         yield self
         for child in self.children.values():
             yield from child.walk()
+
+    def incomplete_nodes(self) -> list["Stage1V13Node"]:
+        """Every node in this subtree whose recursion was cut short.
+
+        Empty list == the hierarchy ran to completion. This is the programmatic
+        check; do not infer completion from `recursion_note`, which belongs to
+        the model.
+        """
+        return [n for n in self.walk() if n.is_incomplete]
+
+    @property
+    def is_complete(self) -> bool:
+        return not self.incomplete_nodes()
 
     def to_dict(self) -> dict[str, Any]:
         """Plain JSON for the development CLI. Not an ontology serialization."""
@@ -136,6 +168,7 @@ class Stage1V13Node:
             "depth": self.depth,
             "target_segments": self.target_segments,
             "parent_context": self.parent_context,
+            "incomplete_reason": self.incomplete_reason,
             "output": self.output,
             "children": [c.to_dict() for c in self.children.values()],
         }
