@@ -15,7 +15,9 @@ There are **three tracks** that share code but serve different goals:
 
 ## Key documentation (read these first)
 
-**Start with `docs/CURRENT_STATUS.md`** — research state, latest evidence-set numbers, and known deferred drift. Then `docs/repository/SOURCE_OF_TRUTH.md` tells you which path is authoritative for each category (implementation contract, ontology basis, guideline basis, frozen evidence, generated output), and `docs/guidelines/stage1/CURRENT.md` fixes the Stage 1 normative precedence. Do not infer current truth from the highest-looking filename.
+**Start with `docs/CURRENT_STATUS.md`** — research state, latest evidence-set numbers, and the known implementation gap. Then `docs/repository/SOURCE_OF_TRUTH.md` gives authority **by purpose**: normative Stage 1 semantics, current implementation contracts, historical adjudication semantics, historical adjudication implementation, frozen evidence, generated output. `docs/guidelines/stage1/CURRENT.md` fixes the four-layer Stage 1 model. Do not infer current truth from the highest-looking filename.
+
+**Stage 1 has four layers, and they are not interchangeable.** The current normative method is `docs/guidelines/stage1/canonical_core_v1_3_0.md` (v1.3.0, frozen). `pipeline/prompts/development/stage1/stage1_prompt_v1_3_1.txt` is a **non-normative** development prompt that no loader reads. The historical adjudication basis is guideline v1.2.2 + ontology v1.2.2/v1.2.3, and reproducing the historical 113-item behaviour means `iaa_pipeline/adjudication.py` **at tag `stage1-adjudication-complete-2026-09-08`**, not today's working tree. The runtime is **not yet v1.3 conformant** — `pipeline/prompts/prompt_1_splitting.txt` is the older production prompt and must not be relabelled v1.3; the gap inventory is `docs/project_state/stage1_v1_3_implementation_gap.md`. Code says what runs; the canonical core says what should be implemented.
 
 The two design docs below are kept current and contain far more detail than is summarized here. Read them before substantial work:
 - `pipeline/PIPELINE.md` — script inventory, stage graph, data flow, current 30-trial results

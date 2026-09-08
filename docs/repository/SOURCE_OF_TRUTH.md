@@ -11,32 +11,91 @@
 
 ---
 
-## 1. 권위 우선순위 표
+## 1. 목적별 권위 (authority by purpose)
 
-| # | Category | Authoritative path | Status | Mutability | Notes |
-|---|---|---|---|---|---|
-| 1 | implementation enums / config | `pipeline/config.py` | active | **mutable** | v1.2.2 enum 정본. `SEMANTIC_CATEGORIES`·`RELATION_TYPES`·`CONCEPT_SUBTYPES`·`SPLITTING_DECISIONS`·`CHILD_LOGIC`·`RELATION_PROPERTY_WHITELIST`·`LLM_OUTPUT_STRIP_FIELDS`. `CHILD_LOGIC`에서 XOR 제거됨(`:94`) |
-| 2 | Stage-1 storage contract | `iaa_pipeline/stage_schemas.py` | active | **mutable** | envelope/record 계약. `text_span: list[str] \| str`은 **의도적 관대함** — R1/R2 문자열 저장분을 읽어야 하기 때문 |
-| 3 | adjudication behavior | `iaa_pipeline/adjudication.py` | active | **mutable** | **v1.2.3 준수**: `child_logic` 양방향 필수(`:271-281`), `normalize_text_span`(`:137`). 113 gold를 생성한 코드 |
-| 4 | historical adjudication ontology basis | `pipeline/schema/ontology_full_specification_unified_v1_2_2_ko.md` | **frozen** | ❌ immutable | v1.2.2 본문 |
-| 5 | 〃 (alignment patch) | `pipeline/schema/ontology_spec_v1_2_3_patch.md` | **frozen** | ❌ immutable | 본문에 **미병합**. #4와 **반드시 함께** 읽는다 |
-| 6 | historical adjudication guideline basis | `pipeline/schema/annotation_guideline_v1_2_2_notion.md` | **frozen** | ❌ immutable | `§1-1`/`§T2-3`/`§C1-1` 규칙 ID의 출처(부록 3이 색인). **`_notion` 접미사이지만 이것이 v1.2.2 정본이며 유일본**이다 |
-| 7 | frozen evidence (최신) | `evidence/stage1/adjudication_v1_2_2_2026-09-07/` | **frozen** | ❌ append-only | 113 gold / 0 gap / 8 trials + exact queue + R1/R2/GOLD 불변 사본. `SHA256SUMS` 보유 |
-| 8 | working annotations | `iaa_workspace/*/stage1/round{1,2}/` | live source | ⚠️ **git 미추적** | 판정 UI가 쓰는 live 파일. 불변 사본은 #7에 있다 |
-| 9 | generated reports | `results/**`, `pipeline/output/**`, `docs/amia_stage1_*.md` | **generated** | 재생성 가능 | source of truth **아님**. §3 참조 |
-| 10 | LLM context snapshot | `gpt_context_package/`, `gpt_context_package.zip` | **generated** | 재생성 가능 | source of truth **아님**. §4 참조 |
+**권위는 하나의 사다리가 아니다.** 질문의 목적에 따라 authoritative한 문서가 달라진다.
+v1.3 반입 이후에는 특히 다음을 구분해야 한다.
 
-### 코드 권위 순서 (충돌 시)
+> **코드는 무엇이 *실행되는가*를 말한다. Canonical Core는 무엇이 *구현되어야 하는가*를 말한다.**
+> 현행 규범 의미(normative semantics)에 관해서는 **구현 코드가 v1.3.0보다 우위에 있지 않다.**
+
+### 1-A. Normative Stage 1 semantics — "규칙이 무엇인가"
+
+| 순위 | 경로 | Status | Mutability |
+|---|---|---|---|
+| 1 | `docs/guidelines/stage1/canonical_core_v1_3_0.md` | **CURRENT NORMATIVE (v1.3.0 FROZEN)** | ❌ v1.4 없이는 불변 |
+
+H0–H6, X1–X7, 라벨 의미, split/merge 경계, child-logic 의미, criterion-locality의 **유일한 규범 출처**.
+런타임이 아직 이를 구현하지 않는다는 사실은 규범 지위를 낮추지 않는다.
+
+### 1-B. Current implementation contracts — "지금 무엇이 실행되는가"
+
+| 순위 | 경로 | Status | Mutability | Notes |
+|---|---|---|---|---|
+| 1 | `pipeline/config.py` | active | **mutable** | v1.2.2 enum 정본. `SEMANTIC_CATEGORIES`·`RELATION_TYPES`·`CONCEPT_SUBTYPES`·`SPLITTING_DECISIONS`·`CHILD_LOGIC`·`RELATION_PROPERTY_WHITELIST`. `CHILD_LOGIC`에서 XOR 제거(`:94`) |
+| 2 | `iaa_pipeline/stage_schemas.py` | active | **mutable** | envelope/record 저장 계약. `text_span: list[str] \| str`은 **의도적 관대함** — R1/R2 문자열 저장분을 읽어야 한다 |
+| 3 | 실행 코드 전반 (`orchestrator.py`, `validators.py`, `llm_client.py`, `stage_runner.py`, `pipeline/prompts/prompt_1_splitting.txt`) | active | **mutable** | **v1.3 비준수.** 격차는 §7 |
+
+이 계층은 "현재 동작"의 근거이지 **규범의 근거가 아니다.**
+구현이 canonical과 다르면 그것은 canonical이 틀린 것이 아니라 **구현 격차**다.
+
+### 1-C. Development prompt — 비규범
+
+| 순위 | 경로 | Status | Mutability |
+|---|---|---|---|
+| 1 | `pipeline/prompts/development/stage1/stage1_prompt_v1_3_1.txt` | **NON-NORMATIVE 개발 아티팩트** | mutable (v1.3.x 패치, 동작 불변 조건) |
+
+v1.3.0을 프롬프트로 구현한 것. 현행 프로덕션 프롬프트도, 최종 동결 프롬프트도, 런타임 준수 증거도 **아니다**.
+프로덕션 로더가 읽지 않는다(§5-B).
+
+### 1-D. Historical adjudication semantics — "113건은 무엇을 근거로 판정됐나"
+
+| 순위 | 경로 | Status | Mutability |
+|---|---|---|---|
+| 1 | `pipeline/schema/annotation_guideline_v1_2_2_notion.md` | **frozen** | ❌ immutable |
+| 2 | `pipeline/schema/ontology_full_specification_unified_v1_2_2_ko.md` | **frozen** | ❌ immutable |
+| 3 | `pipeline/schema/ontology_spec_v1_2_3_patch.md` | **frozen** | ❌ immutable · 본문 **미병합**, #2와 함께 읽는다 |
+
+`§1-1`/`§T2-3`/`§C1-1` 규칙 ID의 출처는 위 #1(부록 3이 색인)이며, **`_notion` 접미사가 붙었지만 v1.2.2 정본이자 유일본**이다.
+
+### 1-E. Historical adjudication implementation — "그 판정을 어떻게 재현하나"
+
+| 순위 | 경로 | Status |
+|---|---|---|
+| 1 | `iaa_pipeline/adjudication.py` **@ tag `stage1-adjudication-complete-2026-09-08`** | **frozen anchor** |
+
+⚠️ **"오늘의 `adjudication.py`"가 아니다.** 작업 트리 파일은 Phase 4 이후 진화할 수 있으므로
+영구 불변으로 선언하지 않는다. 불변인 것은 **태그가 가리키는 그 시점의 내용**이다.
+
+```bash
+git show stage1-adjudication-complete-2026-09-08:iaa_pipeline/adjudication.py
+```
+
+### 1-F. Historical evidence — "결과가 무엇인가"
+
+| 순위 | 경로 | Status | Mutability |
+|---|---|---|---|
+| 1 | `evidence/stage1/adjudication_v1_2_2_2026-09-07/` | **frozen** | ❌ append-only |
+
+113 gold / 0 gap / 8 trials + exact queue + R1/R2/GOLD 불변 사본. `SHA256SUMS` 보유.
+**113-item historical gold ≠ v1.3-harmonized gold.**
+
+### 1-G. Working annotations / generated output
+
+| 경로 | Status | Mutability | Notes |
+|---|---|---|---|
+| `iaa_workspace/*/stage1/round{1,2}/` | live source | ⚠️ **git 미추적** | 판정 UI가 쓰는 live 파일. 불변 사본은 1-F |
+| `results/**`, `pipeline/output/**`, `docs/amia_stage1_*.md` | **generated** | 재생성 가능 | source of truth **아님**. §3 |
+| `gpt_context_package/` + `.zip` | **generated** | 재생성 가능 | source of truth **아님**. §4 |
+
+### 충돌 시 판단 순서
 
 ```
-1. pipeline/config.py                    실행되는 구현 계약
-2. iaa_pipeline/stage_schemas.py         Stage별 저장 계약
-   iaa_pipeline/adjudication.py          판정 동작
-3. ontology v1.2.2 + v1.2.3 패치         현행 온톨로지 설계
-4. annotation guideline v1.2.2           판정에 쓰인 동결 가이드라인
-5. evidence/stage1/.../ + MANIFEST       동결 증거·해시
-6. (v1.3 core / dev prompt)              ⛔ 아직 저장소에 없음
-7. 그 밖의 historical/superseded 산출물   lineage 용도
+질문이 "규칙이 무엇인가"       → 1-A (canonical v1.3.0)
+질문이 "지금 무엇이 도는가"     → 1-B (config / stage_schemas / 실행 코드)
+질문이 "113건 판정 근거"        → 1-D + 1-E (v1.2.2 기준 + 태그 앵커)
+질문이 "결과 수치"             → 1-F (동결 증거)
+1-A와 1-B가 다르면            → 구현 격차. 조용히 고치지 말고 gap inventory에 기록
 ```
 
 불일치를 발견하면 **조용히 고치지 말고 보고**한다.
@@ -50,11 +109,12 @@
 | `pipeline/schema/ontology_v1.2.1.json` | **dead reference** | `pipeline/config.py:21`이 `SCHEMA_PATH`로 대입하지만 **호출부 0곳**이며 코드 주석이 "presently unused"라고 명시. v1.2.2 enum 정본은 `config.py`다. 이동하지 않는다 — active 코드가 경로를 참조하기 때문 |
 | `pipeline/schema/ontology_full_specification_v1.2.1.md` | superseded | v1.2.2 통합본이 대체. **v1.2.2 본문이 링크하므로 제자리 유지** |
 | `pipeline/schema/annotation_guideline_v1_2_1.md` | superseded | 규칙 내용은 v1.2.2와 동일, 규칙 ID가 없다. 인용은 v1.2.2로 |
-| `pipeline/schema/annotation_guideline_v0_2_stage1 (1).md` | **legacy (v0.2)** | 인용하지 않는다. 현재 Stage 1 가이드라인은 #6(v1.2.2)이다. `pipeline/REVIEW.md` / `REVIEW_notion.md`가 이 파일을 "현재 stage 1"로 가리키던 stale pointer는 2026-09-08에 #6으로 교정되었고, v0.2 링크는 superseded로 표시해 보존한다 |
+| `pipeline/schema/annotation_guideline_v0_2_stage1 (1).md` | **legacy (v0.2)** | 인용하지 않는다. historical Stage 1 가이드라인은 1-D의 v1.2.2이고, 현행 규범은 1-A의 v1.3.0이다. `pipeline/REVIEW.md` / `REVIEW_notion.md`가 이 파일을 "현재 stage 1"로 가리키던 stale pointer는 2026-09-08에 #6으로 교정되었고, v0.2 링크는 superseded로 표시해 보존한다 |
 | `pipeline/schema/stage1_iaa_review_and_guideline_v1_1.md` | 검토 기록 | 가이드라인 본문 아님 |
 | `pipeline/schema/cohort_standard_unit_proposal_v0.md` | DEFERRED 결정문 | 2026-06-07 미채택. cohort_scope는 표면형 유지 |
 | `AGENTS.md` | 훼손된 미러 | CLAUDE.md의 find/replace 사본이며 문자열이 깨져 있다(예: `Codex-*`가 Anthropic으로 라우팅된다는 잘못된 서술). **CLAUDE.md가 authoritative**. 현재 git 미추적 |
-| `docs/project_state/CLAUDE_CODE_HANDOFF_POST_ADJUDICATION.md` | 외부 설계 핸드오프 | v1.3 설계를 서술하지만 **그 v1.3 산출물은 저장소에 없다**([`../CURRENT_STATUS.md`](../CURRENT_STATUS.md) §5) |
+| `pipeline/prompts/prompt_1_splitting.txt` | **구 프로덕션 프롬프트** | ⚠️ v1.3 프롬프트가 아니다. 개발용 v1.3.1이 반입됐다는 이유로 재라벨하지 않는다. 현행 규범 대비 비준수 4건(§7) |
+| `docs/project_state/CLAUDE_CODE_HANDOFF_POST_ADJUDICATION.md` | 외부 설계 핸드오프 | v1.3 설계를 서술한 문서. **규범 출처가 아니다** — 규범은 1-A의 canonical core다. 2026-09-08 이후 v1.3 산출물은 저장소에 반입되어 있다 |
 | `docs/audit_reference/` | 참조 구현 | blinding 위반 방지 설계 예시. 실행 코드 아님 |
 
 ---
@@ -97,7 +157,9 @@ gpt_context_package/  =  generated LLM context snapshot; never a source of truth
 
 ---
 
-## 5. Gold payload 이중 보관 — 의도된 중복
+## 5. 경로 주의사항
+
+### 5-A. Gold payload 이중 보관 — 의도된 중복
 
 동일 payload가 두 곳에 있다.
 
@@ -115,6 +177,24 @@ gpt_context_package/  =  generated LLM context snapshot; never a source of truth
 
 ---
 
+### 5-B. 프롬프트 디렉터리 — 프로덕션 로더는 development/ 를 읽지 않는다
+
+`pipeline/prompts/` 아래에 개발용 서브트리가 생겼다.
+
+| 경로 | 로더가 읽는가 |
+|---|---|
+| `pipeline/prompts/prompt_{1..5}_*.txt` | ✅ `llm_client.py:86-93`의 명시적 `filename_map` |
+| `pipeline/prompts/examples.json` | ✅ `config.py:24` `EXAMPLES_PATH` |
+| `pipeline/prompts/development/**` | ❌ **어떤 코드도 참조하지 않음** |
+
+두 로더(`pipeline/llm_client.py`, `iaa_pipeline/stage_runner.py:107-112`) 모두 **명시적 파일명**만 쓰고
+디렉터리를 glob하지 않는다. 따라서 `development/` 하위에 파일을 두어도 런타임에 들어가지 않는다.
+
+**development artifact imported; runtime activation deferred to Phase 4.**
+로더 매핑을 바꾸거나 프로덕션 실행을 DEV 프롬프트로 돌리는 것은 Phase 4 작업이다.
+
+---
+
 ## 6. 로컬 절대경로 정책
 
 `evidence/.../queue/adjudication_queue.json`의 `workspace` 필드에
@@ -127,15 +207,32 @@ gpt_context_package/  =  generated LLM context snapshot; never a source of truth
 
 ---
 
-## 7. Known deferred implementation drift
+## 7. Known implementation gap — 기준은 v1.3.0
 
-프로덕션 어노테이션 트랙이 ontology v1.2.3 패치를 **아직 반영하지 않았다**.
-목록과 상세는 [`../CURRENT_STATUS.md`](../CURRENT_STATUS.md) §6.
+현재 런타임은 **현행 규범 v1.3.0을 따르지 않는다.** (이전 기록은 v1.2.3 기준이었으나 v1.3.0이 forward 목표다.)
 
-**113 gold의 유효성에는 영향이 없다** — gold는 v1.2.3을 준수하는 판정 트랙(#3)으로 생성되었고
-프로덕션 프롬프트를 거치지 않았다.
+> **v1.3.0이 현행 규범이지만, 완전히 v1.3을 따르는 런타임 구현은 아직 없다.**
+
+`incompatible` 6건(고치면 기존 출력이 바뀜):
+
+| canonical family | 위치 | 어긋난 동작 |
+|---|---|---|
+| **H4** | `validators.py:59-61` | `nested_exception`에 `≥2 sub_criteria` 강제 — v1.3은 exception span만(1개도 유효). **historical gold 10건 중 9건을 거부** |
+| **X1** | `orchestrator.py:155` | `sub["text_span"]`을 문자열로 소비 — v1.3은 배열 |
+| **H5** | `prompt_1_splitting.txt` | inclusion=AND / exclusion=OR 암묵 기본값 — v1.3은 criterion type·표면 연결어에서 추론 금지 |
+| **X7** | 〃 | 인접 criterion 텍스트를 자식 span 출처로 **명시 지시** |
+| **X5** | 〃 | "as defined in Table" 위임을 `macro_aggregate`로 — v1.3은 `none` + delegation note |
+| **X4** | 〃 | `nested_exception`의 cohort_scope를 자식에 배치 — v1.3은 현재 Criterion에 부착 가능 |
+
+전체 재고(conformant 5 / partial 8 / missing 12 / incompatible 6 / historical-only 4),
+저장·실행 계약 재고, ontology vs pipeline metadata 경계:
+[`../project_state/stage1_v1_3_implementation_gap.md`](../project_state/stage1_v1_3_implementation_gap.md)
+
+**113 gold의 유효성에는 영향이 없다** — gold는 판정 트랙(1-E)으로 생성되었고 프로덕션 프롬프트를 거치지 않았다.
+실제로 gold의 sub_criteria 123/123은 이미 `text_span` 배열이다.
 
 이 항목들은 Stage 1 semantic 계약을 건드리므로 **연구 측 판단 없이 수정하지 않는다.**
+v1.2.3 중간 상태를 따로 만들지 않고 **v1.3에서 한 번에 해소**한다.
 
 ---
 
