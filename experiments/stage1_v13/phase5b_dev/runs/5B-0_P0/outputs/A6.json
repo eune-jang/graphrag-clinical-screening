@@ -1,0 +1,41 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Prior allogeneic stem cell transplant, or prior autologous stem cell transplant within 100 days before the first dose."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "OR",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Prior allogeneic stem cell transplant"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: prior allogeneic transplant is a distinct transplant-history screening target from autologous transplant and can independently satisfy the exclusion criterion."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "prior autologous stem cell transplant within 100 days before the first dose"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: prior autologous transplant is independently evaluated and carries its own 100-day timing constraint."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H1-A"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

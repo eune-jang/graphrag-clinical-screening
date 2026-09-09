@@ -1,0 +1,96 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Prior treatment with either a BTK inhibitor for at least 8 weeks or a BCL-2 inhibitor for at least 12 weeks, and prior CAR-T therapy, are exclusionary unless the most recent qualifying therapy ended more than 24 months before enrollment."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "nested_exception",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "unless the most recent qualifying therapy ended more than 24 months before enrollment"
+        ],
+        "cohort_scope": null,
+        "rationale": "H4: removing this phrase restores the broader exclusion for the listed prior qualifying therapies. The phrase waives that exclusion when the most recent qualifying therapy ended more than 24 months before enrollment; the explicit trigger 'unless' is included (X3)."
+      }
+    ],
+    "needs_recursion": true,
+    "recursion_targets": [
+      "main"
+    ],
+    "recursion_note": "The main content contains distinct prior-therapy requirements: BTK-inhibitor exposure, BCL-2-inhibitor exposure, and prior CAR-T therapy. The shared exception is assigned at this level first.",
+    "primary_rule_id": "H4",
+    "supporting_rule_ids": [
+      "H1-B",
+      "X3"
+    ],
+    "notes": ""
+  },
+  "children": [
+    {
+      "node_id": "root.main",
+      "depth": 1,
+      "target_segments": [
+        "Prior treatment with either a BTK inhibitor for at least 8 weeks or a BCL-2 inhibitor for at least 12 weeks, and prior CAR-T therapy, are exclusionary"
+      ],
+      "parent_context": {
+        "parent_decision": "nested_exception",
+        "parent_child_logic": null,
+        "current_child_id": "main",
+        "sibling_spans": {
+          "a": [
+            "unless the most recent qualifying therapy ended more than 24 months before enrollment"
+          ]
+        }
+      },
+      "incomplete_reason": null,
+      "output": {
+        "splitting_decision": "composite_split",
+        "child_logic": "OR",
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "Prior treatment with either a BTK inhibitor for at least 8 weeks"
+            ],
+            "cohort_scope": null,
+            "rationale": "H1-B: prior BTK-inhibitor exposure has a distinct pharmacologic mechanism and its own minimum-duration requirement."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "a BCL-2 inhibitor for at least 12 weeks"
+            ],
+            "cohort_scope": null,
+            "rationale": "H1-B: prior BCL-2-inhibitor exposure is independently evaluable and has a different mechanism and minimum-duration requirement."
+          },
+          {
+            "child_id": "c",
+            "text_span": [
+              "prior CAR-T therapy"
+            ],
+            "cohort_scope": null,
+            "rationale": "H1-B: prior CAR-T therapy is a distinct treatment-history screening target from the inhibitor-exposure branches."
+          }
+        ],
+        "needs_recursion": false,
+        "recursion_targets": [],
+        "recursion_note": "",
+        "primary_rule_id": "H1-B",
+        "supporting_rule_ids": [
+          "H1-A",
+          "H5"
+        ],
+        "notes": "The shared exception was handled at the parent nested_exception level and is not part of the current target segments."
+      },
+      "children": []
+    }
+  ]
+}

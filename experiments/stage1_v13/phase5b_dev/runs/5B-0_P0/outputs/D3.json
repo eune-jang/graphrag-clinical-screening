@@ -1,0 +1,24 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Systemic antibiotics are not allowed during screening; topical antibiotic use is permitted if limited to a single body region."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "none",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H0",
+    "supporting_rule_ids": [
+      "H4"
+    ],
+    "notes": "The systemic-antibiotic prohibition is the eligibility requirement. The conditional permission for topical use concerns an exposure outside the stated systemic restriction and is scope clarification/permissive content, not a carve-out."
+  },
+  "children": []
+}

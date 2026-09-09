@@ -1,0 +1,33 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Any prior malignancy, other than non-melanoma skin cancer treated with curative intent."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "nested_exception",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "other than non-melanoma skin cancer treated with curative intent"
+        ],
+        "cohort_scope": null,
+        "rationale": "H4: removing this carve-out restores the broader exclusion of any prior malignancy; this phrase waives exclusion for the specified curatively treated non-melanoma skin cancer."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H4",
+    "supporting_rule_ids": [
+      "X3"
+    ],
+    "notes": "Main content is one prior-malignancy exclusion proposition."
+  },
+  "children": []
+}

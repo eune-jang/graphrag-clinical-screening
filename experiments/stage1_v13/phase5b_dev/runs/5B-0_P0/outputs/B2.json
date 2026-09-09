@@ -1,0 +1,41 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Life expectancy of at least 12 weeks and adequate venous access for study drug administration."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Life expectancy of at least 12 weeks"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: life expectancy is an independently evaluable eligibility requirement with its own numeric threshold."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "adequate venous access for study drug administration"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: adequate venous access is a distinct independently evaluable clinical/access requirement; study-drug administration is its purpose qualifier."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H0"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

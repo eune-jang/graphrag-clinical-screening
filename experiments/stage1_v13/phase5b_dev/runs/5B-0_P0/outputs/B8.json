@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Adequate coagulation function, defined as international normalized ratio no greater than 1.5 and activated partial thromboplastin time no greater than 1.5 times the upper limit of normal."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "macro_aggregate",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "international normalized ratio no greater than 1.5"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: international normalized ratio is an independently evaluable coagulation requirement with its own threshold."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "activated partial thromboplastin time no greater than 1.5 times the upper limit of normal"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: activated partial thromboplastin time is a distinct independently evaluable coagulation requirement with its own threshold."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H4",
+      "H5"
+    ],
+    "notes": "The broad adequate-coagulation statement is fully operationalized by the two stated threshold requirements and has no residual pass/fail meaning."
+  },
+  "children": []
+}

@@ -1,0 +1,46 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Participants in Cohort A must have measurable disease, and participants in Cohort B must have evaluable disease."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Participants in Cohort A must have measurable disease"
+        ],
+        "cohort_scope": [
+          "Cohort A"
+        ],
+        "rationale": "H1-B: measurable disease is an independently evaluated eligibility requirement applicable specifically to Cohort A."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "participants in Cohort B must have evaluable disease"
+        ],
+        "cohort_scope": [
+          "Cohort B"
+        ],
+        "rationale": "H1-B: evaluable disease is an independently evaluated eligibility requirement applicable specifically to Cohort B."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "X4",
+      "H5"
+    ],
+    "notes": "Cohort-specific eligibility content differs; under applicable-branch semantics, each cohort's corresponding requirement must hold when that cohort branch applies."
+  },
+  "children": []
+}

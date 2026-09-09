@@ -1,0 +1,41 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Body weight at least 40 kg and body mass index at least 18 kg per square metre."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Body weight at least 40 kg"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: body-weight threshold is an independently evaluable eligibility requirement distinct from body mass index."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "body mass index at least 18 kg per square metre"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: body-mass-index threshold is an independently evaluable eligibility requirement distinct from body weight."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H2-A"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

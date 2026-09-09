@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Interstitial lung disease or radiation pneumonitis, in either case requiring systemic corticosteroids, diagnosed at any time before screening."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "OR",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Interstitial lung disease",
+          "in either case requiring systemic corticosteroids, diagnosed at any time before screening"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: interstitial lung disease is a distinct screening target. The explicitly shared corticosteroid and diagnosis-timing qualifier applies to this branch (X2)."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "radiation pneumonitis, in either case requiring systemic corticosteroids, diagnosed at any time before screening"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: radiation pneumonitis is a distinct screening target with the shared corticosteroid and diagnosis-timing qualifier."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "X2"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

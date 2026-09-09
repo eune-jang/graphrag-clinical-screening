@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Locally advanced urothelial carcinoma with documented FGFR3 fusion."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Locally advanced urothelial carcinoma"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-B: the locally advanced urothelial carcinoma diagnosis/disease-state requirement is independently asserted from the molecular alteration requirement."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "documented FGFR3 fusion"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A/H2-B: documented FGFR3 fusion is an independently required biomarker proposition with a different downstream semantic category from diagnosis."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H2-A",
+    "supporting_rule_ids": [
+      "H2-B",
+      "H1-B"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

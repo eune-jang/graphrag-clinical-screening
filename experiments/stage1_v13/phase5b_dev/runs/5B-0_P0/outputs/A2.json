@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Within 6 months before enrollment, myocardial infarction or cerebrovascular accident."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "OR",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Within 6 months before enrollment, myocardial infarction"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: myocardial infarction and cerebrovascular accident are distinct screening targets. The 6-month pre-enrollment window applies to this branch."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "Within 6 months before enrollment,",
+          "cerebrovascular accident."
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: cerebrovascular accident is a distinct screening target independently evaluated under the shared 6-month pre-enrollment window (X2)."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "X2"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

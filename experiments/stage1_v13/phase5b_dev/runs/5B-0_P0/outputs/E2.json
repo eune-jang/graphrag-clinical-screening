@@ -1,0 +1,89 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Current therapeutic anticoagulation, or current antiplatelet therapy unless limited to low-dose aspirin, within 7 days before enrollment."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "OR",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Current therapeutic anticoagulation",
+          "within 7 days before enrollment."
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: therapeutic anticoagulation is a distinct medication-exposure screening target. The 7-day timing qualifier applies to this coordinated branch and is retained as a separate exact segment."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "current antiplatelet therapy unless limited to low-dose aspirin, within 7 days before enrollment."
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: antiplatelet therapy is independently evaluated from therapeutic anticoagulation. The branch-specific 'unless' allowance is retained for recursive exception annotation (H4)."
+      }
+    ],
+    "needs_recursion": true,
+    "recursion_targets": [
+      "b"
+    ],
+    "recursion_note": "Child b contains a branch-specific exception permitting antiplatelet therapy limited to low-dose aspirin.",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H4",
+      "X2"
+    ],
+    "notes": ""
+  },
+  "children": [
+    {
+      "node_id": "root.b",
+      "depth": 1,
+      "target_segments": [
+        "current antiplatelet therapy unless limited to low-dose aspirin, within 7 days before enrollment."
+      ],
+      "parent_context": {
+        "parent_decision": "composite_split",
+        "parent_child_logic": "OR",
+        "current_child_id": "b",
+        "sibling_spans": {
+          "a": [
+            "Current therapeutic anticoagulation",
+            "within 7 days before enrollment."
+          ]
+        }
+      },
+      "incomplete_reason": null,
+      "output": {
+        "splitting_decision": "nested_exception",
+        "child_logic": null,
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "unless limited to low-dose aspirin"
+            ],
+            "cohort_scope": null,
+            "rationale": "H4: removing this phrase restores the broader exclusion of current antiplatelet therapy within the stated time window. The phrase waives that restriction for antiplatelet therapy limited to low-dose aspirin; trigger word 'unless' is included (X3)."
+          }
+        ],
+        "needs_recursion": false,
+        "recursion_targets": [],
+        "recursion_note": "",
+        "primary_rule_id": "H4",
+        "supporting_rule_ids": [
+          "X3"
+        ],
+        "notes": "Main content is one antiplatelet-therapy proposition with the shared 7-day timing qualifier retained in the current target."
+      },
+      "children": []
+    }
+  ]
+}

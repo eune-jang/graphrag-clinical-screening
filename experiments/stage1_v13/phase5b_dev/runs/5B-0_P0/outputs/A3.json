@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Peripheral sensory neuropathy or peripheral motor neuropathy, either of Grade 2 or higher."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "OR",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Peripheral sensory neuropathy",
+          "either of Grade 2 or higher"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: peripheral sensory neuropathy is a distinct screening target from peripheral motor neuropathy. The Grade 2-or-higher qualifier explicitly applies to either branch and is retained with this child (X2)."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "peripheral motor neuropathy, either of Grade 2 or higher"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: peripheral motor neuropathy is independently evaluable and separately eligibility-determinative; the shared Grade 2-or-higher qualifier applies to this branch."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "X2"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

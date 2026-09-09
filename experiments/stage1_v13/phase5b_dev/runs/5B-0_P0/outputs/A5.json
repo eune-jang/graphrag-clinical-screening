@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Measurable hepatic lesion or measurable nodal lesion, in either case confirmed on contrast-enhanced imaging."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "OR",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Measurable hepatic lesion",
+          "in either case confirmed on contrast-enhanced imaging"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: hepatic lesion and nodal lesion are distinct screening targets. The measurability and imaging-confirmation requirements apply to either target; the explicitly shared confirmation qualifier is retained with this branch (X2)."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "measurable nodal lesion, in either case confirmed on contrast-enhanced imaging"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: nodal lesion is independently evaluable from hepatic lesion. The shared imaging-confirmation qualifier applies to this alternative as indicated by 'in either case' (X2)."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "X2"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

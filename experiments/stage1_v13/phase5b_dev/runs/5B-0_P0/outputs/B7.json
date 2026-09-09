@@ -1,0 +1,25 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Ongoing infection requiring intravenous antimicrobials, including bacteremia, osteomyelitis, or endocarditis."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "none",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H3",
+    "supporting_rule_ids": [
+      "H0",
+      "X5"
+    ],
+    "notes": "The 'including' list is non-exhaustive; bacteremia, osteomyelitis, and endocarditis are examples within the broader ongoing infection requiring intravenous antimicrobials requirement."
+  },
+  "children": []
+}

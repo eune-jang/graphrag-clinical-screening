@@ -1,0 +1,41 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Absolute lymphocyte count at least 0.5 x 10^9/L without growth factor support in the preceding 14 days."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Absolute lymphocyte count at least 0.5 x 10^9/L"
+        ],
+        "cohort_scope": null,
+        "rationale": "The absolute lymphocyte count threshold is an independently required laboratory eligibility condition."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "without growth factor support in the preceding 14 days"
+        ],
+        "cohort_scope": null,
+        "rationale": "Absence of recent growth factor support is an independently required medication/exposure condition with its own time window."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H2-A",
+    "supporting_rule_ids": [
+      "H1-B"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

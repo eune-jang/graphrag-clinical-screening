@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Diffuse large B-cell lymphoma and at least one prior anthracycline-containing regimen."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Diffuse large B-cell lymphoma"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A/H2-B: the diagnosis is an independently asserted eligibility requirement and requires a different downstream semantic category from prior treatment exposure."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "at least one prior anthracycline-containing regimen"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A: prior anthracycline-containing regimen exposure is an independently asserted treatment-history requirement."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H2-A",
+    "supporting_rule_ids": [
+      "H1-B",
+      "H2-B"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

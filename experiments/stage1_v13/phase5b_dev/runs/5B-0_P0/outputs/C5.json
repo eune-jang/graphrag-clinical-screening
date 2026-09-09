@@ -1,0 +1,96 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Confirmed relapsed disease and either measurable extramedullary disease or documented bone marrow involvement of at least 10 percent."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Confirmed relapsed disease"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B/H2-B: confirmed relapsed disease is an independently required disease-status proposition. Confirmation belongs to this proposition."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "either measurable extramedullary disease or documented bone marrow involvement of at least 10 percent"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: the alternative disease-involvement requirement is independently required in addition to relapsed disease and retains explicit lower-level OR structure."
+      }
+    ],
+    "needs_recursion": true,
+    "recursion_targets": [
+      "b"
+    ],
+    "recursion_note": "Child b contains two alternative, independently assessable disease-involvement propositions joined by OR.",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H2-B",
+      "H6"
+    ],
+    "notes": ""
+  },
+  "children": [
+    {
+      "node_id": "root.b",
+      "depth": 1,
+      "target_segments": [
+        "either measurable extramedullary disease or documented bone marrow involvement of at least 10 percent"
+      ],
+      "parent_context": {
+        "parent_decision": "composite_split",
+        "parent_child_logic": "AND",
+        "current_child_id": "b",
+        "sibling_spans": {
+          "a": [
+            "Confirmed relapsed disease"
+          ]
+        }
+      },
+      "incomplete_reason": null,
+      "output": {
+        "splitting_decision": "composite_split",
+        "child_logic": "OR",
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "measurable extramedullary disease"
+            ],
+            "cohort_scope": null,
+            "rationale": "H1-B: measurable extramedullary disease is a distinct independently evaluable disease-involvement requirement."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "documented bone marrow involvement of at least 10 percent"
+            ],
+            "cohort_scope": null,
+            "rationale": "H1-B: bone marrow involvement with its specified threshold is a separate independently evaluable disease-involvement requirement; documentation supports this requirement rather than forming a separate child."
+          }
+        ],
+        "needs_recursion": false,
+        "recursion_targets": [],
+        "recursion_note": "",
+        "primary_rule_id": "H1-B",
+        "supporting_rule_ids": [
+          "H0",
+          "H5"
+        ],
+        "notes": ""
+      },
+      "children": []
+    }
+  ]
+}

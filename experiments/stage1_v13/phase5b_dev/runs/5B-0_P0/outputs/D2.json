@@ -1,0 +1,33 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Live attenuated vaccine within 30 days before the first dose, unless administered as part of standard institutional practice for seasonal influenza."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "nested_exception",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "unless administered as part of standard institutional practice for seasonal influenza"
+        ],
+        "cohort_scope": null,
+        "rationale": "H4: removing this phrase restores the broader exclusion of live attenuated vaccination within 30 days. The phrase waives that exclusion for vaccines administered under standard institutional practice for seasonal influenza; the explicit trigger 'unless' is included (X3)."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H4",
+    "supporting_rule_ids": [
+      "X3"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

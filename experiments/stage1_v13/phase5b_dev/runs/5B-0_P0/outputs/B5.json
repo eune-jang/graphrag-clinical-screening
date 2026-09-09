@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Total bilirubin no greater than 1.5 times the upper limit of normal and no ongoing treatment with UGT1A1 inhibitors."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Total bilirubin no greater than 1.5 times the upper limit of normal"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A: the bilirubin threshold is an independently asserted laboratory eligibility requirement."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "no ongoing treatment with UGT1A1 inhibitors"
+        ],
+        "cohort_scope": null,
+        "rationale": "H2-A: absence of ongoing UGT1A1-inhibitor treatment is an independently asserted medication-exposure requirement."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H2-A",
+    "supporting_rule_ids": [
+      "H1-B",
+      "H5"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

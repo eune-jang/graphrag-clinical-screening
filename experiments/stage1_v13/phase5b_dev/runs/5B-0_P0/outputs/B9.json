@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "The participant must meet all of the following pulmonary parameters: forced expiratory volume in one second at least 50 percent predicted, and resting oxygen saturation at least 92 percent on room air."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "macro_aggregate",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "forced expiratory volume in one second at least 50 percent predicted"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: this is an independently evaluable pulmonary-function threshold."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "resting oxygen saturation at least 92 percent on room air"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: this is a distinct independently evaluable oxygenation threshold."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H3",
+      "H5"
+    ],
+    "notes": "The stated pulmonary-parameter wrapper is fully operationalized by the two listed required thresholds."
+  },
+  "children": []
+}

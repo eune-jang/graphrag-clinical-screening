@@ -1,0 +1,79 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Adequate organ reserve, defined as estimated glomerular filtration rate at least 45 mL/min per 1.73 square metres, and hepatic function with aspartate aminotransferase and alanine aminotransferase each no greater than 3 times the upper limit of normal."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "macro_aggregate",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "estimated glomerular filtration rate at least 45 mL/min per 1.73 square metres"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: eGFR threshold is an independently evaluable renal-reserve requirement within the adequate-organ-reserve umbrella."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "hepatic function with aspartate aminotransferase and alanine aminotransferase each no greater than 3 times the upper limit of normal"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: hepatic-function requirements are independently evaluable from the eGFR requirement. This child retains two coordinate aminotransferase thresholds for next-level evaluation."
+      }
+    ],
+    "needs_recursion": true,
+    "recursion_targets": [
+      "b"
+    ],
+    "recursion_note": "The hepatic-function child contains separate aspartate aminotransferase and alanine aminotransferase threshold requirements.",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "H5",
+      "H6"
+    ],
+    "notes": "“Adequate organ reserve” is a true umbrella fully operationalized by the renal and hepatic requirements."
+  },
+  "children": [
+    {
+      "node_id": "root.b",
+      "depth": 1,
+      "target_segments": [
+        "hepatic function with aspartate aminotransferase and alanine aminotransferase each no greater than 3 times the upper limit of normal"
+      ],
+      "parent_context": {
+        "parent_decision": "macro_aggregate",
+        "parent_child_logic": "AND",
+        "current_child_id": "b",
+        "sibling_spans": {
+          "a": [
+            "estimated glomerular filtration rate at least 45 mL/min per 1.73 square metres"
+          ]
+        }
+      },
+      "incomplete_reason": null,
+      "output": {
+        "splitting_decision": "none",
+        "child_logic": null,
+        "cohort_scope": null,
+        "sub_criteria": [],
+        "needs_recursion": false,
+        "recursion_targets": [],
+        "recursion_note": "",
+        "primary_rule_id": "H1-B",
+        "supporting_rule_ids": [
+          "H0",
+          "H2-A"
+        ],
+        "notes": "Aspartate aminotransferase and alanine aminotransferase thresholds jointly define one hepatic-function adequacy judgment; both are laboratory measures within the same integrated requirement."
+      },
+      "children": []
+    }
+  ]
+}

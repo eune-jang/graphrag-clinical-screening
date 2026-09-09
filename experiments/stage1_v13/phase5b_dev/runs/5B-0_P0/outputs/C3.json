@@ -1,0 +1,34 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Prior solid organ transplant and ongoing immunosuppressive therapy are exclusionary, unless the participant has been off all immunosuppression for at least 6 months."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "nested_exception",
+    "child_logic": null,
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "unless the participant has been off all immunosuppression for at least 6 months"
+        ],
+        "cohort_scope": null,
+        "rationale": "H4: removing this phrase restores the broader exclusion involving prior solid organ transplant with ongoing immunosuppressive therapy. The phrase waives that restriction for participants who have been off immunosuppression for at least 6 months."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H4",
+    "supporting_rule_ids": [
+      "H1-B",
+      "X3"
+    ],
+    "notes": "The transplant history and immunosuppressive-treatment status jointly define the restricted clinical situation; no further independent lower-level structure remains."
+  },
+  "children": []
+}

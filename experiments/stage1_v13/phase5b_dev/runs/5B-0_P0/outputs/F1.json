@@ -1,0 +1,26 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "In Part 2 only, participants must have documented progression on prior immunotherapy."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "none",
+    "child_logic": null,
+    "cohort_scope": [
+      "Part 2"
+    ],
+    "sub_criteria": [],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H0",
+    "supporting_rule_ids": [
+      "X4"
+    ],
+    "notes": "Documented progression on prior immunotherapy is one eligibility proposition; 'In Part 2 only' is explicit cohort applicability scope."
+  },
+  "children": []
+}

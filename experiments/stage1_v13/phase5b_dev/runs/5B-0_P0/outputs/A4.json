@@ -1,0 +1,42 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Serum albumin and serum total protein each at least 3.0 g/dL at screening."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "Serum albumin",
+          "each at least 3.0 g/dL at screening."
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: serum albumin is an independently evaluated laboratory requirement. The shared threshold and screening-time qualifier apply to this measurement (X2)."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "serum total protein each at least 3.0 g/dL at screening."
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: serum total protein is a distinct independently evaluated laboratory requirement with the shared threshold and screening-time qualifier."
+      }
+    ],
+    "needs_recursion": false,
+    "recursion_targets": [],
+    "recursion_note": "",
+    "primary_rule_id": "H1-B",
+    "supporting_rule_ids": [
+      "X2"
+    ],
+    "notes": ""
+  },
+  "children": []
+}

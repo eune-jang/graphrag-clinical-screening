@@ -1,0 +1,95 @@
+{
+  "node_id": "root",
+  "depth": 0,
+  "target_segments": [
+    "Participants must have an ECOG performance status of 0 or 1 and one of the following prior-treatment histories: platinum-based chemotherapy completed within 12 months before enrollment, or taxane therapy completed within 6 months before enrollment."
+  ],
+  "parent_context": null,
+  "incomplete_reason": null,
+  "output": {
+    "splitting_decision": "composite_split",
+    "child_logic": "AND",
+    "cohort_scope": null,
+    "sub_criteria": [
+      {
+        "child_id": "a",
+        "text_span": [
+          "ECOG performance status of 0 or 1"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B/H2-A: ECOG performance status is an independently asserted eligibility requirement and requires a different downstream semantic category from prior-treatment history."
+      },
+      {
+        "child_id": "b",
+        "text_span": [
+          "one of the following prior-treatment histories: platinum-based chemotherapy completed within 12 months before enrollment, or taxane therapy completed within 6 months before enrollment"
+        ],
+        "cohort_scope": null,
+        "rationale": "H1-B: the prior-treatment-history requirement is independently asserted alongside performance status. Its closed alternatives and branch-specific completion windows remain integrated for recursive evaluation."
+      }
+    ],
+    "needs_recursion": true,
+    "recursion_targets": [
+      "b"
+    ],
+    "recursion_note": "Child b contains two independently evaluable prior-treatment alternatives with different treatment targets and time windows.",
+    "primary_rule_id": "H2-A",
+    "supporting_rule_ids": [
+      "H1-B",
+      "H3"
+    ],
+    "notes": ""
+  },
+  "children": [
+    {
+      "node_id": "root.b",
+      "depth": 1,
+      "target_segments": [
+        "one of the following prior-treatment histories: platinum-based chemotherapy completed within 12 months before enrollment, or taxane therapy completed within 6 months before enrollment"
+      ],
+      "parent_context": {
+        "parent_decision": "composite_split",
+        "parent_child_logic": "AND",
+        "current_child_id": "b",
+        "sibling_spans": {
+          "a": [
+            "ECOG performance status of 0 or 1"
+          ]
+        }
+      },
+      "incomplete_reason": null,
+      "output": {
+        "splitting_decision": "macro_aggregate",
+        "child_logic": "OR",
+        "cohort_scope": null,
+        "sub_criteria": [
+          {
+            "child_id": "a",
+            "text_span": [
+              "platinum-based chemotherapy completed within 12 months before enrollment"
+            ],
+            "cohort_scope": null,
+            "rationale": "H3: this is an explicitly closed 'one of the following' prior-treatment-history alternative with its own treatment and temporal constraint."
+          },
+          {
+            "child_id": "b",
+            "text_span": [
+              "taxane therapy completed within 6 months before enrollment"
+            ],
+            "cohort_scope": null,
+            "rationale": "H3: this is the other exhaustively listed prior-treatment-history alternative, independently determinative and carrying a distinct treatment and temporal constraint."
+          }
+        ],
+        "needs_recursion": false,
+        "recursion_targets": [],
+        "recursion_note": "",
+        "primary_rule_id": "H3",
+        "supporting_rule_ids": [
+          "H1-B"
+        ],
+        "notes": "The introductory prior-treatment-history wording is a true umbrella fully operationalized by the two listed alternatives."
+      },
+      "children": []
+    }
+  ]
+}
