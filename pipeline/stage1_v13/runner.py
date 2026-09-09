@@ -29,6 +29,7 @@ import argparse
 import json
 import logging
 import sys
+import time
 from pathlib import Path
 from typing import Any, Callable, Protocol
 
@@ -44,6 +45,16 @@ from .contracts import (
     derive_tier,
 )
 from .context import Stage1Context, child_context, main_context, root_context
+from .tracing import (
+    DISPOSITION_API_ERROR,
+    DISPOSITION_CACHE_HIT,
+    DISPOSITION_CACHE_REJECTED,
+    DISPOSITION_PARSE_FAILURE,
+    DISPOSITION_SUCCESS,
+    DISPOSITION_VALIDATION_FAILURE,
+    AttemptTracer,
+    build_attempt,
+)
 from .validators import Stage1V13ValidationError, validate_v13_output
 
 logger = logging.getLogger(__name__)
@@ -104,14 +115,28 @@ def run_pass(
     template: str,
     cache: _Cache | None = None,
     max_retries: int = MAX_RETRIES,
+    tracer: AttemptTracer | None = None,
 ) -> V13Output:
     """One hierarchy level: render → call → parse → validate (hard).
 
     Retries on validation failure because a malformed pass is usually a
     formatting slip, but the loop never relaxes a rule to make output pass.
+
+    Every attempt is handed to `tracer` **as it happens**, failures included, so
+    a response that was rejected and retried stays in the record. Nothing is
+    overwritten and retry counts never have to be inferred from call totals.
+
+    Token usage and provider errors belong to whoever owns the API call, so the
+    callable may expose a `last_call_meta` dict (e.g. `{"usage": {...}}`) that
+    is read after each call. Optional and duck-typed; a plain function traces
+    fine without it.
     """
     prompt_text = render_prompt(ctx, template)
     payload = ctx.cache_payload()
+
+    def _trace(**kw) -> None:
+        if tracer is not None:
+            tracer.record(build_attempt(ctx=ctx, template=template, model=model, **kw))
 
     if cache is not None:
         cached = cache.get(template, payload, model)
@@ -119,23 +144,45 @@ def run_pass(
             errors = validate_v13_output(cached, ctx)
             if not errors:
                 logger.debug("[%s] cache hit", ctx.node_id)
+                _trace(attempt_index=0, disposition=DISPOSITION_CACHE_HIT, cache="hit",
+                       parsed_json=cached, validation_errors=[])
                 return cached
             logger.warning("[%s] 캐시된 응답이 검증에 실패해 무시합니다: %s", ctx.node_id, errors[:2])
+            _trace(attempt_index=0, disposition=DISPOSITION_CACHE_REJECTED, cache="hit",
+                   parsed_json=cached, validation_errors=errors)
 
+    cache_state = "miss" if cache is not None else "disabled"
     last_errors: list[str] = []
     for attempt in range(1 + max_retries):
-        raw = llm(prompt_text, model)
+        t0 = time.time()
+        try:
+            raw = llm(prompt_text, model)
+        except Exception as exc:  # noqa: BLE001 — traced, then re-raised
+            _trace(attempt_index=attempt, disposition=DISPOSITION_API_ERROR,
+                   api_error=f"{type(exc).__name__}: {exc}", cache=cache_state,
+                   latency_s=round(time.time() - t0, 3),
+                   llm_meta=getattr(llm, "last_call_meta", None))
+            raise
+        meta = getattr(llm, "last_call_meta", None)
+        latency = round(time.time() - t0, 3)
+
         try:
             parsed = _parse_json_response(raw)
         except (json.JSONDecodeError, ValueError) as exc:
             last_errors = [f"JSON 파싱 실패: {exc}"]
             logger.warning("[%s] attempt %d: %s", ctx.node_id, attempt + 1, last_errors[0])
+            _trace(attempt_index=attempt, disposition=DISPOSITION_PARSE_FAILURE,
+                   raw_response=raw, parse_error=str(exc), cache=cache_state,
+                   latency_s=latency, llm_meta=meta)
             continue
 
         errors = validate_v13_output(parsed, ctx)
         if not errors:
             if cache is not None:
                 cache.put(template, payload, model, parsed)
+            _trace(attempt_index=attempt, disposition=DISPOSITION_SUCCESS,
+                   raw_response=raw, parsed_json=parsed, validation_errors=[],
+                   cache=cache_state, latency_s=latency, llm_meta=meta)
             return parsed
 
         last_errors = errors
@@ -143,6 +190,9 @@ def run_pass(
             "[%s] attempt %d: 검증 실패 %d건 — %s",
             ctx.node_id, attempt + 1, len(errors), errors[0],
         )
+        _trace(attempt_index=attempt, disposition=DISPOSITION_VALIDATION_FAILURE,
+               raw_response=raw, parsed_json=parsed, validation_errors=errors,
+               cache=cache_state, latency_s=latency, llm_meta=meta)
 
     raise Stage1V13ValidationError(last_errors, node_id=ctx.node_id)
 
@@ -159,6 +209,7 @@ def run_stage1_v13(
     template: str | None = None,
     cache: _Cache | None = None,
     max_depth: int = DEFAULT_MAX_DEPTH,
+    tracer: AttemptTracer | None = None,
 ) -> Stage1V13Node:
     """Run one pass and every pass it legitimately asks for.
 
@@ -180,7 +231,8 @@ def run_stage1_v13(
     model = model or MODELS["prompt_1"]
     template = template if template is not None else load_dev_prompt()
 
-    output = run_pass(ctx, llm=llm, model=model, template=template, cache=cache)
+    output = run_pass(ctx, llm=llm, model=model, template=template, cache=cache,
+                      tracer=tracer)
     node = Stage1V13Node(
         node_id=ctx.node_id,
         depth=ctx.depth,
@@ -216,14 +268,16 @@ def run_stage1_v13(
             )
             return node
         node.children[MAIN_TARGET] = run_stage1_v13(
-            sub_ctx, llm=llm, model=model, template=template, cache=cache, max_depth=max_depth,
+            sub_ctx, llm=llm, model=model, template=template, cache=cache,
+            max_depth=max_depth, tracer=tracer,
         )
         return node
 
     for child_id in targets:
         sub_ctx = child_context(ctx, output, child_id)
         node.children[child_id] = run_stage1_v13(
-            sub_ctx, llm=llm, model=model, template=template, cache=cache, max_depth=max_depth,
+            sub_ctx, llm=llm, model=model, template=template, cache=cache,
+            max_depth=max_depth, tracer=tracer,
         )
     return node
 

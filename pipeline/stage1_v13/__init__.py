@@ -48,6 +48,7 @@ from .contracts import (
     read_legacy_stage1_record,
 )
 from .context import Stage1Context, derive_main_segments, root_context
+from .tracing import AttemptTracer, JsonlTracer, MemoryTracer, summarize_attempts
 from .validators import Stage1V13ValidationError, validate_v13_output
 
 # `runner` is imported lazily: eagerly importing it here would put the module in
@@ -64,7 +65,10 @@ def __getattr__(name: str) -> Any:  # PEP 562
 
 
 __all__ = [
+    "AttemptTracer",
     "CHILD_LOGIC_VALUES",
+    "JsonlTracer",
+    "MemoryTracer",
     "INCOMPLETE_EMPTY_MAIN",
     "INCOMPLETE_MAX_DEPTH",
     "EXECUTION_CONTEXT_FIELDS",
@@ -83,6 +87,7 @@ __all__ = [
     "read_legacy_stage1_record",
     "root_context",
     "run_pass",
+    "summarize_attempts",
     "run_stage1_v13",
     "validate_v13_output",
 ]
