@@ -3,7 +3,8 @@
 > **최종 갱신**: 2026-09-08
 > **활성 브랜치**: `feat/adjudication-prep` (main 미병합)
 > **동결 checkpoint**: commit `80f0f28` / tag `stage1-adjudication-complete-2026-09-08`
-> **Phase 2**: 완료 · **Phase 3**: 완료 (v1.3 반입) · **Phase 4**: 완료 (v1.3 개발 런타임) · **Phase 5**: 대기
+> **Phase 2–4**: 완료 · **Phase 5A**: 완료 (실모델 스모크 + trace review) · **Phase 5B-prep**: 완료
+> · **Phase 5B**: **미실행** — 프롬프트 후보 미작성, 비교 미수행
 > 이 문서는 **빠르게 변하는 연구 진행 상태**의 entry point다.
 > 무엇을 authoritative하게 읽어야 하는지는 [`repository/SOURCE_OF_TRUTH.md`](repository/SOURCE_OF_TRUTH.md)를 본다.
 
@@ -33,7 +34,9 @@ export와 함께 Git에 보존·원격 백업되었다. 저장소 구조가 안�
 | 저장소 구조 안정화 | ✅ **완료 (PHASE 2)** — source / frozen evidence / historical / generated 경계 문서화 |
 | v1.3 방법론 반입 (PHASE 3) | ✅ **완료** — canonical core v1.3.0 + 개발 프롬프트 v1.3.1 반입, 4층 governance 정의 (§5) |
 | v1.3 **개발** 런타임 (PHASE 4) | ✅ **완료** — `pipeline/stage1_v13/` 병렬 실행 경로. 프로덕션 경로는 무변경 |
-| v1.3 프롬프트 개발·동결 (PHASE 5) | ⏸️ **대기** — 실제 모델 호출·튜닝 미착수 |
+| v1.3 실모델 스모크 (PHASE 5A) | ✅ **완료** — 14 케이스 / 15 호출, hard failure 0. [trace review](../experiments/stage1_v13/smoke_2026-09-08/TRACE_REVIEW_SUMMARY.md) 완료 |
+| v1.3 프롬프트 개발 준비 (PHASE 5B-prep) | ✅ **완료** — attempt 트레이스 계측, 환경 기록, 가설 2건 사전 등록, 개발 세트 34건 설계 |
+| v1.3 프롬프트 개발·동결 (PHASE 5B) | ⏸️ **미실행** — 프롬프트 후보 미작성. **검증된 프롬프트 패치는 아직 없다** |
 | Stage 2–5 IAA | ⛔ 미착수 (stage_runner에서 `NotImplementedError`) |
 | Neo4j 온톨로지 / RAG 에이전트 | ⛔ scaffold만 존재 |
 
@@ -218,6 +221,9 @@ v1.2.3 중간 상태를 따로 만들지 않고 **v1.3에서 한 번에 해소**
 | [`project_state/stage1_v1_3_implementation_gap.md`](project_state/stage1_v1_3_implementation_gap.md) | v1.3 구현 격차 재고 (Phase 4 입력) |
 | [`decisions/0001-stage1-v1-3-method-import.md`](decisions/0001-stage1-v1-3-method-import.md) | v1.3 반입 ADR |
 | [`methods/stage1_v1_3_runtime.md`](methods/stage1_v1_3_runtime.md) | v1.3 **개발** 런타임 — 아키텍처·계약·재귀·검증·실행법 |
+| [`project_state/stage1_v1_3_phase5b_prompt_hypotheses.md`](project_state/stage1_v1_3_phase5b_prompt_hypotheses.md) | Phase 5B 프롬프트 가설 (사전 등록, **프롬프트 미수정**) |
+| [`../experiments/stage1_v13/smoke_2026-09-08/TRACE_REVIEW_SUMMARY.md`](../experiments/stage1_v13/smoke_2026-09-08/TRACE_REVIEW_SUMMARY.md) | Phase 5A trace review 요약 |
+| [`../experiments/stage1_v13/phase5b_dev/README.md`](../experiments/stage1_v13/phase5b_dev/README.md) | Phase 5B 개발 세트 (34 케이스, **미실행**) |
 | [`papers/amia2027/README.md`](papers/amia2027/README.md) | AMIA 제출 당시 산출물 vs post-AMIA 113건 분리 |
 | [`project_state/PHASE2_HANDOVER_2026-09-08.md`](project_state/PHASE2_HANDOVER_2026-09-08.md) | PHASE 2 인계 — 최종 tree, move/archive 목록, 미결 질문, Phase 3 설계 입력 |
 | [`../evidence/stage1/adjudication_v1_2_2_2026-09-07/README.md`](../evidence/stage1/adjudication_v1_2_2_2026-09-07/README.md) | 동결 증거 번들 provenance·재검증 절차 |
