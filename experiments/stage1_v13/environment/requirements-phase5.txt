@@ -1,0 +1,17 @@
+# Stage 1 v1.3 Phase 5 development environment — RECORD, not an install target
+#
+# This file records the environment in which the PHASE 5A smoke test actually
+# succeeded (2026-09-08). It is intentionally NOT wired into pyproject.toml —
+# see README.md in this directory for why.
+#
+# python  : 3.11.5 (CPython)
+# platform: Darwin arm64
+#
+# Install into a development environment with:
+#   pip install -r experiments/stage1_v13/environment/requirements-phase5.txt
+
+openai==1.6.1
+httpx==0.26.0
+pydantic==2.5.3
+anyio==4.2.0
+python-dotenv==1.0.0
