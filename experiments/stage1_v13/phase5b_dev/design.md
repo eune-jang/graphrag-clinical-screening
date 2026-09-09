@@ -89,9 +89,15 @@ positive에서 복사가 늘고 **음성 대조군에서 늘지 않아야** 가�
 | B3 | 진단 + 바이오마커 | `{H2-B, H1-B}` · H2-A primary = FAIL |
 | B4 | 진단 + 치료력 | `{H1-B}` · H2-A primary = FAIL |
 | B5 | 검사값 + 약물 제한 | `{H1-B}` · H2-A primary = FAIL |
-| B6 | 확인 귀속 | `{H2-B, H0, H1-A}` |
+| B6 | 확인 귀속 | `{H2-B, H0}` · H1-A / H2-A primary = FAIL |
 | **B8 / B9** | umbrella + closed list ×2 | `{H3, H4}` · **서로 일치해야 함** |
 | B10 | 같은 도메인·다른 기전 | `{H1-B}` |
+
+**B6 사전등록 축소 (2026-09-09 승인)**: `pathologically documented`는 독립 screening target의
+대안이 아니므로 H1-A를 primary로 인정하는 것은 너무 넓다. canonical H0가 다른 요건을 지원하기만 하는
+확인 방법을 독립 자식으로 만들지 말라고 하고, H2-B가 확인의 진단 귀속을 더 구체적으로 규정한다.
+둘 중 하나를 배제할 근거는 현행 동결 canonical만으로는 약하므로 **H2-B를 preferred로 고정하지 않고**
+`{H2-B, H0}` 두 값을 모두 허용한다.
 
 **B8/B9 쌍이 안정성 자체를 측정한다.** 도메인만 다르고 구조가 같다 —
 같은 primary면 안정, 갈리면 S06 vs S07 관측이 재현된 것이다.

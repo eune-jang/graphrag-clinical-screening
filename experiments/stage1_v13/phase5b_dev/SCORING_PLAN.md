@@ -99,7 +99,9 @@ child가 문법적으로 불완전하게 남는 것이 **정답**이다.
 
 분모: `provenance_target` = **B3 B4 B5 B6 B8 B9 B10 (7건)**.
 각 케이스의 허용 primary 집합은 `cases.jsonl`의 `expected_provenance`에 **사전 등록**되어 있다.
-canonical이 실제로 복수 해석을 허용하는 경우에만 집합을 넓게 잡았다(예: B6 `{H2-B, H0, H1-A}`).
+canonical이 실제로 복수 해석을 허용하는 경우에만 집합을 넓게 잡았다(예: B6 `{H2-B, H0}` —
+H0는 확인 방법을 dependent content로 판정하는 직접적 gate이고 H2-B는 확인의 진단 귀속을
+구체적으로 규정한다. 현행 동결 canonical만으로 둘 중 하나를 배제할 근거는 약하다).
 
 ### 보고 항목
 

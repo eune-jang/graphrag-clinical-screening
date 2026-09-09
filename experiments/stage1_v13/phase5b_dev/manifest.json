@@ -4,7 +4,7 @@
   "created": "2026-09-08",
   "corrected": "2026-09-09",
   "executed": false,
-  "correction_note": "B1/C1/C6/E2 rewritten, D1 expectation fixed, D6 added, F2 and A8 reclassified, D5 marked qualitative. Depth labels now follow the runner convention (root = depth 0).",
+  "correction_note": "B1/C1/C6/E2 rewritten, D1 expectation fixed, D6 added, F2 and A8 reclassified, D5 marked qualitative. Depth labels now follow the runner convention (root = depth 0). B6 allowed primary narrowed to {H2-B, H0} on human review.",
   "provenance": "newly written synthetic criteria. Verified programmatically: none appears in the v1.3.1 prompt, none reuses a PHASE 5A case, none reuses a historical 113-item criterion.",
   "n_cases": 35,
   "prompts": {
@@ -465,7 +465,7 @@
       ],
       "boundary": "confirmation belongs to the diagnosis proposition — must not split confirmation out",
       "expected_structural": "none",
-      "expected_provenance": "allowed primary {H2-B, H0, H1-A}",
+      "expected_provenance": "allowed primary {H2-B, H0}; H1-A as primary is a FAIL; H2-A as primary is a FAIL",
       "expected_recursion": false,
       "expected_max_depth": 0,
       "role": "primary_rule_hypothesis",
