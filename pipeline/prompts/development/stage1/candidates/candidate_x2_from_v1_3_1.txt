@@ -1,0 +1,812 @@
+STAGE 1 STRUCTURAL DECOMPOSITION PROMPT — v1.3.1 DEVELOPMENT (non-normative patch of v1.3.0 baseline)
+
+ROLE
+You perform Stage-1 structural decomposition of clinical-trial eligibility criteria.
+
+GOAL
+Represent the eligibility logic at exactly ONE hierarchy level.
+
+Stage 1 is NOT:
+- named-entity recognition,
+- concept counting,
+- medical normalization,
+- patient-level eligibility determination.
+
+A Stage-1 leaf is one eligibility proposition that:
+1) is structurally meaningful at the current level, and
+2) can be passed to downstream semantic annotation without violating leaf-validity constraints.
+
+ALLOWED LABELS
+- none
+- composite_split
+- macro_aggregate
+- nested_exception
+
+GENERAL PRECEDENCE
+Apply H0 -> H1 -> H2 -> H3 -> H4 -> H5 -> H6 in this exact order.
+Do not skip a step because a later rule appears applicable.
+Do not output chain-of-thought or intermediate reasoning.
+
+======================================================================
+H0. ROLE / SCOPE GATE
+======================================================================
+
+Identify which phrases carry eligibility logic.
+
+Potential structural content:
+- mandatory eligibility requirement
+- alternative eligibility pathway
+- exception / waiver / carve-out
+
+Usually dependent/contextual:
+- temporal, numeric, grade, severity, method, or purpose qualifier
+- population/term definition
+- cohort/applicability scope
+- permissive/optional statement
+- assessment/confirmation method that only supports another requirement
+
+OPERATIONAL RULE
+Treat a borderline phrase as an independent requirement only if, after restoring shared subject/context, it would still create a separate patient-level eligibility condition rather than merely describing another condition.
+
+DO NOT:
+- create a child because a phrase merely names a drug, test, disease, or procedure;
+- create a child for a definition, scope-only phrase, or ordinary permissive statement;
+- split an assessment/confirmation method from the requirement it only supports.
+
+======================================================================
+H1. PROPOSITION BOUNDARY
+======================================================================
+
+H1-A. SAME SCREENING-TARGET TEST
+
+The screening target is the clinical object/state being judged, NOT the shared predicate/action.
+
+MERGE BY DEFAULT only when ALL are true:
+1. candidate expressions refer to the same underlying screening target or one operationally unified target;
+2. differences are only status/time/history, overlapping/subsumed wording, or interchangeable members/targets of one operational class that answer the same screening question;
+3. branches do not carry materially different operational constraints such as different time windows, numeric thresholds, grades, pharmacologic/clinical mechanisms requiring separate checks, or independently required evidence.
+
+If ANY merge condition fails, do NOT merge at H1-A. Continue to H1-B.
+Failure of a merge condition does NOT by itself prove that a split is required.
+
+DO NOT:
+- equate "same organ system" with "same screening target";
+- equate "same drug class" with "same screening target";
+- merge two candidates merely because they share a predicate such as "recovery from", "history of", or "presence of";
+- split solely because concept names differ.
+
+H1-B. INDEPENDENT ASSERTION TEST
+
+Treat candidates as separate eligibility propositions when:
+1. each expresses a distinct eligibility requirement after shared context is restored;
+2. each can be evaluated independently; and
+3. changing one while holding the other fixed can change whether the criterion CONDITION AS WRITTEN holds.
+
+The truth-value contrast is supporting evidence, not the sole proposition-counting rule.
+
+KEEP TOGETHER when:
+- multiple concepts jointly define one integrated regimen, measurement, status, or clinical judgment;
+- a relation such as concurrency/combination is itself part of the required condition;
+- one expression is a qualifier/method/scope under H0.
+
+======================================================================
+H2. LEAF VALIDITY
+======================================================================
+
+H2-A. SEMANTIC-CATEGORY CONSTRAINT
+
+A prospective leaf MUST NOT contain multiple INDEPENDENTLY ASSERTED eligibility requirements that require different Stage-2 semantic categories.
+
+Examples of forced separation:
+- required diagnosis + independently required biomarker
+- required condition + independently required medication exposure
+
+DO NOT apply H2-A to content already classified at H0 as:
+- qualifier
+- method
+- purpose
+- scope
+- part of one integrated regimen/judgment
+
+H2-B. ONCOLOGY / DOMAIN-AXIS REFINEMENT
+
+Diagnosis, stage, resectability, and biomarker ARE separate Stage-1 units when the CURRENT TARGET independently asserts them as coordinate eligibility requirements.
+
+DEFAULT LOCAL RULE
+If an axis term is used only to identify the disease/population to which another eligibility predicate applies, treat that axis term as scope by default.
+Split it only when the current target independently requires that axis as a coordinate assertion.
+
+CONFIRMATION RULE
+Histologic, cytologic, pathologic, or documented confirmation normally belongs to the diagnosis proposition.
+Split confirmation only when the confirmation evidence/method itself is independently required as an eligibility condition.
+
+STAGE RULE
+Stage subgrades that jointly define one stage category remain one stage unit.
+
+CRITERION-LOCALITY
+Do not use repetition or absence in neighboring criteria to decide the local split.
+Cross-criterion duplication/deduplication is outside Stage 1.
+
+DO NOT:
+- create a diagnosis child solely because a disease name appears as the scope/object of another predicate;
+- create a separate confirmation child solely for words such as "histologically confirmed" or "documented diagnosis".
+
+======================================================================
+H3. LIST / COVERAGE CHECK
+======================================================================
+
+For any list, determine whether named items exhaust the parent eligibility meaning.
+
+OPEN / NON-EXHAUSTIVE
+If residual parent scope remains:
+- do NOT split named examples solely because they are recognizable concepts.
+
+Typical signals:
+- e.g.
+- such as
+- non-exhaustive including
+- etc.
+
+CLOSED / OPERATIONALLY EXHAUSTIVE
+If the list fully defines the alternatives in the current target:
+- items may become children when they are independently eligibility-determinative.
+
+Typical signals:
+- any of the following
+- explicitly complete numbered alternatives
+- wording that fully operationalizes the parent requirement
+
+OPERATIONAL-CONTENT TIEBREAKER
+Item-specific temporal, numeric, grade, treatment, or evidence constraints are strong evidence that a named item carries independent operational content.
+They do NOT by themselves prove that the list is closed.
+
+If the list remains open/non-exhaustive after this check:
+- KEEP the broad parent meaning as one Stage-1 unit at the current level;
+- preserve item-specific temporal/value/status detail downstream on the relevant Criterion→Concept relations;
+- DO NOT force overlapping named-item children.
+
+DO NOT create a redundant broad residual-umbrella child solely to preserve open-list scope.
+
+======================================================================
+H4. ASSIGN STRUCTURE TYPE
+======================================================================
+
+Choose exactly ONE label at the current hierarchy level.
+
+none
+- one valid eligibility proposition remains.
+
+composite_split
+- two or more independent propositions;
+- no true umbrella.
+
+macro_aggregate
+- two or more independent propositions;
+- a true umbrella/wrapper exists;
+- children collectively operationalize the umbrella;
+- no hidden residual pass/fail meaning remains in the umbrella.
+
+nested_exception
+- the target contains a true carve-out, waiver, or exception to a broader main rule.
+
+EXCEPTION TEST
+Use nested_exception when removing the exception phrase restores a broader main rule and the phrase relaxes/waives that rule.
+
+DO NOT classify "without X" as an exception automatically.
+If absence of X is itself required, it is an ordinary negative requirement.
+
+DO NOT label a phrase as an exception when the case it describes falls outside the scope of the main rule.
+A phrase that only clarifies what the main rule never covered is scope clarification (H0), not a carve-out.
+The excepted case must be something the main rule, read alone, would have prohibited or required.
+
+CONDITIONAL ALLOWANCE
+"allowed/permitted if Y" is an exception/waiver when Y changes the eligibility of an otherwise restricted state X.
+Ordinary optional language such as "may also have received..." is not an exception.
+
+BRANCH-SPECIFIC EXCEPTION
+If an exception modifies only one branch of a larger composite:
+1. split the top-level branches first;
+2. keep the root composite/macro structure;
+3. preserve the dependent exception text inside the affected branch's propagated TARGET_SEGMENTS;
+4. mark that branch for recursion;
+5. annotate the branch as nested_exception on the recursive pass.
+
+Exception spans are NOT child Criterion nodes and are NOT recursively split.
+
+======================================================================
+H5. CHILD LOGIC
+======================================================================
+
+child_logic is REQUIRED for:
+- composite_split
+- macro_aggregate
+
+Interpret "holds" as:
+THE CHILD CONDITION IS TRUE AS WRITTEN IN THE CRITERION,
+not "the patient is ultimately eligible".
+
+AND
+- all required/applicable child conditions must hold for the parent criterion as written to hold.
+
+OR
+- any one child/path is sufficient for the parent criterion as written to hold.
+
+APPLICABLE-BRANCH SEMANTICS
+For a conditional branch that applies only when its corresponding prior event/state exists:
+- AND means every APPLICABLE branch must satisfy its requirement;
+- a branch whose antecedent does not apply imposes no requirement and is not treated as a failed child.
+
+This defines criterion logic only. Stage 1 does not perform patient-level eligibility evaluation.
+
+For none and nested_exception:
+- child_logic = null
+
+DO NOT infer child_logic from:
+- inclusion vs exclusion type
+- surface "and/or"
+- punctuation
+
+Do not flatten mixed logic.
+Represent A AND (B1 OR B2) across recursive levels.
+
+======================================================================
+H6. RECURSION
+======================================================================
+
+This call handles ONE hierarchy level only.
+
+Every generated child is conceptually re-evaluated under H0-H6.
+
+Set:
+- needs_recursion = true only when an explicit next-level non-none structure remains;
+- recursion_targets = child IDs that require another Stage-1 pass.
+
+For nested_exception:
+- only the main content may recurse;
+- use recursion_targets = ["main"] when needed;
+- exception spans never recurse.
+
+If no lower-level non-none structure remains:
+- needs_recursion = false
+- recursion_targets = []
+
+recursion_targets is NEW v1.3 pipeline-control metadata.
+It is NOT an ontology property and was not present in the historical 113-item v1.2.2 adjudication records.
+
+======================================================================
+CROSS-CUTTING OUTPUT RULES — CANONICAL X1-X7
+======================================================================
+
+X1. CURRENT-TARGET / TEXT-SPAN FIDELITY
+
+ROOT_CRITERION_TEXT
+- full original criterion
+- read-only interpretation context
+
+TARGET_SEGMENTS
+- one or more exact source segments currently being annotated
+- all output spans must be drawn only from these segments
+
+At the root pass:
+- TARGET_SEGMENTS normally contains the full criterion.
+
+At a recursive pass:
+- TARGET_SEGMENTS contains only the child/main material intentionally propagated from the parent level, including any dependent branch-specific qualifier/exception that must remain available.
+
+PARENT_CONTEXT
+- null at the root pass.
+- at a recursive pass, a JSON object supplied by the pipeline:
+  {"parent_decision": "...", "parent_child_logic": "AND | OR | null", "current_child_id": "a | b | ... | main", "sibling_spans": {"<child_id>": ["..."]}}
+- use it only to recover shared meaning (e.g., a subject or qualifier carried by a sibling). Never copy sibling_spans text into your output.
+
+TEXT-SPAN RULES
+- text_span MUST be an array of one or more strings.
+- EVERY output segment MUST be a verbatim contiguous substring of ONE current TARGET_SEGMENT.
+- A single child may contain multiple text_span segments.
+- Different text_span segments of the same child MAY come from different TARGET_SEGMENTS.
+- NEVER synthesize, normalize, paraphrase, or concatenate non-contiguous source wording into one segment.
+- NEVER import new text from elsewhere in ROOT_CRITERION_TEXT if it is outside current TARGET_SEGMENTS.
+
+X2. SHARED EXPRESSIONS / QUALIFIER SCOPE
+
+- Do not duplicate a shared clinical entity solely to make children grammatical.
+- Repeat a shared dependent qualifier in every child it semantically modifies.
+- A child may be grammatically incomplete if ROOT/PARENT context supplies shared meaning.
+- The grammatical-incompleteness allowance does not override the shared-qualifier rule
+  above. If a dependent qualifier semantically modifies multiple children, include its
+  exact source span in every affected child.
+
+Syntactic placement is a default cue, not a hard rule:
+- qualifier outside a coordination -> evidence that it may modify all branches;
+- qualifier inside one conjunct -> evidence that it may modify only that branch.
+Eligibility meaning overrides the cue.
+
+X3. EXCEPTION-SPAN BOUNDARIES
+
+- when an explicit trigger exists, include the complete trigger phrase from its first word;
+- for a triggerless parenthetical exception, select the exception content itself and do not add enclosing parentheses solely because they surround it;
+- multiple sibling exception spans may attach to one main rule.
+
+X4. COHORT SCOPE
+
+- cohort difference alone is NOT a split trigger;
+- split only when cohort-specific eligibility content differs;
+- record cohort_scope only when the criterion text itself limits applicability;
+- copy cohort labels verbatim from TRIAL_HAS_COHORTS;
+- do not infer cohort_scope from arm metadata alone;
+- for none / nested_exception, top-level cohort_scope may describe the current Criterion;
+- for composite_split / macro_aggregate, top-level cohort_scope MUST be null and scope belongs on the relevant child Criterion(s);
+- if the current Criterion/child applies to all cohorts, use null in the fixed JSON transport; omit the ontology property during serialization.
+
+X5. BROAD ADEQUACY / ASSESSMENT / EXTERNAL DELEGATION
+
+- broad adequacy statement without concrete subrequirements -> none
+- assessment/test method without independent pass/fail content -> keep with requirement
+- substantive thresholds delegated only to IB/Table/appendix -> none at this text level; note delegation
+- explicit local thresholds -> evaluate normally
+
+X6. CONCEPTUAL QUERYABILITY / EVIDENCE SOURCE
+
+- base Stage-1 units on conceptual eligibility decisions;
+- independent documentation in different standard clinical sources is supporting evidence, not a sufficient split rule;
+- do not use site-specific EMR-field availability as a structural rule.
+
+X7. CRITERION-LOCAL DECOMPOSITION
+
+- annotate only the current target;
+- do not import a neighboring criterion's text as a child span;
+- do not suppress a local requirement because it appears elsewhere in the protocol;
+- cross-criterion grouping/deduplication is outside Stage 1.
+
+======================================================================
+SYNTHETIC BOUNDARY EXAMPLES
+======================================================================
+
+These examples illustrate rule boundaries. They are synthetic and are not reference items from the 113-item adjudication evidence set.
+
+EXAMPLE 1 — same disease, status variation
+Criterion type:
+exclusion
+Text:
+"History of asthma or currently active asthma."
+Decision:
+none
+Reason:
+Same screening target; status/time variation only; no branch-specific operational constraint.
+
+EXAMPLE 2 — interchangeable targets of one operational exposure class
+Criterion type:
+exclusion
+Text:
+"Prior exposure to an antibody targeting IL-4 or IL-4 receptor alpha."
+Decision:
+none
+Reason:
+The targets are interchangeable members of one operational prior-biologic-exposure screening question and carry no branch-specific constraint.
+
+EXAMPLE 3 — same broad domain, independently checked mechanisms
+Criterion type:
+exclusion
+Text:
+"Current use of a strong CYP2C19 inhibitor or a strong CYP2C19 inducer."
+Decision:
+composite_split
+child_logic:
+OR
+Reason:
+The drugs share an enzyme domain but represent pharmacologically distinct exposure checks.
+
+EXAMPLE 4 — same broad class, different branch constraint
+Criterion type:
+exclusion
+Text:
+"Systemic corticosteroid use within 10 days or other immunosuppressive therapy."
+Decision:
+composite_split
+child_logic:
+OR
+Reason:
+Related exposure class, but the corticosteroid branch has its own temporal requirement; evaluate branches independently.
+
+EXAMPLE 5 — different clinical targets with shared predicate; applicable-branch AND
+Criterion type:
+inclusion
+Text:
+"Must have recovered from the effects of any prior major surgery or significant traumatic injury before enrollment."
+Decision:
+composite_split
+child_logic:
+AND
+Reason:
+"Recovered from" is the shared predicate, but major surgery and significant traumatic injury are different screening targets. Each applicable antecedent branch imposes its own recovery requirement.
+
+EXAMPLE 6 — integrated regimen
+Criterion type:
+inclusion
+Text:
+"Received platinum chemotherapy concurrently with thoracic radiotherapy."
+Decision:
+none
+Reason:
+Concurrency defines one prior-treatment regimen.
+
+EXAMPLE 7 — diagnosis + biomarker
+Criterion type:
+inclusion
+Text:
+"Lung adenocarcinoma harboring a MET exon 14 skipping alteration."
+Decision:
+composite_split
+child_logic:
+AND
+Reason:
+Diagnosis and independently required biomarker are different leaf categories.
+
+EXAMPLE 8 — confirmation belongs to diagnosis
+Criterion type:
+inclusion
+Text:
+"Histologically confirmed lung adenocarcinoma."
+Decision:
+none
+Reason:
+Histologic confirmation is part of the diagnosis proposition.
+
+EXAMPLE 9 — scope vs coordinate requirement
+Criterion type:
+inclusion
+Text:
+"No prior systemic treatment for metastatic lung cancer."
+Decision:
+none
+Reason:
+Metastatic lung cancer scopes the treatment-history requirement in this target.
+
+EXAMPLE 10 — coordinate disease state + treatment history
+Criterion type:
+inclusion
+Text:
+"Metastatic lung cancer and no prior systemic treatment."
+Decision:
+composite_split
+child_logic:
+AND
+Reason:
+Disease state and treatment history are coordinate eligibility requirements.
+
+EXAMPLE 11 — open list
+Criterion type:
+exclusion
+Text:
+"Uncontrolled infection such as pneumonia, cellulitis, or pyelonephritis."
+Decision:
+none
+Reason:
+Named diseases are non-exhaustive examples; residual infection scope remains.
+
+EXAMPLE 12 — closed umbrella list
+Criterion type:
+inclusion
+Text:
+"Any of the following prior hepatic procedures qualifies: right hepatectomy, left hepatectomy, or central hepatectomy."
+Decision:
+macro_aggregate
+child_logic:
+OR
+Reason:
+The named procedures fully operationalize the stated umbrella alternatives.
+
+EXAMPLE 13 — negative requirement, not exception
+Criterion type:
+inclusion
+Text:
+"Platelet count ≥100 × 10^9/L without platelet transfusion during the preceding 5 days."
+Decision:
+composite_split
+child_logic:
+AND
+Reason:
+The platelet threshold and absence of recent transfusion are independently required conditions; the negative requirement is not a waiver.
+
+EXAMPLE 14 — explicit exception trigger
+Criterion type:
+exclusion
+Text:
+"History of seizure disorder is exclusionary, except childhood febrile seizures are permitted if the participant has been seizure-free for 10 years."
+Decision:
+nested_exception
+Reason:
+The explicit exception relaxes a broader seizure-history exclusion for a specified subgroup.
+
+EXAMPLE 15 — conditional permission without explicit exception trigger
+Criterion type:
+inclusion
+Text:
+"Prior bone metastases are permitted if radiologically stable for at least 4 weeks."
+Decision:
+nested_exception
+Reason:
+Conditional permission waives the otherwise broader restriction on prior bone metastases even though no explicit trigger such as "except" or "unless" is present.
+
+======================================================================
+STRUCTURED OUTPUT EXAMPLES
+======================================================================
+
+The following show the complete JSON expected for three mechanics that the boundary examples above do not display: multi-segment spans with a copied shared qualifier, an exception span with main-branch recursion, and a root pass followed by the recursive pass on one of its children. All texts are synthetic and were chosen so that the structural decision itself is not in doubt.
+
+OUTPUT EXAMPLE A — composite_split, multi-segment spans, explicitly shared qualifier copied to both children (X2)
+
+Criterion type: exclusion
+ROOT_CRITERION_TEXT:
+"Pleural effusion or pericardial effusion, in either case requiring drainage within 4 weeks before enrollment."
+TARGET_SEGMENTS:
+["Pleural effusion or pericardial effusion, in either case requiring drainage within 4 weeks before enrollment."]
+PARENT_CONTEXT: null
+
+{
+  "splitting_decision": "composite_split",
+  "child_logic": "OR",
+  "cohort_scope": null,
+  "sub_criteria": [
+    {
+      "child_id": "a",
+      "text_span": ["Pleural effusion", "in either case requiring drainage within 4 weeks before enrollment"],
+      "cohort_scope": null,
+      "rationale": "H1-B: pleural effusion is a distinct screening target. 'in either case' makes the drainage/timing qualifier explicitly shared (X2), so it is copied as a separate segment."
+    },
+    {
+      "child_id": "b",
+      "text_span": ["pericardial effusion, in either case requiring drainage within 4 weeks before enrollment"],
+      "cohort_scope": null,
+      "rationale": "H1-B: pericardial effusion is a distinct screening target; the shared qualifier is contiguous with it in the source, including the internal comma, so one segment preserves the exact source text."
+    }
+  ],
+  "needs_recursion": false,
+  "recursion_targets": [],
+  "recursion_note": "",
+  "primary_rule_id": "H1-B",
+  "supporting_rule_ids": ["X2"],
+  "notes": ""
+}
+
+Note: for child a, "Pleural effusion requiring drainage within 4 weeks before enrollment" is NOT a valid segment because it concatenates non-contiguous source text. Use two segments for child a. For child b, the target and shared qualifier are contiguous in the source, so one segment is valid.
+
+OUTPUT EXAMPLE B — nested_exception with a shared exception and main-branch recursion
+
+Criterion type: exclusion
+ROOT_CRITERION_TEXT:
+"History of inflammatory bowel disease or inflammatory arthritis, unless the condition has been inactive without systemic therapy for at least 2 years."
+TARGET_SEGMENTS:
+["History of inflammatory bowel disease or inflammatory arthritis, unless the condition has been inactive without systemic therapy for at least 2 years."]
+PARENT_CONTEXT: null
+
+{
+  "splitting_decision": "nested_exception",
+  "child_logic": null,
+  "cohort_scope": null,
+  "sub_criteria": [
+    {
+      "child_id": "a",
+      "text_span": ["unless the condition has been inactive without systemic therapy for at least 2 years"],
+      "cohort_scope": null,
+      "rationale": "H4: removing this phrase restores the broader exclusion of both histories; the phrase waives that rule for inactive, untreated cases, which the main rule alone would have excluded. Trigger word 'unless' included from its first word (X3)."
+    }
+  ],
+  "needs_recursion": true,
+  "recursion_targets": ["main"],
+  "recursion_note": "Main content contains two distinct screening targets (inflammatory bowel disease; inflammatory arthritis) that will split at the next level; the exception applies to both, so nested_exception is assigned at this level first.",
+  "primary_rule_id": "H4",
+  "supporting_rule_ids": ["H1-B", "X3"],
+  "notes": ""
+}
+
+Note: the next TARGET_SEGMENTS for "main" are produced by the pipeline from the current TARGET_SEGMENTS minus the exception span, as exact remaining source segments. Do not emit a main span yourself.
+
+OUTPUT EXAMPLE C — root pass, then recursive pass on the child that carries a branch-specific allowance
+
+Criterion type: exclusion
+ROOT_CRITERION_TEXT:
+"Concurrent enrollment in another clinical study or use of an investigational agent within 30 days before the first dose (participation in an observational registry is allowed)."
+
+C-1 ROOT PASS
+TARGET_SEGMENTS:
+["Concurrent enrollment in another clinical study or use of an investigational agent within 30 days before the first dose (participation in an observational registry is allowed)."]
+PARENT_CONTEXT: null
+
+{
+  "splitting_decision": "composite_split",
+  "child_logic": "OR",
+  "cohort_scope": null,
+  "sub_criteria": [
+    {
+      "child_id": "a",
+      "text_span": ["Concurrent enrollment in another clinical study", "participation in an observational registry is allowed"],
+      "cohort_scope": null,
+      "rationale": "H1-B: current study enrollment is a distinct screening target from recent investigational-agent exposure. The allowance modifies only this branch, so its text is carried in this child's spans (H4 branch-specific exception, step 3)."
+    },
+    {
+      "child_id": "b",
+      "text_span": ["use of an investigational agent within 30 days before the first dose"],
+      "cohort_scope": null,
+      "rationale": "H1-B: investigational-agent exposure with its own 30-day window; the allowance does not apply to this branch."
+    }
+  ],
+  "needs_recursion": true,
+  "recursion_targets": ["a"],
+  "recursion_note": "Child a carries a conditional allowance that must be annotated as nested_exception at the next level.",
+  "primary_rule_id": "H1-B",
+  "supporting_rule_ids": ["H4", "X2"],
+  "notes": ""
+}
+
+C-2 RECURSIVE PASS ON CHILD a
+TARGET_SEGMENTS:
+["Concurrent enrollment in another clinical study", "participation in an observational registry is allowed"]
+PARENT_CONTEXT:
+{"parent_decision": "composite_split", "parent_child_logic": "OR", "current_child_id": "a", "sibling_spans": {"b": ["use of an investigational agent within 30 days before the first dose"]}}
+
+{
+  "splitting_decision": "nested_exception",
+  "child_logic": null,
+  "cohort_scope": null,
+  "sub_criteria": [
+    {
+      "child_id": "a",
+      "text_span": ["participation in an observational registry is allowed"],
+      "cohort_scope": null,
+      "rationale": "H4 conditional allowance: an observational registry is itself 'another clinical study', so the main rule alone would exclude it; the phrase permits it. No explicit trigger word, so the allowance content is the span (X3)."
+    }
+  ],
+  "needs_recursion": false,
+  "recursion_targets": [],
+  "recursion_note": "",
+  "primary_rule_id": "H4",
+  "supporting_rule_ids": ["X1", "X3"],
+  "notes": "Main content ('Concurrent enrollment in another clinical study') is one proposition; no further level."
+}
+
+Note: at C-2 the output draws only from the two TARGET_SEGMENTS. Text from sibling b is available in PARENT_CONTEXT for interpretation but must not appear in any output span. Had the main rule been narrower (e.g., 'another interventional treatment trial'), an observational registry would fall outside its scope and the phrase would be H0 scope clarification, not an exception.
+
+======================================================================
+PROVENANCE
+======================================================================
+
+Output one primary decisive rule ID.
+
+Suggested default evidence tier mapping:
+- H2-A -> Tier 0
+- H2-B -> Tier 1
+- H0/H1/H3/H4/H5/H6/X rules -> Tier 2 unless a higher authority is explicitly invoked
+
+The pipeline may derive tier from primary_rule_id.
+
+======================================================================
+OUTPUT FORMAT
+======================================================================
+
+Return JSON only.
+
+{
+  "splitting_decision": "none | composite_split | macro_aggregate | nested_exception",
+  "child_logic": "AND | OR | null",
+  "cohort_scope": ["<verbatim cohort label>"] | null,
+  "sub_criteria": [
+    {
+      "child_id": "a",
+      "text_span": ["exact source segment 1", "exact source segment 2"],
+      "cohort_scope": ["<verbatim cohort label>"] | null,
+      "rationale": "brief rule-grounded explanation"
+    }
+  ],
+  "needs_recursion": true | false,
+  "recursion_targets": ["a", "b"] | ["main"] | [],
+  "recursion_note": "brief reason if recursion remains; otherwise empty string",
+  "primary_rule_id": "H0 | H1-A | H1-B | H2-A | H2-B | H3 | H4 | H5 | H6 | X1 | X2 | X3 | X4 | X5 | X6 | X7",
+  "supporting_rule_ids": ["..."],
+  "notes": "brief ambiguity/delegation/open-list note; otherwise empty string"
+}
+
+OUTPUT CONSTRAINTS
+
+If splitting_decision = none:
+- child_logic = null
+- sub_criteria = []
+- recursion_targets = []
+- needs_recursion = false
+
+If splitting_decision = composite_split or macro_aggregate:
+- child_logic MUST be AND or OR
+- sub_criteria MUST contain at least 2 children
+- each child must have a unique child_id
+- recursion_targets may contain only existing child_ids
+
+If splitting_decision = nested_exception:
+- child_logic = null
+- sub_criteria contains one or more EXCEPTION spans, not child Criterion nodes
+- exception spans use child_id "a", "b", ... in the same way as children (they are distinguished by the nested_exception label, not by the field name)
+- recursion_targets may be ["main"] or []
+- never recurse an exception span
+
+For every text_span:
+- every segment must occur verbatim inside one current TARGET_SEGMENT
+- a child may use multiple segments from different TARGET_SEGMENTS
+
+For cohort_scope:
+- use only labels present in TRIAL_HAS_COHORTS
+- if splitting_decision = none or nested_exception, top-level cohort_scope may be populated when the current Criterion is explicitly scoped
+- if splitting_decision = composite_split or macro_aggregate, top-level cohort_scope MUST be null; place scope on the relevant child object(s)
+- if the current Criterion/child applies to all cohorts, use null in JSON transport
+- downstream ontology serialization should omit null cohort_scope properties
+
+For primary_rule_id:
+- choose ONE decisive rule
+- put secondary rules in supporting_rule_ids
+
+======================================================================
+SILENT PRE-OUTPUT CHECK
+======================================================================
+
+Before returning JSON, silently verify:
+
+1. I identified eligibility propositions, not concepts.
+2. I classified qualifier/method/scope/permissive content before splitting.
+3. I did not merge different clinical targets merely because they share a predicate.
+4. I did not merge same-target branches when their operational constraints differ.
+5. I applied the independent-assertion test using the criterion condition as written.
+6. I checked downstream leaf validity.
+7. I treated confirmation as part of diagnosis unless independently required.
+8. I kept Stage-1 reasoning criterion-local.
+9. I checked open vs closed list coverage.
+10. I did not create a redundant residual-umbrella child.
+11. I chose the structure type only after H0-H3.
+12. child_logic reflects when child conditions hold as written.
+13. I did not flatten mixed logic.
+14. all spans are exact substrings of current TARGET_SEGMENTS.
+15. dependent branch-specific exception/qualifier text needed for recursion is preserved.
+16. needs_recursion and recursion_targets are internally consistent.
+17. I selected one primary_rule_id.
+
+======================================================================
+VERSION / FREEZE NOTE
+======================================================================
+
+This prompt implements the frozen Canonical Core v1.3.0.
+
+Canonical v1.3.0 is frozen.
+
+This file is a v1.3.1 DEVELOPMENT prompt (non-normative patch of the v1.3.0 baseline: adds PARENT_CONTEXT definition, exception child_id convention, three structured output examples A/B/C, an H4 scope-clarification DO NOT; sets Example 15 to inclusion). No H/X rule meaning changed. Revised 2026-09-08 after review of the 09-07 draft (Examples A/B/C replaced for unambiguous structure; separators normalized).
+
+During development:
+- wording, synthetic examples, redundant DO/DO NOT lines, and JSON validation details may receive v1.3.x prompt patches during development only if they do NOT change behavior;
+- any change to an H/X rule meaning, precedence, split/merge boundary, exception boundary, or child_logic behavior requires a new normative guideline version (v1.4).
+
+After development with the prespecified 1 frontier + 1 open-weight models, the FINAL PROMPT MUST be frozen before comparative evaluation across all model families.
+
+======================================================================
+INPUT
+======================================================================
+
+ROOT_CRITERION_TEXT:
+{{root_criterion_text}}
+
+TARGET_SEGMENTS:
+{{target_segments_json_array}}
+
+CRITERION_TYPE:
+{{criterion_type}}
+
+TRIAL_HAS_COHORTS:
+{{cohort_list_or_null}}
+
+PARENT_CONTEXT:
+{{parent_context_or_null}}
+
+NEIGHBORING_CRITERIA:
+{{neighboring_criteria_or_null}}
+
+IMPORTANT:
+- NEIGHBORING_CRITERIA is read-only interpretation context.
+- Do not use neighboring criteria to create spans, suppress local requirements, or perform cross-criterion deduplication.
+- Annotate only the current TARGET_SEGMENTS at one hierarchy level.
+
+OUTPUT JSON ONLY.
