@@ -1,17 +1,34 @@
 # Phase 5B 개발 세트
 
-> **상태: 미실행.** 모델을 호출하지 않았다. 이 디렉터리는 **사전 등록된 실험 설계**다.
-> **개발 아티팩트** — 규범 증거도, gold standard도, held-out 평가 세트도 아니다.
+> **상태: 미실행.** 모델을 호출하지 않았다. **개발 아티팩트** — 규범 증거도, gold standard도,
+> held-out 평가 세트도 아니다.
+> **작성 2026-09-08 · 교정 2026-09-09** (pre-execution correction)
 
 ## 파일
 
 | 파일 | 내용 |
 |---|---|
-| [`cases.jsonl`](cases.jsonl) | 34개 합성 케이스 (한 줄 = 한 root case) |
-| [`manifest.json`](manifest.json) | 케이스 매니페스트 + 커버리지 집계 + 해석 한계 |
-| [`design.md`](design.md) | 설계 근거, 군별 의도, 비교 설계 |
+| [`cases.jsonl`](cases.jsonl) | **35**개 합성 케이스 (한 줄 = 한 root case) |
+| [`manifest.json`](manifest.json) | 매니페스트 + 분모 + 프롬프트 해시 + 예산 (파일에서 생성) |
+| [`design.md`](design.md) | 설계 근거, 군별 의도, 교정 내역 |
+| [`SCORING_PLAN.md`](SCORING_PLAN.md) | **지표·수용 기준·호출 예산 (사전 등록)** |
 
-가설 본문: [`../../../docs/project_state/stage1_v1_3_phase5b_prompt_hypotheses.md`](../../../docs/project_state/stage1_v1_3_phase5b_prompt_hypotheses.md)
+가설: [`../../../docs/project_state/stage1_v1_3_phase5b_prompt_hypotheses.md`](../../../docs/project_state/stage1_v1_3_phase5b_prompt_hypotheses.md)
+
+## 실험 구조 — 가설 격리
+
+```
+P0 = 변경 없는 v1.3.1
+
+5B-0   P0 × 전체 35건            ← 공유 baseline, 한 번만
+5B-1   P-X2 × X2 서브셋 (14)
+5B-2   P-PR × provenance 서브셋 (12)
+   ██ 사람 검토 ██
+5B-3   P-COMBINED × 전체 35건    승인 후에만 (파일 미생성)
+```
+
+두 명확화를 한 후보에 넣으면 **개선의 원인을 귀속할 수 없다.** P0를 전체에 한 번만 돌리는 이유는
+가설별 재측정을 피하고 재귀군·대조군에도 baseline을 주기 위해서다.
 
 ## 케이스 스키마
 
@@ -22,67 +39,69 @@
   "root_criterion_text": "...",
   "trial_has_cohorts": ["..."] 또는 null,
   "rule_family": ["X2", "H1-B"],
-  "boundary": "이 케이스가 겨냥하는 경계",
-  "expected_structural": "기대 구조 속성",
-  "expected_provenance": "기대 provenance 속성",
-  "expected_recursion": true | false,
-  "role": "x2_hypothesis | primary_rule_hypothesis | recursion_coverage | "
-          "exception_distinction | control | *_negative_control"
+  "boundary": "겨냥하는 경계",
+  "expected_structural": "...",
+  "expected_provenance": "허용 primary 집합 포함",
+  "expected_recursion": true | false | null,
+  "expected_max_depth": 0 | 1 | 2 | null,
+  "role": "...",
+  "metric_group": "분모를 기계적으로 정하는 필드"
 }
 ```
 
+X2 케이스는 `shared_qualifier` / `qualifier_applies_to`(또는 `branch_specific_qualifier`,
+`shared_entity`)를 추가로 갖는다. E2는 `leakage_forbidden_span`을 갖는다.
 `expected_*`는 **사전 등록된 기계적·provenance 속성**이지 정답지가 아니다.
-가설을 실행 **전에** 고정해 두기 위한 것이다. 두 케이스(D1, D5)는 의도적으로 열어 두었다.
 
-## 구성
+## 분모 (`metric_group`)
 
-34건 = x2 8 + x2 대조 2 + primary_rule 7 + recursion 7 + recursion 대조 1 +
-exception 4 + control 5
-
-| 축 | 값 |
-|---|---|
-| 기대 구조 | composite_split 20 · nested_exception 5 · none 4 · macro_aggregate 3 · 모호 2 |
-| 재귀 기대 | 7건 |
-| criterion_type | inclusion 19 / exclusion 15 |
-| cohort 지정 | 2건 |
-| rule family | H1-B 15 · X2 10 · H4 9 · H6 8 · H3 5 · X1/X3/H5 각 3 · 그 외 |
+| 그룹 | 수 | 케이스 |
+|---|--:|---|
+| `x2_positive` | **6** | A1 A2 A3 A4 A5 E1 |
+| `x2_negative_control` | **2** | A6 A7 |
+| `x2_safety_control` | **1** | A8 |
+| `provenance_target` | **7** | B3 B4 B5 B6 B8 B9 B10 |
+| `recursion_coverage` | **7** | C1 C2 C3 C4 C5 C6 E2 |
+| `recursion_negative_control` | 1 | C7 |
+| `exception_distinction` | 4 | D1 D3 D4 D6 |
+| `structural_control` | **5** | B1 B2 B7 D2 F1 |
+| `cohort_scope_coverage` | 1 | F2 (X2 지표 제외) |
+| `qualitative_probe` | 1 | D5 (정량 수용 제외) |
 
 ## 검증된 provenance
 
-프로그램으로 확인했다.
+프로그램으로 확인했다 — v1.3.1 프롬프트 인라인 예제 **0건** · Phase 5A 케이스 **0건** ·
+historical 113-item **0건** · `case_id` 중복 **0건** · 비결정 라벨 **0건**(qualitative probe 제외).
 
-- v1.3.1 프롬프트의 inline 예제와 **문장 중복 0건**
-- Phase 5A 스모크 케이스와 **중복 0건**
-- historical 113-item 세트에서 가져온 것 **없음**
-- `case_id` 중복 없음
+## 설계에서 가장 중요한 세 가지
 
-## 설계에서 가장 중요한 두 가지
+**1. 음성 대조군.** A6(분기 전용 qualifier)·A7(공유 없음)은 **복사하면 안 되는** 케이스다.
+positive에서 복사가 늘고 음성에서 늘지 않아야 가설이 지지된다. 한쪽만 개선되면 **편향 이동**이다.
 
-**1. 음성 대조군이 있다.** A6·A7은 **공유 qualifier를 복사하면 안 되는** 케이스다.
-"복사하라"를 강화하면 과잉 복사로 넘어갈 수 있으므로, A1–A5에서 복사가 늘고
-**A6·A7에서는 늘지 않아야** 가설이 지지된다. 한쪽만 개선되면 편향 이동이다.
+**2. A8은 safety control이다.** `first-line platinum therapy`는 shared **entity**이지
+dependent qualifier가 아니다. canonical X2 첫 불릿상 문법을 맞추려 복제하면 **실패**다.
 
-**2. B8/B9는 쌍이다.** 도메인만 다르고 구조가 같은 `macro_aggregate` 두 건으로,
-`primary_rule_id` 선택이 동등 구조에서 **안정적인지** 본다. Phase 5A의 S06 vs S07 관측의 직접 후속이다.
+**3. B8/B9는 쌍이다.** 도메인만 다르고 구조가 같은 macro_aggregate 두 건으로,
+`primary_rule_id` 선택이 **안정적인지** 측정한다. "고칠 수 있는가"가 아니라 "규칙군 문제인가"를 묻는다.
+
+## 재귀 — 깊이는 runner 규약 (root = 0)
+
+**C6이 최심**: `root(0) → root.main(1) → root.main.<child>(2)`.
+최심 경로 Stage-1 패스 3회, **관측 예상 max depth는 2**다. `depth 3`이라 부르지 않는다.
+
+`max_depth` 가드와 `empty_main`은 자연스러운 criterion으로 유도하기 어려워 mock 테스트가 담당한다.
 
 ## 실행 시 지켜야 할 것
 
-- `pipeline/stage1_v13/`의 `JsonlTracer`를 **반드시 사용**한다 — Phase 5A는 실패한 시도를
-  기록하지 못했다(I-07). 이제 attempt 단위로 남는다
+- `pipeline/stage1_v13`의 `JsonlTracer`를 **반드시 사용** — Phase 5A는 실패 시도를 남기지 못했다(I-07)
 - `run_config`에 model · **requested**_reasoning_effort · max_completion_tokens ·
-  SDK/Python 버전 · prompt artifact + sha256을 넣는다
-  ([`../environment/README.md`](../environment/README.md) §4)
-- 호출 상한을 사전에 정한다. A/B 비교는 34 × 2 = 68 root 호출 + 재귀 + 재시도
+  SDK/Python 버전 · prompt artifact + sha256
+- 호출 상한: 5B-0 **60** · 5B-1 **25** · 5B-2 **25** · 검토 전 누계 **100** · 향후 5B-3 **70**
+- 비교 중 **SDK를 올리지 않는다**
 - `iaa_workspace/` · `evidence/` · `STAGE1_GOLD_*/` · `results/adjudication/`에 쓰지 않는다
-
-## 실행 전 미확정 (사람 판단)
-
-1. 프롬프트 후보 문구 (가설 문서 A안 / B안 / 제3안)
-2. 호출 상한
-3. A6·A7 과잉 복사 판정 기준
-4. D5(모호 케이스) 처리 — 지표 제외 또는 별도 보고
 
 ## 해석 한계
 
-34건으로 **유병률을 추정하지 않는다.** 커버리지는 rule family 기준이며 빈도 기준이 아니다.
-확인하려는 것은 비율이 아니라 **규칙군 차원의 실패 존재 여부**다.
+35건으로 **유병률을 추정하지 않는다.** 커버리지는 rule family 기준이다.
+P0는 **1회 관측**이므로 통계적 우월성을 주장하지 않으며, 수용이 단일 불일치 케이스에 달려 있으면
+성공 선언 대신 **paired confirmation 필요**로 표시한다.

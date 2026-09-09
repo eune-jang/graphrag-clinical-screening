@@ -1,33 +1,181 @@
 {
-  "artifact": "Stage 1 v1.3 PHASE 5B development set",
+  "artifact": "Stage 1 v1.3 PHASE 5B development set (corrected)",
   "status": "DEVELOPMENT ARTIFACT — prespecified hypothesis test set. Not normative evidence, not a gold standard, not held-out evaluation data.",
   "created": "2026-09-08",
+  "corrected": "2026-09-09",
   "executed": false,
-  "provenance": "newly written synthetic criteria. Verified programmatically: none appears in pipeline/prompts/development/stage1/stage1_prompt_v1_3_1.txt, none reuses a PHASE 5A case, and none is drawn from the historical 113-item adjudication set.",
-  "n_cases": 34,
-  "hypotheses_under_test": {
-    "H-X2-1": "shared dependent qualifier must be copied into every child it semantically modifies",
-    "H-PR-1": "primary_rule_id should name the rule that established the structural decision, not a rule that only validates it"
+  "correction_note": "B1/C1/C6/E2 rewritten, D1 expectation fixed, D6 added, F2 and A8 reclassified, D5 marked qualitative. Depth labels now follow the runner convention (root = depth 0).",
+  "provenance": "newly written synthetic criteria. Verified programmatically: none appears in the v1.3.1 prompt, none reuses a PHASE 5A case, none reuses a historical 113-item criterion.",
+  "n_cases": 35,
+  "prompts": {
+    "P0": {
+      "path": "pipeline/prompts/development/stage1/stage1_prompt_v1_3_1.txt",
+      "sha256": "dfce30245473b8f69627d5030cb772be3ef84f8e23957b09d170e6ac288590f9",
+      "role": "baseline, unchanged"
+    },
+    "P-X2": {
+      "path": "pipeline/prompts/development/stage1/candidates/candidate_x2_from_v1_3_1.txt",
+      "sha256": "4fca1123b4e14da1ebddc3a8e63bc926cac95aa8bdacadb2c16d1c61bb4374a8",
+      "role": "X2 clarification only (non-normative)"
+    },
+    "P-PR": {
+      "path": "pipeline/prompts/development/stage1/candidates/candidate_pr_from_v1_3_1.txt",
+      "sha256": "f903cf6e7beb2549333f36954c52fb30b392618f77d737c23b59e6628a2baf2e",
+      "role": "primary_rule clarification only (non-normative)"
+    },
+    "P-COMBINED": {
+      "path": null,
+      "status": "NOT CREATED — awaits human review of 5B-1 and 5B-2"
+    }
   },
-  "hypothesis_doc": "docs/project_state/stage1_v1_3_phase5b_prompt_hypotheses.md",
-  "roles": {
-    "x2_hypothesis": 8,
-    "x2_hypothesis_negative_control": 2,
-    "control": 5,
-    "primary_rule_hypothesis": 7,
+  "naming_policy": "Unvalidated candidates use provenance names (candidate_<hypothesis>_from_<base>). A v1.3.x release version is assigned only after human-reviewed acceptance.",
+  "metric_groups": {
+    "x2_positive": 6,
+    "x2_negative_control": 2,
+    "x2_safety_control": 1,
+    "structural_control": 5,
+    "provenance_target": 7,
     "recursion_coverage": 7,
-    "recursion_coverage_negative_control": 1,
-    "exception_distinction": 4
+    "recursion_negative_control": 1,
+    "exception_distinction": 4,
+    "qualitative_probe": 1,
+    "cohort_scope_coverage": 1
   },
+  "metric_group_members": {
+    "cohort_scope_coverage": [
+      "F2"
+    ],
+    "exception_distinction": [
+      "D1",
+      "D3",
+      "D4",
+      "D6"
+    ],
+    "provenance_target": [
+      "B3",
+      "B4",
+      "B5",
+      "B6",
+      "B8",
+      "B9",
+      "B10"
+    ],
+    "qualitative_probe": [
+      "D5"
+    ],
+    "recursion_coverage": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "E2"
+    ],
+    "recursion_negative_control": [
+      "C7"
+    ],
+    "structural_control": [
+      "B1",
+      "B2",
+      "B7",
+      "D2",
+      "F1"
+    ],
+    "x2_negative_control": [
+      "A6",
+      "A7"
+    ],
+    "x2_positive": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "E1"
+    ],
+    "x2_safety_control": [
+      "A8"
+    ]
+  },
+  "x2_denominators": {
+    "positive": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "E1"
+    ],
+    "negative_controls": [
+      "A6",
+      "A7"
+    ],
+    "shared_entity_safety_control": [
+      "A8"
+    ],
+    "excluded": {
+      "F2": "cohort_scope_coverage",
+      "D5": "qualitative_normative_probe"
+    }
+  },
+  "provenance_targets": [
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B8",
+    "B9",
+    "B10"
+  ],
+  "paired_stability_check": {
+    "pair": [
+      "B8",
+      "B9"
+    ],
+    "purpose": "structurally analogous macro_aggregate cases in different domains; tests whether primary_rule_id selection is stable across equivalent structures"
+  },
+  "structural_controls": [
+    "B1",
+    "B2",
+    "B7",
+    "D2",
+    "F1"
+  ],
+  "recursion": {
+    "cases": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "E2"
+    ],
+    "negative_control": [
+      "C7"
+    ],
+    "depth_convention": "runner convention: root = depth 0, root.<child> = depth 1, root.main.<child> = depth 2",
+    "deepest_case": "C6",
+    "expected_max_observed_depth": 2,
+    "expected_passes_on_deepest_path": 3,
+    "not_reachable_by_real_model": [
+      "max_depth guard",
+      "empty_main"
+    ]
+  },
+  "excluded_from_quantitative_acceptance": [
+    "D5"
+  ],
   "rule_family_coverage": {
-    "H0": 1,
+    "H0": 3,
     "H1-A": 2,
     "H1-B": 15,
     "H2-A": 2,
     "H2-B": 2,
-    "H3": 5,
-    "H4": 9,
-    "H5": 3,
+    "H3": 4,
+    "H4": 11,
+    "H5": 4,
     "H6": 8,
     "X1": 3,
     "X2": 10,
@@ -37,44 +185,22 @@
     "X7": 1
   },
   "expected_structural_distribution": {
-    "composite_split": 20,
-    "none": 4,
+    "composite_split": 21,
+    "none": 5,
     "macro_aggregate": 3,
     "nested_exception": 5,
-    "composite_split or none": 1,
-    "none or nested_exception (ambiguous by design)": 1
-  },
-  "recursion_cases": [
-    "C1",
-    "C2",
-    "C3",
-    "C4",
-    "C5",
-    "C6",
-    "E2"
-  ],
-  "control_cases": [
-    "B1",
-    "B2",
-    "B7",
-    "D2",
-    "F1"
-  ],
-  "negative_control_cases": [
-    "A6",
-    "A7",
-    "C7"
-  ],
-  "paired_stability_check": {
-    "pair": [
-      "B8",
-      "B9"
-    ],
-    "purpose": "structurally analogous macro_aggregate cases in different domains; tests whether primary_rule_id selection is stable across equivalent structures"
+    "OPEN — no preregistered label": 1
   },
   "criterion_type": {
-    "exclusion": 15,
+    "exclusion": 16,
     "inclusion": 19
+  },
+  "call_budget_ceilings": {
+    "5B-0": 60,
+    "5B-1": 25,
+    "5B-2": 25,
+    "cumulative_before_human_review": 100,
+    "5B-3_future": 70
   },
   "cases": [
     {
@@ -90,7 +216,14 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "x2_hypothesis",
+      "metric_group": "x2_positive",
+      "shared_qualifier": "documented within 28 days prior to randomization",
+      "qualifier_applies_to": [
+        "a",
+        "b"
+      ]
     },
     {
       "case_id": "A2",
@@ -105,7 +238,14 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "x2_hypothesis",
+      "metric_group": "x2_positive",
+      "shared_qualifier": "Within 6 months before enrollment",
+      "qualifier_applies_to": [
+        "a",
+        "b"
+      ]
     },
     {
       "case_id": "A3",
@@ -120,7 +260,14 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "x2_hypothesis",
+      "metric_group": "x2_positive",
+      "shared_qualifier": "either of Grade 2 or higher",
+      "qualifier_applies_to": [
+        "a",
+        "b"
+      ]
     },
     {
       "case_id": "A4",
@@ -135,7 +282,14 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "x2_hypothesis",
+      "metric_group": "x2_positive",
+      "shared_qualifier": "each at least 3.0 g/dL at screening",
+      "qualifier_applies_to": [
+        "a",
+        "b"
+      ]
     },
     {
       "case_id": "A5",
@@ -150,7 +304,14 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "x2_hypothesis",
+      "metric_group": "x2_positive",
+      "shared_qualifier": "in either case confirmed on contrast-enhanced imaging",
+      "qualifier_applies_to": [
+        "a",
+        "b"
+      ]
     },
     {
       "case_id": "A6",
@@ -164,7 +325,13 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis_negative_control"
+      "expected_max_depth": 0,
+      "role": "x2_negative_control",
+      "metric_group": "x2_negative_control",
+      "branch_specific_qualifier": "within 100 days before the first dose",
+      "qualifier_applies_to": [
+        "b"
+      ]
     },
     {
       "case_id": "A7",
@@ -179,7 +346,11 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary",
       "expected_recursion": false,
-      "role": "x2_hypothesis_negative_control"
+      "expected_max_depth": 0,
+      "role": "x2_negative_control",
+      "metric_group": "x2_negative_control",
+      "shared_qualifier": null,
+      "qualifier_applies_to": []
     },
     {
       "case_id": "A8",
@@ -190,25 +361,31 @@
         "X2",
         "X1"
       ],
-      "boundary": "grammatically incomplete children that remain semantically complete; shared object after the coordination",
+      "boundary": "shared clinical ENTITY ('first-line platinum therapy'), not a dependent qualifier — X2 bullet 1 forbids duplicating it merely for grammar; children may stay grammatically incomplete",
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "x2_safety_control",
+      "metric_group": "x2_safety_control",
+      "shared_entity": "first-line platinum therapy",
+      "duplication_is_failure": true
     },
     {
       "case_id": "B1",
       "criterion_type": "exclusion",
-      "root_criterion_text": "Active hepatitis B infection or chronic hepatitis B infection.",
+      "root_criterion_text": "Untreated or incompletely treated latent tuberculosis infection.",
       "trial_has_cohorts": null,
       "rule_family": [
         "H1-A"
       ],
-      "boundary": "same screening target differing only in status/history — merge, do not split",
+      "boundary": "two treatment-status variants of ONE operational screening target — merge, do not split",
       "expected_structural": "none",
       "expected_provenance": "H1-A primary",
       "expected_recursion": false,
-      "role": "control"
+      "expected_max_depth": 0,
+      "role": "control",
+      "metric_group": "structural_control"
     },
     {
       "case_id": "B2",
@@ -222,7 +399,9 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary",
       "expected_recursion": false,
-      "role": "control"
+      "expected_max_depth": 0,
+      "role": "control",
+      "metric_group": "structural_control"
     },
     {
       "case_id": "B3",
@@ -235,9 +414,11 @@
       ],
       "boundary": "diagnosis + independently required biomarker — H2-B is the on-point canonical rule",
       "expected_structural": "composite_split",
-      "expected_provenance": "H2-B or H1-B primary; H2-A should NOT be primary",
+      "expected_provenance": "allowed primary {H2-B, H1-B}; H2-A as primary is a FAIL",
       "expected_recursion": false,
-      "role": "primary_rule_hypothesis"
+      "expected_max_depth": 0,
+      "role": "primary_rule_hypothesis",
+      "metric_group": "provenance_target"
     },
     {
       "case_id": "B4",
@@ -250,9 +431,11 @@
       ],
       "boundary": "diagnosis + treatment history — different semantic categories, but H1-B sets the boundary",
       "expected_structural": "composite_split",
-      "expected_provenance": "H1-B primary; H2-A supporting at most",
+      "expected_provenance": "allowed primary {H1-B}; H2-A as primary is a FAIL",
       "expected_recursion": false,
-      "role": "primary_rule_hypothesis"
+      "expected_max_depth": 0,
+      "role": "primary_rule_hypothesis",
+      "metric_group": "provenance_target"
     },
     {
       "case_id": "B5",
@@ -265,9 +448,11 @@
       ],
       "boundary": "lab value + medication restriction — the S12 pattern in a new domain",
       "expected_structural": "composite_split",
-      "expected_provenance": "H1-B primary; H2-A supporting at most",
+      "expected_provenance": "allowed primary {H1-B}; H2-A as primary is a FAIL",
       "expected_recursion": false,
-      "role": "primary_rule_hypothesis"
+      "expected_max_depth": 0,
+      "role": "primary_rule_hypothesis",
+      "metric_group": "provenance_target"
     },
     {
       "case_id": "B6",
@@ -275,13 +460,16 @@
       "root_criterion_text": "Pathologically documented triple-negative breast cancer.",
       "trial_has_cohorts": null,
       "rule_family": [
-        "H2-B"
+        "H2-B",
+        "H0"
       ],
       "boundary": "confirmation belongs to the diagnosis proposition — must not split confirmation out",
       "expected_structural": "none",
-      "expected_provenance": "H2-B or H0 primary",
+      "expected_provenance": "allowed primary {H2-B, H0, H1-A}",
       "expected_recursion": false,
-      "role": "primary_rule_hypothesis"
+      "expected_max_depth": 0,
+      "role": "primary_rule_hypothesis",
+      "metric_group": "provenance_target"
     },
     {
       "case_id": "B7",
@@ -295,7 +483,9 @@
       "expected_structural": "none",
       "expected_provenance": "H3 primary",
       "expected_recursion": false,
-      "role": "control"
+      "expected_max_depth": 0,
+      "role": "control",
+      "metric_group": "structural_control"
     },
     {
       "case_id": "B8",
@@ -308,9 +498,12 @@
       ],
       "boundary": "closed list under a true umbrella — macro gate. PAIR MEMBER 1 with B9",
       "expected_structural": "macro_aggregate",
-      "expected_provenance": "H3 primary preferred (umbrella/coverage decided it)",
+      "expected_provenance": "allowed primary {H3, H4}; must MATCH B9",
       "expected_recursion": false,
-      "role": "primary_rule_hypothesis"
+      "expected_max_depth": 0,
+      "role": "primary_rule_hypothesis",
+      "metric_group": "provenance_target",
+      "pair_with": "B9"
     },
     {
       "case_id": "B9",
@@ -323,9 +516,12 @@
       ],
       "boundary": "structurally analogous to B8 in a different domain — tests primary-rule STABILITY across equivalent cases. PAIR MEMBER 2",
       "expected_structural": "macro_aggregate",
-      "expected_provenance": "same primary as B8 (stability check)",
+      "expected_provenance": "allowed primary {H3, H4}; must MATCH B8",
       "expected_recursion": false,
-      "role": "primary_rule_hypothesis"
+      "expected_max_depth": 0,
+      "role": "primary_rule_hypothesis",
+      "metric_group": "provenance_target",
+      "pair_with": "B8"
     },
     {
       "case_id": "B10",
@@ -338,25 +534,30 @@
       ],
       "boundary": "same transporter domain but pharmacologically distinct exposure checks — H1-A merge must FAIL, continue to H1-B",
       "expected_structural": "composite_split",
-      "expected_provenance": "H1-B primary",
+      "expected_provenance": "allowed primary {H1-B}",
       "expected_recursion": false,
-      "role": "primary_rule_hypothesis"
+      "expected_max_depth": 0,
+      "role": "primary_rule_hypothesis",
+      "metric_group": "provenance_target"
     },
     {
       "case_id": "C1",
       "criterion_type": "inclusion",
-      "root_criterion_text": "Histologically confirmed gastric adenocarcinoma with HER2 overexpression, and adequate cardiac function defined as left ventricular ejection fraction at least 50 percent.",
+      "root_criterion_text": "Participants must have an ECOG performance status of 0 or 1 and one of the following prior-treatment histories: platinum-based chemotherapy completed within 12 months before enrollment, or taxane therapy completed within 6 months before enrollment.",
       "trial_has_cohorts": null,
       "rule_family": [
         "H6",
         "H1-B",
-        "H3"
+        "H5"
       ],
-      "boundary": "composite whose second child is itself an umbrella — one recursive child, depth 2",
+      "boundary": "root AND over [ECOG leaf, prior-treatment alternative group]; the treatment group recurses to an OR pair whose branch-specific windows (12 vs 6 months) block an H1-A merge",
       "expected_structural": "composite_split",
-      "expected_provenance": "H1-B primary at root",
+      "expected_provenance": "H1-B primary at root; child_logic AND at root, OR at the recursed child",
       "expected_recursion": true,
-      "role": "recursion_coverage"
+      "expected_max_depth": 1,
+      "expected_passes_on_deepest_path": 2,
+      "role": "recursion_coverage",
+      "metric_group": "recursion_coverage"
     },
     {
       "case_id": "C2",
@@ -372,7 +573,10 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary at root",
       "expected_recursion": true,
-      "role": "recursion_coverage"
+      "expected_max_depth": 1,
+      "expected_passes_on_deepest_path": 2,
+      "role": "recursion_coverage",
+      "metric_group": "recursion_coverage"
     },
     {
       "case_id": "C3",
@@ -388,7 +592,10 @@
       "expected_structural": "nested_exception",
       "expected_provenance": "H4 primary at root",
       "expected_recursion": true,
-      "role": "recursion_coverage"
+      "expected_max_depth": 1,
+      "expected_passes_on_deepest_path": 2,
+      "role": "recursion_coverage",
+      "metric_group": "recursion_coverage"
     },
     {
       "case_id": "C4",
@@ -404,7 +611,10 @@
       "expected_structural": "macro_aggregate",
       "expected_provenance": "H3 primary at root",
       "expected_recursion": true,
-      "role": "recursion_coverage"
+      "expected_max_depth": 1,
+      "expected_passes_on_deepest_path": 2,
+      "role": "recursion_coverage",
+      "metric_group": "recursion_coverage"
     },
     {
       "case_id": "C5",
@@ -419,23 +629,29 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary at root; child_logic AND at root, OR at child",
       "expected_recursion": true,
-      "role": "recursion_coverage"
+      "expected_max_depth": 1,
+      "expected_passes_on_deepest_path": 2,
+      "role": "recursion_coverage",
+      "metric_group": "recursion_coverage"
     },
     {
       "case_id": "C6",
       "criterion_type": "exclusion",
-      "root_criterion_text": "Uncontrolled intercurrent illness, including either ongoing symptomatic congestive heart failure or unstable angina, and any psychiatric condition that would limit compliance, are exclusionary unless resolved before the first dose.",
+      "root_criterion_text": "Prior treatment with either a BTK inhibitor for at least 8 weeks or a BCL-2 inhibitor for at least 12 weeks, and prior CAR-T therapy, are exclusionary unless the most recent qualifying therapy ended more than 24 months before enrollment.",
       "trial_has_cohorts": null,
       "rule_family": [
         "H6",
         "H4",
         "H5"
       ],
-      "boundary": "deepest case — exception over a composite whose first child is itself an OR pair; targets depth 3",
+      "boundary": "DEEPEST case. nested_exception -> main composite AND -> the BTK/BCL-2 child recurses to an OR pair. No open-list wording; branch-specific durations (8 vs 12 weeks) block an H1-A merge",
       "expected_structural": "nested_exception",
       "expected_provenance": "H4 primary at root",
       "expected_recursion": true,
-      "role": "recursion_coverage"
+      "expected_max_depth": 2,
+      "expected_passes_on_deepest_path": 3,
+      "role": "recursion_coverage",
+      "metric_group": "recursion_coverage"
     },
     {
       "case_id": "C7",
@@ -449,7 +665,9 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary",
       "expected_recursion": false,
-      "role": "recursion_coverage_negative_control"
+      "expected_max_depth": 0,
+      "role": "recursion_negative_control",
+      "metric_group": "recursion_negative_control"
     },
     {
       "case_id": "D1",
@@ -460,11 +678,14 @@
         "H4",
         "H1-B"
       ],
-      "boundary": "'without X' is a negative REQUIREMENT, not an exception — must not become nested_exception",
-      "expected_structural": "composite_split or none",
-      "expected_provenance": "H1-B primary; NOT H4",
+      "boundary": "'without X' where the absence IS independently required — negative REQUIREMENT, not an exception",
+      "expected_structural": "composite_split",
+      "expected_provenance": "H1-B primary; H2-A may be supporting; H4 as primary is a FAIL",
+      "expected_child_logic": "AND",
       "expected_recursion": false,
-      "role": "exception_distinction"
+      "expected_max_depth": 0,
+      "role": "exception_distinction",
+      "metric_group": "exception_distinction"
     },
     {
       "case_id": "D2",
@@ -479,7 +700,9 @@
       "expected_structural": "nested_exception",
       "expected_provenance": "H4 primary; X3 supporting",
       "expected_recursion": false,
-      "role": "control"
+      "expected_max_depth": 0,
+      "role": "control",
+      "metric_group": "structural_control"
     },
     {
       "case_id": "D3",
@@ -493,7 +716,9 @@
       "expected_structural": "nested_exception",
       "expected_provenance": "H4 primary",
       "expected_recursion": false,
-      "role": "exception_distinction"
+      "expected_max_depth": 0,
+      "role": "exception_distinction",
+      "metric_group": "exception_distinction"
     },
     {
       "case_id": "D4",
@@ -508,7 +733,9 @@
       "expected_structural": "nested_exception",
       "expected_provenance": "H4 primary; X3 supporting",
       "expected_recursion": false,
-      "role": "exception_distinction"
+      "expected_max_depth": 0,
+      "role": "exception_distinction",
+      "metric_group": "exception_distinction"
     },
     {
       "case_id": "D5",
@@ -519,11 +746,31 @@
         "H4",
         "X5"
       ],
-      "boundary": "exception-shaped wording that DELEGATES to an external document rather than waiving eligibility — should not become a substantive nested_exception carve-out",
-      "expected_structural": "none or nested_exception (ambiguous by design)",
-      "expected_provenance": "X5 delegation note expected",
+      "boundary": "exception-shaped wording that DELEGATES to an external document rather than waiving eligibility — H4 and X5 compete. Deliberately open",
+      "expected_structural": "OPEN — no preregistered label",
+      "expected_provenance": "observe whether a delegation note appears",
+      "expected_recursion": null,
+      "expected_max_depth": null,
+      "role": "qualitative_normative_probe",
+      "metric_group": "qualitative_probe",
+      "excluded_from_quantitative_acceptance": true
+    },
+    {
+      "case_id": "D6",
+      "criterion_type": "inclusion",
+      "root_criterion_text": "Participants must be able to ambulate at least 100 metres without a walking aid.",
+      "trial_has_cohorts": null,
+      "rule_family": [
+        "H0",
+        "H4"
+      ],
+      "boundary": "'without X' where the absence is part of ONE integrated functional-capacity target — structurally different from D1 and not close to any prompt example",
+      "expected_structural": "none",
+      "expected_provenance": "allowed primary {H0, H1-A}; H4 as primary is a FAIL",
       "expected_recursion": false,
-      "role": "exception_distinction"
+      "expected_max_depth": 0,
+      "role": "exception_distinction",
+      "metric_group": "exception_distinction"
     },
     {
       "case_id": "E1",
@@ -538,23 +785,35 @@
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X1/X2 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "x2_hypothesis",
+      "metric_group": "x2_positive",
+      "shared_qualifier": "in either case requiring systemic corticosteroids",
+      "qualifier_applies_to": [
+        "a",
+        "b"
+      ]
     },
     {
       "case_id": "E2",
-      "criterion_type": "inclusion",
-      "root_criterion_text": "Eligible participants must have documented EGFR exon 19 deletion or L858R substitution, and must have received prior osimertinib.",
+      "criterion_type": "exclusion",
+      "root_criterion_text": "Current therapeutic anticoagulation, or current antiplatelet therapy unless limited to low-dose aspirin, within 7 days before enrollment.",
       "trial_has_cohorts": null,
       "rule_family": [
         "X1",
         "X7",
-        "H6"
+        "H6",
+        "H4"
       ],
-      "boundary": "recursive pass must not import the prior-osimertinib sibling text into the biomarker child's spans",
+      "boundary": "the allowance sits INSIDE the antiplatelet conjunct, so that branch should recurse as nested_exception. Primary test: during that recursive pass no span may import 'therapeutic anticoagulation' from the sibling",
       "expected_structural": "composite_split",
-      "expected_provenance": "H1-B primary",
+      "expected_provenance": "H1-B primary at root; H4 at the recursed antiplatelet child",
       "expected_recursion": true,
-      "role": "recursion_coverage"
+      "expected_max_depth": 1,
+      "expected_passes_on_deepest_path": 2,
+      "role": "recursion_coverage",
+      "metric_group": "recursion_coverage",
+      "leakage_forbidden_span": "therapeutic anticoagulation"
     },
     {
       "case_id": "F1",
@@ -572,7 +831,9 @@
       "expected_structural": "none",
       "expected_provenance": "H0 primary; X4 supporting",
       "expected_recursion": false,
-      "role": "control"
+      "expected_max_depth": 0,
+      "role": "control",
+      "metric_group": "structural_control"
     },
     {
       "case_id": "F2",
@@ -586,17 +847,20 @@
         "X4",
         "H1-B"
       ],
-      "boundary": "cohort-specific eligibility CONTENT differs — split, with scope on the relevant children and top-level scope null",
+      "boundary": "cohort-specific eligibility CONTENT differs — split, with scope on the relevant children and top-level scope null. This is X4 coverage, NOT a shared-qualifier case",
       "expected_structural": "composite_split",
       "expected_provenance": "H1-B primary; X4 supporting",
       "expected_recursion": false,
-      "role": "x2_hypothesis"
+      "expected_max_depth": 0,
+      "role": "cohort_scope_coverage",
+      "metric_group": "cohort_scope_coverage"
     }
   ],
   "interpretation_limits": [
-    "expected_* fields are PRESPECIFIED MECHANICAL/PROVENANCE properties, not a hand-written gold standard. They exist so the hypothesis is registered before execution.",
-    "Two cases are deliberately open (D1 'composite_split or none', D5 ambiguous); their value is the exception-vs-requirement distinction, not a single right label.",
-    "34 cases cannot estimate prevalence. Coverage is by rule family, not by frequency.",
+    "expected_* are PRESPECIFIED mechanical/provenance properties, not a hand-written gold standard.",
+    "D5 has no preregistered label by design and is excluded from quantitative acceptance.",
+    "35 cases cannot estimate prevalence. Coverage is by rule family, not by frequency.",
+    "P0 is observed once; do not make statistical superiority claims from a single observation.",
     "The historical 113-item set is neither few-shot material nor held-out evaluation data."
   ]
 }

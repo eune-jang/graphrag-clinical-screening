@@ -1,11 +1,29 @@
 # Stage 1 v1.3 — Phase 5B 프롬프트 가설
 
-> **작성일**: 2026-09-08 (PHASE 5B-prep) · **성격**: 사전 등록된 **가설**이다.
-> **프롬프트를 수정하지 않았다. canonical core를 수정하지 않았다. v1.3.2를 만들지 않았다.**
+> **작성일**: 2026-09-08 · **문구 확정**: 2026-09-09 (pre-execution correction) · **성격**: 사전 등록된 **가설**이다.
+> **P0(v1.3.1)를 수정하지 않았다. canonical core를 수정하지 않았다. v1.3.2를 만들지 않았다.**
+> 후보는 P0를 건드리지 않고 `candidates/`에 별도 파일로 만들었다.
 > 근거: [`../../experiments/stage1_v13/smoke_2026-09-08/TRACE_REVIEW.md`](../../experiments/stage1_v13/smoke_2026-09-08/TRACE_REVIEW.md)
 
 두 가설 모두 **비규범(non-normative) 프롬프트 명확화 후보**다. canonical 의미를 바꾸지 않는다.
-문구는 **확정이 아니다** — 각 가설에 대안 표현을 하나 이상 적어 둔다.
+
+**2026-09-09 교정에서 문구가 확정되었고 두 후보 프롬프트가 생성되었다.** 아래 각 가설의
+**확정 문구** 절을 보라. 대안 표현은 선택 근거를 남기기 위해 그대로 둔다.
+
+```
+P0    pipeline/prompts/development/stage1/stage1_prompt_v1_3_1.txt            (변경 없음)
+P-X2  pipeline/prompts/development/stage1/candidates/candidate_x2_from_v1_3_1.txt
+P-PR  pipeline/prompts/development/stage1/candidates/candidate_pr_from_v1_3_1.txt
+P-COMBINED                                                                    미생성
+```
+
+**명명 규칙**: 검증 전 후보에 `v1_3_2a` 같은 릴리스 버전을 붙이지 않는다.
+`candidate_<가설>_from_<기반 버전>` 형식의 provenance 이름을 쓰고, **다음 v1.3.x 버전 번호는
+사람 검토를 통과한 후보에만** 부여한다.
+
+**두 가설은 실험적으로 격리한다** — 한 후보에 둘 다 넣으면 개선의 원인을 귀속할 수 없다.
+5B-0(P0 전체 baseline) → 5B-1(P-X2) / 5B-2(P-PR) → 사람 검토 → 5B-3(combined).
+설계: [`../../experiments/stage1_v13/phase5b_dev/SCORING_PLAN.md`](../../experiments/stage1_v13/phase5b_dev/SCORING_PLAN.md)
 
 ---
 
@@ -46,7 +64,20 @@ available downstream.`).
 > 세 번째 불릿은 *문법적* 불완전성 허용이지 *의미적으로 수식하는 qualifier의 생략 허가*가 아니다.
 > 두 절의 관계를 명시하면 누락이 줄어들 것이다.
 
-### 후보 문구 A (관계 명시)
+### ✅ 확정 문구 — 후보 A 방향 (관계 명시), 축약본
+
+`candidate_x2_from_v1_3_1.txt`에 X2 세 번째 불릿 **바로 뒤** 한 항목으로 삽입됐다.
+P0 대비 **이 삽입 외 변경 없음**(diff 검증 완료).
+
+```
+- The grammatical-incompleteness allowance does not override the shared-qualifier rule
+  above. If a dependent qualifier semantically modifies multiple children, include its
+  exact source span in every affected child.
+```
+
+canonical에 없는 의무를 새로 만들지 않는다 — 기존 두 문장의 **관계만** 분명히 한다.
+
+### (기록) 초안 후보 A — 더 긴 형태
 
 ```
 - A child may be grammatically incomplete if ROOT/PARENT context supplies shared meaning.
@@ -55,7 +86,7 @@ available downstream.`).
   child, its exact source span must appear in every child it modifies.
 ```
 
-### 후보 문구 B (자기 점검으로 이동, 본문 불변)
+### (기록) 초안 후보 B — 자기 점검으로 이동
 
 X2 본문은 그대로 두고 SILENT PRE-OUTPUT CHECK에 한 줄 추가:
 
@@ -66,6 +97,10 @@ X2 본문은 그대로 두고 SILENT PRE-OUTPUT CHECK에 한 줄 추가:
 
 B의 장점: 규칙 본문을 건드리지 않아 규범 해석 변경 위험이 더 낮다.
 B의 단점: 점검 목록이 이미 17항목이라 희석될 수 있다.
+
+**A 방향을 택한 이유**: canonical X2 자체가 이미 명확하고(복사 의무 + 별도의 문법 허용),
+문제는 **두 문장의 관계가 프롬프트에 없다는 것**이다. 관계를 본문에서 직접 잇는 편이
+점검 목록 한 줄보다 원인에 가깝다.
 
 ### 기대되는 관측 효과
 
@@ -137,7 +172,28 @@ For primary_rule_id:
 > `macro_aggregate`의 경우: 구조를 결정한 것이 H3의 open/closed 판정 또는 umbrella 테스트라면,
 > 단지 복수의 독립 자식을 식별했다는 이유로 H1-B를 고르지 말고 **H3를 결정적 규칙으로 본다.**
 
-### 후보 문구 A (PROVENANCE에 정의 추가)
+### ✅ 확정 문구 — 일반 원칙만 (H2-A·H3 미지목)
+
+`candidate_pr_from_v1_3_1.txt`의 OUTPUT CONSTRAINTS 안 기존 `For primary_rule_id:` 블록에
+**두 항목만 추가**됐다. P0 대비 **이 삽입 외 변경 없음**(diff 검증 완료).
+
+```
+For primary_rule_id:
+- choose ONE decisive rule
+- put secondary rules in supporting_rule_ids
+- "decisive" means the rule whose substantive test most directly determines the
+  structural decision at the current level
+- a rule that only validates or confirms a structural boundary established by
+  another rule belongs in supporting_rule_ids
+```
+
+**H2-A와 H3를 이름으로 지목하지 않는다.** 일반 원칙을 먼저 시험하고, 그것으로 해소되지 않을 때에만
+규칙명 지정이 필요한지 판단한다. 지목하면 Phase 5A 관측 3건에 맞출 위험이 있다.
+
+> ⚠️ 일반 문구로 H2-A 역전이 해소되지 않으면 **같은 실험 안에서 H2-A 지목 문구를 점진적으로
+> 덧붙이지 않는다.** 그것은 실험이 아니라 튜닝이다. 규범/사람 검토로 넘긴다.
+
+### (기록) 초안 후보 A — 규칙명 지목형
 
 ```
 For primary_rule_id:
@@ -150,7 +206,7 @@ For primary_rule_id:
   H3 is the decisive rule
 ```
 
-### 후보 문구 B (최소 개입)
+### (기록) 초안 후보 B — 최소 개입
 
 두 줄만 추가:
 
